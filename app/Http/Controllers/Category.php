@@ -23,7 +23,7 @@ class Category extends Controller
 
         $data['sub_heading']  = 'Category';
         $data['page_title']   = 'eUniversitylondon Category';
-        $data['users']        =  User::where('user_type','user')->orwhere('user_type', 'instructor')->orwhere('user_type', 'learner')->paginate(10);
-        return view('users/index', $data);
+        $data['categories']        =  Categories::paginate(10);
+        return view('categories/index', $data);
     }
 }
