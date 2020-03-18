@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="{{{ asset('images/favicons.ico') }}}">
-    <title>Reset Password</title>
+    <title>eUniversityLondon - Reset Password</title>
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript"></script>
     <!-- CSS -->

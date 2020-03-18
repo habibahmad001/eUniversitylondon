@@ -20,11 +20,11 @@ class IsAdmin
          if (Auth::user() &&  Auth::user()->user_type == 'admin') {
                 return $next($request);
          }
-         else if(Auth::user() &&  Auth::user()->user_type == 'employee') {
-             return redirect('/employee_listing');
-         } else if(Auth::user() &&  Auth::user()->user_type == 'employer') {
-             return redirect('/employer_listing');
+         else if(Auth::user() &&  Auth::user()->user_type == 'instructor') {
+             return redirect('/instructor/dashboard');
+         } else if(Auth::user() &&  Auth::user()->user_type == 'learner') {
+             return redirect('/learner/dashboard');
          }
-        return redirect('/dashboard');
+        return redirect('/admin/dashboard');
     }
 }

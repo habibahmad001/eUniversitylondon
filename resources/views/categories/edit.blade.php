@@ -1,11 +1,11 @@
 <div class="add-new-form edit-current-data">
   <div class="form-header">
-    <h3>Edit User</h3>
+    <h3>Edit Category</h3>
     <div class="close-icon"></div>
   </div>
-  <form method="post" action="/update-user" onSubmit="return validate('edit-');">
+  <form method="post" action="/admin/update-category" onSubmit="return validate('edit-');">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-    <input type="hidden" name="user_id" id="user_id">
+    <input type="hidden" name="cat_id" id="cat_id">
     <input type="hidden" id="edit-email_exist">
     <div class="form-height-control">
       <div class="loading-container">
@@ -14,36 +14,28 @@
       <div style="color:red" id="form-errors">
       </div>
       <div class="form-content-box">
-        
-       
-        
-        
-       
+
         <div class="form-line">
-          <input type="text" name="first_name" id="edit-first_name" placeholder="First Name">
+          <input type="text" name="cat_title" id="edit-cat_title" placeholder="Category Title" >
         </div>
 
         <div class="form-line">
-          <input type="text" name="last_name" id="edit-last_name" placeholder="Last Name">
+          <textarea name="c_content" id="edit-c_content" placeholder="Type some description."></textarea>
         </div>
 
         <div class="form-line">
-          <input type="email" name="email" id="edit-email" placeholder="First Name" onchange="validateEmailExist('edit-')">
-          <span id="edit-email-exist"></span>
+          <input type="checkbox" name="child" id="edit-child" >&nbsp;&nbsp;&nbsp; Is Child
         </div>
 
-        <div class="form-line">
-          <input type="text" name="phone" id="edit-phone" placeholder="Phone">
-        </div>
-
-
-
-         <div class="form-line">
-          <select class="half-width" name="status" id="edit-status">
-            <option>Select Status</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-        </select>
+        <div class="form-line" id="cat_div">
+          <select name="sel_txt" id="edit-sel_txt" class="half-width">
+            <option value="">Select Categories</option>
+            @if(count($categories)) @foreach ($categories as $cat) @if($cat->category_cid == NULL)
+              <option value="{{ $cat->id }}">{{ $cat->category_title }}</option>
+              @endif @endforeach @else
+              <option value="">No Categories Listed</option>
+            @endif
+          </select>
         </div>
         
        

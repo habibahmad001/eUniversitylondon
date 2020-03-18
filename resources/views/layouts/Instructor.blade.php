@@ -13,7 +13,7 @@
 	  	<meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- CSS -->
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-        <link href="{{ asset('css/style-front.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/style-instructor.css') }}" rel="stylesheet">
         <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
         <!-- Font  -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,800" rel="stylesheet">
@@ -23,12 +23,23 @@
             <div class="login-page">
                 <!-- Header Starts Here  -->
                 <header>
-                    <div class="container-fluid">
-                        <div class="logo-txt">
-                            <a href="/">eUniversityLondon</a>
+                    <!--div class="menu right">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><img src="{{ asset('images/menu-icon.png') }}" alt=""></a>
+                            <ul class="dropdown-menu popover">
+                            @if (Auth::check())
+                                <li><a href="{{ URL::to('/logout') }}">Logout</a></li>
+                            @else
+                                <li><a href="{{ URL::to('/login') }}">Login</a></li>
+                                <li><a href="{{ URL::to('/register') }}">Registered</a></li>
+                            @endif
+                            </ul>
                         </div>
-
-                    </div>
+                    </div-->
+                        <div class="col-md-12 center header-title">
+                            Instructor Login Area
+                        </div>
+                    <div class="clear"></div>
                 </header>
                 <!-- Header Ends Here  -->
                 <!-- Banner Starts Here  -->
@@ -37,27 +48,11 @@
 
                 <!-- Banner Ends Here  -->
                 <!-- Content Starts Here  -->
-                <div class="content">
-                    <div class="container">
-                        <div class="rules">
-                            <h2 class="title">The Rules</h2>
-                            <div class="row">
-                                <div class="col-md-4 ">
-                                    <p><span>1 )&nbsp;&nbsp;&nbsp;</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex.</p>
-                                </div>
-                                <div class="col-md-4 ">
-                                    <p><span>2 )&nbsp;&nbsp;&nbsp;</span>Commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla <strong>pariatur</strong>. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.</p>
-                                </div>
-                                <div class="col-md-4 ">
-                                    <p><span>3 )&nbsp;&nbsp;&nbsp;</span>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt <strong>explicabo</strong>.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="content-1">
                 </div>
                 <!-- Content Ends Here  -->
                 <!-- Footer Starts Here  -->
-                <footer>
+                <!--footer>
                     <div class="container">
                         <div class="social">
                             <ul>
@@ -87,21 +82,20 @@
                         <div class="copyrights-and-sponsor">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <p>Copyright © 2020 eUniversityLondon. All Rights Reserved.</p>
+                                    <p>Copyright © 2020. All Rights Reserved.</p>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="brought-by">
                                         <p>Brought to you by the creator of the original</p>
-                                        <img src="{{ asset('images/super-quiz-logo-ftr.png') }}" alt="">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="design-by">A Niagara Website Design by Future Access Inc.</p>
+                                    <p class="design-by">&nbsp;</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </footer>
+                </footer-->
                 <!-- Footer Ends Here  -->
             </div>
         </div>
@@ -110,12 +104,21 @@
 
 
 <script type="text/javascript">
-        $(document).ready(function(){
-            if(jQuery("input").length > 0)
-          {
-            jQuery("input").attr("autocomplete", "off");  
-          }
+    function check(input) {
+        if (input.value != document.getElementById('email').value) {
+            input.setCustomValidity('Password Must be Matching.');
+        } else {
+            // input is valid -- reset the error message
+            input.setCustomValidity('');
+        }
+    }
+    $(document).ready(function(){
+        if(jQuery("input").length > 0)
+      {
+        jQuery("input").attr("autocomplete", "off");
+      }
 
-        });  
-    </script>
+    });
+</script>
+
 

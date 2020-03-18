@@ -2,7 +2,7 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
 	<meta charset="utf-8">
-	<title>{{ $page_title or 'JobsToday' }}</title>
+	<title>{{ $page_title or 'eUniversityLondon' }}</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="{{{ asset('images/favicons.ico') }}}">
@@ -43,7 +43,7 @@
 				</div>
 			@endif
 			<div class="logo-txt">
-				<a href="{{ URL::to('/home') }}">Administrator</a>
+				<a href="{{ URL::to('/admin/home') }}">Administrator</a>
 
 			</div>
 			@if(!Auth::guest())
@@ -62,7 +62,7 @@
 									</div>
 								</div>
 								<div class="bottom-container">
-									<a href="{{ URL::to('/my-account')}}">My Account</a>
+									<a href="{{ URL::to('/admin/my-account')}}">My Account</a>
 									<a href="{{ route('logout') }}"
 		                  onclick="event.preventDefault(); event.stopImmediatePropagation();
 		                           document.getElementById('logout-form').submit();">Sign Out</a>

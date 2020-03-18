@@ -20,7 +20,7 @@ $(".edit-icon").click(function () {
     duration: 500,
   });
 
-  $.get('/getCategory/' + cat_id, function(data){
+  $.get('/admin/getCategory/' + cat_id, function(data){
 
     $(".loading-container").fadeOut();
     $(".form-content-box").fadeIn();

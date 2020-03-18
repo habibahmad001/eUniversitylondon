@@ -3,7 +3,7 @@
     <h3>Edit User</h3>
     <div class="close-icon"></div>
   </div>
-  <form method="post" action="/update-user" onSubmit="return validate('edit-');">
+  <form method="post" action="/admin/update-user" onSubmit="return validate('edit-');">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" name="user_id" id="user_id">
     <input type="hidden" id="edit-email_exist">

@@ -19,13 +19,13 @@ Route::get('/redirect', 'SocialAuthFacebookController@redirect');
 Route::get('/callback', 'SocialAuthFacebookController@callback');
 Route::get('verifyemail/{id}', 'Auth\RegisterController@verifyEmail');
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
-Route::get('rules', 'Rules@index');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset_password', 'Auth\ForgotPasswordController@reset_password');
 Route::get('/checkUsername', 'Rules@checkUsername');
 Route::get('/checkUserEmail', 'Rules@checkUserEmail');
 Route::get('/administrator', 'Auth\LoginController@showAdminLoginForm')->name('administrator');
+Route::get('/instructor', 'Auth\LoginController@showInstructorLoginForm')->name('instructor');
 
 
 
@@ -59,48 +59,86 @@ Route::post('/login', 'Auth\LoginController@login');
 // Route::get('admin_area', ['middleware' => 'admin', function () {
 Route::middleware(['admin'])->group(function () {	
 
-    Route::post('/users_add', 'UserController@create_user');
-    Route::resource('users', 'UserController');
-    Route::get('/user-create', 'UserController@user_create');
-    Route::get('/getusers/{id}', 'UserController@getusers');
+    Route::post('/admin/users_add', 'UserController@create_user');
+    Route::resource('/admin/users', 'UserController');
+    Route::get('/admin/user-create', 'UserController@user_create');
+    Route::get('/admin/getusers/{id}', 'UserController@getusers');
     Route::get('/email-exist', 'UserController@isEmailExist');
-    Route::delete('/user/{id}', 'UserController@destroy');
-    Route::post('/users_add', 'UserController@create_user');
+    Route::delete('/admin/user/{id}', 'UserController@destroy');
+    Route::post('/admin/users_add', 'UserController@create_user');
     Route::get('/user-edit/{squirrel}', 'UserController@edit_user');
-    Route::post('/update-user', 'UserController@update_user');
-    Route::get('/user-delete/{squirrel}', 'UserController@delete_user');
-    Route::get('/my-account', 'UserController@my_account');
-    Route::get('/instructor', 'UserController@instructor');
-    Route::get('/learner', 'UserController@learner');
-    Route::get('/category', 'Category@index');
+    Route::post('/admin/update-user', 'UserController@update_user');
+    Route::get('/admin/user-delete/{squirrel}', 'UserController@delete_user');
+    Route::get('/admin/my-account', 'UserController@my_account');
+    Route::get('/admin/instructor', 'UserController@instructor');
+    Route::get('/admin/learner', 'UserController@learner');
+
+
+    /*************** Categories Starts ***************/
+    Route::resource('/admin/categories', 'Category');
+    Route::get('/admin/category', 'Category@index');
+    Route::get('/admin/childitem/{id}', 'Category@ChildItem');
+    Route::post('/admin/category_add', 'Category@CategoryAdd');
+    Route::get('/admin/getcategories/{cat_id}', 'Category@GetCategories');
+    Route::post('/admin/update-category', 'Category@UpdateCategory');
+    /*************** Categories Ends ***************/
+
+    /*************** CMS Starts ***************/
+    Route::resource('/admin/cms', 'cmsc');
+    Route::get('/admin/cms', 'cmsc@index');
+    Route::post('/admin/cms_add', 'cmsc@CMSAdd');
+    Route::get('/admin/getcms/{cms_id}', 'cmsc@GetCMS');
+    Route::post('/admin/update-cms', 'cmsc@UpdateCMS');
+    /*************** CMS Ends ***************/
+
+    /*************** CurriCulums Starts ***************/
+    Route::resource('/admin/coursecurriculum', 'CurriCulums');
+    Route::get('/admin/curriculum', 'CurriCulums@index');
+    Route::post('/admin/curriculum_add', 'CurriCulums@CurriCulumAdd');
+    Route::get('/admin/getcurriculum/{cc_id}', 'CurriCulums@GetCurriCulum');
+    Route::post('/admin/update-curriculum', 'CurriCulums@UpdateCurriCulum');
+    /*************** CurriCulums Ends ***************/
+
+    /*************** Exam Starts ***************/
+    Route::resource('/admin/exam', 'Exams');
+    Route::get('/admin/exam', 'Exams@index');
+    Route::post('/admin/exam_add', 'Exams@ExamsAdd');
+    Route::get('/admin/getexam/{exm_id}', 'Exams@GetExams');
+    Route::post('/admin/update-exam', 'Exams@UpdateExams');
+    /*************** Exam Ends ***************/
+
+    /*************** MockExam Starts ***************/
+    Route::resource('/admin/mockexam', 'MexamController');
+    Route::get('/admin/mexam', 'MexamController@index');
+    Route::post('/admin/mexam_add', 'MexamController@MexamsAdd');
+    Route::get('/admin/getmexam/{exm_id}', 'MexamController@GetMexams');
+    Route::post('/admin/update-mexam', 'MexamController@UpdateMexams');
+    /*************** MockExam Ends ***************/
+
+    /*************** Term And Services Starts ***************/
+    Route::resource('/admin/termandservices', 'TermAndServicesController');
+    Route::get('/admin/termservices', 'TermAndServicesController@index');
+    Route::post('/admin/termservices_add', 'TermAndServicesController@TermAndServicesAdd');
+    Route::get('/admin/gettermservices/{tns_id}', 'TermAndServicesController@GetTermAndServices');
+    Route::post('/admin/update-cmstermservices', 'TermAndServicesController@UpdateTermAndServices');
+    /*************** Term And Services Ends ***************/
+
+
+    /*************** Courses Starts ***************/
+    Route::resource('/admin/course', 'CoursesController');
+    Route::get('/admin/course', 'CoursesController@index');
+    Route::post('/admin/course_add', 'CoursesController@CourseAdd');
+    Route::get('/admin/getcourse/{cou_id}', 'CoursesController@GetCourse');
+    Route::post('/admin/update-course', 'CoursesController@UpdateCourse');
+    /*************** Courses Ends ***************/
+
     Route::resource('facker', 'FakerController');
 
+    Route::get('/admin/home', 'DashboardController@index');
 
-    Route::get('/home', function () {
-        $data['sub_heading']  = 'Dashboard Page';
-        $data['page_title']   = 'Dashboard';
-        $data['msg']   = 'You are logged in!';
+    Route::get('/admin/dashboard', 'DashboardController@index');
 
-        return view('home', $data);
-    });
-
-    Route::get('/cms', function () {
-        $data['sub_heading']  = 'CMS Page';
-        $data['page_title']   = 'CMS';
-        $data['msg']   = 'You are on CMS page!';
-
-        return view('home', $data);
-    });
-
-    Route::get('/course', function () {
-        $data['sub_heading']  = 'Course Page';
-        $data['page_title']   = 'Course';
-        $data['msg']   = 'Course admin functionality will be implemented soon!';
-
-        return view('home', $data);
-    });
-
-    Route::get('/orders', function () {
+    Route::get('/admin/orders', function () {
         $data['sub_heading']  = 'Order Page';
         $data['page_title']   = 'Orders';
         $data['msg']   = 'Order admin functionality will be implemented soon!';
@@ -108,54 +146,62 @@ Route::middleware(['admin'])->group(function () {
         return view('home', $data);
     });
 
-    Route::get('/views', function () {
-        $data['sub_heading']  = 'View Page';
-        $data['page_title']   = 'Views';
-        $data['msg']   = 'View admin functionality will be implemented soon!';
-
-        return view('home', $data);
-    });
-
-    Route::get('/termservices', function () {
-        $data['sub_heading']  = 'Term & Service Page';
-        $data['page_title']   = 'Term & Services';
-        $data['msg']   = 'Term & Services admin functionality will be implemented soon!';
-
-        return view('home', $data);
-    });
-
-    Route::get('/curriculum', function () {
-        $data['sub_heading']  = 'Curriculum Page';
-        $data['page_title']   = 'Curriculums';
-        $data['msg']   = 'Curriculum admin functionality will be implemented soon!';
-
-        return view('home', $data);
-    });
-
-    Route::get('/mexam', function () {
-        $data['sub_heading']  = 'Mock Exam Page';
-        $data['page_title']   = 'Mock Exams';
-        $data['msg']   = 'Mock Exams admin functionality will be implemented soon!';
-
-        return view('home', $data);
-    });
-
-    Route::get('/exam', function () {
-        $data['sub_heading']  = 'Exam Page';
-        $data['page_title']   = 'Exams';
-        $data['msg']   = 'Exams admin functionality will be implemented soon!';
-
-        return view('home', $data);
-    });
-
 });
 
-Route::middleware(['employee'])->group(function () {
-    Route::get('/employee', "JobsEmployee@index");
-    Route::get('/employee_listing', "JobsEmployee@employee_listing");
+Route::middleware(['instructor'])->group(function () {
+
+
+    Route::post('/instructor/users_add', 'UserController@create_user');
+    Route::resource('/instructor/users', 'UserController');
+    Route::get('/instructor/user-create', 'UserController@user_create');
+    Route::get('/instructor/getusers/{id}', 'UserController@getusers');
+    Route::delete('/instructor/user/{id}', 'UserController@destroy');
+    Route::post('/instructor/users_add', 'UserController@create_user');
+    Route::post('/instructor/update-user', 'UserController@update_user');
+    Route::get('/instructor/user-delete/{squirrel}', 'UserController@delete_user');
+    Route::get('/instructor/my-account', 'UserController@my_account');
+
+
+
+    /*************** CurriCulums Starts ***************/
+    Route::resource('/instructor/coursecurriculum', 'CurriCulums');
+    Route::get('/instructor/curriculum', 'CurriCulums@index');
+    Route::post('/instructor/curriculum_add', 'CurriCulums@CurriCulumAdd');
+    Route::get('/instructor/getcurriculum/{cc_id}', 'CurriCulums@GetCurriCulum');
+    Route::post('/instructor/update-curriculum', 'CurriCulums@UpdateCurriCulum');
+    /*************** CurriCulums Ends ***************/
+
+    /*************** Exam Starts ***************/
+    Route::resource('/instructor/exam', 'Exams');
+    Route::get('/instructor/exam', 'Exams@index');
+    Route::post('/instructor/exam_add', 'Exams@ExamsAdd');
+    Route::get('/instructor/getexam/{exm_id}', 'Exams@GetExams');
+    Route::post('/instructor/update-exam', 'Exams@UpdateExams');
+    /*************** Exam Ends ***************/
+
+    /*************** MockExam Starts ***************/
+    Route::resource('/instructor/mockexam', 'MexamController');
+    Route::get('/instructor/mexam', 'MexamController@index');
+    Route::post('/instructor/mexam_add', 'MexamController@MexamsAdd');
+    Route::get('/instructor/getmexam/{exm_id}', 'MexamController@GetMexams');
+    Route::post('/instructor/update-mexam', 'MexamController@UpdateMexams');
+    /*************** MockExam Ends ***************/
+
+
+    /*************** Courses Starts ***************/
+    Route::resource('/instructor/course', 'CoursesController');
+    Route::get('/instructor/course', 'CoursesController@index');
+    Route::post('/instructor/course_add', 'CoursesController@CourseAdd');
+    Route::get('/instructor/getcourse/{cou_id}', 'CoursesController@GetCourse');
+    Route::post('/instructor/update-course', 'CoursesController@UpdateCourse');
+    /*************** Courses Ends ***************/
+
+    Route::get('/instructor/home', 'DashboardController@index');
+
+    Route::get('/instructor/dashboard', 'DashboardController@index');
 });
 
-Route::middleware(['employer'])->group(function () {
+Route::middleware(['learner'])->group(function () {
     Route::get('/employer', "JobsEmployer@index");
     Route::get('/employer_listing', "JobsEmployer@employer_listing");
     Route::get('/create_job', "JobsEmployer@create_job");

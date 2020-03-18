@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="shortcut icon" href="{{{ asset('images/favicon.ico') }}}">
-<title>SUPER QUIZ.</title>
+<title>eUniversityLondon</title>
 
 <!-- Styles -->
 <link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -14,7 +14,7 @@
 <body>
 	<div class="wrapper login-background">
 		<div class="login-header">
-			<div class="logo"><img src="images/logo.png"></div>
+			<div class="logo"><img src="{{URL::asset('/images/')}}/logo.png"></div>
 		</div>
 
     @yield('content')

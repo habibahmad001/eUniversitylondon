@@ -115,14 +115,14 @@ class UserController extends Controller {
       $users->last_name   = $request->last_name;
       $users->phone       = $request->phone;
       $users->status      = $request->status;
-      $users->type        = 'user';
+      $users->user_type   = 'user';
       $users->username    = $this->getUsername($request->first_name,$request->last_name);
       $users->email       = $request->email;
       $users->password    = bcrypt($request->password);
       $saved              = $users->save();
      if ($saved) {
        $request->session()->flash('alert-success', 'User was successful added!');
-       return redirect('users');
+       return redirect('/admin/users');
       } else {
        return redirect()->back()->with('error', 'Couldn\'t create organization!');
       }
@@ -151,7 +151,7 @@ class UserController extends Controller {
       $saved              = $users->save(); 
       if ($saved) {
        $request->session()->flash('message', 'User was successful edited!');
-       return redirect('users');
+       return redirect('/admin/users');
       } else {
        return redirect()->back()->with('error', 'Couldn\'t create organization!');
       } 
@@ -189,11 +189,11 @@ class UserController extends Controller {
           $user->delete();
           $request->session()->flash('alert-success', 'User was successful deleted!');
           if($user_type == "instructor") {
-              return redirect('instructor');
+              return redirect('/admin/instructor');
           } else if($user_type == "learner") {
-              return redirect('learner');
+              return redirect('/admin/learner');
           } else {
-              return redirect('users');
+              return redirect('/admin/dashboard');
           }
 
     }
@@ -231,7 +231,7 @@ class UserController extends Controller {
 
     
     public function show($id) {
-        return redirect('users');
+        return redirect('/admin/users');
     }
 
     
@@ -277,7 +277,7 @@ class UserController extends Controller {
 
         if($user->fill($input)->save()){
         $request->session()->flash('message', 'User was successful Edited!');
-        return redirect('/my-account');
+        return redirect('/admin/my-account');
         }else{
         return redirect()->back()->with('error', 'Couldn\'t create organization!');
 
@@ -292,11 +292,11 @@ class UserController extends Controller {
         $user_type = $user['user_type'];
         $user->delete();
         if($user_type == "instructor") {
-            return redirect('instructor')->with('message', 'Selected category has been deleted successfully!');
+            return redirect('/admin/instructor')->with('message', 'Selected category has been deleted successfully!');
         } else if($user_type == "learner") {
-            return redirect('learner')->with('message', 'Selected category has been deleted successfully!');
+            return redirect('/admin/learner')->with('message', 'Selected category has been deleted successfully!');
         } else {
-            return redirect('users')->with('message', 'Selected category has been deleted successfully!');
+            return redirect('/admin/users')->with('message', 'Selected category has been deleted successfully!');
         }
     }
 

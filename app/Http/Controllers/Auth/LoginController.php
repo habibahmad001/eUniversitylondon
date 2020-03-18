@@ -52,13 +52,17 @@ class LoginController extends Controller {
         return view('auth/admin/login');
     }
 
+    public function showInstructorLoginForm() {
+        return view('auth/instructor/login');
+    }
+
     public function login(Request $request) {
         $email = $request->email;
         $password = $request->password;
 
         if (Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'admin'])) {
             //exit($password);
-            return redirect()->intended('/home');
+            return redirect()->intended('/admin/home');
         } 
         else if(Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'instructor']))
         {
@@ -66,7 +70,7 @@ class LoginController extends Controller {
             {
                 return redirect()->intended('/instructor');
             } else {
-                return redirect()->intended('/instructor_listing');
+                return redirect()->intended('/instructor/home');
             }
         }
         else if(Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'learner']))
@@ -75,7 +79,7 @@ class LoginController extends Controller {
             {
                 return redirect()->intended('/learner');
             } else {
-                return redirect()->intended('/learner_listing');
+                return redirect()->intended('/learner/home');
             }
         }
         else

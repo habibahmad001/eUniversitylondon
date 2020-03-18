@@ -1,12 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.app-admin')
 
 @section('content')
 
 @include('blocks.sub-header')
-@include('blocks.left-menu')
+@include('blocks.left-menu-admin')
 
 <div class="center-content-area">
-  <form method="post" action="{{ URL::to('/users/'.Auth::user()->id) }}" onsubmit="return validate()" enctype="multipart/form-data">
+  <form method="post" action="{{ URL::to('/admin/users/'.Auth::user()->id) }}" onsubmit="return validate()" enctype="multipart/form-data">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" name="_method" value="PUT">
 

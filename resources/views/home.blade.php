@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.app-admin')
 
 @section('content')
 @include('blocks.sub-header')
-@include('blocks.left-menu')
+@include('blocks.left-menu-admin')
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">

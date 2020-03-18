@@ -1,9 +1,9 @@
-@extends('layouts.app') 
+@extends('layouts.app-admin')
 @section('content') 
 @include('blocks.sub-header')
-@include('blocks.left-menu') 
-@include('users.edit')
-@include('users.create')
+@include('blocks.left-menu-admin')
+@include('categories.edit')
+@include('categories.create')
 
 <!-- Edit form -->
 <div class="center-content-area table-set">
@@ -33,13 +33,14 @@
                 </thead>
                 @if(count($categories)) @foreach ($categories as $cat)
                 <tr>
-                    <th class="edit-icon-container"><span class="edit-icon" data-id="{{ $cat->id }}"><img src="images/edit-icon.png" alt="" title=""></span></th>
+                    <th class="edit-icon-container"><span class="edit-icon" data-id="{{ $cat->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span></th>
                     <th class="checkbox-container">
-                        <input type="checkbox" name="del_user[]" value="{{ $cat->id }}" class="checkbox-selector">
+                        <input type="checkbox" name="del_categories[]" value="{{ $cat->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $cat->category_title }}</td>
-                    <td>{{ $cat->category_cid }}</td>
-                    <td><a href="#">View Child</a></td>
+                    <td>@if(empty($cat->category_cid)) Yes @else No @endif</td>
+                    <!--td>@if($categories->total() > 0)<a href="/admin/childitem/{{ $cat->id }}">View Child</a> @else No Child @endif</td-->
+                    <td><a href="/admin/childitem/{{ $cat->id }}">View Child</a></td>
                 </tr>
                 @endforeach @else
                 <tr>
@@ -58,10 +59,10 @@
         </nav>
     </div>
 </div>
-@include('../blocks/delete-form', ['model' => 'user'])
+@include('../blocks/delete-form', ['model' => 'categories'])
 
 @endsection 
 
 @section('js_libraries')
-<script type="text/javascript" src="{{ asset('js/user.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/categories.js')}}"></script>
 @endsection

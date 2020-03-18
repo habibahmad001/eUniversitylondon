@@ -4,7 +4,7 @@
     <h3>Create New User</h3>
     <div class="close-icon"></div>
   </div>
-  <form method="POST" action="/users_add" accept-charset="UTF-8" onSubmit="return validate('');">
+  <form method="POST" action="/admin/users_add" accept-charset="UTF-8" onSubmit="return validate('');">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" id="email_exist">
     <div class="form-height-control">

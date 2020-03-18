@@ -22,7 +22,7 @@ $(".edit-icon").click(function () {
     duration: 500,
   });
 
-  $.get('/getusers/' + user_id, function(data){
+  $.get('/admin/getusers/' + user_id, function(data){
 
     $(".loading-container").fadeOut();
     $(".form-content-box").fadeIn();

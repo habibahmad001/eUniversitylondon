@@ -22,6 +22,6 @@ class IsInstructor
                 return $next($request);
          }
 
-        return redirect('/instructor_listing');
+        return redirect('/instructor/dashboard');
     }
 }

@@ -291,6 +291,9 @@ table.table { border-collapse:collapse; }
 .customer-listing-outer { position: relative; margin-right: -10px; }
 .customer-listing-cont { height: 100%; }
 .customer-history-inner { position: relative; height: 100%; padding-right: 10px; }
+div#avatar_div {
+    margin: 3% 0 0 0;
+}
 
 
 /*  Measures --------- */

@@ -1,7 +1,7 @@
-@extends('layouts.app') 
+@extends('layouts.app-admin')
 @section('content') 
 @include('blocks.sub-header')
-@include('blocks.left-menu') 
+@include('blocks.left-menu-admin')
 @include('users.edit')
 @include('users.create')
 
@@ -37,7 +37,7 @@
                 </thead>
                 @if(count($users)) @foreach ($users as $user)
                 <tr>
-                    <th class="edit-icon-container"><span class="edit-icon" data-id="{{ $user->id }}"><img src="images/edit-icon.png" alt="" title=""></span></th>
+                    <th class="edit-icon-container"><span class="edit-icon" data-id="{{ $user->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span></th>
                     <th class="checkbox-container">
                         <input type="checkbox" name="del_user[]" value="{{ $user->id }}" class="checkbox-selector">
                     </th>

@@ -22,6 +22,6 @@ class IsLearner
                 return $next($request);
          }
 
-        return redirect('/learner_listing');
+        return redirect('/learner/dashboard');
     }
 }
