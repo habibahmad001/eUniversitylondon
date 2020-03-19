@@ -12,7 +12,7 @@
 
 	<link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet">
 	<link href="{{ asset('css/jquery-ui.css') }}" type="text/css" rel="stylesheet">
-	<link href="{{ asset('css/style-instructor.css') }}" type="text/css" rel="stylesheet">
+	<link href="{{ asset('css/style-instructor-app.css') }}" type="text/css" rel="stylesheet">
 
 	<!-- custom scrollbar stylesheet -->
 	<link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.css') }}">
@@ -43,7 +43,7 @@
 				</div>
 			@endif
 			<div class="logo-txt">
-				<a href="{{ URL::to('/admin/home') }}">Administrator</a>
+				<a href="{{ URL::to('/instructor/home') }}">Instructor Panel</a>
 
 			</div>
 			@if(!Auth::guest())
@@ -62,7 +62,7 @@
 									</div>
 								</div>
 								<div class="bottom-container">
-									<a href="{{ URL::to('/admin/my-account')}}">My Account</a>
+									<a href="{{ URL::to('/instructor/my-account')}}">My Account</a>
 									<a href="{{ route('logout') }}"
 		                  onclick="event.preventDefault(); event.stopImmediatePropagation();
 		                           document.getElementById('logout-form').submit();">Sign Out</a>

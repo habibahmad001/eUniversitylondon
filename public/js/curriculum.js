@@ -22,7 +22,8 @@ $(".edit-icon").click(function () {
     duration: 500,
   });
 
-  $.get('/admin/getcurriculum/' + cc_id, function(data){
+  var user_folder = $("#user_folder").val();
+  $.get('/' + user_folder + '/getcurriculum/' + cc_id, function(data){
 
     $(".loading-container").fadeOut();
     $(".form-content-box").fadeIn();

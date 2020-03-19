@@ -1,12 +1,12 @@
-@extends('layouts.app-admin')
+@extends('layouts.app-' . collect(request()->segments())->first())
 
 @section('content')
 
 @include('blocks.sub-header')
-@include('blocks.left-menu-admin')
+@include('blocks.left-menu-' . collect(request()->segments())->first())
 
 <div class="center-content-area">
-  <form method="post" action="{{ URL::to('/admin/users/'.Auth::user()->id) }}" onsubmit="return validate()" enctype="multipart/form-data">
+  <form method="post" action="{{ URL::to('/' . collect(request()->segments())->first() . '/users/'.Auth::user()->id) }}" onsubmit="return validate()" enctype="multipart/form-data">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" name="_method" value="PUT">
 

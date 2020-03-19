@@ -196,9 +196,9 @@ Route::middleware(['instructor'])->group(function () {
     Route::post('/instructor/update-course', 'CoursesController@UpdateCourse');
     /*************** Courses Ends ***************/
 
-    Route::get('/instructor/home', 'DashboardController@index');
+    Route::get('/instructor/home', 'DashboardController@InstructorDashboard');
 
-    Route::get('/instructor/dashboard', 'DashboardController@index');
+    Route::get('/instructor/dashboard', 'DashboardController@InstructorDashboard');
 });
 
 Route::middleware(['learner'])->group(function () {
