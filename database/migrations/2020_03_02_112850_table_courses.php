@@ -16,7 +16,7 @@ class TableCourses extends Migration
         Schema::create('tablecourses', function (Blueprint $table) {
             $table->increments('id',100);
             $table->integer('category_id')->unsigned();
-            $table->integer('course_curriculum_id')->unsigned();
+            $table->text('course_avatar')->nullable();
             $table->text('course_title')->nullable();
             $table->longText('course_desc')->nullable();
             $table->text('created_company')->nullable();
@@ -31,11 +31,6 @@ class TableCourses extends Migration
             $table->foreign('category_id')
                 ->references('id')
                 ->on('tablecategories')
-                ->onDelete('cascade');
-
-            $table->foreign('course_curriculum_id')
-                ->references('id')
-                ->on('tablecurriculum')
                 ->onDelete('cascade');
 
         });
