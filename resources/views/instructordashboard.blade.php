@@ -32,7 +32,7 @@
     <br />
     <div class="col-sm-9 col-md-4 col-lg-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Recent Users</div>
+                <div class="panel-heading">Recent Course</div>
 
                 <div class="panel-body">
                     <table class="dash_table">
@@ -40,14 +40,14 @@
                         <thead>
                         </tr>
                         <tr>
-                            <th>User Name</th>
-                            <th>User Email</th>
+                            <th>Course Title</th>
+                            <th>Course Description</th>
                         </tr>
                         </thead>
-                        @if(count($users)) @foreach ($users as $user)
+                        @if(count($courses)) @foreach ($courses as $course)
                             <tr>
-                                <td>{{ $user->first_name }} {{ $user->last_name }}</td>
-                                <td>{{ $user->email }}</td>
+                                <td>{{ $course->course_title }}</td>
+                                <td>{{ $course->course_desc }}</td>
                             </tr>
                         @endforeach @else
                             <tr>
@@ -61,7 +61,7 @@
         </div>
     <div class="col-sm-9 col-md-4 col-lg-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Recent Instructor</div>
+                <div class="panel-heading">Recent Exam</div>
 
                 <div class="panel-body">
                     <table class="dash_table">
@@ -69,14 +69,14 @@
                         <thead>
                         </tr>
                         <tr>
-                            <th>Instructor Name</th>
-                            <th>Instructor Email</th>
+                            <th>Exam Title</th>
+                            <th>Exam Description</th>
                         </tr>
                         </thead>
-                        @if(count($instructor)) @foreach ($instructor as $ins)
+                        @if(count($exam)) @foreach ($exam as $exm)
                             <tr>
-                                <td>{{ $ins->first_name }} {{ $ins->last_name }}</td>
-                                <td>{{ $ins->email }}</td>
+                                <td>{{ $exm->exam_title }}</td>
+                                <td>{{ $exm->exam_content }}</td>
                             </tr>
                         @endforeach @else
                             <tr>
@@ -90,7 +90,7 @@
         </div>
     <div class="col-sm-9 col-md-4 col-lg-6">
         <div class="panel panel-default">
-            <div class="panel-heading">Recent Learner</div>
+            <div class="panel-heading">Recent Mock Exam</div>
 
             <div class="panel-body">
                 <table class="dash_table">
@@ -98,14 +98,14 @@
                     <thead>
                     </tr>
                     <tr>
-                        <th>Learner Name</th>
-                        <th>Learner Email</th>
+                        <th>Mock Exam Title</th>
+                        <th>Mock Exam Description</th>
                     </tr>
                     </thead>
-                    @if(count($learner)) @foreach ($learner as $ler)
+                    @if(count($mexam)) @foreach ($mexam as $mexm)
                         <tr>
-                            <td>{{ $ler->first_name }} {{ $ler->last_name }}</td>
-                            <td>{{ $ler->email }}</td>
+                            <td>{{ $mexm->exam_title }}</td>
+                            <td>{{ $mexm->exam_content }}</td>
                         </tr>
                     @endforeach @else
                         <tr>
@@ -119,7 +119,7 @@
     </div>
     <div class="col-sm-9 col-md-4 col-lg-6">
         <div class="panel panel-default">
-            <div class="panel-heading">Recent Courses</div>
+            <div class="panel-heading">Recent Curriculum</div>
 
             <div class="panel-body">
                 <table class="dash_table">
@@ -127,14 +127,14 @@
                     <thead>
                     </tr>
                     <tr>
-                        <th>Course Title</th>
-                        <th>Course Description</th>
+                        <th>Curriculum Title</th>
+                        <th>Curriculum Description</th>
                     </tr>
                     </thead>
-                    @if(count($courses)) @foreach ($courses as $course)
+                    @if(count($coursecurriculum)) @foreach ($coursecurriculum as $curriculum)
                         <tr>
-                            <td>{{ $course->course_title }}</td>
-                            <td>{{ $course->course_desc }}</td>
+                            <td>{{ $curriculum->curriculum_title }}</td>
+                            <td>{{ $curriculum->curriculum_content }}</td>
                         </tr>
                     @endforeach @else
                         <tr>

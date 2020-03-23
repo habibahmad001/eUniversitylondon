@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUserCourse extends Migration
+class AddUserMockExam extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class AddUserCourse extends Migration
      */
     public function up()
     {
-        Schema::table('tablecourses', function (Blueprint $table) {
-            $table->integer('course_user_id')->unsigned()->nullable();
+        Schema::table('tablemockexam', function (Blueprint $table) {
+            $table->integer('mexam_user_id')->unsigned()->nullable();
 
-            $table->foreign('course_user_id')
+            $table->foreign('mexam_user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
@@ -30,8 +30,8 @@ class AddUserCourse extends Migration
      */
     public function down()
     {
-        Schema::table('tablecourses', function (Blueprint $table) {
-            $table->dropColumn(['course_user_id']);
+        Schema::table('tablemockexam', function (Blueprint $table) {
+            $table->dropColumn(['mexam_user_id']);
         });
     }
 }

@@ -10,10 +10,14 @@ class CourseCurriculum extends Model
     protected $table = 'tablecurriculum';
 
     protected $fillable = [
-        'id','course_id','curriculum_title','curriculum_content','curriculum_status'
+        'id','course_id','curriculum_title','curriculum_content','curriculum_status', 'curriculum_user_id'
     ];
 
     public function course() {
         return $this->belongsTo('App\Courses');
+    }
+
+    public function curriculum_user() {
+        return $this->belongsTo('App\User');
     }
 }

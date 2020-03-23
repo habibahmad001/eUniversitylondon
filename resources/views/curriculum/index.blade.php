@@ -28,7 +28,10 @@
                         </th>
                         <th>Curriculum Title</th>
                         <th>Curriculum Content</th>
-                        <!--th>Curriculum Course</th-->
+                        <th>Course Name</th>
+                        @if(collect(request()->segments())->first() == "admin")
+                            <th>Instructor Name</th>
+                        @endif
                     </tr>
                 </thead>
                 @if(count($Curriculums)) @foreach ($Curriculums as $Curriculum)
@@ -39,7 +42,10 @@
                     </th>
                     <td>{{ $Curriculum->curriculum_title }}</td>
                     <td>{{ $Curriculum->curriculum_content }}</td>
-                    <!--td>{{ $Curriculum->course_cid }}</td-->
+                    <td>{{ (array_key_exists($Curriculum->id, $Array_Course_Name)) ? $Array_Course_Name[$Curriculum->id] : "" }}</td>
+                    @if(collect(request()->segments())->first() == "admin")
+                        <td>{{ (array_key_exists($Curriculum->id, $Array_Instructor_Name)) ? $Array_Instructor_Name[$Curriculum->id] : "" }}</td>
+                    @endif
                 </tr>
                 @endforeach @else
                 <tr>

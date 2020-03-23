@@ -24,12 +24,36 @@ class CurriCulums extends Controller
 
         $data['sub_heading']  = 'Curriculum';
         $data['page_title']   = 'eUniversitylondon Curriculum';
-        $data['Curriculums']        =  CourseCurriculum::paginate(10);
+        if(collect(request()->segments())->first() == 'instructor')
+            $data['Curriculums']        =  CourseCurriculum::where('curriculum_user_id', Auth::user()->id)->paginate(10);
+        else
+            $data['Curriculums']        =  CourseCurriculum::paginate(10);
         $data['Courses']        =  Courses::All();
+        /**************** Get Course Name **************/
+        $Array_Course_Name           =  array();
+        foreach($data['Curriculums'] as $Curriculums_data) {
+            if(!empty($Curriculums_data->course_id)) {
+                $Course_Name        =  Courses::where('id', $Curriculums_data->course_id)->first();
+                $Array_Course_Name[$Curriculums_data->id] = $Course_Name->course_title;
+            }
+        }
+        $data['Array_Course_Name']           =  $Array_Course_Name;
+        /**************** Get Course Name **************/
+
+        /**************** Get instructor Name **************/
+        $Array_Instructor_Name           =  array();
+        foreach($data['Curriculums'] as $course_data) {
+            if(!empty($course_data->curriculum_user_id)) {
+                $Instructor_Name        =  User::where('id', $course_data->curriculum_user_id)->first();
+                $Array_Instructor_Name[$course_data->id] = $Instructor_Name->first_name . " " . $Instructor_Name->last_name;
+            }
+        }
+        $data['Array_Instructor_Name']           =  $Array_Instructor_Name;
+        /**************** Get instructor Name **************/
         return view('curriculum/index', $data);
     }
 
-    public function CurriCulumAdd(Request $request){ //exit($request->axaxa);
+    public function CurriCulumAdd(Request $request){
         $CurriCulums         = new CourseCurriculum;
         $this->validate($request, [
 
@@ -40,10 +64,11 @@ class CurriCulums extends Controller
         $CurriCulums->curriculum_title  = $request->cur_title;
         $CurriCulums->curriculum_content  = $request->cur_content;
         $CurriCulums->course_id  = $request->cour_id;
+        $CurriCulums->curriculum_user_id  = Auth::user()->id;
         $saved          = $CurriCulums->save();
         if ($saved) {
             $request->session()->flash('message', 'Curriculum successfully added!');
-            return redirect('/admin/curriculum');
+            return redirect('/' . collect(request()->segments())->first() . '/curriculum');
         } else {
             return redirect()->back()->with('message', 'Couldn\'t create Curriculum!');
         }
@@ -70,7 +95,7 @@ class CurriCulums extends Controller
         $saved              = $CurriCulums->save();
         if ($saved) {
             $request->session()->flash('message', 'CurriCulums was successful edited!');
-            return redirect('/admin/curriculum');
+            return redirect('/' . collect(request()->segments())->first() . '/curriculum');
         } else {
             return redirect()->back()->with('error', 'Couldn\'t create CurriCulums!');
         }
@@ -81,7 +106,7 @@ class CurriCulums extends Controller
         //Find a user with a given id and delete
         $CurriCulums = CourseCurriculum::findOrFail($id);
         $CurriCulums->delete();
-        return redirect('/admin/curriculum')->with('message', 'Selected Curriculum has been deleted successfully!');
+        return redirect('/' . collect(request()->segments())->first() . '/curriculum')->with('message', 'Selected Curriculum has been deleted successfully!');
     }
 
 }

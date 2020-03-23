@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\User;
 use App\Courses;
 use App\Categories;
+use App\CourseWithUser;
 
 use Auth;
 
@@ -22,10 +23,34 @@ class CoursesController extends Controller
 
     public function index() {
 
-        $data['sub_heading']  = 'Courses';
-        $data['page_title']   = 'eUniversitylondon Courses';
-        $data['Courses']        =  Courses::paginate(10);
-        $data['Category']        =  Categories::All();
+        $data['sub_heading']        = 'Courses';
+        $data['page_title']         = 'eUniversitylondon Courses';
+        if(collect(request()->segments())->first() == 'instructor')
+            $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->paginate(10);
+        else
+            $data['Courses']        =  Courses::paginate(10);
+
+        /**************** Get User Count **************/
+        $Array_User_Count           =  array();
+        foreach($data['Courses'] as $course_v) {
+            $User_Count        =  CourseWithUser::where('course_id', $course_v->id)->count();
+            $Array_User_Count[$course_v->id] = $User_Count;
+        }
+        $data['Array_User_Count']           =  $Array_User_Count;
+        /**************** Get User Count **************/
+
+        /**************** Get instructor Name **************/
+        $Array_Instructor_Name           =  array();
+        foreach($data['Courses'] as $course_data) {
+            if(!empty($course_data->course_user_id)) {
+                $Instructor_Name        =  User::where('id', $course_data->course_user_id)->first();
+                $Array_Instructor_Name[$course_data->id] = $Instructor_Name->first_name . " " . $Instructor_Name->last_name;
+            }
+        }
+        $data['Array_Instructor_Name']           =  $Array_Instructor_Name;
+        /**************** Get instructor Name **************/
+
+        $data['Category']           =  Categories::All();
         return view('course/index', $data);
     }
 
@@ -54,6 +79,7 @@ class CoursesController extends Controller
         $Courses->course_for  = $request->cou_course_for;
         $Courses->course_price  = $request->cou_price;
         $Courses->course_discounted_price  = $request->cou_discounted_price;
+        $Courses->course_user_id  = Auth::user()->id;
         /************ Image Upload ***********/
         if(!empty($request->file('cou_avatar'))) {
             $CoursesImage = $request->file('cou_avatar');
@@ -67,7 +93,7 @@ class CoursesController extends Controller
         $saved          = $Courses->save();
         if ($saved) {
             $request->session()->flash('message', 'Course successfully added!');
-            return redirect('/admin/course');
+            return redirect('/' . collect(request()->segments())->first() . '/course');
         } else {
             return redirect()->back()->with('message', 'Couldn\'t create Course!');
         }
@@ -118,7 +144,7 @@ class CoursesController extends Controller
         $saved              = $Courses->save();
         if ($saved) {
             $request->session()->flash('message', 'Course was successful edited!');
-            return redirect('/admin/course');
+            return redirect('/' . collect(request()->segments())->first() . '/course');
         } else {
             return redirect()->back()->with('error', 'Couldn\'t create Courses!');
         }
@@ -130,7 +156,7 @@ class CoursesController extends Controller
         $Courses = Courses::findOrFail($id);
         unlink('uploads/pavatar/' . $Courses->course_avatar);
         $Courses->delete();
-        return redirect('/admin/course')->with('message', 'Selected Courses has been deleted successfully!');
+        return redirect('/' . collect(request()->segments())->first() . '/course')->with('message', 'Selected Courses has been deleted successfully!');
     }
 
 }

@@ -24,8 +24,33 @@ class Exams extends Controller
 
         $data['sub_heading']  = 'Exam';
         $data['page_title']   = 'eUniversitylondon Exam';
-        $data['Exams']        =  Exam::paginate(10);
+        if(collect(request()->segments())->first() == 'instructor')
+            $data['Exams']        =  Exam::where('exam_user_id', Auth::user()->id)->paginate(10);
+        else
+            $data['Exams']        =  Exam::paginate(10);
         $data['Courses']        =  Courses::All();
+        /**************** Get Course Name **************/
+        $Array_Course_Name           =  array();
+        foreach($data['Exams'] as $exam_data) {
+            if(!empty($exam_data->course_id)) {
+                $Course_Name        =  Courses::where('id', $exam_data->course_id)->first();
+                $Array_Course_Name[$exam_data->id] = $Course_Name->course_title;
+            }
+        }
+        $data['Array_Course_Name']           =  $Array_Course_Name;
+        /**************** Get Course Name **************/
+
+        /**************** Get instructor Name **************/
+        $Array_Instructor_Name           =  array();
+        foreach($data['Exams'] as $course_data) {
+            if(!empty($course_data->exam_user_id)) {
+                $Instructor_Name        =  User::where('id', $course_data->exam_user_id)->first();
+                $Array_Instructor_Name[$course_data->id] = $Instructor_Name->first_name . " " . $Instructor_Name->last_name;
+            }
+        }
+        $data['Array_Instructor_Name']           =  $Array_Instructor_Name;
+        /**************** Get instructor Name **************/
+
         return view('exam/index', $data);
     }
 
@@ -37,13 +62,14 @@ class Exams extends Controller
             'exe_content'=>'required',
             'cour_id'=>'required'
         ]);
-        $Exam->exam_title  = $request->exe_title;
+        $Exam->exam_title    = $request->exe_title;
         $Exam->exam_content  = $request->exe_content;
-        $Exam->course_id  = $request->cour_id;
-        $saved          = $Exam->save();
+        $Exam->course_id     = $request->cour_id;
+        $Exam->exam_user_id  = Auth::user()->id;
+        $saved               = $Exam->save();
         if ($saved) {
             $request->session()->flash('message', 'Exam successfully added!');
-            return redirect('/admin/exam');
+            return redirect('/' . collect(request()->segments())->first() . '/exam');
         } else {
             return redirect()->back()->with('message', 'Couldn\'t create Exam!');
         }
@@ -72,7 +98,7 @@ class Exams extends Controller
         $saved              = $Exam->save();
         if ($saved) {
             $request->session()->flash('message', 'Exams was successful edited!');
-            return redirect('/admin/exam');
+            return redirect('/' . collect(request()->segments())->first() . '/exam');
         } else {
             return redirect()->back()->with('error', 'Couldn\'t create Exams!');
         }
@@ -83,7 +109,7 @@ class Exams extends Controller
         //Find a user with a given id and delete
         $Exam = Exam::findOrFail($id);
         $Exam->delete();
-        return redirect('/admin/exam')->with('message', 'Selected Exam has been deleted successfully!');
+        return redirect('/' . collect(request()->segments())->first() . '/exam')->with('message', 'Selected Exam has been deleted successfully!');
     }
 
 }

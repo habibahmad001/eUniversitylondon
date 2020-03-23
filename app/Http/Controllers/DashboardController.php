@@ -8,6 +8,9 @@ use Illuminate\Support\Str;
 
 use App\User;
 use App\Courses;
+use App\Exam;
+use App\MockExam;
+use App\CourseCurriculum;
 
 use Auth;
 
@@ -33,12 +36,12 @@ class DashboardController extends Controller
 
     public function InstructorDashboard() {
 
-        $data['sub_heading']  = 'Dashborard';
-        $data['page_title']   = 'eUniversitylondon Dashborard';
-        $data['users']        =  User::take(5)->get();
-        $data['learner']      =  User::where("user_type", "learner")->take(5)->get();
-        $data['instructor']   =  User::where("user_type", "instructor")->take(5)->get();
-        $data['courses']      =  Courses::orderBy('id', 'desc')->take(5)->get();
+        $data['sub_heading']    = 'Dashborard';
+        $data['page_title']     = 'eUniversitylondon Dashborard';
+        $data['courses']               =  Courses::where('course_user_id', Auth::user()->id)->take(5)->get();
+        $data['exam']                  =  Exam::where('exam_user_id', Auth::user()->id)->take(5)->get();
+        $data['mexam']                 =  MockExam::where('mexam_user_id', Auth::user()->id)->take(5)->get();
+        $data['coursecurriculum']      =  CourseCurriculum::where('curriculum_user_id', Auth::user()->id)->take(5)->get();
 
         return view('instructordashboard', $data);
     }

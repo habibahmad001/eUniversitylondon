@@ -28,7 +28,10 @@
                         </th>
                         <th>Exam's Title</th>
                         <th>Exam's Content</th>
-                        <!--th>Curriculum Course</th-->
+                        <th>Course Name</th>
+                        @if(collect(request()->segments())->first() == "admin")
+                            <th>Instructor Name</th>
+                        @endif
                     </tr>
                 </thead>
                 @if(count($Exams)) @foreach ($Exams as $Exam)
@@ -39,7 +42,10 @@
                     </th>
                     <td>{{ $Exam->exam_title }}</td>
                     <td>{{ $Exam->exam_content }}</td>
-                    <!--td>{{ $Exam->exam_status }}</td-->
+                    <td>{{ (array_key_exists($Exam->id, $Array_Course_Name)) ? $Array_Course_Name[$Exam->id] : "" }}</td>
+                    @if(collect(request()->segments())->first() == "admin")
+                        <td>{{ (array_key_exists($Exam->id, $Array_Instructor_Name)) ? $Array_Instructor_Name[$Exam->id] : "" }}</td>
+                    @endif
                 </tr>
                 @endforeach @else
                 <tr>

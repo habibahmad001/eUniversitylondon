@@ -85,11 +85,13 @@ header .success-message-box .cancel:hover { background: url(../images/cancel-ico
 .content .table .edit-icon-container { text-align: center; }
 .content .table tbody tr:hover { background:#ababab; }
 .content .table tbody tr:hover td { color: #fff; }
+.content .table tbody tr:hover td a { color: #fff; }
+.content .table tbody tr td a { color: #555555; text-decoration: underline; }
 .content .table tbody tr:hover .edit-icon { opacity:1; }
 .content .table th.error { text-align: center; color: #ff0000; }
-.content .table th,.content .table td { color:#555555; font-size:12px; }
+.content .table th,.content .table td { color:#555555; font-size:12px; text-align: center;}
 .content .table tr a { color:#2b97df; }
-.content .table tr.yellow { background: #2b2b2b; }
+.content .table tr.yellow { background: #ababab; }
 .content .table>tbody>tr>td,.content .table>tbody>tr>th,
 .content .table>tfoot>tr>td,.content .table>tfoot>tr>th,
 .content .table>thead>tr>td,.content .table>thead>tr>th { border-top: none; }

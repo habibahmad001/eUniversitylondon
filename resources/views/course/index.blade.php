@@ -28,6 +28,10 @@
                         </th>
                         <th>Course Title</th>
                         <th>Course Content</th>
+                        <th>Number of User's</th>
+                        @if(collect(request()->segments())->first() == "admin")
+                            <th>Instructor Name</th>
+                        @endif
                     </tr>
                 </thead>
                 @if(count($Courses)) @foreach ($Courses as $Course)
@@ -38,6 +42,10 @@
                     </th>
                     <td>{{ $Course->course_title }}</td>
                     <td>{{ $Course->course_desc }}</td>
+                    <td><a href="#">View User's({{ (array_key_exists($Course->id, $Array_User_Count)) ? $Array_User_Count[$Course->id] : 0 }}) </a> </td>
+                    @if(collect(request()->segments())->first() == "admin")
+                        <td>{{ (array_key_exists($Course->id, $Array_Instructor_Name)) ? $Array_Instructor_Name[$Course->id] : "" }}</td>
+                    @endif
                 </tr>
                 @endforeach @else
                 <tr>

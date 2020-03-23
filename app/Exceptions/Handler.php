@@ -50,4 +50,9 @@ class Handler extends ExceptionHandler
     {
         return parent::render($request, $exception);
     }
+
+    public function unauthenticated()
+    {
+        return redirect('/'); // use redirect('/login') or something if you want to redirect to login.
+    }
 }
