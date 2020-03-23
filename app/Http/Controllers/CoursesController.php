@@ -65,6 +65,7 @@ class CoursesController extends Controller
             'cou_includes'=>'required',
             'cou_requirements'=>'required',
             'cou_course_for'=>'required',
+            'youtube'=>'required',
             'cou_price'=>'required',
             'cou_discounted_price'=>'required',
             'cou_avatar'  => 'required',
@@ -77,6 +78,7 @@ class CoursesController extends Controller
         $Courses->course_includes  = $request->cou_includes;
         $Courses->course_requirements  = $request->cou_requirements;
         $Courses->course_for  = $request->cou_course_for;
+        $Courses->youtube  = $request->youtube;
         $Courses->course_price  = $request->cou_price;
         $Courses->course_discounted_price  = $request->cou_discounted_price;
         $Courses->course_user_id  = Auth::user()->id;
@@ -116,6 +118,7 @@ class CoursesController extends Controller
             'cou_includes'=>'required',
             'cou_requirements'=>'required',
             'cou_course_for'=>'required',
+            'youtube'=>'required',
             'cou_price'=>'required',
             'cou_discounted_price'=>'required',
             'cou_category'=>'required'
@@ -128,6 +131,7 @@ class CoursesController extends Controller
         $Courses->course_includes  = $request->cou_includes;
         $Courses->course_requirements  = $request->cou_requirements;
         $Courses->course_for  = $request->cou_course_for;
+        $Courses->youtube  = $request->youtube;
         $Courses->course_price  = $request->cou_price;
         $Courses->course_discounted_price  = $request->cou_discounted_price;
         /************ Image Upload ***********/

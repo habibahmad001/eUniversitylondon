@@ -1,7 +1,7 @@
-@extends('layouts.app-admin')
+@extends("layouts.app-" . collect(request()->segments())->first())
 @section('content') 
 @include('blocks.sub-header')
-@include('blocks.left-menu-admin')
+@include('blocks.left-menu-' . collect(request()->segments())->first())
 @include('users.edit')
 @include('users.create')
 
@@ -49,7 +49,7 @@
                 </tr>
                 @endforeach @else
                 <tr>
-                    <th colspan="6" class="error">No results found</th>
+                    <th colspan="7" class="error">No results found</th>
                 </tr>
                 @endif
             </tbody>

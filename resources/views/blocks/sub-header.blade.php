@@ -3,8 +3,12 @@
   <h2>{{ $sub_heading }}</h2>
   
   <a href="javascript:void(0)" class="delete-btn">Delete</a>
-  @if(!isset($is_reload_btn))
-    <div class="add-button"></div>
+  @if(collect(request()->segments())->pull(1) != 'students')
+    @if(collect(request()->segments())->last() != 'home')
+      @if(!isset($is_reload_btn))
+        <div class="add-button"></div>
+      @endif
+    @endif
   @endif
 
   @if($sub_heading=='Reports')

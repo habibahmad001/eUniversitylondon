@@ -43,6 +43,7 @@ $(".edit-icon").click(function () {
       $("#edit-cou_includes").val(Courses.course_includes);
       $("#edit-cou_requirements").val(Courses.course_requirements);
       $("#edit-cou_course_for").val(Courses.course_for);
+      $("#edit-youtube").val(Courses.youtube);
       $("#edit-cou_price").val(Courses.course_price);
       $("#edit-cou_discounted_price").val(Courses.course_discounted_price);
       $("#avatar_div img").attr("src", img_path + Courses.course_avatar);
@@ -68,6 +69,7 @@ function reset_form() {
   $("#cou_includes").val('');
   $("#cou_requirements").val('');
   $("#cou_course_for").val('');
+  $("#youtube").val();
   $("#cou_price").val('');
   $("#cou_discounted_price").val('');
   $("#avatar_div img").attr("src", "http://via.placeholder.com/150x150");
@@ -106,6 +108,7 @@ function validate(type) {
   var cou_includes = $("#"+ type +"cou_includes").val();
   var cou_requirements = $("#"+ type +"cou_requirements").val();
   var cou_course_for = $("#"+ type +"cou_course_for").val();
+  var youtube = $("#"+ type +"youtube").val();
   var cou_price = $("#"+ type +"cou_price").val();
   var cou_discounted_price = $("#"+ type +"cou_discounted_price").val();
   var cou_category = $("#"+ type +"cou_category").val();
@@ -140,6 +143,10 @@ function validate(type) {
 
   if(cou_price == '') {
     errors.push("#"+ type +"cou_price");
+  }
+
+  if(youtube == '') {
+    errors.push("#"+ type +"youtube");
   }
 
   if(cou_discounted_price == '') {

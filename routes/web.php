@@ -61,6 +61,7 @@ Route::middleware(['admin'])->group(function () {
 
     Route::post('/admin/users_add', 'UserController@create_user');
     Route::resource('/admin/users', 'UserController');
+    Route::get('/admin/students/{cid}', 'UserController@User_enrolled_in_course');
     Route::get('/admin/user-create', 'UserController@user_create');
     Route::get('/admin/getusers/{id}', 'UserController@getusers');
     Route::get('/email-exist', 'UserController@isEmailExist');
@@ -152,7 +153,7 @@ Route::middleware(['instructor'])->group(function () {
 
 
     Route::post('/instructor/users_add', 'UserController@create_user');
-    Route::resource('/instructor/users', 'UserController');
+    Route::get('/instructor/students/{cid}', 'UserController@User_enrolled_in_course');
     Route::get('/instructor/user-create', 'UserController@user_create');
     Route::get('/instructor/getusers/{id}', 'UserController@getusers');
     Route::delete('/instructor/user/{id}', 'UserController@destroy');

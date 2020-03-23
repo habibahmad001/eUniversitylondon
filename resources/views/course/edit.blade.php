@@ -46,6 +46,10 @@
         </div>
 
         <div class="form-line">
+          <input type="text" name="youtube" id="edit-youtube" placeholder="YouTube Video Link" >
+        </div>
+
+        <div class="form-line">
           <input type="text" name="cou_price" id="edit-cou_price" placeholder="Course Price" >
         </div>
 
