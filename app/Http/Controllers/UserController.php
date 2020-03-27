@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\User;
 use Auth;
+use App\CourseWithUser;
 //use Image;
 
 //Enables us to output flash messaging
@@ -29,6 +30,21 @@ class UserController extends Controller {
         $data['sub_heading']  = 'Users';
         $data['page_title']   = 'eUniversitylondon Users';
         $data['users']        =  User::where('user_type','user')->orwhere('user_type', 'instructor')->orwhere('user_type', 'learner')->paginate(10);
+        return view('users/index', $data);
+    }
+
+    public function User_enrolled_in_course(Request $request) { // exit($request->cid);
+
+        $data['sub_heading']  = 'Users';
+        $data['page_title']   = 'eUniversitylondon Users';
+
+        $data['users'] = DB::table('tableuserwithcourse')
+            ->join('users', 'tableuserwithcourse.user_id', '=', 'users.id')
+            ->select('*')
+            ->where('tableuserwithcourse.course_id', '=', $request->cid)
+            ->paginate(10);
+
+
         return view('users/index', $data);
     }
 

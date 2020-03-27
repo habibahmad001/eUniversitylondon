@@ -1,7 +1,7 @@
-@extends('layouts.app-instructor')
+@extends('layouts.app-learner')
 @section('content')
 @include('blocks.sub-header')
-@include('blocks.left-menu-instructor')
+@include('blocks.left-menu-learner')
 
 <style>
     .dash_table {

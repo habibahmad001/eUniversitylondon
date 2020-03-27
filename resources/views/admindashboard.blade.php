@@ -22,6 +22,14 @@
         padding-left: 10px;
     }
 
+    .table-set .row > div:nth-child(1) {
+        padding-left: 3%;
+    }
+
+    .table-set .row > div:nth-child(2) {
+        padding-right: 3%;
+    }
+
     @media (max-width: 1770px) {
         .margin_17 {
             margin-left: 17%;
@@ -29,7 +37,9 @@
     }
 </style>
 <div class="center-content-area table-set">
-    <div class="col-sm-9 col-md-4 col-lg-6">
+    <br />
+    <div class="row">
+        <div class="col-sm-9 col-md-4 col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Recent Users</div>
 
@@ -58,7 +68,7 @@
                 </div>
             </div>
         </div>
-    <div class="col-sm-9 col-md-4 col-lg-6">
+        <div class="col-sm-9 col-md-4 col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Recent Instructor</div>
 
@@ -87,7 +97,9 @@
                 </div>
             </div>
         </div>
-    <div class="col-sm-9 col-md-4 col-lg-6">
+    </div>
+    <div class="row">
+        <div class="col-sm-9 col-md-4 col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">Recent Learner</div>
 
@@ -116,7 +128,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-9 col-md-4 col-lg-6">
+        <div class="col-sm-9 col-md-4 col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">Recent Courses</div>
 
@@ -144,6 +156,7 @@
                 </table>
             </div>
         </div>
+    </div>
     </div>
 </div>
 @endsection

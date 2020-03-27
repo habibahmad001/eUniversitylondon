@@ -46,4 +46,16 @@ class DashboardController extends Controller
         return view('instructordashboard', $data);
     }
 
+    public function LearnerDashboard() {
+
+        $data['sub_heading']    = 'Dashborard';
+        $data['page_title']     = 'eUniversitylondon Dashborard';
+        $data['courses']               =  Courses::where('course_user_id', Auth::user()->id)->take(5)->get();
+        $data['exam']                  =  Exam::where('exam_user_id', Auth::user()->id)->take(5)->get();
+        $data['mexam']                 =  MockExam::where('mexam_user_id', Auth::user()->id)->take(5)->get();
+        $data['coursecurriculum']      =  CourseCurriculum::where('curriculum_user_id', Auth::user()->id)->take(5)->get();
+
+        return view('learnerdashboard', $data);
+    }
+
 }

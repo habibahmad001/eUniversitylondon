@@ -42,7 +42,7 @@
                     </th>
                     <td>{{ $Course->course_title }}</td>
                     <td>{{ $Course->course_desc }}</td>
-                    <td><a href="#">View User's({{ (array_key_exists($Course->id, $Array_User_Count)) ? $Array_User_Count[$Course->id] : 0 }}) </a> </td>
+                    <td><a href="{{ URL::to('/' . collect(request()->segments())->first() .'/students/' . $Course->id) }}">View User's({{ (array_key_exists($Course->id, $Array_User_Count)) ? $Array_User_Count[$Course->id] : 0 }}) </a> </td>
                     @if(collect(request()->segments())->first() == "admin")
                         <td>{{ (array_key_exists($Course->id, $Array_Instructor_Name)) ? $Array_Instructor_Name[$Course->id] : "" }}</td>
                     @endif

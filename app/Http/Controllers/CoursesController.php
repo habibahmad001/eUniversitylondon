@@ -27,6 +27,11 @@ class CoursesController extends Controller
         $data['page_title']         = 'eUniversitylondon Courses';
         if(collect(request()->segments())->first() == 'instructor')
             $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->paginate(10);
+        elseif(collect(request()->segments())->first() == 'learner')
+            $data['Courses']        =  CourseWithUser::join('tablecourses', 'tableuserwithcourse.course_id', '=', 'tablecourses.id')
+                                        ->select('*')
+                                        ->where('tableuserwithcourse.user_id', '=', Auth::user()->id)
+                                        ->paginate(10);
         else
             $data['Courses']        =  Courses::paginate(10);
 
@@ -65,6 +70,7 @@ class CoursesController extends Controller
             'cou_includes'=>'required',
             'cou_requirements'=>'required',
             'cou_course_for'=>'required',
+            'youtube'=>'required',
             'cou_price'=>'required',
             'cou_discounted_price'=>'required',
             'cou_avatar'  => 'required',
@@ -77,6 +83,7 @@ class CoursesController extends Controller
         $Courses->course_includes  = $request->cou_includes;
         $Courses->course_requirements  = $request->cou_requirements;
         $Courses->course_for  = $request->cou_course_for;
+        $Courses->youtube  = $request->youtube;
         $Courses->course_price  = $request->cou_price;
         $Courses->course_discounted_price  = $request->cou_discounted_price;
         $Courses->course_user_id  = Auth::user()->id;
@@ -116,6 +123,7 @@ class CoursesController extends Controller
             'cou_includes'=>'required',
             'cou_requirements'=>'required',
             'cou_course_for'=>'required',
+            'youtube'=>'required',
             'cou_price'=>'required',
             'cou_discounted_price'=>'required',
             'cou_category'=>'required'
@@ -128,6 +136,7 @@ class CoursesController extends Controller
         $Courses->course_includes  = $request->cou_includes;
         $Courses->course_requirements  = $request->cou_requirements;
         $Courses->course_for  = $request->cou_course_for;
+        $Courses->youtube  = $request->youtube;
         $Courses->course_price  = $request->cou_price;
         $Courses->course_discounted_price  = $request->cou_discounted_price;
         /************ Image Upload ***********/
