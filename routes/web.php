@@ -26,6 +26,7 @@ Route::get('/checkUsername', 'Rules@checkUsername');
 Route::get('/checkUserEmail', 'Rules@checkUserEmail');
 Route::get('/administrator', 'Auth\LoginController@showAdminLoginForm')->name('administrator');
 Route::get('/instructor', 'Auth\LoginController@showInstructorLoginForm')->name('instructor');
+Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learner');
 
 
 
@@ -137,7 +138,9 @@ Route::middleware(['admin'])->group(function () {
 
     Route::get('/admin/home', 'DashboardController@index');
 
-    Route::get('/admin/dashboard', 'DashboardController@index');
+    Route::get('/admin/dashboard', function () {
+        return redirect('/' . collect(request()->segments())->first() . '/home');
+    });
 
     Route::get('/admin/orders', function () {
         $data['sub_heading']  = 'Order Page';
@@ -199,14 +202,63 @@ Route::middleware(['instructor'])->group(function () {
 
     Route::get('/instructor/home', 'DashboardController@InstructorDashboard');
 
-    Route::get('/instructor/dashboard', 'DashboardController@InstructorDashboard');
+    Route::get('/instructor/dashboard', function () {
+        return redirect('/' . collect(request()->segments())->first() . '/home');
+    });
 });
 
 Route::middleware(['learner'])->group(function () {
-    Route::get('/employer', "JobsEmployer@index");
-    Route::get('/employer_listing', "JobsEmployer@employer_listing");
-    Route::get('/create_job', "JobsEmployer@create_job");
-    Route::post('/emp_c_j', "JobsEmployer@emp_c_j");
+
+    Route::post('/learner/users_add', 'UserController@create_user');
+    Route::get('/learner/students/{cid}', 'UserController@User_enrolled_in_course');
+    Route::get('/learner/user-create', 'UserController@user_create');
+    Route::get('/learner/getusers/{id}', 'UserController@getusers');
+    Route::delete('/learner/user/{id}', 'UserController@destroy');
+    Route::post('/learner/users_add', 'UserController@create_user');
+    Route::post('/learner/update-user', 'UserController@update_user');
+    Route::get('/learner/user-delete/{squirrel}', 'UserController@delete_user');
+    Route::get('/learner/my-account', 'UserController@my_account');
+
+
+
+    /*************** CurriCulums Starts ***************/
+    Route::resource('/learner/coursecurriculum', 'CurriCulums');
+    Route::get('/learner/curriculum', 'CurriCulums@index');
+    Route::post('/learner/curriculum_add', 'CurriCulums@CurriCulumAdd');
+    Route::get('/learner/getcurriculum/{cc_id}', 'CurriCulums@GetCurriCulum');
+    Route::post('/learner/update-curriculum', 'CurriCulums@UpdateCurriCulum');
+    /*************** CurriCulums Ends ***************/
+
+    /*************** Exam Starts ***************/
+    Route::resource('/learner/exam', 'Exams');
+    Route::get('/learner/exam', 'Exams@index');
+    Route::post('/learner/exam_add', 'Exams@ExamsAdd');
+    Route::get('/learner/getexam/{exm_id}', 'Exams@GetExams');
+    Route::post('/learner/update-exam', 'Exams@UpdateExams');
+    /*************** Exam Ends ***************/
+
+    /*************** MockExam Starts ***************/
+    Route::resource('/learner/mockexam', 'MexamController');
+    Route::get('/learner/mexam', 'MexamController@index');
+    Route::post('/learner/mexam_add', 'MexamController@MexamsAdd');
+    Route::get('/learner/getmexam/{exm_id}', 'MexamController@GetMexams');
+    Route::post('/learner/update-mexam', 'MexamController@UpdateMexams');
+    /*************** MockExam Ends ***************/
+
+
+    /*************** Courses Starts ***************/
+    Route::resource('/learner/course', 'CoursesController');
+    Route::get('/learner/course', 'CoursesController@index');
+    Route::post('/learner/course_add', 'CoursesController@CourseAdd');
+    Route::get('/learner/getcourse/{cou_id}', 'CoursesController@GetCourse');
+    Route::post('/learner/update-course', 'CoursesController@UpdateCourse');
+    /*************** Courses Ends ***************/
+
+    Route::get('/learner/home', 'DashboardController@LearnerDashboard');
+
+    Route::get('/learner/dashboard', function () {
+        return redirect('/' . collect(request()->segments())->first() . '/home');
+    });
 });
 
 /*___________________Public Routs______________________________*/

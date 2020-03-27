@@ -1,5 +1,5 @@
 * { margin: 0; padding: 0; outline: 0; box-sizing: border-box; border: 0; list-style: none; }
-body { font-family: 'Ubuntu', sans-serif; font-weight: 400; line-height: 19px; font-size: 14px; background: #f1f1f1; }
+body { font-family: 'Ubuntu', sans-serif; font-weight: 400; line-height: 19px; font-size: 14px; background-color: #c9c9c9; }
 .wrapper { width: 100%;}
 .clear { clear: both; }
 img { max-width: 100%; }
@@ -31,7 +31,7 @@ h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
 
 
 /* Header -------------------------------- */
-header { background-image: linear-gradient(to bottom right, #cccccc, #ffffff); min-height: 70px; padding:0; box-shadow: 0 0 3px rgba(44, 59, 73, .25); position: relative; z-index:11; min-width: 1024px; }
+header { background-image: linear-gradient(to bottom right, #cccccc, #949494); min-height: 70px; padding:0; box-shadow: 0 0 3px rgba(44, 59, 73, .25); position: relative; z-index:11; min-width: 1024px; }
 header::after { display: block; content: ''; clear: both; }
 header .logo { float: left; margin: 17px 0 0 18px; }
 header .logo img { width: 179px; }
@@ -46,33 +46,33 @@ header .navbar-nav>li>a { padding-top: 25px; padding-bottom: 25px; }
 header .navbar-right { margin-right: 0; }
 header .dropdown-menu>li>a { padding: 3px 16px; }
 header .logo-txt { float: left; font-size: 30px; padding: 1.5%;}
-header .logo-txt > a { color: #555; text-decoration: none;}
+header .logo-txt > a { color: #fff; text-decoration: none;}
 header .success-message-box { position: absolute; top: 15px; right: 10px; left: 10px; background:#e6efc2; padding: 10.5px 12px;  border: 1px solid #c7d983; color: #759204; font-size: 14px; z-index: 10; animation: fadein 1s; -moz-animation: fadein 1s; -webkit-animation: fadein 1s; -o-animation: fadein 1s; }
 header .success-message-box .cancel { display: block; content: ''; background: url(../images/cancel-icon.png) no-repeat; width: 11px; height: 11px; position: absolute; right: 16px; top: 16px; cursor: pointer; }
 header .success-message-box .cancel:hover { background: url(../images/cancel-icon-hover.png) no-repeat; }
 
 /* left Menu -------------------------------- */
-.left-menu { width: 180px; position: absolute; top:61px; bottom: 0; background: #cccccc; }
+.left-menu { width: 180px; position: absolute; top:61px; bottom: 0; background: #959595; }
 .left-menu ul { list-style: none; }
 .left-menu ul li { font-size: 14px; font-weight: 500; }
-.left-menu ul li a { display: block; padding: 10px; color: #555; text-decoration: none; }
+.left-menu ul li a { display: block; padding: 10px; color: #fff; text-decoration: none; }
 .left-menu ul li.active a { background: #ababab; }
 .left-menu ul li:hover a { background: #ababab; }
 
-.left-menu ul li .icon { display: inline-block; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; color: #555; background: #d9d9d9; line-height: 32px; text-align: center; }
+.left-menu ul li .icon { display: inline-block; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; color: #fff; background: #35c8ac; line-height: 32px; text-align: center; }
 
 .left-menu ul li .icon-detail { display: inline-block; padding: 0 0 0 10px; }
 
 
 /* Content -------------------------------- */
 .content {  position: absolute; top: 70px; background: #f1f1f1; left: 0; right: 0; bottom: 0; min-width: 1024px }
-.sub-header { background: #cccccc; padding:14px 12px 14px 12px; box-shadow: 0 0 3px rgba(44, 59, 73, .25); height: 60px; }
+.sub-header { background: #959595; padding:14px 12px 14px 12px; box-shadow: 0 0 3px rgba(44, 59, 73, .25); height: 60px; }
 .sub-header::after { display: block; content: ''; clear: both; }
-.sub-header h2 { font-size: 24px; font-weight: 500; color: #555; min-width: 184px; float: left; padding: 7px 0 0 0; }
+.sub-header h2 { font-size: 24px; font-weight: 500; color: #fff; min-width: 184px; float: left; padding: 7px 0 0 0; }
 .sub-header .refresh-button { background: url('../images/refresh-icon.png') no-repeat; width: 13px; height: 16px; cursor: pointer; float: left; margin: 12px 0 0 0; }
 .sub-header .refresh-button:hover { background: url('../images/refresh-icon-hover.png') no-repeat; }
 .sub-header .add-button { border: 1px solid #c4c4c4; color: #888888; padding: 10px; background: url(../images/add-icon.png) center center no-repeat #ffffff; width:31px; height:31px; float: right; cursor: pointer; }
-.sub-header .add-button:hover { border-color: #ffffff; background: url(../images/add-icon-hover.png) center center no-repeat #d9d9d9; }
+.sub-header .add-button:hover { border-color: #c4c4c4; background: url(../images/add-icon-hover.png) center center no-repeat #888888; }
 .sub-header .delete-btn { border: 1px solid #c4c4c4; padding:0 13px; line-height: 31px; color: #999999; background: #ffffff; border-radius: 2px; cursor: pointer; float: left; margin: 72px 0 0 32px; text-decoration: none; -webkit-transition: all .5s ease-in-out; -moz-transition: all .5s ease-in-out; -ms-transition: all .5s ease-in-out; -o-transition: all .5s ease-in-out; transition: all .5s ease-in-out; visibility: hidden; opacity: 0; }
 .sub-header .delete-btn:hover { color: #fff; background: #2c3b49; border: 1px solid #2c3b49;  }
 .sub-header .delete-btn.show-btn { margin-top: 2px !important; visibility: visible; opacity: 1; }
@@ -152,13 +152,13 @@ header .success-message-box .cancel:hover { background: url(../images/cancel-ico
 
 
 table.table { border-collapse:collapse; }
-.table.fixed{  position:fixed; width:auto; border:none; background-image: linear-gradient(to bottom right, #ffffff , #e0e0e0); }
+.table.fixed{  position:fixed; width:auto; border:none; background-image: linear-gradient(to bottom right, #BABAD8 , #e0e0e0); }
 
 .dropdown.user { padding: 19px 10px 0 0; }
 
-.dropdown.user .dropdown-toggle { width: 32px; display: inline-block; padding: 0; height: 32px; border-radius: 50%; font-size: 16px; color: #555; background: #d9d9d9; line-height: 32px; text-align: center; }
+.dropdown.user .dropdown-toggle { width: 32px; display: inline-block; padding: 0; height: 32px; border-radius: 50%; font-size: 16px; color: #ffffff; background: #35c8ac; line-height: 32px; text-align: center; }
 
-.nav .dropdown.user.open>a, .nav .dropdown.user.open>a:focus, .nav .dropdown.user.open>a:hover { background: #d9d9d9; }
+.nav .dropdown.user.open>a, .nav .dropdown.user.open>a:focus, .nav .dropdown.user.open>a:hover { background: #35c8ac; }
 .dropdown.user.open .dropdown-menu { width: 330px; border-radius: 0; padding: 0; border: 0; background: none; box-shadow: none; }
 .dropdown.user.open .dropdown-menu::before { content:''; display: block; height: 9px; background:url(../images/top-arrow.png) right top no-repeat; margin: 11px 18px 0 0; position: relative; z-index: 10; }
 .dropdown.user.open .menu-box { border: 1px solid #e6e7e8;  background: #ffffff; position: relative; z-index: 9; top: -1px; -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175); box-shadow: 0 6px 12px rgba(0,0,0,.175); }

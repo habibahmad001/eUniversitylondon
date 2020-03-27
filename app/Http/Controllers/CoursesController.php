@@ -27,6 +27,11 @@ class CoursesController extends Controller
         $data['page_title']         = 'eUniversitylondon Courses';
         if(collect(request()->segments())->first() == 'instructor')
             $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->paginate(10);
+        elseif(collect(request()->segments())->first() == 'learner')
+            $data['Courses']        =  CourseWithUser::join('tablecourses', 'tableuserwithcourse.course_id', '=', 'tablecourses.id')
+                                        ->select('*')
+                                        ->where('tableuserwithcourse.user_id', '=', Auth::user()->id)
+                                        ->paginate(10);
         else
             $data['Courses']        =  Courses::paginate(10);
 

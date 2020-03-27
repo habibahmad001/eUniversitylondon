@@ -56,6 +56,10 @@ class LoginController extends Controller {
         return view('auth/instructor/login');
     }
 
+    public function showLearnerLoginForm() {
+        return view('auth/learner/login');
+    }
+
     public function login(Request $request) {
         $email = $request->email;
         $password = $request->password;
