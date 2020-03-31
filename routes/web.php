@@ -86,6 +86,16 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/update-category', 'Category@UpdateCategory');
     /*************** Categories Ends ***************/
 
+    /*************** Question & Answer Starts ***************/
+    Route::resource('/admin/questionandanswer', 'QandAController');
+    Route::delete('/admin/childitem/questionandanswer/{id}', 'QandAController@destroy');
+    Route::get('/admin/questionandanswer', 'QandAController@index');
+    Route::get('/admin/childitem/{id}', 'QandAController@ChildItem');
+    Route::post('/admin/questionandanswer_add', 'QandAController@qandaAdd');
+    Route::get('/admin/getquestionandanswer/{cat_id}', 'QandAController@Getqanda');
+    Route::post('/admin/update-questionandanswer', 'QandAController@Updateqanda');
+    /*************** Question & Answer Ends ***************/
+
     /*************** CMS Starts ***************/
     Route::resource('/admin/cms', 'cmsc');
     Route::get('/admin/cms', 'cmsc@index');

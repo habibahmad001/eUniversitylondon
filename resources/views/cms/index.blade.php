@@ -27,7 +27,7 @@
                             <input type="checkbox" name="all">
                         </th>
                         <th>Title</th>
-                        <th>Page Content</th>
+                        <th width="40%">Page Content</th>
                     </tr>
                 </thead>
                 @if(count($cms)) @foreach ($cms as $v)
@@ -37,7 +37,7 @@
                         <input type="checkbox" name="del_cms[]" value="{{ $v->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $v->cms_title }}</td>
-                    <td>{{ $v->cms_desc }}</td>
+                    <td width="40%">@if(strlen(strip_tags($v->cms_desc)) > 350) {{ substr(strip_tags($v->cms_desc) , 0, 350). "..." }} @else {{ strip_tags($v->cms_desc) }} @endif</td>
                 </tr>
                 @endforeach @else
                 <tr>

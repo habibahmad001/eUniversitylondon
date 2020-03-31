@@ -27,7 +27,7 @@
                             <input type="checkbox" name="all">
                         </th>
                         <th>Curriculum Title</th>
-                        <th>Curriculum Content</th>
+                        <th width="40%">Curriculum Content</th>
                         <th>Course Name</th>
                         @if(collect(request()->segments())->first() == "admin")
                             <th>Instructor Name</th>
@@ -41,7 +41,7 @@
                         <input type="checkbox" name="del_coursecurriculum[]" value="{{ $Curriculum->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $Curriculum->curriculum_title }}</td>
-                    <td>{{ $Curriculum->curriculum_content }}</td>
+                    <td width="40%">@if(strlen(strip_tags($Curriculum->curriculum_content)) > 350) {{ substr(strip_tags($Curriculum->curriculum_content) , 0, 350). "..." }} @else {{ strip_tags($Curriculum->curriculum_content) }} @endif</td>
                     <td>{{ (array_key_exists($Curriculum->id, $Array_Course_Name)) ? $Array_Course_Name[$Curriculum->id] : "" }}</td>
                     @if(collect(request()->segments())->first() == "admin")
                         <td>{{ (array_key_exists($Curriculum->id, $Array_Instructor_Name)) ? $Array_Instructor_Name[$Curriculum->id] : "" }}</td>
