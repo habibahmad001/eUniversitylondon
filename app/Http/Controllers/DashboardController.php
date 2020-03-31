@@ -11,6 +11,9 @@ use App\Courses;
 use App\Exam;
 use App\MockExam;
 use App\CourseCurriculum;
+use App\ExamWithUser;
+use App\CourseWithUser;
+use App\MexamWithUser;
 
 use Auth;
 
@@ -50,10 +53,19 @@ class DashboardController extends Controller
 
         $data['sub_heading']    = 'Dashborard';
         $data['page_title']     = 'eUniversitylondon Dashborard';
-        $data['courses']               =  Courses::where('course_user_id', Auth::user()->id)->take(5)->get();
-        $data['exam']                  =  Exam::where('exam_user_id', Auth::user()->id)->take(5)->get();
-        $data['mexam']                 =  MockExam::where('mexam_user_id', Auth::user()->id)->take(5)->get();
-        $data['coursecurriculum']      =  CourseCurriculum::where('curriculum_user_id', Auth::user()->id)->take(5)->get();
+        $data['courses']               =  CourseWithUser::join('tablecourses', 'tableuserwithcourse.course_id', '=', 'tablecourses.id')
+                                                        ->select('*')
+                                                        ->where('tableuserwithcourse.user_id', '=', Auth::user()->id)
+                                                        ->take(5)->get();
+        $data['exam']                  =  ExamWithUser::join('tableexam', 'tableexamwithuser.exam_id', '=', 'tableexam.id')
+                                                        ->select('*')
+                                                        ->where('tableexamwithuser.user_id', '=', Auth::user()->id)
+                                                        ->take(5)->get();
+
+        $data['mexam']                 =  MexamWithUser::join('tablemockexam', 'tablemexamwithuser.mexam_id', '=', 'tablemockexam.id')
+                                                        ->select('*')
+                                                        ->where('tablemexamwithuser.user_id', '=', Auth::user()->id)
+                                                        ->take(5)->get();
 
         return view('learnerdashboard', $data);
     }

@@ -78,6 +78,7 @@ Route::middleware(['admin'])->group(function () {
 
     /*************** Categories Starts ***************/
     Route::resource('/admin/categories', 'Category');
+    Route::delete('/admin/childitem/categories/{id}', 'Category@destroy');
     Route::get('/admin/category', 'Category@index');
     Route::get('/admin/childitem/{id}', 'Category@ChildItem');
     Route::post('/admin/category_add', 'Category@CategoryAdd');

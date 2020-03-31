@@ -36,7 +36,11 @@
                 </thead>
                 @if(count($Exams)) @foreach ($Exams as $Exam)
                 <tr>
-                    <th class="edit-icon-container"><span class="edit-icon" data-id="{{ $Exam->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span></th>
+                    <th class="edit-icon-container">
+                        @if(collect(request()->segments())->first() != 'learner')
+                            <span class="edit-icon" data-id="{{ $Exam->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span>
+                        @endif
+                    </th>
                     <th class="checkbox-container">
                         <input type="checkbox" name="del_mockexam[]" value="{{ $Exam->id }}" class="checkbox-selector">
                     </th>

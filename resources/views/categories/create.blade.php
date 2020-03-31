@@ -1,4 +1,9 @@
 <!-- Add form -->
+<style>
+  #category_div {
+    display: none;
+  }
+</style>
 <div class="add-new-form add-new-data">
   <div class="form-header">
     <h3>Create New Category</h3>
@@ -23,9 +28,9 @@
         <input type="checkbox" name="child" id="child" >&nbsp;&nbsp;&nbsp; Is Child
       </div>
       
-      <div class="form-line" id="cat_div">
+      <div class="form-line" id="category_div">
         <select name="sel_txt" id="sel_txt" class="half-width">
-            <option value="">Select Categories</option>
+            <option value="0">Select Categories</option>
           @if(count($categories)) @foreach ($categories as $cat) @if($cat->category_cid == NULL)
             <option value="{{ $cat->id }}">{{ $cat->category_title }}</option>
           @endif @endforeach @else

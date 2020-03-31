@@ -1,14 +1,17 @@
 
 <div class="sub-header">
   <h2>{{ $sub_heading }}</h2>
-  
-  <a href="javascript:void(0)" class="delete-btn">Delete</a>
+
   @if(collect(request()->segments())->pull(1) != 'students')
-    @if(collect(request()->segments())->last() != 'home')
+      <a href="javascript:void(0)" class="delete-btn">Delete</a>
+  @endif
+
+  @if(collect(request()->segments())->pull(1) == 'students' or collect(request()->segments())->pull(1) == 'childitem' or collect(request()->segments())->pull(0) == 'learner' or collect(request()->segments())->last() == 'home')
+    &nbsp;
+  @else
       @if(!isset($is_reload_btn))
         <div class="add-button"></div>
       @endif
-    @endif
   @endif
 
   @if($sub_heading=='Reports')

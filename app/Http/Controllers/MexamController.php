@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\User;
 use App\MockExam;
 use App\Courses;
+use App\MexamWithUser;
 
 use Auth;
 
@@ -24,12 +25,19 @@ class MexamController extends Controller
 
         $data['sub_heading']  = 'Exam';
         $data['page_title']   = 'eUniversitylondon Exam';
-        if(collect(request()->segments())->first() == 'instructor')
+        if(collect(request()->segments())->first() == 'instructor') {
             $data['Exams']        =  MockExam::where('mexam_user_id', Auth::user()->id)->paginate(10);
-        else
+            $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->get();
+        } elseif(collect(request()->segments())->first() == 'learner') {
+            $data['Exams']        =  MexamWithUser::join('tablemockexam', 'tablemexamwithuser.mexam_id', '=', 'tablemockexam.id')
+                ->select('*')
+                ->where('tablemexamwithuser.user_id', '=', Auth::user()->id)
+                ->paginate(10);
+            $data['Courses']        =  Courses::All();
+        } else {
             $data['Exams']        =  MockExam::paginate(10);
-        $data['Courses']        =  Courses::All();
-
+            $data['Courses']        =  Courses::All();
+        }
         /**************** Get Course Name **************/
         $Array_Course_Name           =  array();
         foreach($data['Exams'] as $exam_data) {

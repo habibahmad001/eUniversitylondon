@@ -37,7 +37,11 @@
                 </thead>
                 @if(count($users)) @foreach ($users as $user)
                 <tr>
-                    <th class="edit-icon-container"><span class="edit-icon" data-id="{{ $user->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span></th>
+                    <th class="edit-icon-container">
+                        @if(collect(request()->segments())->pull(1) != 'students')
+                            <span class="edit-icon" data-id="{{ $user->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span>
+                        @endif
+                    </th>
                     <th class="checkbox-container">
                         <input type="checkbox" name="del_user[]" value="{{ $user->id }}" class="checkbox-selector">
                     </th>

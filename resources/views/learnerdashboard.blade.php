@@ -128,35 +128,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-9 col-md-4 col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Recent Curriculum</div>
-
-                <div class="panel-body">
-                    <table class="dash_table">
-                        <tbody>
-                        <thead>
-                        </tr>
-                        <tr>
-                            <th>Curriculum Title</th>
-                            <th>Curriculum Description</th>
-                        </tr>
-                        </thead>
-                        @if(count($coursecurriculum)) @foreach ($coursecurriculum as $curriculum)
-                            <tr>
-                                <td>{{ $curriculum->curriculum_title }}</td>
-                                <td>{{ $curriculum->curriculum_content }}</td>
-                            </tr>
-                        @endforeach @else
-                            <tr>
-                                <th colspan="6" class="error">No results found</th>
-                            </tr>
-                            @endif
-                            </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 @endsection

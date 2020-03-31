@@ -90,15 +90,17 @@
    </div>
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-      <script src="{{ asset('js/jquery-2.2.4.min.js') }}"></script>
-      <!-- Include all compiled plugins (below), or include individual files as needed -->
-      <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-      <!-- custom scrollbar plugin -->
-			<script src="{{ asset('js/jquery-ui.js') }}"></script>
-  	 <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-		 <script src="{{ asset('js/main.js') }}"></script>
-  	 <script src="{{ asset('js/custom.js') }}"></script>
+		  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		  <script src="{{ asset('js/jquery-2.2.4.min.js') }}"></script>
+		  <!-- Include all compiled plugins (below), or include individual files as needed -->
+		  <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+		  <!-- custom scrollbar plugin -->
+		  <script src="{{ asset('js/jquery-ui.js') }}"></script>
+		  <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+		  <script src="{{ asset('js/main.js') }}"></script>
+		  <script src="{{ asset('js/custom.js') }}"></script>
+		  <link href="{{ asset('css/summernote.css') }}" rel="stylesheet" type="text/css" />
+		  <script type="text/javascript" src="{{ asset('js/summernote.js') }}"></script>
 		 @yield('js_libraries')
 </body>
 </html>
@@ -109,5 +111,14 @@
           {
             jQuery("input").attr("autocomplete", "off");  
           }
+			$('textarea').each(function(){
+				var p = $(this).attr("placeholder");
+
+				$(this).summernote({
+					height: 200,
+					tabsize: 2,
+					placeholder: p + ' . .'
+				});
+			});
         });  
     </script>

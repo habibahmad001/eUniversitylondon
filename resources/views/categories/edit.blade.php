@@ -1,3 +1,8 @@
+<style>
+  #edit-category_div {
+    display: none;
+  }
+</style>
 <div class="add-new-form edit-current-data">
   <div class="form-header">
     <h3>Edit Category</h3>
@@ -27,9 +32,9 @@
           <input type="checkbox" name="child" id="edit-child" >&nbsp;&nbsp;&nbsp; Is Child
         </div>
 
-        <div class="form-line" id="cat_div">
+        <div class="form-line" id="edit-category_div">
           <select name="sel_txt" id="edit-sel_txt" class="half-width">
-            <option value="">Select Categories</option>
+            <option value="0">Select Categories</option>
             @if(count($categories)) @foreach ($categories as $cat) @if($cat->category_cid == NULL)
               <option value="{{ $cat->id }}">{{ $cat->category_title }}</option>
               @endif @endforeach @else

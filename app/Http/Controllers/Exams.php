@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\User;
 use App\Exam;
 use App\Courses;
+use App\ExamWithUser;
 
 use Auth;
 
@@ -24,11 +25,19 @@ class Exams extends Controller
 
         $data['sub_heading']  = 'Exam';
         $data['page_title']   = 'eUniversitylondon Exam';
-        if(collect(request()->segments())->first() == 'instructor')
+        if(collect(request()->segments())->first() == 'instructor') {
             $data['Exams']        =  Exam::where('exam_user_id', Auth::user()->id)->paginate(10);
-        else
+            $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->get();
+        } elseif(collect(request()->segments())->first() == 'learner') {
+            $data['Exams']        =  ExamWithUser::join('tableexam', 'tableexamwithuser.exam_id', '=', 'tableexam.id')
+                ->select('*')
+                ->where('tableexamwithuser.user_id', '=', Auth::user()->id)
+                ->paginate(10);
+            $data['Courses']        =  Courses::All();
+        } else {
             $data['Exams']        =  Exam::paginate(10);
-        $data['Courses']        =  Courses::All();
+            $data['Courses']        =  Courses::All();
+        }
         /**************** Get Course Name **************/
         $Array_Course_Name           =  array();
         foreach($data['Exams'] as $exam_data) {

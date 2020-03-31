@@ -23,7 +23,7 @@ class Category extends Controller
 
         $data['sub_heading']  = 'Category';
         $data['page_title']   = 'eUniversitylondon Category';
-        $data['categories']        =  Categories::paginate(10);
+        $data['categories']        =  Categories::where("category_cid", 0)->paginate(10);
         return view('categories/index', $data);
     }
 
@@ -87,7 +87,7 @@ class Category extends Controller
         //Find a user with a given id and delete
         $categories = Categories::findOrFail($id);
         $categories->delete();
-        return redirect('category')->with('message', 'Selected category has been deleted successfully!');
+        return redirect()->back()->with('message', 'Selected category has been deleted successfully!');
     }
 
 }

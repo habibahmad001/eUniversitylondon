@@ -65,8 +65,13 @@ class LoginController extends Controller {
         $password = $request->password;
 
         if (Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'admin'])) {
-            //exit($password);
-            return redirect()->intended('/admin/home');
+//            exit($password);
+            if($request->formtype == "administrator") {
+                return redirect()->intended('/admin/home');
+            } else {
+                Auth::logout();
+                return redirect()->intended('/' . $request->formtype )->withErrors(['email' => 'Invalid username or password!']);
+            }
         } 
         else if(Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'instructor']))
         {
@@ -74,7 +79,13 @@ class LoginController extends Controller {
             {
                 return redirect()->intended('/instructor');
             } else {
-                return redirect()->intended('/instructor/home');
+                if($request->formtype == "instructor") {
+                    return redirect()->intended('/instructor/home');
+                } else {
+                    Auth::logout();
+                    return redirect()->intended('/' . $request->formtype )->withErrors(['email' => 'Invalid username or password!']);
+                }
+
             }
         }
         else if(Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'learner']))
@@ -83,7 +94,13 @@ class LoginController extends Controller {
             {
                 return redirect()->intended('/learner');
             } else {
-                return redirect()->intended('/learner/home');
+                if($request->formtype == "learner") {
+                    return redirect()->intended('/learner/home');
+                } else {
+                    Auth::logout();
+                    return redirect()->intended('/' . $request->formtype )->withErrors(['email' => 'Invalid username or password!']);
+                }
+
             }
         }
         else
