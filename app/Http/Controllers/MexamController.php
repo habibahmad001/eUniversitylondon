@@ -33,6 +33,7 @@ class MexamController extends Controller
                 ->select('*')
                 ->where('tablemexamwithuser.user_id', '=', Auth::user()->id)
                 ->paginate(10);
+            $data['Courses']        =  Courses::All();
         } else {
             $data['Exams']        =  MockExam::paginate(10);
             $data['Courses']        =  Courses::All();

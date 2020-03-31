@@ -33,6 +33,7 @@ class Exams extends Controller
                 ->select('*')
                 ->where('tableexamwithuser.user_id', '=', Auth::user()->id)
                 ->paginate(10);
+            $data['Courses']        =  Courses::All();
         } else {
             $data['Exams']        =  Exam::paginate(10);
             $data['Courses']        =  Courses::All();
