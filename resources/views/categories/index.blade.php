@@ -28,19 +28,27 @@
                         </th>
                         <th>Title</th>
                         <th>Is Parent</th>
-                        <th>View Childs</th>
+                        @if(collect(request()->segments())->pull(1) != 'childitem')
+                            <th>View Childs</th>
+                        @endif
                     </tr>
                 </thead>
                 @if(count($categories)) @foreach ($categories as $cat)
                 <tr>
-                    <th class="edit-icon-container"><span class="edit-icon" data-id="{{ $cat->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span></th>
+                    <th class="edit-icon-container">
+                        @if(collect(request()->segments())->pull(1) != 'childitem')
+                            <span class="edit-icon" data-id="{{ $cat->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span>
+                        @endif
+                    </th>
                     <th class="checkbox-container">
                         <input type="checkbox" name="del_categories[]" value="{{ $cat->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $cat->category_title }}</td>
                     <td>@if(empty($cat->category_cid)) Yes @else No @endif</td>
                     <!--td>@if($categories->total() > 0)<a href="/admin/childitem/{{ $cat->id }}">View Child</a> @else No Child @endif</td-->
-                    <td><a href="/admin/childitem/{{ $cat->id }}">View Child</a></td>
+                    @if(collect(request()->segments())->pull(1) != 'childitem')
+                        <td><a href="/admin/childitem/{{ $cat->id }}">View Child</a></td>
+                    @endif
                 </tr>
                 @endforeach @else
                 <tr>

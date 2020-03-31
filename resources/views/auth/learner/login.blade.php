@@ -8,6 +8,7 @@
 
                 <form id="login" method="POST" action="{{ route('login') }}" class="login-text-white">
                     {{ csrf_field() }}
+                    <input type="hidden" name="formtype" id="formtype" value="learner">
                     <div class="login-block">
                         <div class="form-group">
                             <label class="" for="email-address">Email</label>

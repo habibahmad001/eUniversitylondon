@@ -33,7 +33,7 @@ $(".edit-icon").click(function () {
       cms = data.cms;
 
       $("#edit-cms_title").val(cms.cms_title);
-      $("#edit-cms_desc").val(cms.cms_desc);
+      $("#edit-cms_desc").summernote('insertText', cms.cms_desc);
       $("#cms_id").val(cms_id);
 
       $(".save-changes").removeClass('disable').removeAttr('disabled');

@@ -33,7 +33,7 @@ $(".edit-icon").click(function () {
       TermAndServices = data.TermAndServices;
 
       $("#edit-tns_title").val(TermAndServices.termandservices_title);
-      $("#edit-tns_desc").val(TermAndServices.termandservices_desc);
+      $("#edit-tns_desc").summernote('insertText', TermAndServices.termandservices_desc);
       $("#tns_id").val(tns_id);
 
       $(".save-changes").removeClass('disable').removeAttr('disabled');

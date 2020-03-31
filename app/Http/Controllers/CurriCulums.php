@@ -24,11 +24,15 @@ class CurriCulums extends Controller
 
         $data['sub_heading']  = 'Curriculum';
         $data['page_title']   = 'eUniversitylondon Curriculum';
-        if(collect(request()->segments())->first() == 'instructor')
+        if(collect(request()->segments())->first() == 'instructor') {
             $data['Curriculums']        =  CourseCurriculum::where('curriculum_user_id', Auth::user()->id)->paginate(10);
-        else
+            $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->get();
+        } else {
             $data['Curriculums']        =  CourseCurriculum::paginate(10);
-        $data['Courses']        =  Courses::All();
+            $data['Courses']        =  Courses::All();
+        }
+
+
         /**************** Get Course Name **************/
         $Array_Course_Name           =  array();
         foreach($data['Curriculums'] as $Curriculums_data) {

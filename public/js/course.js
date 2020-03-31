@@ -36,13 +36,13 @@ $(".edit-icon").click(function () {
       var img_path = $("#img_path").val() + "/";
 
       $("#edit-cou_title").val(Courses.course_title);
-      $("#edit-cou_desc").val(Courses.course_desc);
+      $("#edit-cou_desc").summernote('insertText', Courses.course_desc);
       $("#cou_id").val(cou_id);
-      $("#edit-cou_company").val(Courses.created_company);
-      $("#edit-cou_what_you_learn").val(Courses.what_you_learn);
-      $("#edit-cou_includes").val(Courses.course_includes);
-      $("#edit-cou_requirements").val(Courses.course_requirements);
-      $("#edit-cou_course_for").val(Courses.course_for);
+      $("#edit-cou_company").summernote('insertText', Courses.created_company);
+      $("#edit-cou_what_you_learn").summernote('insertText', Courses.what_you_learn);
+      $("#edit-cou_includes").summernote('insertText', Courses.course_includes);
+      $("#edit-cou_requirements").summernote('insertText', Courses.course_requirements);
+      $("#edit-cou_course_for").summernote('insertText', Courses.course_for);
       $("#edit-youtube").val(Courses.youtube);
       $("#edit-cou_price").val(Courses.course_price);
       $("#edit-cou_discounted_price").val(Courses.course_discounted_price);

@@ -16,14 +16,6 @@
       </a>
     </li>
 
-    <li @if(collect(request()->segments())->last()=='curriculum') class="active" @endif>
-      <a href="{{ URL::to('/learner/curriculum') }}">
-        {{--manage-rules--}}
-        <div class="icon">CC</div>
-        <div class="icon-detail">Curriculum</div>
-      </a>
-    </li>
-
     <li @if(collect(request()->segments())->last()=='mexam') class="active" @endif>
       <a href="{{ URL::to('/learner/mexam') }}">
         {{--manage-rules--}}

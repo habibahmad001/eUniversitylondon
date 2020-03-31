@@ -34,7 +34,7 @@ $(".edit-icon").click(function () {
       CurriCulums = data.CurriCulums;
 
       $("#edit-cur_title").val(CurriCulums.curriculum_title);
-      $("#edit-cur_content").val(CurriCulums.curriculum_content);
+      $("#edit-cur_content").summernote('insertText', CurriCulums.curriculum_content);
       $("#cc_id").val(cc_id);
       $("#edit-cour_id option").each(function() {
         if($(this).val() == CurriCulums.course_id) {

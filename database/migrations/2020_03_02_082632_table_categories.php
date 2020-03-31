@@ -18,7 +18,7 @@ class TableCategories extends Migration
             $table->text('category_title')->nullable();
             $table->longText('category_desc')->nullable();
             $table->enum('category_status', array('yes', 'no'))->default('yes');
-            $table->integer('category_cid')->nullable();
+            $table->integer('category_cid')->default(0);
 
 
         });
