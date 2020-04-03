@@ -30,19 +30,36 @@ $(".edit-icon").click(function () {
 
     var store;
 
-    if(typeof data.QAdata != 'undefined'){
-      QAdata = data.QAdata;
+    if(typeof data.QandA != 'undefined'){
+      QandA = data.QandA;
 
-      $("#edit-qa_title").val(QAdata.qa_title);
-      $("#edit-qa_content").summernote('insertText', QAdata.qa_desc);
+      $("#edit-qa_title").val(QandA.qa_title);
+      $("#edit-qa_content").summernote('insertText', QandA.qa_desc);
       $("#cat_id").val(cat_id);
-      if(QAdata.qa_cid != 0) {
+      if(QandA.qa_cid != 0) {
         $("#edit-category_div").show();
       } else {
         $("#edit-category_div").hide();
       }
+
+      if(QandA.exam_qa_id != "") {
+        $("#edit-exm_item").show();
+      }
+
       $("#edit-sel_txt option").each(function() {
-        if($(this).val() == QAdata.qa_cid) {
+        if($(this).val() == QandA.qa_cid) {
+          $(this).attr("selected","selected");
+        }
+      });
+
+      $("#sel_ex_id option").each(function() {
+        if($(this).val() == QandA.exam_qa_id) {
+          $(this).attr("selected","selected");
+        }
+      });
+
+      $("#edit-sel_table option").each(function() {
+        if($(this).val() == QandA.table_name) {
           $(this).attr("selected","selected");
         }
       });
@@ -63,11 +80,40 @@ function reset_form() {
   });
 }
 
+$("#sel_table").change(function(){
+
+  var user_folder = $("#user_folder").val();
+  var tab_name = $("#sel_table").val();
+  $.get('/' + user_folder + '/getqaexam/' + tab_name, function(data){
+
+    if(typeof data.ResponseData != 'undefined'){
+      // alert(data.ResponseData);
+      $("#exm_item").html(data.ResponseData).show();
+    }
+  });
+});
+
+$("#edit-sel_table").change(function(){
+
+  var user_folder = $("#user_folder").val();
+  var tab_name = $("#edit-sel_table").val();
+  $.get('/' + user_folder + '/getqaexam/' + tab_name, function(data){
+
+    if(typeof data.ResponseData != 'undefined'){
+      // alert(data.ResponseData);
+      $("#edit-exm_item").html(data.ResponseData).show();
+    }
+  });
+});
+
+
 $("#child").click(function () {
   if($(this).is(":checked")){
     $("#category_div").show();
+    $(".exm_table").hide();
   } else {
     $("#category_div").hide();
+    $(".exm_table").show();
   }
 });
 

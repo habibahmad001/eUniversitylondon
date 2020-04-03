@@ -35,9 +35,9 @@
         <div class="form-line" id="edit-category_div">
           <select name="sel_txt" id="edit-sel_txt" class="half-width">
             <option value="0">Select Categories</option>
-            @if(count($categories)) @foreach ($categories as $cat) @if($cat->category_cid == NULL)
+            @if(count($ALLCats)) @foreach ($ALLCats as $cat)
               <option value="{{ $cat->id }}">{{ $cat->category_title }}</option>
-              @endif @endforeach @else
+              @endforeach @else
               <option value="">No Categories Listed</option>
             @endif
           </select>

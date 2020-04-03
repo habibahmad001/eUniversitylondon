@@ -38,7 +38,23 @@
           @endif
         </select>
       </div>
+
+      <div class="form-line exm_table" id="exm_table">
+        <select name="sel_table" id="sel_table" class="half-width">
+          <option value="Exam">Select Exam Type</option>
+          <option value="Exam">Exam</option>
+          <option value="MockExam">Mock Exam</option>
+        </select>
+      </div>
+
+      <div class="form-line exm_table" id="exm_item" style="display: none;">
+        <select name="sel_ex_id" id="sel_ex_id" class="half-width">
+          <option value="0">Select Exam</option>
+        </select>
+      </div>
     </div>
+
+
     <div class="form-footer">
       <a href="javascript:void(0)" class="cancel-button">Cancel</a>
       <input type="submit" class="save-changes" value="Save Changes" />

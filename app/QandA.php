@@ -10,6 +10,6 @@ class QandA extends Model
     protected $table = 'tableqanda';
 
     protected $fillable = [
-        'id', 'qa_title', 'qa_desc', 'qa_status', 'qa_cid'
+        'id', 'qa_title', 'qa_desc', 'qa_status', 'qa_cid', 'exam_qa_id', 'table_name', 'qa_user_id'
     ];
 }

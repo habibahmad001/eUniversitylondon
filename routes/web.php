@@ -57,6 +57,9 @@ Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 
 
+Route::get('/HasItems/{id}', 'QandAController@HasItems');
+Route::get('/AnswerCount/{id}', 'QandAController@AnswerCount');
+
 // Route::get('admin_area', ['middleware' => 'admin', function () {
 Route::middleware(['admin'])->group(function () {	
 
@@ -88,11 +91,12 @@ Route::middleware(['admin'])->group(function () {
 
     /*************** Question & Answer Starts ***************/
     Route::resource('/admin/questionandanswer', 'QandAController');
-    Route::delete('/admin/childitem/questionandanswer/{id}', 'QandAController@destroy');
+    Route::delete('/admin/childqa/questionandanswer/{id}', 'QandAController@destroy');
     Route::get('/admin/questionandanswer', 'QandAController@index');
-    Route::get('/admin/childitem/{id}', 'QandAController@ChildItem');
+    Route::get('/admin/childqa/{id}', 'QandAController@ChildItem');
     Route::post('/admin/questionandanswer_add', 'QandAController@qandaAdd');
     Route::get('/admin/getquestionandanswer/{cat_id}', 'QandAController@Getqanda');
+    Route::get('/admin/getqaexam/{tab_name}', 'QandAController@GeQAExam');
     Route::post('/admin/update-questionandanswer', 'QandAController@Updateqanda');
     /*************** Question & Answer Ends ***************/
 
@@ -210,6 +214,18 @@ Route::middleware(['instructor'])->group(function () {
     Route::get('/instructor/getcourse/{cou_id}', 'CoursesController@GetCourse');
     Route::post('/instructor/update-course', 'CoursesController@UpdateCourse');
     /*************** Courses Ends ***************/
+
+
+    /*************** Question & Answer Starts ***************/
+    Route::resource('/instructor/questionandanswer', 'QandAController');
+    Route::delete('/instructor/childqa/questionandanswer/{id}', 'QandAController@destroy');
+    Route::get('/instructor/questionandanswer', 'QandAController@index');
+    Route::get('/instructor/childqa/{id}', 'QandAController@ChildItem');
+    Route::post('/instructor/questionandanswer_add', 'QandAController@qandaAdd');
+    Route::get('/instructor/getquestionandanswer/{cat_id}', 'QandAController@Getqanda');
+    Route::get('/instructor/getqaexam/{tab_name}', 'QandAController@GeQAExam');
+    Route::post('/instructor/update-questionandanswer', 'QandAController@Updateqanda');
+    /*************** Question & Answer Ends ***************/
 
     Route::get('/instructor/home', 'DashboardController@InstructorDashboard');
 

@@ -36,14 +36,32 @@
         <div class="form-line" id="edit-category_div">
           <select name="sel_txt" id="edit-sel_txt" class="half-width">
             <option value="0">Select Questions</option>
-            @if(count($QandA)) @foreach ($QandA as $qa) @if($qa->qa_cid == NULL)
+            @if(count($QandAALL)) @foreach ($QandAALL as $qa)
               <option value="{{ $qa->id }}">{{ $qa->qa_title }}</option>
-              @endif @endforeach @else
+              @endforeach @else
               <option value="">No Question Listed</option>
             @endif
           </select>
         </div>
-        
+
+        <div class="form-line exm_table" id="edit-exm_table">
+          <select name="sel_table" id="edit-sel_table" class="half-width">
+            <option value="0">Select Exam Type</option>
+            <option value="Exam">Exam</option>
+            <option value="MockExam">Mock Exam</option>
+          </select>
+        </div>
+
+        <div class="form-line exm_table" id="edit-exm_item" style="display: none;">
+          <select name="sel_ex_id" id="sel_ex_id" class="half-width">
+            <option value="0">Select Exam</option>
+            @if(count($ExamList)) @foreach ($ExamList as $el)
+              <option value="{{ $el->id }}">{{ $el->exam_title }}</option>
+            @endforeach @else
+              <option value="">No Question Listed</option>
+            @endif
+          </select>
+        </div>
        
       </div>
     </div>

@@ -120,7 +120,7 @@
 				tabsize: 2,
 				placeholder: p + ' . .'
 			});
-
+			// console.log($(this).val());
 		});
 	});
 </script>

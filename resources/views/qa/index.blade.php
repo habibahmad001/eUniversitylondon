@@ -36,9 +36,7 @@
                 @if(count($QandA)) @foreach ($QandA as $qa)
                 <tr>
                     <th class="edit-icon-container">
-                        @if(collect(request()->segments())->pull(1) != 'childitem')
                             <span class="edit-icon" data-id="{{ $qa->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span>
-                        @endif
                     </th>
                     <th class="checkbox-container">
                         <input type="checkbox" name="del_qanda[]" value="{{ $qa->id }}" class="checkbox-selector">
@@ -46,8 +44,10 @@
                     <td>{{ $qa->qa_title }}</td>
                     <td>@if(empty($qa->qa_cid)) Yes @else No @endif</td>
                     <!--td>@if($QandA->total() > 0)<a href="/admin/childitem/{{ $qa->id }}">View Answers</a> @else No Child @endif</td-->
-                    @if(collect(request()->segments())->pull(1) != 'childitem')
-                        <td><a href="/{{ collect(request()->segments())->first() }}/childitem/{{ $qa->id }}">View Answers</a></td>
+                    @if(collect(request()->segments())->pull(1) != 'childqa')
+                        <td> @if(App\Http\Controllers\QandAController::HasItems($qa->id) == 0) Has no answer @else <a href="/{{ collect(request()->segments())->first() }}/childqa/{{ $qa->id }}">View Answers {{ App\Http\Controllers\QandAController::AnswerCount($qa->id) }}</a> @endif </td>
+                    @else
+                        <td>It's Answers</td>
                     @endif
                 </tr>
                 @endforeach @else

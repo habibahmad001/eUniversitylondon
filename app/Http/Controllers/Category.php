@@ -23,7 +23,9 @@ class Category extends Controller
 
         $data['sub_heading']  = 'Category';
         $data['page_title']   = 'eUniversitylondon Category';
-        $data['categories']        =  Categories::where("category_cid", 0)->paginate(10);
+        $data['categories']   =  Categories::where("category_cid", 0)->paginate(10);
+        $data['ALLCats']      =  Categories::where("category_cid", 0)->get();
+
         return view('categories/index', $data);
     }
 
@@ -33,6 +35,8 @@ class Category extends Controller
         $data['sub_heading']  = 'Category';
         $data['page_title']   = 'eUniversitylondon Category';
         $data['categories']   =  Categories::where('category_cid', $id)->paginate(10);
+        $data['ALLCats']      =  Categories::where("category_cid", 0)->get();
+
         return view('categories/index', $data);
 
     }
