@@ -33,7 +33,7 @@ $(".edit-icon").click(function () {
       categories = data.categories;
 
       $("#edit-cat_title").val(categories.category_title);
-      $("#edit-c_content").summernote('insertText', categories.category_desc);
+      $("#edit-c_content").summernote('code', categories.category_desc);
       $("#cat_id").val(cat_id);
       if(categories.category_cid != 0) {
         $("#edit-category_div").show();

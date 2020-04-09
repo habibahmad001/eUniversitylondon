@@ -86,7 +86,8 @@ class QandAController extends Controller
     public function Getqanda($id){
         $data           = [];
         $QandA          = QandA::find($id);
-        $data['QandA']  = $QandA;
+        $data['QandA']  = $QandA;//exit($QandA->qa_desc);
+        $data['qa_desc']  = html_entity_decode($QandA->qa_desc);
         return Response::json($data);
     }
 

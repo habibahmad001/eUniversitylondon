@@ -56,7 +56,7 @@
                         @if(count($courses)) @foreach ($courses as $course)
                             <tr>
                                 <td>{{ $course->course_title }}</td>
-                                <td>{{ $course->course_desc }}</td>
+                                <td>{{ (strlen(strip_tags($course->course_desc)) > 350) ? substr(strip_tags($course->course_desc), 0, 350) : strip_tags($course->course_desc) }}</td>
                             </tr>
                         @endforeach @else
                             <tr>
@@ -85,7 +85,7 @@
                         @if(count($exam)) @foreach ($exam as $exm)
                             <tr>
                                 <td>{{ $exm->exam_title }}</td>
-                                <td>{{ $exm->exam_content }}</td>
+                                <td>@if(strlen(strip_tags($exm->exam_content)) > 350) {{ substr(strip_tags($exm->exam_content) , 0, 350). "..." }} @else {{ strip_tags($exm->exam_content) }} @endif</td>
                             </tr>
                         @endforeach @else
                             <tr>
@@ -116,7 +116,7 @@
                         @if(count($mexam)) @foreach ($mexam as $mexm)
                             <tr>
                                 <td>{{ $mexm->exam_title }}</td>
-                                <td>{{ $mexm->exam_content }}</td>
+                                <td>@if(strlen(strip_tags($mexm->exam_content)) > 350) {{ substr(strip_tags($mexm->exam_content) , 0, 350). "..." }} @else {{ strip_tags($mexm->exam_content) }} @endif</td>
                             </tr>
                         @endforeach @else
                             <tr>
@@ -145,7 +145,7 @@
                         @if(count($coursecurriculum)) @foreach ($coursecurriculum as $curriculum)
                             <tr>
                                 <td>{{ $curriculum->curriculum_title }}</td>
-                                <td>{{ $curriculum->curriculum_content }}</td>
+                                <td>@if(strlen(strip_tags($curriculum->curriculum_content)) > 350) {{ substr(strip_tags($curriculum->curriculum_content) , 0, 350). "..." }} @else {{ strip_tags($curriculum->curriculum_content) }} @endif</td>
                             </tr>
                         @endforeach @else
                             <tr>

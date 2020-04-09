@@ -34,7 +34,7 @@ $(".edit-icon").click(function () {
       Exams = data.Exams;
 
       $("#edit-exe_title").val(Exams.exam_title);
-      $("#edit-exe_content").summernote('insertText', Exams.exam_content);
+      $("#edit-exe_content").summernote('code', Exams.exam_content);
       $("#exe_id").val(exm_id);
       $("#edit-cour_id option").each(function() {
         if($(this).val() == Exams.course_id) {

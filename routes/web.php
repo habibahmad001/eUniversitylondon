@@ -248,13 +248,14 @@ Route::middleware(['learner'])->group(function () {
 
 
 
-    /*************** CurriCulums Starts ***************/
-    Route::resource('/learner/coursecurriculum', 'CurriCulums');
-    Route::get('/learner/curriculum', 'CurriCulums@index');
-    Route::post('/learner/curriculum_add', 'CurriCulums@CurriCulumAdd');
-    Route::get('/learner/getcurriculum/{cc_id}', 'CurriCulums@GetCurriCulum');
-    Route::post('/learner/update-curriculum', 'CurriCulums@UpdateCurriCulum');
-    /*************** CurriCulums Ends ***************/
+    /*************** Assignment Starts ***************/
+    Route::resource('/learner/assignment', 'AssignmentController');
+    Route::get('/learner/assignment', 'AssignmentController@index');
+    Route::post('/learner/assignment_add', 'AssignmentController@AssignmentAdd');
+    Route::get('/learner/getassignment/{a_id}', 'AssignmentController@GetAssignment');
+    Route::post('/learner/update-assignment', 'AssignmentController@UpdateAssignment');
+    Route::get('/learner/getassignmentexam/{tab_name}', 'AssignmentController@GetAssignmentExam');
+    /*************** Assignment Ends ***************/
 
     /*************** Exam Starts ***************/
     Route::resource('/learner/exam', 'Exams');

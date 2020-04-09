@@ -47,7 +47,6 @@
                     <table class="dash_table">
                         <tbody>
                         <thead>
-                        </tr>
                         <tr>
                             <th>Course Title</th>
                             <th>Course Description</th>
@@ -56,7 +55,7 @@
                         @if(count($courses)) @foreach ($courses as $course)
                             <tr>
                                 <td>{{ $course->course_title }}</td>
-                                <td>{{ $course->course_desc }}</td>
+                                <td>{{ (strlen(strip_tags($course->course_desc)) > 350) ? substr(strip_tags($course->course_desc), 0, 350) : strip_tags($course->course_desc) }}</td>
                             </tr>
                         @endforeach @else
                             <tr>
@@ -76,7 +75,6 @@
                     <table class="dash_table">
                         <tbody>
                         <thead>
-                        </tr>
                         <tr>
                             <th>Exam Title</th>
                             <th>Exam Description</th>
@@ -85,7 +83,7 @@
                         @if(count($exam)) @foreach ($exam as $exm)
                             <tr>
                                 <td>{{ $exm->exam_title }}</td>
-                                <td>{{ $exm->exam_content }}</td>
+                                <td>{{ (strlen(strip_tags($exm->exam_content)) > 350) ? substr(strip_tags($exm->exam_content), 0, 350) : strip_tags($exm->exam_content) }}</td>
                             </tr>
                         @endforeach @else
                             <tr>
@@ -107,7 +105,6 @@
                     <table class="dash_table">
                         <tbody>
                         <thead>
-                        </tr>
                         <tr>
                             <th>Mock Exam Title</th>
                             <th>Mock Exam Description</th>
@@ -116,7 +113,7 @@
                         @if(count($mexam)) @foreach ($mexam as $mexm)
                             <tr>
                                 <td>{{ $mexm->exam_title }}</td>
-                                <td>{{ $mexm->exam_content }}</td>
+                                <td>{{ (strlen(strip_tags($mexm->exam_content)) > 350) ? substr(strip_tags($mexm->exam_content), 0, 350) : strip_tags($mexm->exam_content) }}</td>
                             </tr>
                         @endforeach @else
                             <tr>

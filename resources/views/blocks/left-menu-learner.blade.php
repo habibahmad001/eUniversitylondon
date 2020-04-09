@@ -32,6 +32,14 @@
       </a>
     </li>
 
+    <li @if(collect(request()->segments())->last()=='exam') class="active" @endif>
+      <a href="{{ URL::to('/learner/assignment') }}">
+        {{--manage-rules--}}
+        <div class="icon">A</div>
+        <div class="icon-detail">Assignment</div>
+      </a>
+    </li>
+
     <li @if(collect(request()->segments())->last()=='my_account') class="active" @endif>
       <a href="{{ URL::to('/learner/my-account') }}">
         {{--manage-rules--}}

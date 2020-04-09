@@ -36,17 +36,19 @@ $(".edit-icon").click(function () {
       var img_path = $("#img_path").val() + "/";
 
       $("#edit-cou_title").val(Courses.course_title);
-      $("#edit-cou_desc").summernote('insertText', Courses.course_desc);
+      $("#edit-cou_desc").summernote('code', Courses.course_desc);
       $("#cou_id").val(cou_id);
-      $("#edit-cou_company").summernote('insertText', Courses.created_company);
-      $("#edit-cou_what_you_learn").summernote('insertText', Courses.what_you_learn);
-      $("#edit-cou_includes").summernote('insertText', Courses.course_includes);
-      $("#edit-cou_requirements").summernote('insertText', Courses.course_requirements);
-      $("#edit-cou_course_for").summernote('insertText', Courses.course_for);
+      $("#edit-cou_company").summernote('code', Courses.created_company);
+      $("#edit-cou_what_you_learn").summernote('code', Courses.what_you_learn);
+      $("#edit-cou_includes").summernote('code', Courses.course_includes);
+      $("#edit-cou_requirements").summernote('code', Courses.course_requirements);
+      $("#edit-cou_course_for").summernote('code', Courses.course_for);
       $("#edit-youtube").val(Courses.youtube);
       $("#edit-cou_price").val(Courses.course_price);
       $("#edit-cou_discounted_price").val(Courses.course_discounted_price);
-      $("#avatar_div img").attr("src", img_path + Courses.course_avatar);
+      if(Courses.course_avatar !== null) {
+        $("#avatar_div img").attr("src", img_path + Courses.course_avatar);
+      }
       $("#edit-cou_category option").each(function() {
         if($(this).val() == Courses.category_id) {
           $(this).attr("selected","selected");
@@ -72,7 +74,7 @@ function reset_form() {
   $("#youtube").val();
   $("#cou_price").val('');
   $("#cou_discounted_price").val('');
-  $("#avatar_div img").attr("src", "http://via.placeholder.com/150x150");
+  $("#avatar_div img").attr("src", "http://via.placeholder.com/150/000000/FFFFFF/?text=File Placeholder");
   $("#cou_category").val('');
 }
 

@@ -34,7 +34,7 @@ $(".edit-icon").click(function () {
       QandA = data.QandA;
 
       $("#edit-qa_title").val(QandA.qa_title);
-      $("#edit-qa_content").summernote('insertText', QandA.qa_desc);
+      $("#edit-qa_content").summernote('code', data.qa_desc);
       $("#cat_id").val(cat_id);
       if(QandA.qa_cid != 0) {
         $("#edit-category_div").show();
