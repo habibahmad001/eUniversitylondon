@@ -27,6 +27,7 @@
                             <input type="checkbox" name="all">
                         </th>
                         <th>Assignment Title</th>
+                        <th>Assignment File</th>
                         <th width="40%">Exam Name</th>
                     </tr>
                 </thead>
@@ -37,6 +38,13 @@
                         <input type="checkbox" name="del_assignment[]" value="{{ $assignment->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $assignment->assignment_title }}</td>
+                    <td>
+                    @if(!empty($assignment->assignment_file))
+                        <a href="{{asset('/uploads/assignment/') . "/" . $assignment->assignment_file}} " target="_blank">Download File</a>
+                    @else
+                       No file Uploaded
+                    @endif
+                    </td>
                     <td width="40%">{{ $assignment->table_name }}</td>
                 </tr>
                 @endforeach @else

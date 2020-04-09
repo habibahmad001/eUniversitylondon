@@ -28,6 +28,8 @@ $(".edit-icon").click(function () {
     $(".loading-container").fadeOut();
     $(".form-content-box").fadeIn();
 
+    var public_folder = $("#public").val();
+
     var store;
 
     if(typeof data.assignment != 'undefined'){
@@ -37,7 +39,7 @@ $(".edit-icon").click(function () {
 
       $("#edit-ass_title").val(assignment.assignment_title);
       if(assignment.assignment_file !== null) {
-        $("#avatar_div img").attr("src", img_path + assignment.assignment_file);
+        $("#avatar_div").html('<a href="' + img_path + assignment.assignment_file + '" target="_blank"><img src="' + public_folder + 'images/excel-icon.png" width="150" height="150"></a>');
       }
       $("#a_id").val(a_id);
       $("#edit-tab_name option").each(function() {
@@ -82,13 +84,16 @@ $("select[name='tab_name']").change(function(){
 });
 
 function reset_form() {
+
   $(".error").each(function(){
     $(this).removeClass('error');
   });
   $("#ass_title").val('');
   $("select[name='tab_name']").removeAttr('selected');
-  $("select[name='exam_id']").removeAttr('selected');
-  $("#avatar_div img").attr("src", "http://via.placeholder.com/150/000000/FFFFFF/?text=File Placeholder");
+  $("select[name='exam_id']").html('<select name="exam_id" id="edit-exam_id" class="full-width">\n' +
+                          '            <option value="">Select Exam</option>\n' +
+                          '          </select>');
+  $("#avatar_div").html("");
 }
 
 function validateEmailExist(type) {

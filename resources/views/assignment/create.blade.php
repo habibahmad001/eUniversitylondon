@@ -32,7 +32,7 @@
       <div class="form-line">
         <input type="file" name="assignment_f" id="assignment_f">
         <div id="avatar_div">
-          <img src="http://via.placeholder.com/150/000000/FFFFFF/?text=File Placeholder" width="150" height="150">
+          {{--<a href="javascript:void(0);"><img src="{{ asset('images/excel-icon.png') }}" width="150" height="150"></a>--}}
         </div>
       </div>
 

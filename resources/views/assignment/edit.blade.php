@@ -8,6 +8,7 @@
     <input type="hidden" name="a_id" id="a_id">
     <input type="hidden" id="edit-email_exist">
     <input type="hidden" name="img_path" id="img_path" value="{{URL::asset('/uploads/assignment/')}}">
+    <input type="hidden" name="public" id="public" value="{{URL::asset('')}}">
     <input type="hidden" name="user_folder" id="user_folder" value="{{ collect(request()->segments())->first() }}">
     <div class="form-height-control">
       <div class="loading-container">
@@ -38,7 +39,7 @@
         <div class="form-line">
           <input type="file" name="assignment_f" id="assignment_f">
           <div id="avatar_div">
-            <img src="http://via.placeholder.com/150/000000/FFFFFF/?text=File Placeholder" width="150" height="150">
+            {{--<a href="javascript:void(0);"><img src="{{ asset('images/excel-icon.png') }}" width="150" height="150"></a>--}}
           </div>
         </div>
 

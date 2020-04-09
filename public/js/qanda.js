@@ -46,6 +46,10 @@ $(".edit-icon").click(function () {
         $("#edit-exm_item").show();
       }
 
+      if(QandA.qa_cid != 0) {
+        $('input[name="child"]').attr("checked","checked");
+      }
+
       $("#edit-sel_txt option").each(function() {
         if($(this).val() == QandA.qa_cid) {
           $(this).attr("selected","selected");
@@ -75,9 +79,11 @@ function reset_form() {
   });
   $("#qa_title").val('');
   $("#child").val('');
-  $("#edit-sel_txt option").each(function() {
-    $(this).removeAttr("selected");
-  });
+  $("#edit-sel_txt").removeAttr('selected');
+  $(".exm_table").removeAttr('selected');
+  $(".exm_item").html('<select name="sel_ex_id" id="sel_ex_id" class="half-width">\n' +
+              '          <option value="0">Select Exam</option>\n' +
+              '        </select>');
 }
 
 $("#sel_table").change(function(){

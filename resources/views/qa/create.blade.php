@@ -47,7 +47,7 @@
         </select>
       </div>
 
-      <div class="form-line exm_table" id="exm_item" style="display: none;">
+      <div class="form-line exm_item" id="exm_item" style="display: none;">
         <select name="sel_ex_id" id="sel_ex_id" class="half-width">
           <option value="0">Select Exam</option>
         </select>
