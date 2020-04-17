@@ -45,7 +45,7 @@
                     <td>@if(empty($cat->category_cid)) Yes @else No @endif</td>
                     <!--td>@if($categories->total() > 0)<a href="/admin/childitem/{{ $cat->id }}">View Child</a> @else No Child @endif</td-->
                     @if(collect(request()->segments())->pull(1) != 'childitem')
-                        <td><a href="/admin/childitem/{{ $cat->id }}">View Child</a></td>
+                        <td>@if(App\Http\Controllers\Category::HasSubItem($cat->id) == 0) Has no child @else <a href="/admin/childitem/{{ $cat->id }}">View Child {{ App\Http\Controllers\Category::ChildCount($cat->id) }}</a> @endif</td>
                     @endif
                 </tr>
                 @endforeach @else

@@ -2,7 +2,14 @@
   #edit-category_div {
     display: none;
   }
+  .iconpicker-popover.popover.fade.bottom.in {
+    z-index: 999;
+  }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome-iconpicker/3.2.0/css/fontawesome-iconpicker.min.css"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fontawesome-iconpicker/3.2.0/js/fontawesome-iconpicker.min.js"></script>
 <div class="add-new-form edit-current-data">
   <div class="form-header">
     <h3>Edit Category</h3>
@@ -22,6 +29,10 @@
 
         <div class="form-line">
           <input type="text" name="cat_title" id="edit-cat_title" placeholder="Category Title" >
+        </div>
+
+        <div class="form-line">
+          <input class="icp selecticon" placeholder="Select Icon" name="iconval" id="edit-iconval" type="text">
         </div>
 
         <div class="form-line">
@@ -52,3 +63,9 @@
     </div>
   </form>
 </div>
+<script language="javascript">
+  $('.selecticon').iconpicker({
+    hideOnSelect: true,
+    inputSearch: true,
+  });
+</script>

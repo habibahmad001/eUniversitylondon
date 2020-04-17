@@ -14,7 +14,8 @@
 
 /*__________________Users Routs______________________________*/
 
-Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('/', 'Auth\LoginController@showHome')->name('home');
+Route::get('/laravelhome', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('/redirect', 'SocialAuthFacebookController@redirect');
 Route::get('/callback', 'SocialAuthFacebookController@callback');
 Route::get('verifyemail/{id}', 'Auth\RegisterController@verifyEmail');
@@ -59,6 +60,11 @@ Route::post('/login', 'Auth\LoginController@login');
 
 Route::get('/HasItems/{id}', 'QandAController@HasItems');
 Route::get('/AnswerCount/{id}', 'QandAController@AnswerCount');
+
+Route::get('/CatChildCount/{id}', 'Category@ChildCount');
+Route::get('/HasCat/{id}', 'Category@HasSubItem');
+
+Route::get('/AllCat', 'Category@AllParentsCat');
 
 // Route::get('admin_area', ['middleware' => 'admin', function () {
 Route::middleware(['admin'])->group(function () {	

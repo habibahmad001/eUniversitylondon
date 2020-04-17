@@ -10,7 +10,7 @@
   	<!-- CSRF Token -->
   	<meta name="csrf-token" content="{{ csrf_token() }}">
 
-	<link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet">
+	<link href="{{ asset('css/bootstrapLive.min.css') }}" type="text/css" rel="stylesheet">
 	<link href="{{ asset('css/jquery-ui.css') }}" type="text/css" rel="stylesheet">
 	<link href="{{ asset('css/style-learner-app.css') }}" type="text/css" rel="stylesheet">
 
@@ -97,7 +97,7 @@
 		  <!-- custom scrollbar plugin -->
 		  <script src="{{ asset('js/jquery-ui.js') }}"></script>
 		  <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-		  <script src="{{ asset('js/main.js') }}"></script>
+		  <script src="{{ asset('js/main-admin.js') }}"></script>
 		  <script src="{{ asset('js/custom.js') }}"></script>
 		  <link href="{{ asset('css/summernote.css') }}" rel="stylesheet" type="text/css" />
 		  <script type="text/javascript" src="{{ asset('js/summernote.js') }}"></script>

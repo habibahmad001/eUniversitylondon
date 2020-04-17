@@ -10,6 +10,6 @@ class Categories extends Model
     protected $table = 'tablecategories';
 
     protected $fillable = [
-        'id', 'category_title', 'category_desc', 'category_status', 'category_cid'
+        'id', 'category_title', 'category_desc', 'category_status', 'category_cid', 'selectedicon'
     ];
 }

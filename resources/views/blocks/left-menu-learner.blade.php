@@ -32,7 +32,7 @@
       </a>
     </li>
 
-    <li @if(collect(request()->segments())->last()=='exam') class="active" @endif>
+    <li @if(collect(request()->segments())->last()=='assignment') class="active" @endif>
       <a href="{{ URL::to('/learner/assignment') }}">
         {{--manage-rules--}}
         <div class="icon">A</div>
