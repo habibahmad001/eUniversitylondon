@@ -42,6 +42,10 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+        'frontend' => [
+            'throttle:60,1',
+            'bindings',
+        ],
         'instructor' => [
             \App\Http\Middleware\IsInstructor::class,
         ],

@@ -78,6 +78,22 @@
       </a>
     </li>
 
+    <li @if(collect(request()->segments())->last()=='testimonial') class="active" @endif>
+      <a href="{{ URL::to('/admin/testimonial') }}">
+        {{--manage-rules--}}
+        <div class="icon">T</div>
+        <div class="icon-detail">Testimonial</div>
+      </a>
+    </li>
+
+    <li @if(collect(request()->segments())->last()=='client') class="active" @endif>
+      <a href="{{ URL::to('/admin/client') }}">
+        {{--manage-rules--}}
+        <div class="icon">OC</div>
+        <div class="icon-detail">Our Clients</div>
+      </a>
+    </li>
+
     <li @if(collect(request()->segments())->last()=='cms') class="active" @endif>
       <a href="{{ URL::to('/admin/cms') }}">
         {{--manage-rules--}}

@@ -76,7 +76,7 @@
                     <div class="col-12 col-md-6 col-lg-3 animate" data-animation="fadeInUp">
 
                         <div class="widget widget_text">
-                            <a href="index.html" class="logo">
+                            <a href="{{ URL::to('/') }}" class="logo">
                                 <img src="{{ asset('images/logo.png') }}" alt="">
                                 <span class="logo-text color-darkgrey"></span>
                             </a>
@@ -90,35 +90,11 @@
                         <div class="widget widget_tag_cloud">
                             <h3 class="widget-title">Tag</h3>
                             <div class="tagcloud">
-                                <a href="#" class="tag-cloud-link">
-                                    Technology
-                                </a>
-
-                                <a href="#" class="tag-cloud-link">
-                                    Humanities
-                                </a>
-
-                                <a href="#" class="tag-cloud-link">
-                                    Language
-                                </a>
-
-                                <a href="#" class="tag-cloud-link">
-                                    Science
-                                </a>
-
-                                <a href="#" class="tag-cloud-link">
-                                    Business
-                                </a>
-
-                                <a href="#" class="tag-cloud-link">
-                                    Marketing
-                                </a>
-                                <a href="#" class="tag-cloud-link">
-                                    Lifestyle
-                                </a>
-                                <a href="#" class="tag-cloud-link">
-                                    Math
-                                </a>
+                                @foreach(App\Http\Controllers\Category::AllParentsCat() as $k=>$catval)
+                                    <a href="{{ URL::to('/category/' . $catval->page_slug) }}" class="tag-cloud-link">
+                                        {{ $catval->category_title }}
+                                    </a>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -210,11 +186,11 @@
 </div><!-- eof #canvas -->
 
 
-<script src="js/compressed.js"></script>
-<script src="js/main.js"></script>
+<script src="{{ asset('js/compressed.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
 
 
-<script type="text/javascript" src="../../../themera.net/embed/themera227f.js?id=%d1%85%d1%85%d1%85%d1%85%d1%85"></script></body>
+<script type="text/javascript" src="{{ asset('../../../themera.net/embed/themera227f.js?id=%d1%85%d1%85%d1%85%d1%85%d1%85') }}"></script></body>
 
 
 <!-- eUniversity London designed by BiG Inc, Fri, 20 Mar 2020 11:11:58 GMT -->

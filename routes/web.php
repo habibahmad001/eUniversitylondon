@@ -12,9 +12,7 @@
 */
 
 
-/*__________________Users Routs______________________________*/
-
-Route::get('/', 'Auth\LoginController@showHome')->name('home');
+/*__________________Gust Routs______________________________*/
 Route::get('/laravelhome', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('/redirect', 'SocialAuthFacebookController@redirect');
 Route::get('/callback', 'SocialAuthFacebookController@callback');
@@ -28,7 +26,7 @@ Route::get('/checkUserEmail', 'Rules@checkUserEmail');
 Route::get('/administrator', 'Auth\LoginController@showAdminLoginForm')->name('administrator');
 Route::get('/instructor', 'Auth\LoginController@showInstructorLoginForm')->name('instructor');
 Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learner');
-
+/*__________________Gust Routs______________________________*/
 
 
 
@@ -65,6 +63,7 @@ Route::get('/CatChildCount/{id}', 'Category@ChildCount');
 Route::get('/HasCat/{id}', 'Category@HasSubItem');
 
 Route::get('/AllCat', 'Category@AllParentsCat');
+
 
 // Route::get('admin_area', ['middleware' => 'admin', function () {
 Route::middleware(['admin'])->group(function () {	
@@ -137,6 +136,22 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/getmexam/{exm_id}', 'MexamController@GetMexams');
     Route::post('/admin/update-mexam', 'MexamController@UpdateMexams');
     /*************** MockExam Ends ***************/
+
+    /*************** Testimonial Starts ***************/
+    Route::resource('/admin/testimonial', 'TestimonialController');
+    Route::get('/admin/testimonial', 'TestimonialController@index');
+    Route::post('/admin/testimonial_add', 'TestimonialController@TestimonialAdd');
+    Route::get('/admin/gettestimonial/{t_id}', 'TestimonialController@GetTestimonial');
+    Route::post('/admin/update-testimonial', 'TestimonialController@UpdateTestimonial');
+    /*************** Testimonial Ends ***************/
+
+    /*************** Clients Starts ***************/
+    Route::resource('/admin/client', 'ClientController');
+    Route::get('/admin/client', 'ClientController@index');
+    Route::post('/admin/client_add', 'ClientController@ClientAdd');
+    Route::get('/admin/getclient/{c_id}', 'ClientController@GetClient');
+    Route::post('/admin/update-client', 'ClientController@UpdateClient');
+    /*************** Clients Ends ***************/
 
     /*************** Term And Services Starts ***************/
     Route::resource('/admin/termandservices', 'TermAndServicesController');

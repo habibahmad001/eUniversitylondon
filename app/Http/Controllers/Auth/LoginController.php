@@ -39,15 +39,6 @@ class LoginController extends Controller {
         $this->middleware('guest')->except('logout');
     }
 
-    public function showHome() {
-        //return view('auth/login');
-
-        $data['sub_heading']  = 'Home page';
-        $data['page_title']   = 'Home';
-
-        return view('frontend.home', $data);
-    }
-
     public function showLoginForm() {
         //return view('auth/login');
 

@@ -37,46 +37,18 @@
             <div class="col-md-5">
                 <div class="intro_layers_wrapper icon-layer">
                     <div class="intro_layers">
-                        <a href="course-categories.html" class="icon-box text-center bordered rounded animate" data-animation="moveFromLeft">
-                            <div class="color-main icon-styled fs-32 itia poumbnail"><i class="icon-m-technology" aria-hidden="true"></i></div>
-                            <p>Technology</p>
-                        </a>
-                        <a href="course-categories.html" class="icon-box text-center bordered rounded animate" data-animation="moveFromLeft">
-                            <div class="color-main icon-styled fs-32"><i class="icon-m-language" aria-hidden="true"></i></div>
-                            <p>Language</p>
-                        </a>
-                        <a href="course-categories.html" class="icon-box text-center bordered rounded animate" data-animation="moveFromLeft">
-                            <div class="color-main icon-styled fs-32"><i class="icon-m-science" aria-hidden="true"></i></div>
-                            <p>Science</p>
-                        </a>
-                    </div> <!-- eof .intro_layers -->
-                    <div class="intro_layers">
-                        <a href="course-categories.html" class="icon-box text-center bordered rounded animate" data-animation="moveFromLeft">
-                            <div class="color-main icon-styled fs-32"><i class="icon-m-business" aria-hidden="true"></i></div>
-                            <p>Business</p>
-                        </a>
-                        <a href="course-categories.html" class="icon-box text-center bordered rounded animate" data-animation="moveFromLeft">
-                            <div class="color-main icon-styled fs-32"><i class="icon-m-marketing" aria-hidden="true"></i></div>
-                            <p>Marketing</p>
-                        </a>
-                        <a href="course-categories.html" class="icon-box text-center bordered rounded animate" data-animation="moveFromLeft">
-                            <div class="color-main icon-styled fs-32"><i class="icon-m-health" aria-hidden="true"></i></div>
-                            <p>Health</p>
-                        </a>
-                    </div> <!-- eof .intro_layers -->
-                    <div class="intro_layers">
-                        <a href="course-categories.html" class="icon-box text-center bordered rounded animate" data-animation="moveFromLeft">
-                            <div class="color-main icon-styled fs-32"><i class="icon-m-humanities" aria-hidden="true"></i></div>
-                            <p>Humanities</p>
-                        </a>
-                        <a href="course-categories.html" class="icon-box text-center bordered rounded animate" data-animation="moveFromLeft">
-                            <div class="color-main icon-styled fs-32"><i class="icon-m-math" aria-hidden="true"></i></div>
-                            <p>Math1</p>
-                        </a>
-                        <a href="course-categories.html" class="icon-box text-center bordered rounded animate" data-animation="moveFromLeft">
-                            <div class="color-main icon-styled fs-32"><i class="icon-m-lifestyle" aria-hidden="true"></i></div>
-                            <p>Lifestyle</p>
-                        </a>
+                        <?php $i=1;?>
+                        @foreach(App\Http\Controllers\Category::AllParentsCat() as $k=>$catval)
+                                <a href="{{ URL::to('/category/' . $catval->page_slug) }}" class="icon-box text-center bordered rounded animate" data-animation="moveFromLeft">
+                                    <div class="color-main icon-styled fs-32 itia poumbnail"><i class="{{ $catval->selectedicon }}" aria-hidden="true"></i></div>
+                                    <p>{{ $catval->category_title }}</p>
+                                </a>
+                            <?php if($i%3 == 0) {?>
+                                </div>
+                                <div class="intro_layers">
+                            <?php }?>
+                            <?php $i++;?>
+                            @endforeach
                     </div> <!-- eof .intro_layers -->
                 </div>
             </div> <!-- eof .col-* -->
@@ -97,7 +69,7 @@
 
                 <div class="media-body">
                     <h6>
-                        14345 Learners
+                        {{ str_pad($AllLearner, 5, '0', STR_PAD_LEFT) }} Learners
                     </h6>
                     <p>
                         We are proud to say that
@@ -113,7 +85,7 @@
 
                 <div class="media-body">
                     <h6>
-                        1050 Courses
+                        {{ str_pad($AllCourses, 5, '0', STR_PAD_LEFT) }} Courses
                     </h6>
                     <p>
                         We are proud to say that
@@ -129,7 +101,7 @@
 
                 <div class="media-body">
                     <h6>
-                        350 Countries
+                        {{ str_pad($AllInstructor, 5, '0', STR_PAD_LEFT) }} Instructors
                     </h6>
                     <p>
                         We are proud to say that
@@ -502,121 +474,26 @@
                 <h2 class="text-center">Popular categories</h2>
             </div>
             <div class="divider-10 d-none d-lg-block"></div>
-            <div class="col-lg-4 col-sm-6 animate" data-animation="fadeInUp">
+            @foreach(App\Http\Controllers\Category::AllParentsCat() as $k=>$catval)
+                <div class="col-lg-4 col-sm-6 animate" data-animation="fadeInUp">
                 <div class="icon-box text-center">
                     <div class="color-main icon-styled fs-77">
-                        <i class="icon-m-technology" aria-hidden="true"></i>
+                        <i class="{{ $catval->selectedicon }}" aria-hidden="true"></i>
                     </div>
                     <h6 class="fw-700">
-                        <a href="single-course.html">Technology</a>
+                        <a href="{{ URL::to('/category/' . $catval->page_slug) }}">{{ $catval->category_title }}</a>
                     </h6>
                     <p>
-                        Lorem ipsum dolor sit amet, contetur adipiscing diam
+                        {{ (strlen(strip_tags($catval->category_desc)) > 150) ? substr(strip_tags($catval->category_desc), 0, 150) . "..." : strip_tags($catval->category_desc) }}
                     </p>
                 </div>
                 <span class="media-links">
-								<a class="abs-link" title="" href="course-categories.html"></a>
+								<a class="abs-link" title="" href="{{ URL::to('/category/' . $catval->page_slug) }}"></a>
 							</span>
             </div><!-- .col-* -->
-            <div class="col-lg-4 col-sm-6 animate" data-animation="fadeInUp">
+            @endforeach
 
-                <div class="icon-box text-center">
-                    <div class="color-main icon-styled fs-77">
-                        <i class="icon-m-language" aria-hidden="true"></i>
-                    </div>
-                    <h6 class="fw-700">
-                        <a href="single-course.html">Language</a>
-                    </h6>
-                    <p>
-                        Phasellus porttitor justo elit, ac tempus ligula sodales
-                    </p>
-                </div>
-                <div class="media-links">
-                    <a class="abs-link" title="" href="course-categories.html"></a>
-                </div>
-            </div><!-- .col-* -->
-            <div class="col-lg-4 col-sm-6 animate" data-animation="fadeInUp">
-
-                <div class="icon-box text-center">
-                    <div class="color-main icon-styled fs-77">
-                        <i class="icon-m-science" aria-hidden="true"></i>
-                    </div>
-
-                    <h6 class="fw-700">
-                        <a href="single-course.html">Science</a>
-                    </h6>
-
-                    <p>
-                        Nunc vehicula metus et massa tincidunt ultrices tincidunt
-                    </p>
-
-
-                </div>
-                <div class="media-links">
-                    <a class="abs-link" title="" href="course-categories.html"></a>
-                </div>
-            </div><!-- .col-* -->
-            <div class="col-lg-4 col-sm-6 animate" data-animation="fadeInUp">
-
-                <div class="icon-box text-center">
-                    <div class="color-main icon-styled fs-77">
-                        <i class="icon-m-humanities" aria-hidden="true"></i>
-                    </div>
-
-                    <h6 class="fw-700">
-                        <a href="single-course.html">Humanities</a>
-                    </h6>
-
-                    <p>
-                        Curabitur pretium elit mi, non sollicitudin massa ac
-                    </p>
-                </div>
-                <div class="media-links">
-                    <a class="abs-link" title="" href="course-categories.html"></a>
-                </div>
-            </div><!-- .col-* -->
-            <div class="col-lg-4 col-sm-6 animate" data-animation="fadeInUp">
-
-                <div class="icon-box text-center">
-                    <div class="color-main icon-styled fs-77">
-                        <i class="icon-m-business" aria-hidden="true"></i>
-                    </div>
-
-                    <h6 class="fw-700">
-                        <a href="single-course.html">Business</a>
-                    </h6>
-
-                    <p>
-                        In porta urna risus, ut imperdiet nisl condimentum lobortis
-                    </p>
-                </div>
-                <div class="media-links">
-                    <a class="abs-link" title="" href="course-categories.html"></a>
-                </div>
-            </div><!-- .col-* -->
-            <div class="col-lg-4 col-sm-6 animate" data-animation="fadeInUp">
-
-                <div class="icon-box text-center">
-                    <div class="color-main icon-styled fs-77">
-                        <i class="icon-m-marketing" aria-hidden="true"></i>
-                    </div>
-
-                    <h6 class="fw-700">
-                        <a href="single-course.html">Marketing</a>
-                    </h6>
-
-                    <p>
-                        Sed pellentesque pulvinar arcu ac congue. Sed sed est nec
-                    </p>
-
-
-                </div>
-                <div class="media-links">
-
-                    <a class="abs-link" title="" href="course-categories.html"></a>
-                </div>
-            </div><!-- .col-* -->
-            <div class="col-12  text-center">
+           <div class="col-12  text-center">
                 <a href="#" class="btn btn-maincolor">View More Categories</a>
             </div>
             <div class="d-none d-lg-block divider-20"></div>
@@ -630,52 +507,25 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="testimonials-slider owl-carousel" data-autoplay="true" data-loop="true" data-responsive-lg="1" data-responsive-md="1" data-responsive-sm="1" data-nav="false" data-dots="false">
-                    <div class="quote-item">
-                        <div class="quote-image">
-                            <img src="{{ asset('images/team/testimonials_01.jpg') }}" alt="">
-                        </div>
-                        <p>
-                            <em class="big">
-                                I met so many interesting people over the last couple of months, who proved to stay ahead of the modern technologies in the world of branding and web design. I loved working with you all, thank you so much!
-                            </em>
-                        </p>
-                        <img src="{{ asset('images/quote.png') }}" alt="">
-                        <h6 class="quote-meta fw-700">
-                            Keith M. Jordan
-                        </h6>
-                        <p>Applied Researcher</p>
-                    </div>
-                    <div class="quote-item">
-                        <div class="quote-image">
-                            <img src="{{ asset('images/team/testimonials_02.jpg') }}" alt="">
-                        </div>
-                        <p>
-                            <em class="big">
-                                I am inspired by the UN Declaration that “everyone is entitled to a free education”. We are committed to equality and access to education irrespective of gender, geography, economic status or any other barriers to access.
-                            </em>
-                        </p>
-                        <img src="{{ asset('images/quote.png') }}" alt="">
-                        <h6 class="quote-meta fw-700">
-                            Ron M. Martin
-                        </h6>
-                        <p>Applied Researcher</p>
-                    </div>
-                    <div class="quote-item">
-                        <div class="quote-image">
-                            <img src="{{ asset('images/team/testimonials_03.jpg') }}" alt="">
-                        </div>
-                        <p>
-                            <em class="big">
-                                I am drive by our belief in the power of free education and skills training to change people’s lives for the better and are passionate about providing an overall learning experience that meets their needs and helps them to achieve life goals.
-                            </em>
-                        </p>
-                        <img src="{{ asset('images/quote.png') }}" alt="">
-                        <h6 class="quote-meta fw-700">
-                            Thelma R. Furman
-                        </h6>
-                        <p>Autor courses</p>
-                    </div>
-
+                    @if(count($AllTestimonial) > 0)
+                        @foreach($AllTestimonial as $Testimonial)
+                            <div class="quote-item">
+                                <div class="quote-image">
+                                    <img src="{{ asset('uploads/testimonial/' . $Testimonial->testimonial_img) }}" height="100" width="100" alt="">
+                                </div>
+                                <p>
+                                    <em class="big">
+                                        {{ strip_tags($Testimonial->testimonial_desc) }}
+                                    </em>
+                                </p>
+                                <img src="{{ asset('images/quote.png') }}" alt="">
+                                <h6 class="quote-meta fw-700">
+                                    {{ $Testimonial->testimonial_name }}
+                                </h6>
+                                <p>{{ $Testimonial->testimonial_role }}</p>
+                            </div>
+                        @endforeach
+                    @endif
                 </div><!-- .testimonials-slider -->
 
             </div>
@@ -715,36 +565,15 @@
 <section class="ls s-pt-60 s-pb-50 s-py-lg-100 partners-section" id="partners">
     <div class="container">
         <div class="row">
-            <div class="col-4 col-md-2">
-                <a href="#">
-                    <img src="{{ asset('images/partners/06.jpg') }}" alt="">
-                </a>
-            </div>
-            <div class="col-4 col-md-2">
-                <a href="#">
-                    <img src="{{ asset('images/partners/05.jpg') }}" alt="">
-                </a>
-            </div>
-            <div class="col-4 col-md-2">
-                <a href="#">
-                    <img src="{{ asset('images/partners/04.jpg') }}" alt="">
-                </a>
-            </div>
-            <div class="col-4 col-md-2">
-                <a href="#">
-                    <img src="{{ asset('images/partners/03.jpg') }}" alt="">
-                </a>
-            </div>
-            <div class="col-4 col-md-2">
-                <a href="#">
-                    <img src="{{ asset('images/partners/02.jpg') }}" alt="">
-                </a>
-            </div>
-            <div class="col-4 col-md-2">
-                <a href="#">
-                    <img src="{{ asset('images/partners/01.jpg') }}" alt="">
-                </a>
-            </div>
+            @if(count($AllClients) > 0)
+                @foreach($AllClients as $Client)
+                    <div class="col-4 col-md-2">
+                        <a href="#">
+                            <img src="{{ asset('uploads/client/' . $Client->client_logo) }}" width="170" height="69" alt="">
+                        </a>
+                    </div>
+                @endforeach
+            @endif
         </div>
     </div>
 </section>

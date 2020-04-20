@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-xl-2 col-lg-4 col-md-5 col-11">
-                    <a href="index.html" class="logo">
+                    <a href="{{ URL::to('/') }}" class="logo">
                         <img src="{{ asset('images/logo.png') }}" alt="">
                         <span class="logo-text color-darkgrey"></span>
                     </a>
@@ -25,7 +25,7 @@
                                                 <div class=" col-lg-4 col-md-4 col-xs-12">
                                                     <?php $i=1;?>
                                                     @foreach(App\Http\Controllers\Category::AllParentsCat() as $k=>$catval)
-                                                        <a class="dropdown-item" href="course-categories.html">
+                                                        <a class="dropdown-item" href="{{ URL::to('/category/' . $catval->page_slug) }}">
                                                             <i class="fs-31 {{ $catval->selectedicon }}" aria-hidden="true"></i>
                                                             {{ $catval->category_title }}
                                                         </a>

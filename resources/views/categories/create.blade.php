@@ -32,6 +32,10 @@
       </div>
 
       <div class="form-line">
+        <input placeholder="home_page" name="p_slug" id="p_slug" type="text">
+      </div>
+
+      <div class="form-line">
         <textarea name="c_content" id="c_content" placeholder="Type some description."></textarea>
       </div>
 

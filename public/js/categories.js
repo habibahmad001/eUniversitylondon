@@ -35,6 +35,7 @@ $(".edit-icon").click(function () {
       $("#edit-cat_title").val(categories.category_title);
       $("#edit-c_content").summernote('code', categories.category_desc);
       $("#edit-iconval").val(categories.selectedicon);
+      $("#edit-p_slug").val(categories.page_slug);
       $("#cat_id").val(cat_id);
       if(categories.category_cid != 0) {
         $("#edit-category_div").show();
@@ -60,6 +61,7 @@ function reset_form() {
   $("#cat_title").val('');
   $("#child").val('');
   $("#iconval").val('');
+  $("#p_slug").val('');
   $("#edit-sel_txt option").each(function() {
     $(this).removeAttr("selected");
   });
@@ -109,6 +111,7 @@ function validate(type) {
   var cat_title = $("#"+ type +"cat_title").val();
   var c_content = $("#"+ type +"c_content").val();
   var iconval = $("#"+ type +"iconval").val();
+  var p_slug = $("#"+ type +"p_slug").val();
 
 
   if(cat_title == '') {
@@ -121,6 +124,10 @@ function validate(type) {
 
   if(iconval == '') {
     errors.push("#"+ type +"iconval");
+  }
+
+  if(p_slug == '') {
+    errors.push("#"+ type +"p_slug");
   }
 
   if(errors.length>0){

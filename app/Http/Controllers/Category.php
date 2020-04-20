@@ -70,10 +70,12 @@ class Category extends Controller
             'cat_title'=>'required',
             'c_content'=>'required',
             'iconval'=>'required',
+            'p_slug'=>'required',
         ]);
         $categories->category_title  = $request->cat_title;
         $categories->category_desc  = $request->c_content;
         $categories->selectedicon  = $request->iconval;
+        $categories->page_slug  = str_replace(" ", "_", strtolower($request->p_slug));
         $categories->category_cid  = $request->sel_txt;
         $saved          = $categories->save();
         if ($saved) {
@@ -97,11 +99,13 @@ class Category extends Controller
             'cat_title'=>'required',
             'c_content'=>'required',
             'iconval'=>'required',
+            'p_slug'=>'required',
         ]);
         $categories              = Categories::find($id);
         $categories->category_title  = $request->cat_title;
         $categories->category_desc  = $request->c_content;
         $categories->selectedicon  = $request->iconval;
+        $categories->page_slug  = str_replace(" ", "_", strtolower($request->p_slug));
         $categories->category_cid  = $request->sel_txt;
         $saved              = $categories->save();
         if ($saved) {
