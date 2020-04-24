@@ -47,7 +47,6 @@
                     <table class="dash_table">
                         <tbody>
                         <thead>
-                        </tr>
                         <tr>
                             <th>User Name</th>
                             <th>User Email</th>
@@ -76,7 +75,6 @@
                     <table class="dash_table">
                         <tbody>
                         <thead>
-                        </tr>
                         <tr>
                             <th>Instructor Name</th>
                             <th>Instructor Email</th>
@@ -107,7 +105,6 @@
                 <table class="dash_table">
                     <tbody>
                     <thead>
-                    </tr>
                     <tr>
                         <th>Learner Name</th>
                         <th>Learner Email</th>
@@ -136,7 +133,6 @@
                 <table class="dash_table">
                     <tbody>
                     <thead>
-                    </tr>
                     <tr>
                         <th>Course Title</th>
                         <th>Course Description</th>
@@ -145,7 +141,7 @@
                     @if(count($courses)) @foreach ($courses as $course)
                         <tr>
                             <td>{{ $course->course_title }}</td>
-                            <td>{{ $course->course_desc }}</td>
+                            <td>{{ (strlen(strip_tags($course->course_desc)) > 350) ? substr(strip_tags($course->course_desc), 0, 350) : strip_tags($course->course_desc) }}</td>
                         </tr>
                     @endforeach @else
                         <tr>

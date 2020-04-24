@@ -27,7 +27,7 @@
                             <input type="checkbox" name="all">
                         </th>
                         <th>Course Title</th>
-                        <th>Course Content</th>
+                        <th width="40%">Course Content</th>
                         @if(collect(request()->segments())->first() == "admin" or collect(request()->segments())->first() == "instructor")
                             <th>Number of User's</th>
                         @endif
@@ -47,7 +47,7 @@
                         <input type="checkbox" name="del_course[]" value="{{ $Course->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $Course->course_title }}</td>
-                    <td>{{ $Course->course_desc }}</td>
+                    <td width="40%">{{ (strlen(strip_tags($Course->course_desc)) > 350) ? substr(strip_tags($Course->course_desc), 0, 350) : strip_tags($Course->course_desc) }}</td>
                     @if(collect(request()->segments())->first() == "admin" or collect(request()->segments())->first() == "instructor")
                         <td><a href="{{ URL::to('/' . collect(request()->segments())->first() .'/students/' . $Course->id) }}">View User's({{ (array_key_exists($Course->id, $Array_User_Count)) ? $Array_User_Count[$Course->id] : 0 }}) </a> </td>
                     @endif

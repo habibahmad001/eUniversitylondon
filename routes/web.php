@@ -14,7 +14,8 @@
 
 /*__________________Users Routs______________________________*/
 
-Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('/', 'Auth\LoginController@showHome')->name('home');
+Route::get('/laravelhome', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('/redirect', 'SocialAuthFacebookController@redirect');
 Route::get('/callback', 'SocialAuthFacebookController@callback');
 Route::get('verifyemail/{id}', 'Auth\RegisterController@verifyEmail');
@@ -57,6 +58,14 @@ Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 
 
+Route::get('/HasItems/{id}', 'QandAController@HasItems');
+Route::get('/AnswerCount/{id}', 'QandAController@AnswerCount');
+
+Route::get('/CatChildCount/{id}', 'Category@ChildCount');
+Route::get('/HasCat/{id}', 'Category@HasSubItem');
+
+Route::get('/AllCat', 'Category@AllParentsCat');
+
 // Route::get('admin_area', ['middleware' => 'admin', function () {
 Route::middleware(['admin'])->group(function () {	
 
@@ -85,6 +94,17 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/getcategories/{cat_id}', 'Category@GetCategories');
     Route::post('/admin/update-category', 'Category@UpdateCategory');
     /*************** Categories Ends ***************/
+
+    /*************** Question & Answer Starts ***************/
+    Route::resource('/admin/questionandanswer', 'QandAController');
+    Route::delete('/admin/childqa/questionandanswer/{id}', 'QandAController@destroy');
+    Route::get('/admin/questionandanswer', 'QandAController@index');
+    Route::get('/admin/childqa/{id}', 'QandAController@ChildItem');
+    Route::post('/admin/questionandanswer_add', 'QandAController@qandaAdd');
+    Route::get('/admin/getquestionandanswer/{cat_id}', 'QandAController@Getqanda');
+    Route::get('/admin/getqaexam/{tab_name}', 'QandAController@GeQAExam');
+    Route::post('/admin/update-questionandanswer', 'QandAController@Updateqanda');
+    /*************** Question & Answer Ends ***************/
 
     /*************** CMS Starts ***************/
     Route::resource('/admin/cms', 'cmsc');
@@ -201,6 +221,18 @@ Route::middleware(['instructor'])->group(function () {
     Route::post('/instructor/update-course', 'CoursesController@UpdateCourse');
     /*************** Courses Ends ***************/
 
+
+    /*************** Question & Answer Starts ***************/
+    Route::resource('/instructor/questionandanswer', 'QandAController');
+    Route::delete('/instructor/childqa/questionandanswer/{id}', 'QandAController@destroy');
+    Route::get('/instructor/questionandanswer', 'QandAController@index');
+    Route::get('/instructor/childqa/{id}', 'QandAController@ChildItem');
+    Route::post('/instructor/questionandanswer_add', 'QandAController@qandaAdd');
+    Route::get('/instructor/getquestionandanswer/{cat_id}', 'QandAController@Getqanda');
+    Route::get('/instructor/getqaexam/{tab_name}', 'QandAController@GeQAExam');
+    Route::post('/instructor/update-questionandanswer', 'QandAController@Updateqanda');
+    /*************** Question & Answer Ends ***************/
+
     Route::get('/instructor/home', 'DashboardController@InstructorDashboard');
 
     Route::get('/instructor/dashboard', function () {
@@ -222,13 +254,14 @@ Route::middleware(['learner'])->group(function () {
 
 
 
-    /*************** CurriCulums Starts ***************/
-    Route::resource('/learner/coursecurriculum', 'CurriCulums');
-    Route::get('/learner/curriculum', 'CurriCulums@index');
-    Route::post('/learner/curriculum_add', 'CurriCulums@CurriCulumAdd');
-    Route::get('/learner/getcurriculum/{cc_id}', 'CurriCulums@GetCurriCulum');
-    Route::post('/learner/update-curriculum', 'CurriCulums@UpdateCurriCulum');
-    /*************** CurriCulums Ends ***************/
+    /*************** Assignment Starts ***************/
+    Route::resource('/learner/assignment', 'AssignmentController');
+    Route::get('/learner/assignment', 'AssignmentController@index');
+    Route::post('/learner/assignment_add', 'AssignmentController@AssignmentAdd');
+    Route::get('/learner/getassignment/{a_id}', 'AssignmentController@GetAssignment');
+    Route::post('/learner/update-assignment', 'AssignmentController@UpdateAssignment');
+    Route::get('/learner/getassignmentexam/{tab_name}', 'AssignmentController@GetAssignmentExam');
+    /*************** Assignment Ends ***************/
 
     /*************** Exam Starts ***************/
     Route::resource('/learner/exam', 'Exams');

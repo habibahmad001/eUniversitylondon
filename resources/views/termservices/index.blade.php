@@ -27,7 +27,7 @@
                             <input type="checkbox" name="all">
                         </th>
                         <th>Term And Services Title</th>
-                        <th>Term And Services Content</th>
+                        <th width="40%">Term And Services Content</th>
                     </tr>
                 </thead>
                 @if(count($TermAndServices)) @foreach ($TermAndServices as $TermAndService)
@@ -37,7 +37,7 @@
                         <input type="checkbox" name="del_termandservices[]" value="{{ $TermAndService->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $TermAndService->termandservices_title }}</td>
-                    <td>{{ $TermAndService->termandservices_desc }}</td>
+                    <td width="40%">@if(strlen(strip_tags($TermAndService->termandservices_desc)) > 350) {{ substr(strip_tags($TermAndService->termandservices_desc) , 0, 350). "..." }} @else {{ strip_tags($TermAndService->termandservices_desc) }} @endif</td>
                 </tr>
                 @endforeach @else
                 <tr>

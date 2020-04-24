@@ -39,7 +39,7 @@
     @endif
 
     @yield('content')
-    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/main-admin.js') }}"></script>
      <script src="{{ asset('js/custom.js') }}"></script>
 
     <script type="text/javascript">

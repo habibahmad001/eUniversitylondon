@@ -12,7 +12,7 @@
 	  	<!-- CSRF Token -->
 	  	<meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- CSS -->
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrapLive.min.css') }}">
         <link href="{{ asset('css/style-learner.css') }}" rel="stylesheet">
         <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
         <!-- Font  -->

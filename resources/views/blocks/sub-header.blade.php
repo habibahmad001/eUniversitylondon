@@ -7,7 +7,11 @@
   @endif
 
   @if(collect(request()->segments())->pull(1) == 'students' or collect(request()->segments())->pull(1) == 'childitem' or collect(request()->segments())->pull(0) == 'learner' or collect(request()->segments())->last() == 'home')
-    &nbsp;
+    @if(collect(request()->segments())->pull(0) == 'learner' && collect(request()->segments())->last() == 'assignment')
+      @if(!isset($is_reload_btn))
+        <div class="add-button"></div>
+      @endif
+    @endif
   @else
       @if(!isset($is_reload_btn))
         <div class="add-button"></div>

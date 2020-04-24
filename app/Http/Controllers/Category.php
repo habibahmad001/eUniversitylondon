@@ -23,8 +23,32 @@ class Category extends Controller
 
         $data['sub_heading']  = 'Category';
         $data['page_title']   = 'eUniversitylondon Category';
-        $data['categories']        =  Categories::where("category_cid", 0)->paginate(10);
+        $data['categories']   =  Categories::where("category_cid", 0)->paginate(10);
+        $data['ALLCats']      =  Categories::where("category_cid", 0)->get();
+
         return view('categories/index', $data);
+    }
+
+    public static function HasSubItem($id){
+
+        $Res_cat          = Categories::where("category_cid", $id)->get();
+        if(count($Res_cat) > 0)
+            $res  = 1;
+        else
+            $res  = 0;
+        return $res;
+    }
+
+    public static function ChildCount($id){
+
+        $Res_cat          = Categories::where("category_cid", $id)->count();
+        return $Res_cat;
+    }
+
+    public static function AllParentsCat(){
+
+        $Res_cat          = Categories::where("category_cid", 0)->get();
+        return $Res_cat;
     }
 
     public function ChildItem(Request $request){
@@ -33,6 +57,8 @@ class Category extends Controller
         $data['sub_heading']  = 'Category';
         $data['page_title']   = 'eUniversitylondon Category';
         $data['categories']   =  Categories::where('category_cid', $id)->paginate(10);
+        $data['ALLCats']      =  Categories::where("category_cid", 0)->get();
+
         return view('categories/index', $data);
 
     }
@@ -42,10 +68,12 @@ class Category extends Controller
         $this->validate($request, [
 
             'cat_title'=>'required',
-            'c_content'=>'required'
+            'c_content'=>'required',
+            'iconval'=>'required',
         ]);
         $categories->category_title  = $request->cat_title;
         $categories->category_desc  = $request->c_content;
+        $categories->selectedicon  = $request->iconval;
         $categories->category_cid  = $request->sel_txt;
         $saved          = $categories->save();
         if ($saved) {
@@ -67,11 +95,13 @@ class Category extends Controller
         $id              =        $request->cat_id;
         $this->validate($request, [
             'cat_title'=>'required',
-            'c_content'=>'required'
+            'c_content'=>'required',
+            'iconval'=>'required',
         ]);
         $categories              = Categories::find($id);
         $categories->category_title  = $request->cat_title;
         $categories->category_desc  = $request->c_content;
+        $categories->selectedicon  = $request->iconval;
         $categories->category_cid  = $request->sel_txt;
         $saved              = $categories->save();
         if ($saved) {

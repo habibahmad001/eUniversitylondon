@@ -10,7 +10,7 @@
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript"></script>
     <!-- CSS -->
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrapLive.min.css') }}">
     <link href="{{ asset('css/style-new.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <script src="{{ asset('js/jquery.validate.min.js') }}" type="text/javascript"></script>

@@ -24,6 +24,14 @@
       </a>
     </li>
 
+    <li @if(collect(request()->segments())->last()=='exam') class="active" @endif>
+      <a href="{{ URL::to('/instructor/exam') }}">
+        {{--manage-rules--}}
+        <div class="icon">E</div>
+        <div class="icon-detail">Exams</div>
+      </a>
+    </li>
+
     <li @if(collect(request()->segments())->last()=='mexam') class="active" @endif>
       <a href="{{ URL::to('/instructor/mexam') }}">
         {{--manage-rules--}}
@@ -32,11 +40,11 @@
       </a>
     </li>
 
-    <li @if(collect(request()->segments())->last()=='exam') class="active" @endif>
-      <a href="{{ URL::to('/instructor/exam') }}">
+    <li @if(collect(request()->segments())->last()=='questionandanswer') class="active" @endif>
+      <a href="{{ URL::to('/instructor/questionandanswer') }}">
         {{--manage-rules--}}
-        <div class="icon">E</div>
-        <div class="icon-detail">Exams</div>
+        <div class="icon">QA</div>
+        <div class="icon-detail">Question & Ans</div>
       </a>
     </li>
 
