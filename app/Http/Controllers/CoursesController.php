@@ -39,20 +39,26 @@ class CoursesController extends Controller
         $Array_User_Count           =  array();
         foreach($data['Courses'] as $course_v) {
             $User_Count        =  CourseWithUser::where('course_id', $course_v->id)->count();
-            $Array_User_Count[$course_v->id] = $User_Count;
+            if(isset($Course_Name->course_title)) {
+                $Array_User_Count[$course_v->id] = $User_Count;
+            }
         }
         $data['Array_User_Count']           =  $Array_User_Count;
         /**************** Get User Count **************/
 
         /**************** Get instructor Name **************/
         $Array_Instructor_Name           =  array();
-        foreach($data['Courses'] as $course_data) {
-            if(!empty($course_data->course_user_id)) {
-                $Instructor_Name        =  User::where('id', $course_data->course_user_id)->first();
-                $Array_Instructor_Name[$course_data->id] = $Instructor_Name->first_name . " " . $Instructor_Name->last_name;
+
+            foreach($data['Courses'] as $course_data) {
+                if(!empty($course_data->course_user_id)) {
+                    $Instructor_Name        =  User::where('id', $course_data->course_user_id)->first();
+                    if(isset($Instructor_Name->first_name)) {
+                        $Array_Instructor_Name[$course_data->id] = $Instructor_Name->first_name . " " . $Instructor_Name->last_name;
+                    }
+                }
             }
-        }
-        $data['Array_Instructor_Name']           =  $Array_Instructor_Name;
+            $data['Array_Instructor_Name']           =  $Array_Instructor_Name;
+
         /**************** Get instructor Name **************/
 
         $data['Category']           =  Categories::All();

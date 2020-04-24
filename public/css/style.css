@@ -120,6 +120,7 @@ header .success-message-box .cancel:hover { background: url(../images/cancel-ico
 .content .add-new-form input[type='text'],
 .content .add-new-form input[type='phone'],
 .content .add-new-form input[type='number'],
+.content .add-new-form input[type='password'],
 .content .add-new-form input[type='email'] { border: 1px solid #dddddd; font-size: 14px; padding: 10px 12px; width: 100%; }
 .content .add-new-form textarea { border: 1px solid #dddddd; font-size: 14px; padding: 10px 12px; width: 100%; height: 135px; resize: none; }
 .content .add-new-form select { border: 1px solid #dddddd; color:#333333; font-size: 14px; padding: 10px 10px 10px 10px; width: 100%; background: #ffffff; }

@@ -130,8 +130,8 @@ class UserController extends Controller {
       $users->first_name  = $request->first_name;
       $users->last_name   = $request->last_name;
       $users->phone       = $request->phone;
+      $users->user_type   = $request->user_type;
       $users->status      = $request->status;
-      $users->user_type   = 'user';
       $users->username    = $this->getUsername($request->first_name,$request->last_name);
       $users->email       = $request->email;
       $users->password    = bcrypt($request->password);
@@ -156,12 +156,15 @@ class UserController extends Controller {
        $this->validate($request, [
             'first_name'=>'required|max:120',
             'last_name'=>'required|max:120',
+            'user_type'=>'required',
+            'status'=>'required',
             'email'=>'required|email|unique:users,email,'.$id
         ]); 
       $users              = User::find($id);
       $users->first_name  = $request->first_name;
       $users->last_name   = $request->last_name;
       $users->phone       = $request->phone;
+      $users->user_type   = $request->user_type;
       $users->email       = $request->email;
       $users->status      = $request->status;
       $saved              = $users->save(); 

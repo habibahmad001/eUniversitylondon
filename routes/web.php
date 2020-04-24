@@ -13,7 +13,7 @@
 
 
 /*__________________Gust Routs______________________________*/
-Route::get('/laravelhome', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('/redirect', 'SocialAuthFacebookController@redirect');
 Route::get('/callback', 'SocialAuthFacebookController@callback');
 Route::get('verifyemail/{id}', 'Auth\RegisterController@verifyEmail');
@@ -75,7 +75,6 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/getusers/{id}', 'UserController@getusers');
     Route::get('/email-exist', 'UserController@isEmailExist');
     Route::delete('/admin/user/{id}', 'UserController@destroy');
-    Route::post('/admin/users_add', 'UserController@create_user');
     Route::get('/user-edit/{squirrel}', 'UserController@edit_user');
     Route::post('/admin/update-user', 'UserController@update_user');
     Route::get('/admin/user-delete/{squirrel}', 'UserController@delete_user');
@@ -327,6 +326,7 @@ Route::post('/search', "JobsController@search")->name('search');
 
 // Auth::routes();
 
+Route::get('/sendmail', 'TermAndServicesController@sendmail');
 
 
 Route::get('/get-started', function () {

@@ -30,21 +30,25 @@
       </div>
 
       <div class="form-line">
-        <input type="text" name="password" id="password" placeholder="Password">
+        <input type="password" name="password" id="password" placeholder="Password">
       </div>
 
-      
+      <div class="form-line">
+        <select class="half-width" name="user_type" id="user_type">
+          <option value="">Select User Type</option>
+          <option value="instructor">Instructor</option>
+          <option value="learner">Learner</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
       <div class="form-line">
         <select class="half-width" name="status" id="status">
             <option value="">Select Status</option>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
         </select>
-
       </div>
-
-      
-
 
     </div>
     <div class="form-footer">
