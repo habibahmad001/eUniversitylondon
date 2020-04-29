@@ -60,6 +60,48 @@ class LoginController extends Controller {
         return view('auth/learner/login');
     }
 
+    public function homelogin(Request $request) {
+        $this->validate($request, [
+            'email'=>'required',
+            'password'=>'required',
+        ]);
+
+        $email = $request->email;
+        $password = $request->password;
+
+        if (Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'admin'])) {
+            //exit($password);
+            return redirect()->intended('/admin/home');
+        }
+        else if(Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'instructor']))
+        {
+            if(Auth::user()->status == 'inactive')
+            {
+                return redirect()->intended('/instructor');
+            } else {
+                return redirect()->intended('/instructor/home');
+            }
+        }
+        else if(Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'learner']))
+        {
+            if(Auth::user()->status == 'inactive')
+            {
+                return redirect()->intended('/learner');
+            } else {
+                return redirect()->intended('/learner/home');
+            }
+        }
+        else
+        {
+            if($request->login_flag == "admin") {
+                return redirect()->intended('/administrator')->withErrors(['email' => 'Invalid username or password!']);
+            } else {
+                return redirect()->intended('/')->withErrors(['email' => 'Invalid username or password!']);
+            }
+
+        }
+    }
+
     public function login(Request $request) {
         $email = $request->email;
         $password = $request->password;

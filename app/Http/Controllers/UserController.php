@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use DB;
 use Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 
 use App\User;
@@ -137,6 +138,15 @@ class UserController extends Controller {
       $users->password    = bcrypt($request->password);
       $saved              = $users->save();
      if ($saved) {
+         $usertype = $request->user_type;
+         $first_name = $request->first_name;
+         $pass = $request->password;
+         $email = $request->email;
+         Mail::send('emails.SendPassword', ['first_name' => $first_name, 'usertype' => $usertype, 'pass'=> $pass, "email" => $email], function($message)  use ($usertype, $email){
+             $message->to($email);
+             $message->subject("Your " . $usertype . " account has been created successfully!!!");
+         });
+
        $request->session()->flash('alert-success', 'User was successful added!');
        return redirect('/admin/users');
       } else {

@@ -91,9 +91,9 @@ class TermAndServicesController extends Controller
         $first_name = "Habib";
         $pass = "123456";
         $email = "Test@gmail.com";
-        Mail::send('emails.SendPassword', ['first_name' => $first_name, 'usertype' => $usertype, 'pass'=> $pass, "email" => $email], function($message, $usertype) {
+        Mail::send('emails.SendPassword', ['first_name' => $first_name, 'usertype' => $usertype, 'pass'=> $pass, "email" => $email], function($message)  use ($usertype){
             $message->to("habibahmed001@gmail.com");
-            $message->subject('You\'r ' . $usertype . 'account has been created successfully!!!');
+            $message->subject("Your " . $usertype . " account has been created successfully!!!");
         });
         return 'Email has been sent to habibahmed001@gmail.com';
     }

@@ -4063,7 +4063,13 @@ py-* - same value for top and for bottom padding
 	padding-bottom: 90px;
 	padding-top: 90px;
 }
-
+input[type='text'].error, input[type='phone'].error, input[type='number'].error, input[type='email'].error, input[type='password'].error, input[type='checkbox'].error, select.error {
+	border: 1px solid #ff0000;
+	color: #e68888;
+}
+label.error {
+	color: #e68888;
+}
 .s-py-95 > [class*='container'] {
 	padding-bottom: 95px;
 	padding-top: 95px;

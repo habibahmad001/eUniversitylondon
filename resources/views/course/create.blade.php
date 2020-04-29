@@ -20,23 +20,26 @@
       </div>
 
       <div class="form-line">
-        <textarea name="cou_company" id="cou_company" placeholder="Type Company by text."></textarea>
+        <input type="text" name="cou_lectures" id="cou_lectures" placeholder="Lectures e.g(30 Lectures)" >
       </div>
 
       <div class="form-line">
-        <textarea name="cou_what_you_learn" id="cou_what_you_learn" placeholder="Type What you learn text."></textarea>
+        <select name="cou_language[]" id="cou_language" class="form-control"  multiple>
+            <option value="english">English</option>
+            <option value="france">France</option>
+        </select>
       </div>
 
       <div class="form-line">
-        <textarea name="cou_includes" id="cou_includes" placeholder="Type Course includes."></textarea>
+        <input type="text" name="cou_video" id="cou_video" placeholder="Video Hours e.g (8 Hours)" >
       </div>
 
       <div class="form-line">
-        <textarea name="cou_requirements" id="cou_requirements" placeholder="Type Course requriments."></textarea>
+        <input type="text" name="cou_duration" id="cou_duration" placeholder="Course Duration e.g (20 Days)" >
       </div>
 
       <div class="form-line">
-        <textarea name="cou_course_for" id="cou_course_for" placeholder="Type Course for text."></textarea>
+        <input type="text" name="cou_includes" id="cou_includes" placeholder="Course Includes e.g (Personal support)" >
       </div>
 
       <div class="form-line">
@@ -52,8 +55,7 @@
       </div>
 
       <div class="form-line">
-        <select name="cou_category" id="cou_category" class="half-width">
-          <option value="">Select Category</option>
+        <select name="cou_category[]" id="cou_category" class="form-control"  multiple>
           @if(count($Category)) @foreach ($Category as $cat) @if($cat->category_cid == NULL)
             <option value="{{ $cat->id }}">{{ $cat->category_title }}</option>
           @endif @endforeach @else

@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 
 /*__________________Front Routs______________________________*/
 Route::group([ 'namespace' => 'Front', 'as' => 'euniversitylondon'], function () {
-    Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('category/{page_slug}', 'CategoryController@GetCategories');
+//    Route::get('/home', 'HomeController@index')->name('home');
+//    Route::get('category/{page_slug}', 'CategoryController@GetCategories');
 });
 /*__________________Front Routs______________________________*/

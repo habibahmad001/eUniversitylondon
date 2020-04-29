@@ -29,9 +29,10 @@ class HomeController extends Controller
 
         $data['AllLearner']         = User::where("user_type", "learner")->count();
         $data['AllInstructor']      = User::where("user_type", "instructor")->count();
-        $data['AllCourses']         = Courses::All()->count();
+        $data['AllCourses']         = Courses::where("course_status","yes")->count();
         $data['AllTestimonial']     = Testimonial::where("testimonial_status","yes")->orderBy('id', 'desc')->get();
         $data['AllClients']         = Clients::where("client_status","yes")->orderBy('id', 'desc')->get();
+        $data['Courses']            = Courses::where("course_status","yes")->take(10)->orderBy('id', 'desc')->get();
 
         return view('frontend.home', $data);
     }

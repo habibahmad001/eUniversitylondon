@@ -88,7 +88,7 @@ header .success-message-box .cancel:hover { background: url(../images/cancel-ico
 .content .table tbody tr:hover td a { color: #fff; }
 .content .table tbody tr td a { color: #ffffff; text-decoration: underline; }
 .content .table th.error { text-align: center; color: #ff0000; }
-.content .table th,.content .table td { color:#fff; font-size:12px; text-align: center; }
+.content .table th,.content .table td { color:#fff; font-size:12px; text-align: left; }
 .content .table tr a { color:#2b97df; }
 .content .table tr.yellow { background: #2b2b2b; }
 .content .table>tbody>tr>td,.content .table>tbody>tr>th,
@@ -246,6 +246,10 @@ table.table { border-collapse:collapse; }
 .report_form input[type='email'].error,
 .report_form select.error { border: 1px solid #ff0000; color: #e68888; }
 .report_form .checkbox-container label.error { color: #e68888; }
+.add-new-form.set-product {
+    width: 0;
+    overflow: hidden;
+}
 
 .error::-webkit-input-placeholder { color: #e68888; }
 .error:-moz-placeholder { color: #e68888; }

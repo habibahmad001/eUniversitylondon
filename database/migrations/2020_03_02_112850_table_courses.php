@@ -15,23 +15,18 @@ class TableCourses extends Migration
     {
         Schema::create('tablecourses', function (Blueprint $table) {
             $table->increments('id',100);
-            $table->integer('category_id')->unsigned();
-            $table->text('course_avatar')->nullable();
+            $table->string('category_id', 256)->nullable();
+            $table->string('course_avatar', 256)->nullable();
             $table->text('course_title')->nullable();
             $table->longText('course_desc')->nullable();
-            $table->text('created_company')->nullable();
-            $table->longText('what_you_learn')->nullable();
-            $table->text('course_includes')->nullable();
-            $table->text('course_requirements')->nullable();
-            $table->text('course_for')->nullable();
-            $table->text('course_price')->nullable();
-            $table->text('course_discounted_price')->nullable();
+            $table->string('course_lectures', 256)->nullable();
+            $table->string('course_language', 256)->nullable();
+            $table->string('course_video', 256)->nullable();
+            $table->string('course_duration', 256)->nullable();
+            $table->string('course_includes', 256)->nullable();
+            $table->string('course_price', 256)->nullable();
+            $table->string('course_discounted_price', 256)->nullable();
             $table->enum('course_status', array('yes', 'no'))->default('yes');
-
-            $table->foreign('category_id')
-                ->references('id')
-                ->on('tablecategories')
-                ->onDelete('cascade');
 
         });
     }

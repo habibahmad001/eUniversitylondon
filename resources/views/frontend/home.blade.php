@@ -124,23 +124,25 @@
                     <div class="col-md-10 col-xl-7">
                         <div class="filters course-filters text-lg-right">
                             <a href="#" data-filter="*" class="active selected">Trending now</a>
-                            <a href="#" data-filter=".popular">Most Popular</a>
-                            <a href="#" data-filter=".resent">Most Recent</a>
-                            <a href="#" data-filter=".certified">Most Certified</a>
+                            <a href="#" data-filter=".most_popular">Most Popular</a>
+                            <a href="#" data-filter=".most_recent">Most Recent</a>
+                            <a href="#" data-filter=".most_certified">Most Certified</a>
                         </div>
                     </div>
                 </div>
                 <div class="row isotope-wrapper c-mb-30" data-filters=".course-filters">
-                    <div class="col-12 col-md-6 col-lg-4 popular">
+                    @if(count($Courses) > 0)
+                        @foreach($Courses as $course)
+                            <div class="col-12 col-md-6 col-lg-4 @if(count(json_decode($course->setas)) > 0) @foreach(json_decode($course->setas) as $v) {{ $v }} @endforeach @endif">
                         <div class="course-flip h-100 ">
                             <div class="course-front rounded bordered">
                                 <div class=" vertical-item content-padding">
                                     <div class="item-media rounded-top">
-                                        <img src="{{ asset('images/courses/01.jpg') }}" alt="">
+                                        <img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
                                     </div>
                                     <div class="item-content">
                                         <h6 class="course-title">
-                                            <a href="single-course.html">Diploma in Basic English Grammar</a>
+                                            <a href="single-course.html">{{ $course->course_title }}</a>
                                         </h6>
 
                                         <div class="star-rating course-rating">
@@ -148,12 +150,13 @@
                                         </div>
 
                                         <div class="tagcloud">
-                                            <a href="#" class="tag-cloud-link">
-                                                Technology
-                                            </a>
-                                            <a href="#" class="tag-cloud-link">
-                                                Humanities
-                                            </a>
+                                            @if(count(json_decode($course->category_id)) > 0)
+                                                @foreach(json_decode($course->category_id) as $v)
+                                                    <a href="#" class="tag-cloud-link">
+                                                        {{ App\Http\Controllers\Category::CatID($v)->category_title }}
+                                                    </a>
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -161,287 +164,31 @@
                             <div class="course-back rounded vertical-item content-padding ds">
                                 <div class="item-content">
                                     <h6 class="course-title">
-                                        <a href="single-course.html">Diploma in Basic English Grammar</a>
+                                        <a href="javascript:void(0);">{{ $course->course_title }}</a>
                                     </h6>
                                     <p>
-                                        Learn about corporate governance of organizations: internal and external factors
+                                        {{ (strlen(strip_tags($course->course_desc)) > 350) ? substr(strip_tags($course->course_desc), 0, 350) : strip_tags($course->course_desc) }}
                                     </p>
                                     <div class="star-rating course-rating">
                                         <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
                                     </div>
                                     <div class="divider-48"></div>
-                                    <a href="#" class="btn btn-maincolor">Start now</a>
+                                    <a href="javascript:void(0);" class="btn btn-maincolor">Start now</a>
                                     <div class="tagcloud">
-                                        <a href="#" class="tag-cloud-link">
-                                            Technology
-                                        </a>
-                                        <a href="#" class="tag-cloud-link">
-                                            Humanities
-                                        </a>
+                                        @if(count(json_decode($course->category_id)) > 0)
+                                            @foreach(json_decode($course->category_id) as $v)
+                                                <a href="category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
+                                                    {{ App\Http\Controllers\Category::CatID($v)->category_title }}
+                                                </a>
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-4 popular">
-                        <div class="course-flip h-100">
-                            <div class="course-front rounded bordered">
-                                <div class="vertical-item content-padding">
-                                    <div class="item-media rounded-top">
-                                        <img src="{{ asset('images/courses/02.jpg') }}" alt="">
-                                    </div>
-                                    <div class="item-content">
-                                        <h6 class="course-title">
-                                            <a href="single-course.html">Diploma in Legal Studies - Revised 2017</a>
-                                        </h6>
-
-                                        <div class="star-rating course-rating">
-                                            <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                        </div>
-                                        <div class="tagcloud">
-                                            <a href="#" class="tag-cloud-link">
-                                                Marketing
-                                            </a>
-                                            <a href="#" class="tag-cloud-link">
-                                                Lifestyle
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="course-back rounded vertical-item content-padding ds">
-                                <div class="item-content">
-                                    <h6 class="course-title">
-                                        <a href="single-course.html">Diploma in Legal Studies - Revised 2017</a>
-                                    </h6>
-                                    <p>
-                                        Learn about corporate governance of organizations: internal and external factors
-                                    </p>
-                                    <div class="star-rating course-rating">
-                                        <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                    </div>
-                                    <div class="divider-48"></div>
-                                    <a href="#" class="btn btn-maincolor">Start now</a>
-                                    <div class="tagcloud">
-                                        <a href="#" class="tag-cloud-link">
-                                            Marketing
-                                        </a>
-                                        <a href="#" class="tag-cloud-link">
-                                            Lifestyle
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 resent">
-                        <div class="course-flip h-100">
-                            <div class="course-front rounded bordered">
-                                <div class="vertical-item content-padding">
-                                    <div class="item-media rounded-top">
-                                        <img src="{{ asset('images/courses/03.jpg') }}" alt="">
-                                    </div>
-                                    <div class="item-content">
-                                        <h6 class="course-title">
-                                            <a href="single-course.html">Working with Students with Special Educational Needs</a>
-                                        </h6>
-
-                                        <div class="star-rating course-rating">
-                                            <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                        </div>
-
-                                        <div class="tagcloud">
-                                            <a href="#" class="tag-cloud-link">
-                                                Language
-                                            </a>
-                                            <a href="#" class="tag-cloud-link">
-                                                Science
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="course-back rounded vertical-item content-padding ds">
-                                <div class="item-content">
-                                    <h6 class="course-title">
-                                        <a href="single-course.html">Working with Students with Special Educational Needs</a>
-                                    </h6>
-                                    <p>
-                                        Learn about corporate governance of organizations: internal and external factors
-                                    </p>
-                                    <div class="star-rating course-rating">
-                                        <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                    </div>
-                                    <div class="divider-48"></div>
-                                    <a href="#" class="btn btn-maincolor">Start now</a>
-                                    <div class="tagcloud">
-                                        <a href="#" class="tag-cloud-link">
-                                            Language
-                                        </a>
-                                        <a href="#" class="tag-cloud-link">
-                                            Science
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 resent">
-                        <div class="course-flip h-100">
-                            <div class="course-front rounded bordered">
-                                <div class="vertical-item content-padding">
-                                    <div class="item-media rounded-top">
-                                        <img src="{{ asset('images/courses/04.jpg') }}" alt="">
-                                    </div>
-                                    <div class="item-content">
-                                        <h6 class="course-title">
-                                            <a href="single-course.html">Introduction to Human Nutrition</a>
-                                        </h6>
-
-                                        <div class="star-rating course-rating">
-                                            <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                        </div>
-
-                                        <div class="tagcloud">
-                                            <a href="#" class="tag-cloud-link">
-                                                Science
-                                            </a>
-                                            <a href="#" class="tag-cloud-link">
-                                                Business
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="course-back rounded vertical-item content-padding ds">
-                                <div class="item-content">
-                                    <h6 class="course-title">
-                                        <a href="single-course.html">Introduction to Human Nutrition</a>
-                                    </h6>
-                                    <p>
-                                        Learn about corporate governance of organizations: internal and external factors
-                                    </p>
-                                    <div class="star-rating course-rating">
-                                        <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                    </div>
-                                    <div class="divider-48"></div>
-                                    <a href="#" class="btn btn-maincolor">Start now</a>
-                                    <div class="tagcloud">
-                                        <a href="#" class="tag-cloud-link">
-                                            Science
-                                        </a>
-                                        <a href="#" class="tag-cloud-link">
-                                            Business
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 certified">
-                        <div class="course-flip h-100">
-                            <div class="course-front rounded bordered">
-                                <div class="vertical-item content-padding">
-                                    <div class="item-media rounded-top">
-                                        <img src="{{ asset('images/courses/05.jpg') }}" alt="">
-                                    </div>
-                                    <div class="item-content">
-                                        <h6 class="course-title">
-                                            <a href="single-course.html">Skills for Speaking Effectively: The Art of Speaking</a>
-                                        </h6>
-
-                                        <div class="star-rating course-rating">
-                                            <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                        </div>
-
-                                        <div class="tagcloud">
-                                            <a href="#" class="tag-cloud-link">
-                                                Humanities
-                                            </a>
-                                            <a href="#" class="tag-cloud-link">
-                                                Language
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="course-back rounded vertical-item content-padding ds">
-                                <div class="item-content">
-                                    <h6 class="course-title">
-                                        <a href="single-course.html">Skills for Speaking Effectively: The Art of Speaking</a>
-                                    </h6>
-                                    <p>
-                                        Learn about corporate governance of organizations: internal and external factors
-                                    </p>
-                                    <div class="star-rating course-rating">
-                                        <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                    </div>
-                                    <div class="divider-48"></div>
-                                    <a href="#" class="btn btn-maincolor">Start now</a>
-                                    <div class="tagcloud">
-                                        <a href="#" class="tag-cloud-link">
-                                            Humanities
-                                        </a>
-                                        <a href="#" class="tag-cloud-link">
-                                            Language
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 certified">
-                        <div class="course-flip h-100">
-                            <div class="course-front rounded bordered">
-                                <div class="vertical-item content-padding">
-                                    <div class="item-media rounded-top">
-                                        <img src="{{ asset('images/courses/06.jpg') }}" alt="">
-                                    </div>
-                                    <div class="item-content">
-                                        <h6 class="course-title">
-                                            <a href="single-course.html">General Data Protection Regulation (GDPR)</a>
-                                        </h6>
-
-                                        <div class="star-rating course-rating">
-                                            <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                        </div>
-
-                                        <div class="tagcloud">
-                                            <a href="#" class="tag-cloud-link">
-                                                Technology
-                                            </a>
-                                            <a href="#" class="tag-cloud-link">
-                                                Lifestyle
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="course-back rounded vertical-item content-padding ds">
-                                <div class="item-content">
-                                    <h6 class="course-title">
-                                        <a href="single-course.html">General Data Protection Regulation (GDPR)</a>
-                                    </h6>
-                                    <p>
-                                        Learn about corporate governance of organizations: internal and external factors
-                                    </p>
-                                    <div class="star-rating course-rating">
-                                        <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                    </div>
-                                    <div class="divider-48"></div>
-                                    <a href="#" class="btn btn-maincolor">Start now</a>
-                                    <div class="tagcloud">
-                                        <a href="#" class="tag-cloud-link">
-                                            Technology
-                                        </a>
-                                        <a href="#" class="tag-cloud-link">
-                                            Lifestyle
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>

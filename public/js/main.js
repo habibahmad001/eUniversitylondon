@@ -1611,16 +1611,16 @@ $("div[id^='form']").each(function(){
   var currentModal = $(this);
   
   //click next
-  currentModal.find('.btn-sign').click(function(){
-    currentModal.modal('hide');
-    currentModal.closest("div[id^='form']").nextAll("div[id^='form']").first().modal('show'); 
-  });
+  // currentModal.find('.btn-sign').click(function(){
+  //   currentModal.modal('hide');
+  //   currentModal.closest("div[id^='form']").nextAll("div[id^='form']").first().modal('show');
+  // });
   
   //click prev
-  currentModal.find('.btn-login').click(function(){
-    currentModal.modal('hide');
-    currentModal.closest("div[id^='form']").prevAll("div[id^='form']").first().modal('show'); 
-  });
+  // currentModal.find('.btn-login').click(function(){
+  //   currentModal.modal('hide');
+  //   currentModal.closest("div[id^='form']").prevAll("div[id^='form']").first().modal('show');
+  // });
 
 });
 

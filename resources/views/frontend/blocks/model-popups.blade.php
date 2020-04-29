@@ -36,8 +36,8 @@
                 <span aria-hidden="true">×</span>
             </button>
             <div class="modal-header">
-                <h6 class="modal-title" id="formlogin">Log In</h6>
-                <button type="button" class="btn btn-maincolor btn-sign">Sign Up</button>
+                <h6 class="modal-title sign-mod" id="formlogin">Sign Up</h6>
+                <button type="button" class="btn btn-maincolor btn-sign login-mod">Log In</button>
 
             </div>
             <div class="modal-body">
@@ -45,16 +45,17 @@
                     <h2>Log In</h2>
                     <p>Log in to save your progress and obtain a certificate in Alison’s free Diploma in Web</p>
                 </div>
-                <form action="http://webdesign-finder.com/">
+                <form  id="login" method="POST" action="/homelogin" onSubmit="return login_validate('');">
+                    {{ csrf_field() }}
                     <div class="form-group has-placeholder">
-                        <label for="email-logn">Email:</label>
-                        <input type="email" class="form-control" id="email-logn" placeholder="Your email adress" name="email-logn">
+                        <label for="email-login">Email:</label>
+                        <input type="email" class="form-control" id="email-login" placeholder="Your email adress" name="email">
                     </div>
                     <div class="form-group has-placeholder">
                         <label for="password-login">Password:</label>
                         <input type="password" class="form-control" id="password-login" placeholder="Password" name="password">
                     </div>
-                    <div class="social-account">
+                    <!--div class="social-account">
                         <h6>
                             or
                         </h6>
@@ -67,19 +68,19 @@
 								<a href="#" class="fa fa-paper-plane " title="telegram"></a>
 								<a href="#" class="fa fa-linkedin " title="linkedin"></a>
 								<a href="#" class="fa fa-instagram " title="instagram"></a>
-								<a href="#" class="fa fa-youtube-play " title="youtube"></a>
+								<a href="#" class="fa fa-youtube-play " title="youtubsssssse"></a>
 							</span>
-                    </div>
+                    </div-->
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="remember">
                         <label class="form-check-label" for="remember">
                             Keep me logged in
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-maincolor log-btn">Log in</button>
+                    <button type="submit" class="btn btn-maincolor log-btn">Log In</button>
                 </form>
                 <div class="modal-footer">
-                    Dont have an Tutor account?<button type="button" class="btn-sign">Sign Up</button>
+                    Dont have an Tutor account?<button type="button" class="btn-sign sign-mod">Sign Up</button>
                 </div>
             </div>
         </div>
@@ -93,28 +94,78 @@
                 <span aria-hidden="true">×</span>
             </button>
             <div class="modal-header">
-                <button type="button" class="btn btn-maincolor btn-login">Log in</button>
-                <h6 class="modal-title" id="formsign">Sign Up</h6>
+                <button type="button" class="btn btn-maincolor btn-login sign-mod">Sign Up</button>
+                <h6 class="modal-title login-mod" id="formsign">Log In</h6>
             </div>
             <div class="modal-body">
                 <div class="form-title">
                     <h2>Sign up</h2>
                     <p>Sign up to save your progress and obtain a certificate in Alison’s free Diploma in Web</p>
                 </div>
-                <form action="http://webdesign-finder.com/">
+                <form method="POST" action="/homesignup" enctype="multipart/form-data" onSubmit="return validate('');">
+                    {{ csrf_field() }}
                     <div class="form-group has-placeholder">
-                        <label for="name-sigin">Your Name:</label>
-                        <input type="text" class="form-control" id="name-sigin" placeholder="Enter your name" name="First name">
+                        <input type="hidden" name="status" id="status" value="active">
+                        <label for="first_name">First Name:</label>
+                        <input id="first_name" type="text" class="form-control" placeholder="First Name" name="first_name" value="{{ old('first_name') }}" autofocus>
+                        @if ($errors->has('first_name'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('first_name') }}</strong>
+                            </span>
+                        @endif
                     </div>
                     <div class="form-group has-placeholder">
-                        <label for="sigemail">Email:</label>
-                        <input type="email" class="form-control" id="sigemail" placeholder="Your email adress" name="sigemail">
+                        <label for="last_name">Last Name:</label>
+                        <input id="last_name" type="text" class="form-control" placeholder="Last Name" name="last_name" value="{{ old('last_name') }}">
+
+                        @if ($errors->has('last_name'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('last_name') }}</strong>
+                            </span>
+                        @endif
                     </div>
                     <div class="form-group has-placeholder">
-                        <label for="sigpassword">Password:</label>
-                        <input type="password" class="form-control" id="sigpassword" placeholder="password" name="sigpassword">
+                        <label for="email">Email:</label>
+                        <input id="email" type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}">
+
+                        @if ($errors->has('email'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
+                        @endif
                     </div>
-                    <div class="social-account">
+                    <div class="form-group has-placeholder">
+                        <label for="phone">Phone Number:</label>
+                        <input id="phone" type="text" class="form-control" name="phone" placeholder="Phone Number" value="{{ old('phone') }}">
+
+                        @if ($errors->has('phone'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('phone') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                    <div class="form-group has-placeholder">
+                        <select class="form-control" name="user_type" id="user_type">
+                            <option value="instructor">Instructor</option>
+                            <option value="learner">Learner</option>
+                        </select>
+                    </div>
+                    <div class="form-group has-placeholder">
+                        <label for="password">Password:</label>
+                        <input id="password" type="password" class="form-control" placeholder="Password" name="password">
+
+                        @if ($errors->has('password'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('password') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                    <div class="form-group has-placeholder">
+                        <label for="sigpassword">Confirm Password:</label>
+                        <input id="sigpassword" type="password" class="form-control" placeholder="Confirm Password" name="password_confirmation">
+                        <div id="password-match"></div>
+                    </div>
+                    <!--div class="social-account">
                         <h6>
                             or
                         </h6>
@@ -129,21 +180,21 @@
 								<a href="#" class="fa fa-instagram " title="instagram"></a>
 								<a href="#" class="fa fa-youtube-play " title="youtube"></a>
 							</span>
-                    </div>
+                    </div-->
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="agree">
-                        <label class="form-check-label agree" for="agree">
+                        <input class="form-check-input" type="checkbox" name="agree" id="agree">
+                        <label class="form-check-label agree" for="agree" id="l-agree">
                             I agree to the Terms and Conditions
                         </label>
-                        <input class="form-check-input" type="checkbox" id="updates">
-                        <label class="form-check-label" for="updates">
+                        <input class="form-check-input" type="checkbox" name="updates" id="updates">
+                        <label class="form-check-label" for="updates" id="l-updates">
                             Yes, I want to get the most out of Tutor by receiving tips, updates and exclusive offers.
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-maincolor btn-sign">Sign In</button>
+                    <button type="submit" class="btn btn-maincolor btn-sign">Sign Up</button>
                 </form>
                 <div class="modal-footer">
-                    Already have an Alison account?<button type="button" class="btn-login">Log In</button>
+                    Already have an Alison account?<button type="button" class="btn-login login-mod">Log In</button>
                 </div>
             </div>
         </div>

@@ -39,6 +39,12 @@ class Category extends Controller
         return $res;
     }
 
+    public static function CatID($id){
+
+        $RES          = Categories::where("id", $id)->first();
+        return $RES;
+    }
+
     public static function ChildCount($id){
 
         $Res_cat          = Categories::where("category_cid", $id)->count();

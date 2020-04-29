@@ -17,6 +17,9 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -65,6 +68,15 @@
                 </div>
             </div>
         </section>
+        @if ($errors->any())
+            <div class="alert alert-danger" style="margin: 0px; padding: 0px;">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <!--eof topline-->
         @include('frontend.blocks.menu-section')
 
@@ -130,6 +142,7 @@
 
                         </div>
                     </div>
+
                     <div class="col-12 col-md-6 col-lg-3 animate" data-animation="fadeInUp">
                         <div class="widget widget_icons_list">
                             <h3>Contacts</h3>
@@ -191,7 +204,7 @@
 
 
 <script type="text/javascript" src="{{ asset('../../../themera.net/embed/themera227f.js?id=%d1%85%d1%85%d1%85%d1%85%d1%85') }}"></script></body>
-
+<script src="{{ asset('js/front/signup.js') }}"></script>
 
 <!-- eUniversity London designed by BiG Inc, Fri, 20 Mar 2020 11:11:58 GMT -->
 </html>

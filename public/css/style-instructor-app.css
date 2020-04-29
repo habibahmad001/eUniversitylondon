@@ -190,6 +190,10 @@ table.table { border-collapse:collapse; }
 .content .pagination-container .number-container { float: left; font-size: 14px; color: #868686; padding: 6px 0 0 0; }
 .content .pagination-container .number-container span { color: #868686; }
 .content .pagination-container.fixed-table-footer { position: fixed; width: calc(100% - 180px); bottom: 0; }
+.add-new-form.set-product {
+    width: 0;
+    overflow: hidden;
+}
 
 /* My Account -------------------------------- */
 .information-form { padding: 20px 0 0 0; vertical-align: top; }

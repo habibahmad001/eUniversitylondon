@@ -142,6 +142,7 @@ header .bars{ margin-left:187px; position:relative; padding-top:10px; }
 .login-text-white {
     color: #555;
 }
+
 .login-text-white .btn {
     width: 100%;
     color: #555;
@@ -156,6 +157,10 @@ header .bars{ margin-left:187px; position:relative; padding-top:10px; }
     font-size: 50px;
     font-weight: bold;
     margin: 15% 0 0 9%;
+}
+.add-new-form.set-product {
+    width: 0;
+    overflow: hidden;
 }
 .correct-animation{
     -webkit-animation: scale 1s ease;

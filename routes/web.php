@@ -13,7 +13,7 @@
 
 
 /*__________________Gust Routs______________________________*/
-Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('/laravelhome', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('/redirect', 'SocialAuthFacebookController@redirect');
 Route::get('/callback', 'SocialAuthFacebookController@callback');
 Route::get('verifyemail/{id}', 'Auth\RegisterController@verifyEmail');
@@ -26,6 +26,8 @@ Route::get('/checkUserEmail', 'Rules@checkUserEmail');
 Route::get('/administrator', 'Auth\LoginController@showAdminLoginForm')->name('administrator');
 Route::get('/instructor', 'Auth\LoginController@showInstructorLoginForm')->name('instructor');
 Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learner');
+Route::get('/', 'Front\HomeController@index')->name('home');
+Route::get('category/{page_slug}', 'Front\CategoryController@GetCategories');
 /*__________________Gust Routs______________________________*/
 
 
@@ -54,6 +56,8 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
+Route::post('/homelogin', 'Auth\LoginController@homelogin');
+Route::post('/homesignup', 'Auth\RegisterController@create_user');
 
 
 Route::get('/HasItems/{id}', 'QandAController@HasItems');
@@ -63,6 +67,8 @@ Route::get('/CatChildCount/{id}', 'Category@ChildCount');
 Route::get('/HasCat/{id}', 'Category@HasSubItem');
 
 Route::get('/AllCat', 'Category@AllParentsCat');
+
+Route::get('/GetCatID/{id}', 'Category@CatID');
 
 
 // Route::get('admin_area', ['middleware' => 'admin', function () {
@@ -166,7 +172,9 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/course', 'CoursesController@index');
     Route::post('/admin/course_add', 'CoursesController@CourseAdd');
     Route::get('/admin/getcourse/{cou_id}', 'CoursesController@GetCourse');
+    Route::post('/admin/updatestatus', 'CoursesController@UpdateCourseStatus');
     Route::post('/admin/update-course', 'CoursesController@UpdateCourse');
+    Route::post('/admin/setproduct', 'CoursesController@SetProduct');
     /*************** Courses Ends ***************/
 
     Route::resource('facker', 'FakerController');
@@ -189,7 +197,7 @@ Route::middleware(['admin'])->group(function () {
 
 Route::middleware(['instructor'])->group(function () {
 
-
+    Route::resource('/instructor/users', 'UserController');
     Route::post('/instructor/users_add', 'UserController@create_user');
     Route::get('/instructor/students/{cid}', 'UserController@User_enrolled_in_course');
     Route::get('/instructor/user-create', 'UserController@user_create');
@@ -256,6 +264,7 @@ Route::middleware(['instructor'])->group(function () {
 
 Route::middleware(['learner'])->group(function () {
 
+    Route::resource('/learner/users', 'UserController');
     Route::post('/learner/users_add', 'UserController@create_user');
     Route::get('/learner/students/{cid}', 'UserController@User_enrolled_in_course');
     Route::get('/learner/user-create', 'UserController@user_create');
