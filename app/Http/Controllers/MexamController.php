@@ -43,7 +43,9 @@ class MexamController extends Controller
         foreach($data['Exams'] as $exam_data) {
             if(!empty($exam_data->course_id)) {
                 $Course_Name        =  Courses::where('id', $exam_data->course_id)->first();
-                $Array_Course_Name[$exam_data->id] = $Course_Name->course_title;
+                if(isset($Course_Name->course_title)) {
+                    $Array_Course_Name[$exam_data->id] = $Course_Name->course_title;
+                }
             }
         }
         $data['Array_Course_Name']           =  $Array_Course_Name;
@@ -54,7 +56,9 @@ class MexamController extends Controller
         foreach($data['Exams'] as $course_data) {
             if(!empty($course_data->mexam_user_id)) {
                 $Instructor_Name        =  User::where('id', $course_data->mexam_user_id)->first();
-                $Array_Instructor_Name[$course_data->id] = $Instructor_Name->first_name . " " . $Instructor_Name->last_name;
+                if(isset($Instructor_Name->first_name)) {
+                    $Array_Instructor_Name[$course_data->id] = $Instructor_Name->first_name . " " . $Instructor_Name->last_name;
+                }
             }
         }
         $data['Array_Instructor_Name']           =  $Array_Instructor_Name;

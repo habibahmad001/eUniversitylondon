@@ -35,7 +35,7 @@ $(".edit-icon").click(function () {
       $("#edit-first_name").val(user.first_name);
       $("#edit-last_name").val(user.last_name);
       $("#edit-email").val(user.email);
-      // $("#state").val(store.state_id);
+      $("#edit-user_type").val(user.user_type);
       $("#edit-phone").val(user.phone);
       $("#edit-status").val(user.status);
 
@@ -89,6 +89,7 @@ function validate(type) {
   var password = $("#"+ type +"password").val();
   var conpassword = $("#"+ type +"conpassword").val();
   var status = $("#"+ type +"status").val();
+  var user_type = $("#"+ type +"user_type").val();
 
   var phone_regex = /^\d{3}(-)\d{3}(-)\d{4}$/;
   var email_rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -113,6 +114,11 @@ function validate(type) {
   if(!phone_regex.test(phone)) {
     errors.push("#"+ type +"phone");
   }
+
+  if(user_type == '') {
+    errors.push("#"+ type +"user_type");
+  }
+
   if(type == ''){
   if(password == '') {
     errors.push("#"+ type +"password");

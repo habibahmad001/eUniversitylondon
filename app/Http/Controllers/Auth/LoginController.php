@@ -39,15 +39,6 @@ class LoginController extends Controller {
         $this->middleware('guest')->except('logout');
     }
 
-    public function showHome() {
-        //return view('auth/login');
-
-        $data['sub_heading']  = 'Home page';
-        $data['page_title']   = 'Home';
-
-        return view('frontend.home', $data);
-    }
-
     public function showLoginForm() {
         //return view('auth/login');
 
@@ -67,6 +58,48 @@ class LoginController extends Controller {
 
     public function showLearnerLoginForm() {
         return view('auth/learner/login');
+    }
+
+    public function homelogin(Request $request) {
+        $this->validate($request, [
+            'email'=>'required',
+            'password'=>'required',
+        ]);
+
+        $email = $request->email;
+        $password = $request->password;
+
+        if (Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'admin'])) {
+            //exit($password);
+            return redirect()->intended('/admin/home');
+        }
+        else if(Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'instructor']))
+        {
+            if(Auth::user()->status == 'inactive')
+            {
+                return redirect()->intended('/instructor');
+            } else {
+                return redirect()->intended('/instructor/home');
+            }
+        }
+        else if(Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'learner']))
+        {
+            if(Auth::user()->status == 'inactive')
+            {
+                return redirect()->intended('/learner');
+            } else {
+                return redirect()->intended('/learner/home');
+            }
+        }
+        else
+        {
+            if($request->login_flag == "admin") {
+                return redirect()->intended('/administrator')->withErrors(['email' => 'Invalid username or password!']);
+            } else {
+                return redirect()->intended('/')->withErrors(['email' => 'Invalid username or password!']);
+            }
+
+        }
     }
 
     public function login(Request $request) {

@@ -73,7 +73,7 @@ $(".edit-icon").click(function () {
 $("select[name='tab_name']").change(function(){
 
   var user_folder = $("#user_folder").val();
-  var tab_name = $("select[name='tab_name']").val();
+  var tab_name = $(this).val();
   $.get('/' + user_folder + '/getassignmentexam/' + tab_name, function(data){
 
     if(typeof data.ResponseData != 'undefined'){
@@ -82,6 +82,7 @@ $("select[name='tab_name']").change(function(){
     }
   });
 });
+
 
 function reset_form() {
 

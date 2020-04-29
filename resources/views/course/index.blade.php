@@ -4,6 +4,13 @@
 @include('blocks.left-menu-' . collect(request()->segments())->first())
 @include('course.edit')
 @include('course.create')
+@include('course.set_product')
+
+<style>
+    .fa-spinner {
+        display: none;
+    }
+</style>
 
 <!-- Edit form -->
 <div class="center-content-area table-set">
@@ -27,9 +34,15 @@
                             <input type="checkbox" name="all">
                         </th>
                         <th>Course Title</th>
-                        <th width="40%">Course Content</th>
+                        <th width="20%">Course Content</th>
+                        @if(collect(request()->segments())->first() == "admin" or collect(request()->segments())->first() == "instructor")
+                            <th>Status</th>
+                        @endif
                         @if(collect(request()->segments())->first() == "admin" or collect(request()->segments())->first() == "instructor")
                             <th>Number of User's</th>
+                        @endif
+                        @if(collect(request()->segments())->first() == "admin")
+                            <th>Set As</th>
                         @endif
                         @if(collect(request()->segments())->first() == "admin")
                             <th>Instructor Name</th>
@@ -47,11 +60,32 @@
                         <input type="checkbox" name="del_course[]" value="{{ $Course->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $Course->course_title }}</td>
-                    <td width="40%">{{ (strlen(strip_tags($Course->course_desc)) > 350) ? substr(strip_tags($Course->course_desc), 0, 350) : strip_tags($Course->course_desc) }}</td>
+                    <td width="20%">{{ (strlen(strip_tags($Course->course_desc)) > 150) ? substr(strip_tags($Course->course_desc), 0, 150) . "..." : strip_tags($Course->course_desc) }}</td>
+                    @if(collect(request()->segments())->first() == "instructor")
+                        <td>
+                            @if($Course->course_status == "no")
+                                <button class="btn btn-warning">Pending</button>
+                            @else
+                                <button class="btn btn-success">Approved</button>
+                            @endif
+                        </td>
+                    @endif
+                    @if(collect(request()->segments())->first() == "admin")
+                        <td>
+                            @if($Course->course_status == "no")
+                                <button type="button" class="btn btn-success approve-course" id="approve-course{{ $Course->id }}" data-id="{{ $Course->id }}" data-status="yes" value="">Approve It <!--i class="fa fa-spinner fa-pulse"></i--></button>
+                            @else
+                                <button type="button" class="btn btn-danger block-course" id="block-course{{ $Course->id }}" data-id="{{ $Course->id }}" data-status="no" value="">Block It <!--i class="fa fa-spinner fa-pulse"></i--></button>
+                            @endif
+                        </td>
+                    @endif
                     @if(collect(request()->segments())->first() == "admin" or collect(request()->segments())->first() == "instructor")
                         <td><a href="{{ URL::to('/' . collect(request()->segments())->first() .'/students/' . $Course->id) }}">View User's({{ (array_key_exists($Course->id, $Array_User_Count)) ? $Array_User_Count[$Course->id] : 0 }}) </a> </td>
                     @endif
-                        @if(collect(request()->segments())->first() == "admin")
+                    @if(collect(request()->segments())->first() == "admin")
+                        <td><a href="javascript:void(0);" class="set-as" data-id="{{ $Course->id }}">Set As</a> </td>
+                    @endif
+                    @if(collect(request()->segments())->first() == "admin")
                         <td>{{ (array_key_exists($Course->id, $Array_Instructor_Name)) ? $Array_Instructor_Name[$Course->id] : "" }}</td>
                     @endif
                 </tr>

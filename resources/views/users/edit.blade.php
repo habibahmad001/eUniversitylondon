@@ -36,15 +36,23 @@
           <input type="text" name="phone" id="edit-phone" placeholder="Phone">
         </div>
 
+        <div class="form-line">
+          <select class="half-width" name="user_type" id="edit-user_type">
+            <option value="">Select User Type</option>
+            <option value="instructor">Instructor</option>
+            <option value="learner">Learner</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
 
 
          <div class="form-line">
-          <select class="half-width" name="status" id="edit-status">
-            <option>Select Status</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-        </select>
-        </div>
+            <select class="half-width" name="status" id="edit-status">
+              <option>Select Status</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
         
        
       </div>

@@ -6,7 +6,7 @@
       <a href="javascript:void(0)" class="delete-btn">Delete</a>
   @endif
 
-  @if(collect(request()->segments())->pull(1) == 'students' or collect(request()->segments())->pull(1) == 'childitem' or collect(request()->segments())->pull(0) == 'learner' or collect(request()->segments())->last() == 'home')
+  @if(collect(request()->segments())->pull(1) == 'students' or collect(request()->segments())->pull(1) == 'childitem' or collect(request()->segments())->pull(0) == 'learner' or collect(request()->segments())->last() == 'home' or collect(request()->segments())->last() == 'instructor' or collect(request()->segments())->last() == 'learner')
     @if(collect(request()->segments())->pull(0) == 'learner' && collect(request()->segments())->last() == 'assignment')
       @if(!isset($is_reload_btn))
         <div class="add-button"></div>

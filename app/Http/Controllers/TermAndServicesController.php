@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Mail;
+
 use App\User;
 use App\TermAndServices;
 
@@ -70,6 +72,30 @@ class TermAndServicesController extends Controller
         } else {
             return redirect()->back()->with('error', 'Couldn\'t create CMS!');
         }
+    }
+
+    public function sendmail()
+    {
+        /*Mail::send('emails.mailExample', ['name' => "Habib",'email'=> "habibahmed001@gmail.com"], function($message) {
+            $message->to("habibahmed001@gmail.com");
+            $message->subject('Super Quiz reminder');
+        });*/
+
+
+        /*Mail::send('emails.verify', ['first_name' => "Habib", 'confirmation_code'=> "asasasa"], function($message) {
+            $message->to("habibahmed001@gmail.com");
+            $message->subject('Super Quiz reminder');
+        });*/
+
+        $usertype = "learner";
+        $first_name = "Habib";
+        $pass = "123456";
+        $email = "Test@gmail.com";
+        Mail::send('emails.SendPassword', ['first_name' => $first_name, 'usertype' => $usertype, 'pass'=> $pass, "email" => $email], function($message)  use ($usertype){
+            $message->to("habibahmed001@gmail.com");
+            $message->subject("Your " . $usertype . " account has been created successfully!!!");
+        });
+        return 'Email has been sent to habibahmed001@gmail.com';
     }
 
 
