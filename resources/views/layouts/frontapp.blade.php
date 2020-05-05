@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"/>
     <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}" class="color-switcher-link">
+    <link rel="stylesheet" href="{{ asset('css/shop.css') }}">
     <script src="{{ asset('js/vendor/modernizr-2.6.2.min.js') }}"></script>
 
     <!--[if lt IE 9]>

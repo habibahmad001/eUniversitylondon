@@ -26,11 +26,33 @@ Route::get('/checkUserEmail', 'Rules@checkUserEmail');
 Route::get('/administrator', 'Auth\LoginController@showAdminLoginForm')->name('administrator');
 Route::get('/instructor', 'Auth\LoginController@showInstructorLoginForm')->name('instructor');
 Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learner');
-Route::get('/', 'Front\HomeController@index')->name('home');
-Route::get('category/{page_slug}', 'Front\CategoryController@GetCategories');
 /*__________________Gust Routs______________________________*/
 
 
+Route::middleware(['guest'])->group(function () {
+
+    /************* Home Starts ***************/
+    Route::get('/', 'Front\HomeController@index')->name('home');
+    /************* Home Ends ***************/
+
+    /************* Categories Starts ***************/
+    Route::get('category/{page_slug}', 'Front\CategoryController@GetCategories');
+    /************* Categories Ends ***************/
+
+    /************* Cart Starts ***************/
+    Route::resource('/cart', 'Front\CartController');
+    Route::post('/addcart', 'Front\CartController@AddCart');
+    Route::post('/updatecart', 'Front\CartController@UpdateCart');
+    Route::post('/cartremoveitem', 'Front\CartController@RemoveItem');
+    Route::get('/undocart', 'Front\CartController@UndoItem');
+    Route::get('/reviewcart', 'Front\CartController@ReviewCart');
+    /************* Cart Ends ***************/
+
+    /************* Order Detail Starts ***************/
+    Route::resource('/orderdetail', 'Front\OrderDetailController');
+    /************* Order Detail Starts ***************/
+
+});
 
 Route::middleware(['user','verified'])->group(function () {
 	/*__________________Front Routs______________________________*/

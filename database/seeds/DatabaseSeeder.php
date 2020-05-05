@@ -213,6 +213,6 @@ class DatabaseSeeder extends Seeder
                 'status' => 'active'
             ]]);
 
-              $this->command->info('Session table data seeded Success!');
+              $this->command->info('cart table data seeded Success!');
     }
 }

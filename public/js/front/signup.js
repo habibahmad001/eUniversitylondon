@@ -143,3 +143,13 @@ function login_validate(type) {
 
     return true;
 }
+
+function product_submit(id) {
+    $("#itm-post-" + id).html('<input type="hidden" name="pid" id="pid" value="' + id + '">');
+    $('#prod').submit();
+}
+
+function cart_item_submit(id) {
+    $("#addinput").html('<input type="hidden" name="itemid" id="itemid" value="' + id + '">');
+    $('#cart-update').attr("action", "/cartremoveitem").submit();
+}

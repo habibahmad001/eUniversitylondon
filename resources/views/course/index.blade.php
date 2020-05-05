@@ -7,8 +7,11 @@
 @include('course.set_product')
 
 <style>
-    .fa-spinner {
-        display: none;
+    .spinnerdiv {
+        visibility: hidden;
+        display: inline-block;
+        position: absolute;
+        /*margin-left: 3px;*/
     }
 </style>
 
@@ -73,9 +76,9 @@
                     @if(collect(request()->segments())->first() == "admin")
                         <td>
                             @if($Course->course_status == "no")
-                                <button type="button" class="btn btn-success approve-course" id="approve-course{{ $Course->id }}" data-id="{{ $Course->id }}" data-status="yes" value="">Approve It <!--i class="fa fa-spinner fa-pulse"></i--></button>
+                                <button type="button" class="btn btn-success approve-course" id="approve-course{{ $Course->id }}" data-id="{{ $Course->id }}" data-status="yes" value="">Approve It <div class="spinnerdiv"><i class="fa fa-spinner fa-pulse"></i></div></button>
                             @else
-                                <button type="button" class="btn btn-danger block-course" id="block-course{{ $Course->id }}" data-id="{{ $Course->id }}" data-status="no" value="">Block It <!--i class="fa fa-spinner fa-pulse"></i--></button>
+                                <button type="button" class="btn btn-danger block-course" id="block-course{{ $Course->id }}" data-id="{{ $Course->id }}" data-status="no" value="">Block It <div class="spinnerdiv"><i class="fa fa-spinner fa-pulse"></i></div></button>
                             @endif
                         </td>
                     @endif

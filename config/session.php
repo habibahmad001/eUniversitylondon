@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Default Session Driver
+    | Default cart Driver
     |--------------------------------------------------------------------------
     |
     | This option controls the default session "driver" that will be used on
@@ -20,7 +20,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Session Lifetime
+    | cart Lifetime
     |--------------------------------------------------------------------------
     |
     | Here you may specify the number of minutes that you wish the session
@@ -35,12 +35,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Session Encryption
+    | cart Encryption
     |--------------------------------------------------------------------------
     |
     | This option allows you to easily specify that all of your session data
     | should be encrypted before it is stored. All encryption will be run
-    | automatically by Laravel and you can use the Session like normal.
+    | automatically by Laravel and you can use the cart like normal.
     |
     */
 
@@ -48,7 +48,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Session File Location
+    | cart File Location
     |--------------------------------------------------------------------------
     |
     | When using the native session driver, we need a location where session
@@ -61,7 +61,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Session Database Connection
+    | cart Database Connection
     |--------------------------------------------------------------------------
     |
     | When using the "database" or "redis" session drivers, you may specify a
@@ -74,7 +74,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Session Database Table
+    | cart Database Table
     |--------------------------------------------------------------------------
     |
     | When using the "database" session driver, you may specify the table we
@@ -87,7 +87,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Session Cache Store
+    | cart Cache Store
     |--------------------------------------------------------------------------
     |
     | When using the "apc" or "memcached" session drivers, you may specify a
@@ -100,7 +100,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Session Sweeping Lottery
+    | cart Sweeping Lottery
     |--------------------------------------------------------------------------
     |
     | Some session drivers must manually sweep their storage location to get
@@ -113,7 +113,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Session Cookie Name
+    | cart Cookie Name
     |--------------------------------------------------------------------------
     |
     | Here you may change the name of the cookie used to identify a session
@@ -129,7 +129,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Session Cookie Path
+    | cart Cookie Path
     |--------------------------------------------------------------------------
     |
     | The session cookie path determines the path for which the cookie will
@@ -142,7 +142,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Session Cookie Domain
+    | cart Cookie Domain
     |--------------------------------------------------------------------------
     |
     | Here you may change the domain of the cookie used to identify a session

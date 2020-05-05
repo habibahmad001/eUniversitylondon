@@ -131,15 +131,15 @@ function reset_form() {
 
 $(".approve-course, .block-course").click(function () {
   var user_folder = $("#user_folder").val();
-  // $(".fa-spinner").show();
+  $(this).children(".spinnerdiv").attr("style", 'visibility: visible;');
   $.post('/' + user_folder + '/updatestatus', {p_id: $(this).attr("data-id"), status: $(this).attr("data-status"), inputid: $(this).attr("id"), _token: $('meta[name="csrf-token"]').attr('content')}, function (data, status) {
     if(status == "success") {
       if(data.statuss == "yes"){
-        $("#" + data.itemid).addClass("btn-danger").removeClass("btn-success").text("Block It");
-        // $("#" + data.itemid).child(".fa-spinner").hide();
+        $("#" + data.itemid).addClass("btn-danger").removeClass("btn-success").html('Block It <div class="spinnerdiv" style="visibility: visible;"><i class="fa fa-spinner fa-pulse"></i></div>');
+        $("#" + data.itemid).children(".spinnerdiv").hide();
       } else {
-        $("#" + data.itemid).addClass("btn-success").removeClass("btn-danger").text("Approve It");
-        // $("#" + data.itemid).child(".fa-spinner").hide();
+        $("#" + data.itemid).addClass("btn-success").removeClass("btn-danger").html('Approve It <div class="spinnerdiv" style="visibility: visible;"><i class="fa fa-spinner fa-pulse"></i></div>');
+        $("#" + data.itemid).children(".spinnerdiv").hide();
       }
     }
   });

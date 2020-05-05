@@ -113,6 +113,7 @@
 </div>
 </section>
 
+<form method="POST" name="prod" id="prod" action="{{ URL::to("/addcart") }}">
 <section class="ls s-pt-55 s-pb-30 s-pt-lg-95 s-pb-lg-70" id="courses">
     <div class="container">
         <div class="divider-3"></div>
@@ -142,7 +143,7 @@
                                     </div>
                                     <div class="item-content">
                                         <h6 class="course-title">
-                                            <a href="single-course.html">{{ $course->course_title }}</a>
+                                            <a href="javascript:void(0);">{{ $course->course_title }}</a>
                                         </h6>
 
                                         <div class="star-rating course-rating">
@@ -171,9 +172,9 @@
                                     </p>
                                     <div class="star-rating course-rating">
                                         <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                    </div>
-                                    <div class="divider-48"></div>
-                                    <a href="javascript:void(0);" class="btn btn-maincolor">Start now</a>
+                                    </div>{{ csrf_field() }}
+                                    <div class="divider-48" id="itm-post-{{ $course->id }}"></div>
+                                    <a href="javascript:void(0);" onclick="javascript:product_submit({{ $course->id }});" class="btn btn-maincolor">Start now</a>
                                     <div class="tagcloud">
                                         @if(count(json_decode($course->category_id)) > 0)
                                             @foreach(json_decode($course->category_id) as $v)
@@ -194,6 +195,7 @@
         </div>
     </div>
 </section>
+</form>
 
 
 <section class="ds s-py-60 s-py-lg-100 call-to-action s-parallax s-overlay text-center text-lg-left" id="action">
