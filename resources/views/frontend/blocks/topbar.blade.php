@@ -47,7 +47,7 @@
                                 <a href="{{ URL::to(\Illuminate\Support\Facades\Auth::user()->user_type . '/my-account') }}"><i class="fa fa-user"></i> My Account</a>
                                 <!--a href="#"><i class="fa fa-heart-o"></i> Wishlist</a-->
                                 <a href="{{ URL::to('/cart') }}"><i class="fa fa-shopping-basket"></i> Cart</a>
-                                <a href="{{ URL::to('/checkout') }}"><i class="fa fa-edit"></i> Checkout</a>
+                                <a href="{{ URL::to('/reviewcart') }}"><i class="fa fa-edit"></i> Checkout</a>
                                 <a href="{{ URL::to('/logout') }}"><i class="fa fa-lock"></i> Logout</a>
                             </div>
                         </div>

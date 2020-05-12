@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\CreateLocationTable;
 use App\JobsTable;
+use App\cart;
 
 class LoginController extends Controller {
     /*
@@ -66,6 +67,10 @@ class LoginController extends Controller {
             'password'=>'required',
         ]);
 
+        /********** Old Session ID Starts *************/
+        $Old_Sess_ID = session()->getId();
+        /********** Old Session ID Ends *************/
+
         $email = $request->email;
         $password = $request->password;
 
@@ -84,6 +89,12 @@ class LoginController extends Controller {
         }
         else if(Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'learner']))
         {
+            /********** Update Cart Session ID Starts *************/
+            $update_session                 = cart::firstOrNew(array('session_id' => $Old_Sess_ID));
+            $update_session->session_id     = session()->getId();
+
+            $update_session->save();
+            /********** Update Cart Session ID Ends *************/
             if(Auth::user()->status == 'inactive')
             {
                 return redirect()->intended('/learner');
@@ -102,9 +113,50 @@ class LoginController extends Controller {
         }
     }
 
+
+    public function LearnerLogin(Request $request) {
+        $this->validate($request, [
+            'email'=>'required',
+            'password'=>'required',
+        ]);
+
+        $email = $request->email;
+        $password = $request->password;
+
+        /********** Old Session ID Starts *************/
+        $Old_Sess_ID = session()->getId();
+        /********** Old Session ID Ends *************/
+
+        if (Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'learner'])) {
+
+            /********** Update Cart Session ID Starts *************/
+            $update_session                 = cart::firstOrNew(array('session_id' => $Old_Sess_ID));
+            $update_session->session_id     = session()->getId();
+
+            $update_session->save();
+            /********** Update Cart Session ID Ends *************/
+
+            if(Auth::user()->status == 'inactive')
+            {
+                Auth::logout();
+                return redirect()->intended('/reviewcart')->withErrors(['email' => 'Admin did not approve you yet!!!']);
+            } else {
+                return redirect()->intended('/reviewcart');
+            }
+        }
+        else
+        {
+            return redirect()->intended('/reviewcart')->withErrors(['email' => 'Invalid Email or password!']);
+        }
+    }
+
     public function login(Request $request) {
         $email = $request->email;
         $password = $request->password;
+
+        /********** Old Session ID Starts *************/
+        $Old_Sess_ID = session()->getId();
+        /********** Old Session ID Ends *************/
 
         if (Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'admin'])) {
 //            exit($password);
@@ -132,6 +184,13 @@ class LoginController extends Controller {
         }
         else if(Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'learner']))
         {
+            /********** Update Cart Session ID Starts *************/
+            $update_session                 = cart::firstOrNew(array('session_id' => $Old_Sess_ID));
+            $update_session->session_id     = session()->getId();
+
+            $update_session->save();
+            /********** Update Cart Session ID Ends *************/
+
             if(Auth::user()->status == 'inactive')
             {
                 return redirect()->intended('/learner');

@@ -29,10 +29,12 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
 /*__________________Gust Routs______________________________*/
 
 
-Route::middleware(['guest'])->group(function () {
+//Route::middleware(['guest'])->group(function () {
 
     /************* Home Starts ***************/
     Route::get('/', 'Front\HomeController@index')->name('home');
+    Route::post('/homelogin', 'Auth\LoginController@homelogin');
+    Route::post('/homesignup', 'Auth\RegisterController@create_user');
     /************* Home Ends ***************/
 
     /************* Categories Starts ***************/
@@ -50,9 +52,21 @@ Route::middleware(['guest'])->group(function () {
 
     /************* Order Detail Starts ***************/
     Route::resource('/orderdetail', 'Front\OrderDetailController');
-    /************* Order Detail Starts ***************/
+    Route::post('/learnerlogin', 'Auth\LoginController@LearnerLogin');
+    Route::get('/getcountries', 'Front\CartController@GetCountries');
+    Route::get('/insertdatacountries', 'Front\CartController@InsertDataCountries');
+    Route::get('/addressinfo', 'Front\CartController@AddressInfo');
+    Route::get('/selectstate/{id}', 'Front\CartController@SelectState');
+    Route::post('/saveaddress', 'Front\CartController@SaveAddress');
+    /************* Order Detail Ends ***************/
 
-});
+    /************* Paypal Starts ***************/
+    Route::get('/paypal', 'Front\CartController@Paypal');
+    Route::get('/paypalsuccess', 'Front\CartController@PayPalSuccess');
+    Route::get('/startcourse/{id}', 'Front\CartController@StartCourse');
+    /************* Paypal Ends ***************/
+
+//});
 
 Route::middleware(['user','verified'])->group(function () {
 	/*__________________Front Routs______________________________*/
@@ -78,19 +92,28 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
-Route::post('/homelogin', 'Auth\LoginController@homelogin');
-Route::post('/homesignup', 'Auth\RegisterController@create_user');
+
 
 
 Route::get('/HasItems/{id}', 'QandAController@HasItems');
 Route::get('/AnswerCount/{id}', 'QandAController@AnswerCount');
 
+
+/********** Gernal Category Functions *********/
 Route::get('/CatChildCount/{id}', 'Category@ChildCount');
 Route::get('/HasCat/{id}', 'Category@HasSubItem');
-
 Route::get('/AllCat', 'Category@AllParentsCat');
-
 Route::get('/GetCatID/{id}', 'Category@CatID');
+/********** Gernal Category Functions *********/
+
+/********** Gernal Get Country/State Name *********/
+Route::get('/getcountryname/{id}', 'Front\CartController@GetCountryName');
+Route::get('/getstatename/{id}', 'Front\CartController@GetStateName');
+/********** Gernal Get Country/State Name *********/
+
+/********** Gernal Cart Functions *********/
+Route::get('/carttotal', 'Front\CartController@CartTotal');
+/********** Gernal Cart Functions *********/
 
 
 // Route::get('admin_area', ['middleware' => 'admin', function () {
@@ -362,4 +385,8 @@ Route::get('/sendmail', 'TermAndServicesController@sendmail');
 
 Route::get('/get-started', function () {
     return view('demo');
+});
+
+Route::get('/404', function () {
+    return view('frontend.404');
 });

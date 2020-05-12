@@ -14,205 +14,75 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
 		
-		  $file_n = app_path().'/../database/seeds/questions.csv';
-          $file = fopen($file_n, "r");
-          $all_data = array();
-          while ( ($data = fgetcsv($file, 200, ",")) !==FALSE) {
-			 fputcsv($file, $data);
-			 $level_id	=	'';
-			 $cateory_id	=	''; 
-			 $level = DB::table('levels')->select('level')->where('level', $data[0])->first();
-			 
-			 if($level){
-			 $level_id	=	$level->level;
-			 }else{
-        if($data[0]==1){
-          $levelname  = 'Freshman';
-        }else if($data[0]==2){
-          $levelname  = 'Graduate';
-        }else if($data[0]==3){
-          $levelname  = 'Ph.D';
-        }
-			 $level_row = ["level" => $data[0],"name"=>$levelname];
-			 $getid	=	DB::table('levels')->insert($level_row);
-			 $level_id = $data[0];
-			 	 
-			 }
-			 $category = DB::table('categories')->select('id')->where('category', $data[3])->count();
-			 if($category==0){
-		     $category_row = ["category" => $data[3]];
-			 $category_id	=	DB::table('categories')->insertGetId($category_row);
-			 }else{
-			 $category_id = DB::table('categories')->select('id')->where('category', $data[3])->first()->id;	 
-			 }
-			 
-			 $question = htmlentities($data[2]);
-			
-             $single_row = ["level_id" => $level_id, "category_id" => $category_id,"question"=>$question, "answer" => $data[1]];
-			 
-             DB::table('questions')->insert($single_row);
-			 array_push($all_data, $single_row);
-           }
-           fclose($file);
-		  
-           DB::table('questions')->insert($all_data);
-           $this->command->info('Questions table seeded!');
+		    $file_n = app_path().'/../database/seeds/countriesandstates.json';
+//            $file_n = './countriesandstates.json';
+            $str = file_get_contents($file_n);
+            $json = json_decode($str, true);
+            $countindex = 0;
+            foreach($json["countries"] as $v) {
+    //            echo '<pre>' . $v["country"] . '</pre>';
+    //            echo '<pre>' . print_r($v["states"], true) . '</pre>';
+                $country_row = ["country_name" => $v["country"]];
+                if(count($v["states"]) > 0) {
+                    $country_id	=	DB::table('tablecountry')->insertGetId($country_row);
+                    foreach($v["states"] as $val) {
+                        $state_row = ["state_name" => $val, "cid" => $country_id];
+                        DB::table('tablestate')->insert($state_row);
+                    }
 
-       //     	$faker = Faker::create();
-     		// $limit = 20;
-       //  	for ($i = 0; $i < $limit; $i++) {
-       //  	if($i==0){
-       //  		$user_type	=	'admin';
-       //  	}else{
-       //  		$user_type	=	'user';
-       //  	}
-       //      DB::table('users')->insert([
-       //          'first_name' => $faker->firstName,
-       //          'last_name' => $faker->lastName,
-       //          'username' => $faker->userName,
-       //          'email' => $faker->unique()->email,
-       //          'phone' => $faker->phoneNumber,
-       //          'user_type' => $user_type,
-       //          'password'=>bcrypt('123456')
-       //      ]);
-       //  }
-       //  $this->command->info('users inserted!');
+                } else {
+                    DB::table('tablecountry')->insert($country_row);
+                }
+                $countindex++;
+            }
+        $this->command->info('Country and states data has been successfully inserted !!!');
+
 
 
         DB::table('users')->insert([[
                 'id' => 1,
-                'first_name' => 'mark1',
-                'last_name' => 'davis1',
-                'username' => 'markdavis1',
-                'email' => 'markspicer1@gmail.com',
+                'first_name' => 'Admin F',
+                'last_name' => 'Admin L',
+                'username' => 'admin',
+                'email' => 'admin@gmail.com',
                 'phone' => '905-697-5170',
                 'user_type' => 'admin',
                 'password'=>bcrypt('123456'),
-                'status'=>'active'
+                'status'=>'active',
+                'avatar'=>'1582622439.png',
+                'remember_token'=>'F2spsX6xxi4dLf2PH0EsGw5nxheVJlepkKoqhK6ttr3GenJNMuD1WgPqsHHD',
+                'created_at'=>'2019-12-13 18:38:53',
+                'updated_at'=>'2020-03-16 15:07:05'
             ],[
                 'id' => 2,
-                'first_name' => 'mark2',
-                'last_name' => 'spicer2',
-                'username' => 'mspicer2',
-                'email' => 'markspicer2@gmail.com',
+                'first_name' => 'Instructor F',
+                'last_name' => 'Instructor L',
+                'username' => 'instructor-f-instructor-l',
+                'email' => 'instructor@gmail.com',
                 'phone' => '905-697-5170',
-                'user_type' => 'user',
+                'user_type' => 'instructor',
                 'password'=>bcrypt('123456'),
-                'status'=>'active'
+                'status'=>'active',
+                'avatar'=>'default.jpg',
+                'remember_token'=>'F2spsX6xxi4dLf2PH0EsGw5nxheVJlepkKoqhK6ttr3GenJNMuD1WgPqsHHD',
+                'created_at'=>'2020-04-22 02:06:46',
+                'updated_at'=>'2020-04-22 02:06:46'
             ],[
                 'id' => 3,
-                'first_name' => 'mark3',
-                'last_name' => 'spicer3',
-                'username' => 'mspicer3',
-                'email' => 'markspicer3@gmail.com',
+                'first_name' => 'learner F',
+                'last_name' => 'learner L',
+                'username' => 'learner-f-learner-l',
+                'email' => 'learner@gmail.com',
                 'phone' => '905-697-5170',
-                'user_type' => 'user',
+                'user_type' => 'learner',
                 'password'=>bcrypt('123456'),
-                'status'=>'active'
-            ],[
-                'id' => 4,
-                'first_name' => 'mark4',
-                'last_name' => 'spicer4',
-                'username' => 'mspicer4',
-                'email' => 'markspicer4@gmail.com',
-                'phone' => '905-697-5170',
-                'user_type' => 'user',
-                'password'=>bcrypt('123456'),
-                'status'=>'active'
-            ],[
-                'id' => 5,
-                'first_name' => 'mark5',
-                'last_name' => 'spicer5',
-                'username' => 'mspicer5',
-                'email' => 'markspicer5@gmail.com',
-                'phone' => '905-697-5170',
-                'user_type' => 'user',
-                'password'=>bcrypt('123456'),
-                'status'=>'active'
-            ],[
-                'id' => 6,
-                'first_name' => 'mark6',
-                'last_name' => 'spicer6',
-                'username' => 'mspicer6',
-                'email' => 'markspicer6@gmail.com',
-                'phone' => '905-697-5170',
-                'user_type' => 'user',
-                'password'=>bcrypt('123456'),
-                'status'=>'active'
-            ],[
-                'id' => 7,
-                'first_name' => 'mark7',
-                'last_name' => 'spicer7',
-                'username' => 'mspicer7',
-                'email' => 'markspicer7@gmail.com',
-                'phone' => '905-697-5170',
-                'user_type' => 'user',
-                'password'=>bcrypt('123456'),
-                'status'=>'active'
-            ],[
-                'id' => 8,
-                'first_name' => 'mark8',
-                'last_name' => 'spicer8',
-                'username' => 'mspicer8',
-                'email' => 'markspicer8@gmail.com',
-                'phone' => '905-697-5170',
-                'user_type' => 'user',
-                'password'=>bcrypt('123456'),
-                'status'=>'active'
-            ],[
-                'id' => 9,
-                'first_name' => 'mark9',
-                'last_name' => 'spicer9',
-                'username' => 'mspicer9',
-                'email' => 'markspicer9@gmail.com',
-                'phone' => '905-697-5170',
-                'user_type' => 'user',
-                'password'=>bcrypt('123456'),
-                'status'=>'active'
-            ],[
-                'id' => 10,
-                'first_name' => 'mark10',
-                'last_name' => 'spicer10',
-                'username' => 'mspicer10',
-                'email' => 'markspicer10@gmail.com',
-                'phone' => '905-697-5170',
-                'user_type' => 'user',
-                'password'=>bcrypt('123456'),
-                'status'=>'active'
+                'status'=>'active',
+                'avatar'=>'default.jpg',
+                'remember_token'=>'F2spsX6xxi4dLf2PH0EsGw5nxheVJlepkKoqhK6ttr3GenJNMuD1WgPqsHHD',
+                'created_at'=>'2020-04-22 02:06:46',
+                'updated_at'=>'2020-04-22 02:06:46'
             ]]);
 
         $this->command->info('User table data seeded Success!');
-
-
-
-
-        DB::table('sessions')->insert([[
-                'id' => 1,
-                'start_date' => '2017-01-01',
-                'end_date' => '2017-03-31',
-                'status' => 'inactive'
-            ],[
-                'id' => 2,
-                'start_date' => '2017-04-01',
-                'end_date' => '2017-06-30',
-                'status' => 'inactive'
-            ],[
-                'id' => 3,
-                'start_date' => '2017-07-01',
-                'end_date' => '2017-09-30',
-                'status' => 'inactive'
-            ],[
-                'id' => 4,
-                'start_date' => '2017-10-01',
-                'end_date' => '2017-12-31',
-                'status' => 'inactive'
-            ],[
-                'id' => 5,
-                'start_date' => '2018-01-01',
-                'end_date' => '2018-03-31',
-                'status' => 'active'
-            ]]);
-
-              $this->command->info('cart table data seeded Success!');
     }
 }

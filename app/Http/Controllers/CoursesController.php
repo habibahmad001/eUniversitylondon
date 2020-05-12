@@ -105,6 +105,15 @@ class CoursesController extends Controller
             $CoursesImage->move('uploads/pavatar', $CoursesImage_new_name);
         }
         /************ Image Upload ***********/
+
+        /************ Image PDF ***********/
+        if(!empty($request->file('cou_pdf'))) {
+            $CoursesPDF = $request->file('cou_pdf');
+            $CoursesPDF_new_name = rand() . '.' . $CoursesPDF->getClientOriginalExtension();
+            $Courses->pdf = $CoursesPDF_new_name;
+            $CoursesPDF->move('uploads/coursepdf', $CoursesPDF_new_name);
+        }
+        /************ Image PDF ***********/
         $Courses->category_id  =  json_encode($request->cou_category);
         $Courses->setas  = json_encode(array("most_recent"));
 
@@ -152,13 +161,28 @@ class CoursesController extends Controller
         $Courses->course_discounted_price  = $request->cou_discounted_price;
         /************ Image Upload ***********/
         if(!empty($request->file('cou_avatar'))) {
-            unlink('uploads/pavatar/' . $Courses->course_avatar);
+            if(!empty($Courses->course_avatar)) {
+                (file_exists('uploads/pavatar/' . $Courses->course_avatar)) ? unlink('uploads/pavatar/' . $Courses->course_avatar) : "";
+            }
             $CoursesImage = $request->file('cou_avatar');
             $CoursesImage_new_name = rand() . '.' . $CoursesImage->getClientOriginalExtension();
             $Courses->course_avatar  = $CoursesImage_new_name;
             $CoursesImage->move('uploads/pavatar', $CoursesImage_new_name);
         }
         /************ Image Upload ***********/
+
+        /************ Image PDF ***********/
+        if(!empty($request->file('cou_pdf'))) {
+            if(!empty($Courses->pdf)) {
+                (file_exists('uploads/coursepdf/' . $Courses->pdf)) ? unlink('uploads/coursepdf/' . $Courses->pdf) : "";
+            }
+            $CoursesPDF = $request->file('cou_pdf');
+            $CoursesPDF_new_name = rand() . '.' . $CoursesPDF->getClientOriginalExtension();
+            $Courses->pdf = $CoursesPDF_new_name;
+            $CoursesPDF->move('uploads/coursepdf', $CoursesPDF_new_name);
+        }
+        /************ Image PDF ***********/
+
         $Courses->category_id  = json_encode($request->cou_category);
 
         $saved              = $Courses->save();
@@ -224,7 +248,12 @@ class CoursesController extends Controller
     public function destroy($id) {
         //Find a user with a given id and delete
         $Courses = Courses::findOrFail($id);
-        unlink('uploads/pavatar/' . $Courses->course_avatar);
+        if(!empty($Courses->course_avatar)) {
+            (file_exists('uploads/pavatar/' . $Courses->course_avatar)) ? unlink('uploads/pavatar/' . $Courses->course_avatar) : "";
+        }
+        if(!empty($Courses->pdf)) {
+            (file_exists('uploads/coursepdf/' . $Courses->pdf)) ? unlink('uploads/coursepdf/' . $Courses->pdf) : "";
+        }
         $Courses->delete();
         return redirect('/' . collect(request()->segments())->first() . '/course')->with('message', 'Selected Courses has been deleted successfully!');
     }

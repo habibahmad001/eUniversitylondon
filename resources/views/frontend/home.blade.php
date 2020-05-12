@@ -56,8 +56,6 @@
     </div><!-- eof .container-fluid -->
 </section>
 
-
-
 <section class="s-py-40 ds gradient-background d-none d-md-block" id="feature">
 <div class="container">
     <div class="row">

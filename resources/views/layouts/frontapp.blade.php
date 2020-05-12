@@ -46,6 +46,13 @@
 <div class="preloader">
     <div class="preloader_image"></div>
 </div>
+@if ($errors->any())
+    <div class="woocommerce-message">
+        @foreach ($errors->all() as $error)
+            {{ $error }}
+        @endforeach
+    </div>
+@endif
 
 @include('frontend.blocks.model-popups')
 <!-- wrappers for visual page editor and boxed version of template -->
@@ -69,15 +76,6 @@
                 </div>
             </div>
         </section>
-        @if ($errors->any())
-            <div class="alert alert-danger" style="margin: 0px; padding: 0px;">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
         <!--eof topline-->
         @include('frontend.blocks.menu-section')
 

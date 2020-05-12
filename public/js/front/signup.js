@@ -17,7 +17,8 @@
 
     });
 
-    $(".alert-danger").fadeOut(12000);
+    $(".woocommerce-message").fadeOut(9000);
+    $('#paypalfrm').submit();
 
 })(jQuery);
 
@@ -142,6 +143,113 @@ function login_validate(type) {
     }
 
     return true;
+}
+
+$("#b_edit").click(function () {
+    $("p[data-msg=\"b_msg\"]").toggle(1500);
+    $("#b_info").toggle(1500);
+    if($("#b_info").is(":visible")) {
+        $("#same").attr("checked", "checked");
+    } else {
+        $("#same").removeAttr("checked");
+    }
+});
+$("#s_edit").click(function () {
+    $("p[data-msg=\"s_msg\"]").toggle(1500);
+    $("#s_info").toggle(1500);
+});
+$("#same").click(function () {
+    // if($(this).is(":checked")) {
+        $("p[data-msg=\"s_msg\"]").toggle(1500);
+        $("#s_info").toggle(1500);
+    // }
+
+});
+
+function cart_login_validate(type) {
+    $(".error").each(function(){
+        $(this).removeClass('error');
+    });
+    var errors = [];
+    var email = $("#"+ type +"email-login-cart").val();
+    var password = $("#"+ type +"password-login-cart").val();
+
+
+    if(email == '') {
+        errors.push("#"+ type +"email-login-cart");
+    }
+
+    if(password == '') {
+        errors.push("#"+ type +"password-login-cart");
+    }
+
+    if(errors.length>0){
+        for(i=0; i < errors.length; i++){
+            $(errors[i]).addClass('error');;
+        }
+        return false;
+    }
+
+    return true;
+}
+
+function shipping_address_validate(type) {
+    $(".error").each(function(){
+        $(this).removeClass('error');
+    });
+    var errors = [];
+    var street = $("#"+ type +"street").val();
+    var count = $("#"+ type +"count").val();
+    var stat = $("#"+ type +"stat").val();
+    var city = $("#"+ type +"city").val();
+    var zip = $("#"+ type +"zip").val();
+
+
+    if(street == '') {
+        errors.push("#"+ type +"street");
+    }
+
+    if(stat == '') {
+        errors.push("#"+ type +"stat");
+    }
+    if(count == '') {
+        errors.push("#"+ type +"count");
+    }
+
+    if(city == '') {
+        errors.push("#"+ type +"city");
+    }
+
+    if(zip == '') {
+        errors.push("#"+ type +"zip");
+    }
+    if(errors.length>0){
+        for(i=0; i < errors.length; i++){
+            $(errors[i]).addClass('error');;
+        }
+        return false;
+    }
+
+    return true;
+}
+
+function pickstate(id, itemId="") {
+    $.get('/selectstate/' + id, function(data){
+        var States = data;
+
+        var res_var = "";
+        for(var i=0; i<States.length; i++) {
+            if(typeof States != 'undefined') {
+                console.log(States[i].state_name);
+                res_var += "<option value='" + States[i].id + "'>" + States[i].state_name + "</option>\n";
+            }
+        }
+        if(itemId == "s_count") {
+            $("#s_stat").html(res_var);
+        } else {
+            $("#stat").html(res_var);
+        }
+    });
 }
 
 function product_submit(id) {

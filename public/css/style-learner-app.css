@@ -63,6 +63,10 @@ header .success-message-box .cancel:hover { background: url(../images/cancel-ico
 
 .left-menu ul li .icon-detail { display: inline-block; padding: 0 0 0 10px; }
 
+.add-new-form.set-product {
+    width: 0;
+    overflow: hidden;
+}
 
 /* Content -------------------------------- */
 .content {  position: absolute; top: 70px; background: #f1f1f1; left: 0; right: 0; bottom: 0; min-width: 1024px }

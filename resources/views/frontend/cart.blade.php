@@ -181,7 +181,7 @@
                                     <th>Subtotal</th>
                                     <td data-title="Subtotal">
 													<span class="amount">
-														<span>$</span>{{ $SubTotal }}.00
+														<span>$</span>{{ (isset($SubTotal)) ? $SubTotal : 0 }}.00
 													</span>
                                     </td>
                                 </tr>
@@ -192,7 +192,7 @@
                                     <td data-title="Total">
                                         <strong>
                         <span class="amount">
-                            <span>$</span>{{ $Total }}.00
+                            <span>$</span>{{ (isset($Total)) ? $Total : 0 }}.00
                         </span>
                                         </strong>
                                     </td>
@@ -204,7 +204,7 @@
 
                             <div class="wc-proceed-to-checkout">
 
-                                <a href="shop-checkout.html" class="checkout-button btn btn-maincolor alt wc-forward">Proceed to checkout</a>
+                                <a href="{{ URL::to('/reviewcart') }}" class="checkout-button btn btn-maincolor alt wc-forward">Proceed to checkout</a>
                             </div>
 
 

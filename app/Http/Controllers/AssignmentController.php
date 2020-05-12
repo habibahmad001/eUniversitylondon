@@ -26,7 +26,7 @@ class AssignmentController extends Controller
 
         $data['sub_heading']  = 'Assignment';
         $data['page_title']   = 'eUniversitylondon Assignment';
-        $data['Assignment']        =  Assignment::paginate(10);
+        $data['Assignment']   =  Assignment::where("id", Auth::user()->id)->paginate(10);
         
         return view('assignment/index', $data);
     }

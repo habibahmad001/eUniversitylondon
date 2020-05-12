@@ -44,40 +44,7 @@
                         <!-- .entry-header -->
                         <div class="entry-content">
                             <div class="woocommerce">
-                                <nav class="woocommerce-MyAccount-navigation ls ms">
-                                    <ul>
-                                        <li>
-                                            <a href="shop-account-dashboard.html">
-                                                <p>Dashboard</p>
-                                            </a>
-                                        </li>
-                                        <li class="is-active">
-                                            <a href="shop-account-orders.html">
-                                                <p>Orders</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-account-downloads.html">
-                                                <p>Downloads</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-account-addresses.html">
-                                                <p>Addresses</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-account-details.html">
-                                                <p>Account details</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-account-login.html">
-                                                <p>Logout</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                @include('frontend.blocks.usernav')
 
 
                                 <div class="woocommerce-MyAccount-content">

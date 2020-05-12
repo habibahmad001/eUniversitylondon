@@ -12,6 +12,11 @@ use App\User;
 use App\Categories;
 use App\Courses;
 use App\cart;
+use App\Country;
+use App\State;
+use App\UserAddress;
+use App\CourseWithUser;
+use App\Order;
 
 use Auth;
 
@@ -32,12 +37,12 @@ class CartController extends Controller
 
     public function index() {
 
+        $data                   = [];
+
         $data['sub_heading']    = 'Cart';
         $data['page_title']     = 'eUniversitylondon Cart';
 
-        $data                   = [];
-
-        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->whereDate('created', Carbon::today())->first();
+        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->first();
         if($session_result === null) {
             $data["CartItems"] = "emp";
         } else {
@@ -59,17 +64,250 @@ class CartController extends Controller
         return view('frontend.cart', $data);
     }
 
+    public static function CartTotal() {
+
+        $Total = "";
+        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->first();
+        if($session_result === null) {
+            $Total = "emp";
+        } else {
+            $CartItems = (array) json_decode($session_result->val, true);
+            /*************** Totals *************/
+            $SubTotal = 0;
+            $Total = 0;
+            foreach($CartItems as $v) {
+                $Total = $Total + ($v[3]*$v[2]);
+            }
+            $Total = $Total;
+            /*************** Totals *************/
+
+            return $Total;
+        }
+    }
+
     public function ReviewCart() {
+
+        $data                   = [];
 
         $data['sub_heading']    = 'Cart';
         $data['page_title']     = 'eUniversitylondon Cart';
 
+        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->first();
+        if($session_result === null) {
+            $data["CartItems"] = "emp";
+        } else {
+            $CartItems = (array) json_decode($session_result->val, true);
+            $data["CartItems"] = $CartItems;
+            /*************** Totals *************/
+            $SubTotal = 0;
+            $Total = 0;
+            foreach($CartItems as $v) {
+                $SubTotal = $SubTotal + ($v[3]*$v[2]);
+                $Total = $Total + ($v[3]*$v[2]);
+            }
+            $data["SubTotal"] = $SubTotal;
+            $data["Total"] = $Total;
+            /*************** Totals *************/
+        }
+
+        /*************** Billing Info *************/
+        if(Auth::user()) {
+            $data['addressData']    = UserAddress::where("user_id", Auth::user()->id)->get();
+        } else {
+            $data['addressData']    = array();
+        }
+        /*************** Billing Info *************/
+
+        $data["datenow"] = Carbon::today();
+
         return view('frontend.reviewcart', $data);
+    }
+
+    public function AddressInfo() {
+
+        $data                   = [];
+
+        if(!Auth::user()) {
+            return redirect()->back()->with('message', 'Please login first !!!');
+        }
+
+        $data['sub_heading']    = 'Cart';
+        $data['page_title']     = 'eUniversitylondon Cart';
+
+        $data['Country']        = Country::where("status", "yes")->get();
+        $data['State']          = State::where("status", "yes")->get();
+        $data['addressData']    = UserAddress::where("user_id", Auth::user()->id)->get();
+
+        return view('frontend.addressinfo', $data);
+    }
+
+    public function Paypal() {
+
+        $data                   = [];
+
+        if(!Auth::user()) {
+            return redirect()->back()->with('message', 'Please login first !!!');
+        }
+
+        $addressData    = UserAddress::where("user_id", Auth::user()->id)->get();
+        if(count($addressData) > 0) {
+            $data['addressData']    = $addressData;
+        } else {
+            return redirect()->intended('/addressinfo')->with('message', 'Please setup billing & shipping information first !!!');
+        }
+
+        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->first();
+        if($session_result === null) {
+            $data["CartItems"] = "emp";
+        } else {
+            $CartItems = (array) json_decode($session_result->val, true);
+            $data["CartItems"] = $CartItems;
+        }
+
+        $data['sub_heading']    = 'Paypal';
+        $data['page_title']     = 'eUniversitylondon Paypal';
+
+        return view('frontend.paypal', $data);
+    }
+
+
+    public function PayPalSuccess() {
+
+//        echo "<pre>" . print_r($request) . "</pre>";exit();
+
+        /************** Set order Table ********/
+        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->first();
+        if($session_result === null) {
+            $data["CartItems"] = "emp";
+        } else {
+            $CartItems = (array) json_decode($session_result->val, true);
+
+            $Order         = new Order;
+
+            $Order->user_id         =  Auth::user()->id;
+            $Order->key             =  $session_result->key;
+            $Order->val             =  $session_result->val;
+            $Order->order_id        =  $session_result->id;
+            $Order->order_items     =  count($CartItems);
+            $Order->order_state     =  "Completed";
+            $Order->created         =  $session_result->created;
+
+        }
+
+        $saved          =   $Order->save();
+
+        if ($saved) {
+            /************** Remove Item From Cart **************/
+            $carts = cart::where('session_id', $session_result->session_id)->first();
+            $carts->delete();
+            /************** Remove Item From Cart **************/
+
+            /************** Insert User to Course **************/
+            $CourseWithUser         = new CourseWithUser;
+            if(count($CartItems) > 0) {
+                foreach($CartItems as $v) {
+                    $CourseWithUser = ["user_id" => Auth::user()->id, "course_id" => $v[4]];
+                    \DB::table('tableuserwithcourse')->insert($CourseWithUser);
+                }
+                return redirect()->intended('/learner/course');
+            }
+            /************** Insert User to Course **************/
+        }
+        /************** Set order Table ********/
+    }
+
+    public function StartCourse($course_id) {
+
+        $data                   = [];
+
+        if(!Auth::user()) {
+            return redirect()->back()->with('message', 'Please login first !!!');
+        }
+
+        $data['sub_heading']    = 'Cart';
+        $data['page_title']     = 'eUniversitylondon Cart';
+
+        $data['courseData']    = Courses::where("id", $course_id)->get();
+
+        return view('frontend.startcourse', $data);
+    }
+
+    public function SaveAddress(Request $request){
+
+        $UserAddress           = UserAddress::firstOrNew(array('user_id' => Auth::user()->id));
+
+        $same = $request->same;
+
+        $this->validate($request, [
+            'street'=>'required',
+            'count'=>'required',
+            'stat'=>'required',
+            'city'=>'required',
+            'zip'=>'required'
+        ]);
+
+        if($same == 1) {
+            $UserAddress->user_id = Auth::user()->id;
+            $UserAddress->b_street_address = $request->street;
+            $UserAddress->b_country = $request->count;
+            $UserAddress->b_state = $request->stat;
+            $UserAddress->b_city = $request->city;
+            $UserAddress->b_zip = $request->zip;
+            $UserAddress->s_street_address = $request->street;
+            $UserAddress->s_country = $request->count;
+            $UserAddress->s_state = $request->stat;
+            $UserAddress->s_city = $request->city;
+            $UserAddress->s_zip = $request->zip;
+        } else {
+            $UserAddress->user_id = Auth::user()->id;
+            $UserAddress->b_street_address = $request->street;
+            $UserAddress->b_country = $request->count;
+            $UserAddress->b_state = $request->stat;
+            $UserAddress->b_city = $request->city;
+            $UserAddress->b_zip = $request->zip;
+            $UserAddress->s_street_address = $request->s_street;
+            $UserAddress->s_country = $request->s_count;
+            $UserAddress->s_state = $request->s_stat;
+            $UserAddress->s_city = $request->s_city;
+            $UserAddress->s_zip = $request->s_zip;
+        }
+
+
+        $saved          = $UserAddress->save();
+
+        if ($saved) {
+            $request->session()->flash('message', 'Billing & Shipping info has been added Successfully !!!');
+            return redirect()->back();
+        } else {
+            return redirect()->back()->with('message', 'Faild to add this information !!!');
+        }
+    }
+
+
+    public static function GetCountryName($id){
+
+        $RES          = Country::where("id", $id)->first();
+        return $RES;
+    }
+
+    public static function GetStateName($id){
+
+        $RES          = State::where("id", $id)->first();
+        return $RES;
+    }
+
+    public function SelectState(Request $request) {
+
+        $cid                    = $request->id;
+
+        $States              = State::where("cid", $cid)->where("status", "yes")->get();
+
+        return Response::json($States);
     }
 
     public function AddCart(Request $request){
 
-        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->whereDate('created', Carbon::today())->get();
+        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->get();
             if(count($session_result) > 0) {
                 $CartItems = (array) json_decode($session_result[0]->val, true);
                 if(array_key_exists($request->pid, $CartItems)) {
@@ -131,7 +369,7 @@ class CartController extends Controller
 
         $quantity = $request->quantity;
 
-        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->whereDate('created', Carbon::today())->get();
+        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->get();
         if(count($session_result) > 0) {
             $CartItems = (array) json_decode($session_result[0]->val, true);
             $index_item = 0;
@@ -152,7 +390,7 @@ class CartController extends Controller
 
         $itemid = $request->itemid;
 
-        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->whereDate('created', Carbon::today())->get();
+        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->get();
         if(count($session_result) > 0) {
             /************ Update Undo Field ************/
             $sess         = cart::firstOrNew(array('session_id' => session()->getId()));
@@ -175,7 +413,7 @@ class CartController extends Controller
 
     public function UndoItem(){
 
-        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->whereDate('created', Carbon::today())->get();
+        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->get();
         if(count($session_result) > 0) {
             /************ Update After Delete Item ************/
             $sess         = cart::firstOrNew(array('session_id' => session()->getId()));
@@ -186,6 +424,33 @@ class CartController extends Controller
 
             return redirect()->intended('/cart')->with('message', 'Back to previous state!!!');
         }
+    }
+
+
+    public function InsertDataCountries(){
+
+        $file_n = app_path().'/../database/seeds/countriesandstates.json';
+//            $file_n = './countriesandstates.json';
+        $str = file_get_contents($file_n);
+        $json = json_decode($str, true);
+        $countindex = 0;
+        foreach($json["countries"] as $v) {
+            //            echo '<pre>' . $v["country"] . '</pre>';
+            //            echo '<pre>' . print_r($v["states"], true) . '</pre>';
+            $country_row = ["country_name" => $v["country"]];
+            if(count($v["states"]) > 0) {
+                $country_id	=	\DB::table('tablecountry')->insertGetId($country_row);
+                foreach($v["states"] as $val) {
+                    $state_row = ["state_name" => $val, "cid" => $country_id];
+                    \DB::table('tablestate')->insert($state_row);
+                }
+
+            } else {
+                \DB::table('tablecountry')->insert($country_row);
+            }
+            $countindex++;
+        }
+        $this->command->info('Country and states data has been successfully inserted !!!');
     }
 
 

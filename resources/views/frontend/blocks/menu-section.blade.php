@@ -81,7 +81,7 @@
                             <a class="dropdown-toggle dropdown-shopping-cart" href="#" role="button" id="dropdown-shopping-cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-shopping-basket"></i>
                                 <span class="badge bg-maincolor">3</span>
-                                $27.00
+                                ${{ (App\Http\Controllers\Front\CartController::CartTotal()) ? App\Http\Controllers\Front\CartController::CartTotal() : 0 }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right ls" aria-labelledby="dropdown-shopping-cart">
                                 <div class="widget woocommerce widget_shopping_cart">

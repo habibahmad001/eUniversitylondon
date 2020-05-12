@@ -2167,6 +2167,10 @@ html[xmlns] .slides {
 	width: 8px;
 }
 
+.cart-login {
+	width: 50%;
+}
+
 .ds .flex-control-paging li a,
 .cs .flex-control-paging li a {
 	border-color: #fff;

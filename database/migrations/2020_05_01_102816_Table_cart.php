@@ -19,7 +19,7 @@ class TableCart extends Migration
             $table->string('key', 150)->nullable();
             $table->longText('val')->nullable();
             $table->enum('status', array('yes', 'no'))->default('yes');
-            $table->timestamp('created')->default(DB::raw('CURRENT_TIMESTAMP'));;
+            $table->timestamp('created')->default(DB::raw('CURRENT_TIMESTAMP'));
 
         });
     }
