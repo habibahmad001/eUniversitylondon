@@ -13,7 +13,7 @@ class Order extends Model
         'id', 'user_id', 'key', 'val', 'order_id', 'order_items', 'order_state', 'created', 'status'
     ];
 
-    public function User_Order() {
+    public function user() {
         return $this->belongsTo('App\User');
     }
 }

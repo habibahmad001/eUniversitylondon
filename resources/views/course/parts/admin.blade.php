@@ -9,18 +9,10 @@
                         </th>
                         <th>Course Title</th>
                         <th width="20%">Course Content</th>
-                        @if(collect(request()->segments())->first() == "admin" or collect(request()->segments())->first() == "instructor")
-                            <th>Status</th>
-                        @endif
-                        @if(collect(request()->segments())->first() == "admin" or collect(request()->segments())->first() == "instructor")
-                            <th>Number of User's</th>
-                        @endif
-                        @if(collect(request()->segments())->first() == "admin")
-                            <th>Set As</th>
-                        @endif
-                        @if(collect(request()->segments())->first() == "admin")
-                            <th>Instructor Name</th>
-                        @endif
+                        <th>Status</th>
+                        <th>Number of User's</th>
+                        <th>Set As</th>
+                        <th>Instructor Name</th>
                     </tr>
                 </thead>
                 @if(count($Courses)) @foreach ($Courses as $Course)

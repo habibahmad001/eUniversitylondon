@@ -32,7 +32,7 @@ class DashboardController extends Controller
         $data['users']        =  User::orderBy('id', 'desc')->take(5)->get();
         $data['learner']      =  User::where("user_type", "learner")->orderBy('id', 'desc')->take(5)->get();
         $data['instructor']   =  User::where("user_type", "instructor")->orderBy('id', 'desc')->take(5)->get();
-        $data['courses']      =  Courses::orderBy('id', 'desc')->take(5)->get();
+        $data['courses']      =  Courses::where('course_status', "yes")->orderBy('id', 'desc')->take(5)->get();
 
         return view('admindashboard', $data);
     }
@@ -41,7 +41,7 @@ class DashboardController extends Controller
 
         $data['sub_heading']    = 'Dashborard';
         $data['page_title']     = 'eUniversitylondon Dashborard';
-        $data['courses']               =  Courses::where('course_user_id', Auth::user()->id)->orderBy('id', 'desc')->take(5)->get();
+        $data['courses']               =  Courses::where('course_user_id', Auth::user()->id)->where('course_status', "yes")->orderBy('id', 'desc')->take(5)->get();
         $data['exam']                  =  Exam::where('exam_user_id', Auth::user()->id)->orderBy('id', 'desc')->take(5)->get();
         $data['mexam']                 =  MockExam::where('mexam_user_id', Auth::user()->id)->orderBy('id', 'desc')->take(5)->get();
         $data['coursecurriculum']      =  CourseCurriculum::where('curriculum_user_id', Auth::user()->id)->orderBy('id', 'desc')->take(5)->get();

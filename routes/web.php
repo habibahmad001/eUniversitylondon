@@ -66,6 +66,10 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/startcourse/{id}', 'Front\CartController@StartCourse');
     /************* Paypal Ends ***************/
 
+    /************* Course Starts ***************/
+    Route::get('/course_detail/{id}', 'Front\CourseController@Detail');
+    /************* Course Ends ***************/
+
 //});
 
 Route::middleware(['user','verified'])->group(function () {
@@ -170,6 +174,14 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/getcurriculum/{cc_id}', 'CurriCulums@GetCurriCulum');
     Route::post('/admin/update-curriculum', 'CurriCulums@UpdateCurriCulum');
     /*************** CurriCulums Ends ***************/
+
+    /*************** Course Program Starts ***************/
+    Route::resource('/admin/courseprogram', 'CourseProgramController');
+    Route::get('/admin/courseprogram', 'CourseProgramController@index');
+    Route::post('/admin/courseprogram_add', 'CourseProgramController@CourseProgramAdd');
+    Route::get('/admin/getcourseprogram/{cp_id}', 'CourseProgramController@GetCourseProgram');
+    Route::post('/admin/update-courseprogram', 'CourseProgramController@UpdateCourseProgram');
+    /*************** Course Program Ends ***************/
 
     /*************** Exam Starts ***************/
     Route::resource('/admin/exam', 'Exams');

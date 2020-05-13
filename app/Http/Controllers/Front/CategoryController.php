@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 use App\Categories;
+use App\Courses;
 
 use Auth;
 
@@ -51,6 +52,22 @@ class CategoryController extends Controller
 
         $categories         = Categories::where("page_slug", $page_slug)->first();
         $data['categories'] = $categories;
+        $data['Courses']    = Courses::where("course_status", "yes")->get();
+        $AllCategories      = Categories::where("category_status", "yes")->get();
+
+        /********** Course in categories starts ************/
+        $course_cat_arr = [];
+        foreach($AllCategories as $CatID) {
+            $course_count = 0;
+            foreach($data['Courses'] as $v) {
+                if(in_array($CatID->id, (array) json_decode($v->category_id))) {
+                    $course_count++;
+                }
+            }
+            $course_cat_arr[trim(strtolower($CatID->category_title))] = $course_count;
+        }
+        $data['course_cat'] = $course_cat_arr;
+        /********** Course in categories Ends ************/
 
         return view('frontend.category-detail', $data);
     }

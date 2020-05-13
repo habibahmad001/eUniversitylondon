@@ -160,6 +160,10 @@ table.table { border-collapse:collapse; }
 
 .dropdown.user { padding: 19px 10px 0 0; }
 
+.content .table tbody tr:hover button.btn.btn-secondary{
+    color: #555;
+}
+
 .dropdown.user .dropdown-toggle { width: 32px; display: inline-block; padding: 0; height: 32px; border-radius: 50%; font-size: 16px; color: #ffffff; background: #35c8ac; line-height: 32px; text-align: center; }
 
 .nav .dropdown.user.open>a, .nav .dropdown.user.open>a:focus, .nav .dropdown.user.open>a:hover { background: #35c8ac; }

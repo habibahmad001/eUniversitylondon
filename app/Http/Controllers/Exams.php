@@ -27,16 +27,16 @@ class Exams extends Controller
         $data['page_title']   = 'eUniversitylondon Exam';
         if(collect(request()->segments())->first() == 'instructor') {
             $data['Exams']        =  Exam::where('exam_user_id', Auth::user()->id)->paginate(10);
-            $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->get();
+            $data['Courses']        =  Courses::where('course_status', "yes")->where('course_user_id', Auth::user()->id)->get();
         } elseif(collect(request()->segments())->first() == 'learner') {
             $data['Exams']        =  ExamWithUser::join('tableexam', 'tableexamwithuser.exam_id', '=', 'tableexam.id')
                 ->select('*')
                 ->where('tableexamwithuser.user_id', '=', Auth::user()->id)
                 ->paginate(10);
-            $data['Courses']        =  Courses::All();
+            $data['Courses']        =  Courses::where('course_status', "yes")->get();
         } else {
             $data['Exams']        =  Exam::paginate(10);
-            $data['Courses']        =  Courses::All();
+            $data['Courses']        =  Courses::where('course_status', "yes")->get();
         }
         /**************** Get Course Name **************/
         $Array_Course_Name           =  array();

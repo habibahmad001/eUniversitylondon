@@ -26,10 +26,10 @@ class CurriCulums extends Controller
         $data['page_title']   = 'eUniversitylondon Curriculum';
         if(collect(request()->segments())->first() == 'instructor') {
             $data['Curriculums']        =  CourseCurriculum::where('curriculum_user_id', Auth::user()->id)->paginate(10);
-            $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->get();
+            $data['Courses']            =  Courses::where('course_user_id', Auth::user()->id)->where('course_status', "yes")->get();
         } else {
             $data['Curriculums']        =  CourseCurriculum::paginate(10);
-            $data['Courses']        =  Courses::All();
+            $data['Courses']            =  Courses::where('course_status', "yes")->get();;
         }
 
 

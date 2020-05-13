@@ -13,7 +13,7 @@ class State extends Model
         'id', 'state_name', 'cid', 'status', 'created'
     ];
 
-    public function country_state() {
-        return $this->belongsTo('App\Country');
+    public function cid() {
+        return $this->belongsTo('App\Country', 'cid');
     }
 }
