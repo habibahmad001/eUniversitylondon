@@ -73,7 +73,6 @@ class CartController extends Controller
         } else {
             $CartItems = (array) json_decode($session_result->val, true);
             /*************** Totals *************/
-            $SubTotal = 0;
             $Total = 0;
             foreach($CartItems as $v) {
                 $Total = $Total + ($v[3]*$v[2]);
@@ -128,7 +127,7 @@ class CartController extends Controller
         $data                   = [];
 
         if(!Auth::user()) {
-            return redirect()->back()->with('message', 'Please login first !!!');
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
         }
 
         $data['sub_heading']    = 'Cart';
@@ -146,7 +145,7 @@ class CartController extends Controller
         $data                   = [];
 
         if(!Auth::user()) {
-            return redirect()->back()->with('message', 'Please login first !!!');
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
         }
 
         $addressData    = UserAddress::where("user_id", Auth::user()->id)->get();
@@ -221,7 +220,7 @@ class CartController extends Controller
         $data                   = [];
 
         if(!Auth::user()) {
-            return redirect()->back()->with('message', 'Please login first !!!');
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
         }
 
         $data['sub_heading']    = 'Cart';

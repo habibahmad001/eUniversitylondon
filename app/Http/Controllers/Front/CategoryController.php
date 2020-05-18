@@ -25,22 +25,9 @@ class CategoryController extends Controller
 
         $data['sub_heading']  = 'Category';
         $data['page_title']   = 'eUniversitylondon Category';
-        $data['categories']   =  Categories::where("category_cid", 0)->paginate(10);
         $data['ALLCats']      =  Categories::where("category_cid", 0)->get();
 
-        return view('categories/index', $data);
-    }
-
-    public function GetAllCategories(){
-        $data         = [];
-
-        $data['sub_heading']  = 'Category Page';
-        $data['page_title']   = $this->header_title;
-
-        $categories         = Categories::All();
-        $data['categories'] = $categories;
-
-        return view('categories/index', $data);
+        return view('frontend.catlog', $data);
     }
 
     public function GetCategories($page_slug){

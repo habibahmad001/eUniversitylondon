@@ -39,6 +39,7 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
 
     /************* Categories Starts ***************/
     Route::get('category/{page_slug}', 'Front\CategoryController@GetCategories');
+    Route::get('allcategories', 'Front\CategoryController@index');
     /************* Categories Ends ***************/
 
     /************* Cart Starts ***************/
@@ -70,13 +71,21 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/course_detail/{id}', 'Front\CourseController@Detail');
     /************* Course Ends ***************/
 
+    /************* Front User Starts ***************/
+    Route::resource('/dashboard', 'Front\UserFrontController');
+    Route::get('/orders', 'Front\UserFrontController@Orders');
+    Route::get('/accountdetail', 'Front\UserFrontController@AccountDetail');
+    Route::get('/vieworder/{id}', 'Front\UserFrontController@ViewOrder');
+    Route::get('/orderagain/{id}', 'Front\UserFrontController@OrderAgain');
+    Route::get('/orderagainsuccess', 'Front\UserFrontController@OGSuccess');
+    /************* Front User Ends ***************/
+
 //});
 
 Route::middleware(['user','verified'])->group(function () {
 	/*__________________Front Routs______________________________*/
 	Route::get('userquestion', 'QuestionUserController@index');
 	Route::get('score', 'QuestionUserController@score');
-	Route::get('dashboard', 'QuestionUserController@dashboard');
 	Route::post('saveanswer', 'QuestionUserController@store');
 	Route::get('usersearch/{id}', 'QuestionUserController@usersearch');
 	Route::get('usersearchall/{id}', 'QuestionUserController@usersearchall');
@@ -118,6 +127,10 @@ Route::get('/getstatename/{id}', 'Front\CartController@GetStateName');
 /********** Gernal Cart Functions *********/
 Route::get('/carttotal', 'Front\CartController@CartTotal');
 /********** Gernal Cart Functions *********/
+
+/********** Gernal Course Functions *********/
+Route::get('/getcourseonid/{id}', 'Front\UserFrontController@GetCourseOnID');
+/********** Gernal Course Functions *********/
 
 
 // Route::get('admin_area', ['middleware' => 'admin', function () {
@@ -274,6 +287,14 @@ Route::middleware(['instructor'])->group(function () {
     Route::get('/instructor/getcurriculum/{cc_id}', 'CurriCulums@GetCurriCulum');
     Route::post('/instructor/update-curriculum', 'CurriCulums@UpdateCurriCulum');
     /*************** CurriCulums Ends ***************/
+
+    /*************** Course Program Starts ***************/
+    Route::resource('/instructor/courseprogram', 'CourseProgramController');
+    Route::get('/instructor/courseprogram', 'CourseProgramController@index');
+    Route::post('/instructor/courseprogram_add', 'CourseProgramController@CourseProgramAdd');
+    Route::get('/instructor/getcourseprogram/{cp_id}', 'CourseProgramController@GetCourseProgram');
+    Route::post('/instructor/update-courseprogram', 'CourseProgramController@UpdateCourseProgram');
+    /*************** Course Program Ends ***************/
 
     /*************** Exam Starts ***************/
     Route::resource('/instructor/exam', 'Exams');

@@ -37,6 +37,7 @@ class CourseController extends Controller
         $data['page_title']   = $this->header_title;
 
         $data['course']              = Courses::where("id", $id)->first();
+        $data['AllCourse']           = Courses::where("course_status", "yes")->get();
         $data['CourseProgram']       = CourseProgram::where("course_id", $data['course']->id)->where("cp_status", "yes")->orderBy("cp_placement", "asc")->get();
 
         return view('frontend.course-detail', $data);

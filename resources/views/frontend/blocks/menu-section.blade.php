@@ -78,7 +78,7 @@
                 <div class="col-4 d-none d-xl-block">
                     <div class="top-includes main-includes">
                         <div class="dropdown">
-                            <a class="dropdown-toggle dropdown-shopping-cart" href="#" role="button" id="dropdown-shopping-cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="dropdown-toggle dropdown-shopping-cart" href="{{ URL::to("/cart") }}" role="button" id="dropdown-shopping-cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-shopping-basket"></i>
                                 <span class="badge bg-maincolor">3</span>
                                 ${{ (App\Http\Controllers\Front\CartController::CartTotal()) ? App\Http\Controllers\Front\CartController::CartTotal() : 0 }}
@@ -125,8 +125,8 @@
                                         </p>
 
                                         <p class="woocommerce-mini-cart__buttons buttons">
-                                            <a href="shop-cart.html" class="button btn btn-maincolor wc-forward">View cart</a>
-                                            <a href="shop-checkout.html" class="button checkout btn btn-outline-maincolor  wc-forward">Checkout</a>
+                                            <a href="{{ URL::to("/cart") }}" class="button btn btn-maincolor wc-forward">View cart</a>
+                                            <a href="{{ URL::to("/reviewcart") }}" class="button checkout btn btn-outline-maincolor  wc-forward">Checkout</a>
                                         </p>
                                     </div>
                                 </div>

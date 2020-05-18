@@ -16,6 +16,14 @@
       </a>
     </li>
 
+    <li @if(collect(request()->segments())->last()=='courseprogram') class="active" @endif>
+      <a href="{{ URL::to('/instructor/courseprogram') }}">
+        {{--manage-rules--}}
+        <div class="icon">CP</div>
+        <div class="icon-detail">Course Program</div>
+      </a>
+    </li>
+
     <li @if(collect(request()->segments())->last()=='curriculum') class="active" @endif>
       <a href="{{ URL::to('/instructor/curriculum') }}">
         {{--manage-rules--}}

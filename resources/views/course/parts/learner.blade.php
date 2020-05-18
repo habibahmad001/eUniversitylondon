@@ -9,6 +9,7 @@
                         </th>
                         <th>Course Title</th>
                         <th>Course Content</th>
+                        <th>Download</th>
                         <th>Detail</th>
                         <th>Action</th>
                     </tr>
@@ -25,6 +26,7 @@
                     </th>
                     <td>{{ $Course->course_title }}</td>
                     <td>{{ (strlen(strip_tags($Course->course_desc)) > 150) ? substr(strip_tags($Course->course_desc), 0, 150) . "..." : strip_tags($Course->course_desc) }}</td>
+                    <td>@if($Course->pdf != NULL)<a href="{{ URL::to("/uploads/coursepdf/" . $Course->pdf) }}" target="_blank">Download</a>@else No PDF @endif</td>
                     <td><button class="btn btn-secondary" onclick="javascript:window.location.href='{{ URL::to("/course_detail/" . $Course->id ) }}'">View</button></td>
                     <td><button class="btn btn-success" onclick="javascript:window.location.href='{{ URL::to("/startcourse/" . $Course->id ) }}'">Start Course</button></td>
                 </tr>

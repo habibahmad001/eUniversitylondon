@@ -69,7 +69,7 @@ header .success-message-box .cancel:hover { background: url(../images/cancel-ico
 }
 
 /* Content -------------------------------- */
-.content {  position: absolute; top: 70px; background: #f1f1f1; left: 0; right: 0; bottom: 0; min-width: 1024px }
+.content {  position: absolute; top: 17%; background: #f1f1f1; left: 0; right: 0; bottom: 0; min-width: 1024px }
 .sub-header { background: #959595; padding:14px 12px 14px 12px; box-shadow: 0 0 3px rgba(44, 59, 73, .25); height: 60px; }
 .sub-header::after { display: block; content: ''; clear: both; }
 .sub-header h2 { font-size: 24px; font-weight: 500; color: #fff; min-width: 184px; float: left; padding: 7px 0 0 0; }

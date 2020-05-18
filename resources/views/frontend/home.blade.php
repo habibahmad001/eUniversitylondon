@@ -221,27 +221,35 @@
                 <h2 class="text-center">Popular categories</h2>
             </div>
             <div class="divider-10 d-none d-lg-block"></div>
-            @foreach(App\Http\Controllers\Category::AllParentsCat() as $k=>$catval)
-                <div class="col-lg-4 col-sm-6 animate" data-animation="fadeInUp">
-                <div class="icon-box text-center">
-                    <div class="color-main icon-styled fs-77">
-                        <i class="{{ $catval->selectedicon }}" aria-hidden="true"></i>
+            @if(count($AllParents) > 0)
+                @foreach($AllParents as $k=>$catval)
+                    <div class="col-lg-4 col-sm-6 animate" data-animation="fadeInUp">
+                    <div class="icon-box text-center">
+                        <div class="color-main icon-styled fs-77">
+                            <i class="{{ $catval->selectedicon }}" aria-hidden="true"></i>
+                        </div>
+                        <h6 class="fw-700">
+                            <a href="{{ URL::to('/category/' . $catval->page_slug) }}">{{ $catval->category_title }}</a>
+                        </h6>
+                        <p>
+                            {{ (strlen(strip_tags($catval->category_desc)) > 150) ? substr(strip_tags($catval->category_desc), 0, 150) . "..." : strip_tags($catval->category_desc) }}
+                        </p>
                     </div>
-                    <h6 class="fw-700">
-                        <a href="{{ URL::to('/category/' . $catval->page_slug) }}">{{ $catval->category_title }}</a>
-                    </h6>
-                    <p>
-                        {{ (strlen(strip_tags($catval->category_desc)) > 150) ? substr(strip_tags($catval->category_desc), 0, 150) . "..." : strip_tags($catval->category_desc) }}
-                    </p>
-                </div>
-                <span class="media-links">
-								<a class="abs-link" title="" href="{{ URL::to('/category/' . $catval->page_slug) }}"></a>
-							</span>
-            </div><!-- .col-* -->
-            @endforeach
+                    <span class="media-links">
+                        <a class="abs-link" title="" href="{{ URL::to('/category/' . $catval->page_slug) }}"></a>
+                    </span>
+                </div><!-- .col-* -->
+                @endforeach
+            @else
+                <div class="col-lg-4 col-sm-6 animate" data-animation="fadeInUp">
+                    <div class="icon-box text-center">
+                        <center>There is no record found yet !!!</center>
+                    </div>
+                </div><!-- .col-* -->
+            @endif
 
            <div class="col-12  text-center">
-                <a href="#" class="btn btn-maincolor">View More Categories</a>
+                <a href="{{ URL::to("/allcategories") }}" class="btn btn-maincolor">View More Categories</a>
             </div>
             <div class="d-none d-lg-block divider-20"></div>
         </div>

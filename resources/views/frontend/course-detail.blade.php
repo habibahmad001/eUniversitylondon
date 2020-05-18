@@ -28,6 +28,7 @@
         </section>
     </div>
 
+    <form method="POST" name="prod" id="prod" action="{{ URL::to("/addcart") }}">
     <section class="ls s-pt-60 s-pb-0 s-pt-lg-100 s-pb-lg-50 c-gutter-30 c-mb-30 c-mb-lg-50 single-course">
         <div class="container">
             <div class="row">
@@ -127,115 +128,70 @@
                         </div>
                     </div>
                     <div class="row courses-item c-mb-30">
-                        <div class="col-12 col-md-6 col-lg-12 popular">
-                            <div class="course-flip h-100">
-                                <div class="course-front bordered rounded">
-                                    <div class=" vertical-item content-padding">
-                                        <div class="item-media rounded-top">
-                                            <img src="images/courses/01.jpg" alt="">
-                                        </div>
-                                        <div class="item-content">
-                                            <h6 class="course-title">
-                                                <a href="single-course.html">Diploma in Basic English Grammar</a>
-                                            </h6>
+                        @if(count($AllCourse) > 0)
+                            @foreach($AllCourse as $course)
+                                @if(in_array("most_popular", json_decode($course->setas)))
+                                    <div class="col-12 col-md-6 col-lg-12 popular">
+                                        <div class="course-flip h-100">
+                                            <div class="course-front bordered rounded">
+                                                <div class=" vertical-item content-padding">
+                                                    <div class="item-media rounded-top">
+                                                        <img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
+                                                    </div>
+                                                    <div class="item-content">
+                                                        <h6 class="course-title">
+                                                            <a href="{{ URL::to('course_detail/' . $course->id) }}">{{ (strlen(strip_tags($course->course_title)) > 32) ? substr(strip_tags($course->course_title), 0, 32) . "..." : strip_tags($course->course_title) }}</a>
+                                                        </h6>
 
-                                            <div class="star-rating course-rating">
-                                                <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                            </div>
+                                                        <div class="star-rating course-rating">
+                                                            <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
+                                                        </div>
 
-                                            <div class="tagcloud">
-                                                <a href="#" class="tag-cloud-link">
-                                                    Technology
-                                                </a>
-                                                <a href="#" class="tag-cloud-link">
-                                                    Humanities
-                                                </a>
+                                                        <div class="tagcloud">
+                                                            @if(count(json_decode($course->category_id)) > 0)
+                                                                @foreach(json_decode($course->category_id) as $v)
+                                                                    <a href="category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
+                                                                        {{ App\Http\Controllers\Category::CatID($v)->category_title }}
+                                                                    </a>
+                                                                @endforeach
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="course-back rounded vertical-item content-padding ds">
+                                                <div class="item-content">
+                                                    <h6 class="course-title">
+                                                        <a href="{{ URL::to('course_detail/' . $course->id) }}">{{ (strlen(strip_tags($course->course_title)) > 32) ? substr(strip_tags($course->course_title), 0, 32) . "..." : strip_tags($course->course_title) }}</a>
+                                                    </h6>
+                                                    {{ (strlen(strip_tags($course->course_desc)) > 150) ? substr(strip_tags($course->course_desc), 0, 150) . "..." : strip_tags($course->course_desc) }}
+                                                    <div class="star-rating course-rating">
+                                                        <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
+                                                    </div>{{ csrf_field() }}
+                                                    <div class="divider-48" id="itm-post-{{ $course->id }}"></div>
+                                                    <a href="javascript:void(0);" onclick="javascript:product_submit({{ $course->id }});" class="btn btn-maincolor">Start now</a>
+                                                    <div class="tagcloud">
+                                                        @if(count(json_decode($course->category_id)) > 0)
+                                                            @foreach(json_decode($course->category_id) as $v)
+                                                                <a href="category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
+                                                                    {{ App\Http\Controllers\Category::CatID($v)->category_title }}
+                                                                </a>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="course-back rounded vertical-item content-padding ds">
-                                    <div class="item-content">
-                                        <h6 class="course-title">
-                                            <a href="single-course.html">Diploma in Basic English Grammar</a>
-                                        </h6>
-                                        <p>
-                                            Learn about corporate governance of organizations: internal and external factors
-                                        </p>
-                                        <div class="star-rating course-rating">
-                                            <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                        </div>
-                                        <div class="divider-48"></div>
-                                        <a href="#" class="btn btn-maincolor">Start now</a>
-                                        <div class="tagcloud">
-                                            <a href="#" class="tag-cloud-link">
-                                                Technology
-                                            </a>
-                                            <a href="#" class="tag-cloud-link">
-                                                Humanities
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-12 popular">
-                            <div class="course-flip h-100">
-                                <div class="course-front bordered rounded">
-                                    <div class="vertical-item content-padding">
-                                        <div class="item-media rounded-top">
-                                            <img src="images/courses/02.jpg" alt="">
-                                        </div>
-                                        <div class="item-content">
-                                            <h6 class="course-title">
-                                                <a href="single-course.html">Diploma in Legal Studies - Revised 2017</a>
-                                            </h6>
-
-                                            <div class="star-rating course-rating">
-                                                <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                            </div>
-                                            <div class="tagcloud">
-                                                <a href="#" class="tag-cloud-link">
-                                                    Marketing
-                                                </a>
-                                                <a href="#" class="tag-cloud-link">
-                                                    Lifestyle
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="course-back rounded vertical-item content-padding ds">
-                                    <div class="item-content">
-                                        <h6 class="course-title">
-                                            <a href="single-course.html">Diploma in Legal Studies - Revised 2017</a>
-                                        </h6>
-                                        <p>
-                                            Learn about corporate governance of organizations: internal and external factors
-                                        </p>
-                                        <div class="star-rating course-rating">
-                                            <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                        </div>
-                                        <div class="divider-48"></div>
-                                        <a href="#" class="btn btn-maincolor">Start now</a>
-                                        <div class="divider-95 d-block d-lg-none d-xl-block"></div>
-                                        <div class="tagcloud">
-                                            <a href="#" class="tag-cloud-link">
-                                                Marketing
-                                            </a>
-                                            <a href="#" class="tag-cloud-link">
-                                                Lifestyle
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                @endif
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    </form>
 
     <section class="ds s-pt-60 s-pb-55 s-py-lg-100 c-gutter-50 course-bio">
         <div class="container">

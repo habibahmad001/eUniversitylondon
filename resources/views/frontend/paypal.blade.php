@@ -66,7 +66,11 @@
                         <input type="hidden" name="handling_1" value="0.01" />
                         <input type="hidden" name="tax_1" value="0.01" />
                         <input type="hidden" name="currency_code" value="USD" />
-                        <input type="hidden" name="return" value="{{ URL::to('/paypalsuccess') }}" />
+                        @if(isset($OrderAgain) && $OrderAgain == "yes")
+                            <input type="hidden" name="return" value="{{ URL::to('/orderagainsuccess') }}" />
+                        @else
+                            <input type="hidden" name="return" value="{{ URL::to('/paypalsuccess') }}" />
+                        @endif
                         <input type="hidden" name="cancel_return" value="{{ URL::to('/404') }}" />
                         <input type="hidden" name="lc" value="test lc country" />
                     </form>

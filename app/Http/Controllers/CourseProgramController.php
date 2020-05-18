@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\User;
 use App\CourseProgram;
 use App\Courses;
+use App\CourseWithUser;
 
 use Auth;
 
@@ -25,11 +26,16 @@ class CourseProgramController extends Controller
         $data['sub_heading']  = 'Curriculum';
         $data['page_title']   = 'eUniversitylondon Curriculum';
         if(collect(request()->segments())->first() == 'instructor') {
-            $data['CourseProgram']          =  CourseProgram::where('cp_status', "yes")->paginate(10);
+            $data['CourseProgram']          =  CourseProgram::join('tablecourses', 'tablecourseprogram.course_id', '=', 'tablecourses.id')
+                                                                ->select('*')
+                                                                ->where('tablecourses.course_user_id', '=', Auth::user()->id)
+                                                                ->orderBy('tablecourses.id', 'asc')
+                                                                ->paginate(10);
+            $data['Courses']                =  Courses::where('course_user_id', Auth::user()->id)->paginate(10);
         } else {
             $data['CourseProgram']          =  CourseProgram::where('cp_status', "yes")->paginate(10);
+            $data['Courses']                =  Courses::where('course_status', "yes")->get();
         }
-        $data['Courses']        =  Courses::where('course_status', "yes")->get();
 
         /**************** Get Course Name **************/
         $Array_Course_Name           =  array();
