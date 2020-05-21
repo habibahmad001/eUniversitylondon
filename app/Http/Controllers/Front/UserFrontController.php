@@ -47,8 +47,8 @@ class UserFrontController extends Controller
 
         $data                   = [];
 
-        $data['sub_heading']    = 'Cart';
-        $data['page_title']     = 'eUniversitylondon Cart';
+        $data['sub_heading']    = 'Order';
+        $data['page_title']     = 'eUniversitylondon Order';
 
 
 
@@ -169,6 +169,39 @@ class UserFrontController extends Controller
         }
 
         return view('frontend.accountdetail', $data);
+    }
+
+    public function UpdateUser(Request $request) {
+        if(Auth::user()) {
+            $id              =        $request->user_id;
+            $this->validate($request, [
+                'account_first_name'=>'required',
+                'account_last_name'=>'required',
+                'account_email'=>'required|email|unique:users,email,'.$id
+            ]);
+            $users              = User::find($id);
+            $users->first_name  = $request->account_first_name;
+            $users->last_name   = $request->account_last_name;
+            $users->email       = $request->account_email;
+            if(isset($request->password_current)) {
+                $this->validate($request, [
+                    'password_current'     => 'required',
+                    'password_1'     => 'required|min:6',
+                    'password_2' => 'required|same:password_1',
+                ]);
+                $users->password    = bcrypt($request->password_1);
+            }
+
+            $saved              = $users->save();
+            if ($saved) {
+                $request->session()->flash('message', 'User information has been updated Successfully !!!');
+                return redirect()->back();
+            } else {
+                return redirect()->back()->with('error', 'Couldn\'t update user info !!!');
+            }
+        } else {
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+        }
     }
 
     public function destroy($id) {

@@ -35,6 +35,10 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/', 'Front\HomeController@index')->name('home');
     Route::post('/homelogin', 'Auth\LoginController@homelogin');
     Route::post('/homesignup', 'Auth\RegisterController@create_user');
+    Route::get('/forgotpassword', 'Front\HomeController@ForgotPassword');
+    Route::post('/resetemail', 'Front\HomeController@ResetEmail');
+    Route::get('/updatepass/{id}', 'Front\HomeController@UpdatePassword');
+    Route::post('/updatepass', 'Front\HomeController@ResetPassword');
     /************* Home Ends ***************/
 
     /************* Categories Starts ***************/
@@ -78,6 +82,7 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/vieworder/{id}', 'Front\UserFrontController@ViewOrder');
     Route::get('/orderagain/{id}', 'Front\UserFrontController@OrderAgain');
     Route::get('/orderagainsuccess', 'Front\UserFrontController@OGSuccess');
+    Route::post('/updateuser', 'Front\UserFrontController@UpdateUser');
     /************* Front User Ends ***************/
 
 //});
@@ -131,6 +136,10 @@ Route::get('/carttotal', 'Front\CartController@CartTotal');
 /********** Gernal Course Functions *********/
 Route::get('/getcourseonid/{id}', 'Front\UserFrontController@GetCourseOnID');
 /********** Gernal Course Functions *********/
+
+/********** Gernal User Functions *********/
+Route::get('/getuseronid/{id}', 'OrderController@GetUserOnID');
+/********** Gernal User Functions *********/
 
 
 // Route::get('admin_area', ['middleware' => 'admin', function () {
@@ -247,6 +256,12 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/setproduct', 'CoursesController@SetProduct');
     /*************** Courses Ends ***************/
 
+    /*************** Order Starts ***************/
+    Route::resource('/admin/Order', 'OrderController');
+    Route::get('/admin/orders', 'OrderController@index');
+    Route::get('/admin/vieworder/{id}', 'OrderController@ViewOrder');
+    /*************** Order Ends ***************/
+
     Route::resource('facker', 'FakerController');
 
     Route::get('/admin/home', 'DashboardController@index');
@@ -254,15 +269,6 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return redirect('/' . collect(request()->segments())->first() . '/home');
     });
-
-    Route::get('/admin/orders', function () {
-        $data['sub_heading']  = 'Order Page';
-        $data['page_title']   = 'Orders';
-        $data['msg']   = 'Order admin functionality will be implemented soon!';
-
-        return view('home', $data);
-    });
-
 });
 
 Route::middleware(['instructor'])->group(function () {
@@ -423,3 +429,6 @@ Route::get('/get-started', function () {
 Route::get('/404', function () {
     return view('frontend.404');
 });
+
+Route::get('/checkout', 'AuthorizeController@index');
+Route::post('/checkout', 'AuthorizeController@chargeCreditCard');

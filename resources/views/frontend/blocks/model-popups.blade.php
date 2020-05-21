@@ -72,9 +72,7 @@
 							</span>
                     </div-->
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="remember">
-                        <label class="form-check-label" for="remember">
-                            Keep me logged in
+                            <a href="{{ URL::to("/forgotpassword") }}">Forgot password</a>
                         </label>
                     </div>
                     <button type="submit" class="btn btn-maincolor log-btn">Log In</button>

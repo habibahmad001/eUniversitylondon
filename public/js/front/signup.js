@@ -145,6 +145,112 @@ function login_validate(type) {
     return true;
 }
 
+function accountdetail_validate(type) {
+    $(".error").each(function(){
+        $(this).removeClass('error');
+    });
+    var errors = [];
+    var account_first_name = $("#"+ type +"account_first_name").val();
+    var account_last_name = $("#"+ type +"account_last_name").val();
+    var account_email = $("#"+ type +"account_email").val();
+    var password_current = $("#"+ type +"password_current").val();
+    var password_1 = $("#"+ type +"password_1").val();
+    var password_2 = $("#"+ type +"password_2").val();
+    var email_rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+
+    if(account_first_name == '') {
+        errors.push("#"+ type +"account_first_name");
+    }
+
+    if(account_last_name == '') {
+        errors.push("#"+ type +"account_last_name");
+    }
+
+    if(account_email == '') {
+        errors.push("#"+ type +"account_email");
+    }
+
+    if(!email_rgx.test(account_email)) {
+        errors.push("#"+ type +"account_email");
+    }
+
+    if(password_current != "")
+    {
+        if((password_1 == "" || password_2 == "") || password_1!=password_2){
+            $("#"+type+"password-match").html('');
+            $("#"+type+"password-match").css('color','#ff0000');
+            $("#"+type+"password-match").html('Password Not match');
+            errors.push("#"+ type +"password_1");
+            errors.push("#"+ type +"password_2");
+        }
+    }
+
+
+    if(errors.length>0){
+        for(i=0; i < errors.length; i++){
+            $(errors[i]).addClass('error');;
+        }
+        return false;
+    }
+
+    return true;
+}
+
+
+function reset_validate(type) {
+    $(".error").each(function(){
+        $(this).removeClass('error');
+    });
+    var errors = [];
+
+    var account_email = $("#"+ type +"account_email").val();
+    var email_rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if(account_email == '') {
+        errors.push("#"+ type +"account_email");
+    }
+
+    if(!email_rgx.test(account_email)) {
+        errors.push("#"+ type +"account_email");
+    }
+
+    if(errors.length>0){
+        for(i=0; i < errors.length; i++){
+            $(errors[i]).addClass('error');;
+        }
+        return false;
+    }
+
+    return true;
+}
+
+function update_pass_validate(type) {
+    $(".error").each(function(){
+        $(this).removeClass('error');
+    });
+    var errors = [];
+
+    var new_password = $("#"+ type +"new_password").val();
+    var confirm_password = $("#"+ type +"confirm_password").val();
+
+    if((new_password == "" || confirm_password == "") || confirm_password!=confirm_password){
+        errors.push("#"+ type +"new_password");
+        errors.push("#"+ type +"confirm_password");
+    }
+
+
+    if(errors.length>0){
+        for(i=0; i < errors.length; i++){
+            $(errors[i]).addClass('error');;
+        }
+        return false;
+    }
+
+    return true;
+}
+
+
 $("#b_edit").click(function () {
     $("p[data-msg=\"b_msg\"]").toggle(1500);
     $("#b_info").toggle(1500);

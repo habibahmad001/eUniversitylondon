@@ -12,6 +12,7 @@ use App\Courses;
 use App\Testimonial;
 use App\Clients;
 use App\Categories;
+use Illuminate\Support\Facades\Mail;
 
 use Auth;
 
@@ -37,6 +38,65 @@ class HomeController extends Controller
         $data['Courses']            = Courses::where("course_status","yes")->take(10)->orderBy('id', 'desc')->get();
 
         return view('frontend.home', $data);
+    }
+
+    public function ForgotPassword() {
+
+        $data['sub_heading']  = 'Forgot Password Page';
+        $data['page_title']   = 'Forgot Password';
+
+        return view('frontend.forgotpass', $data);
+    }
+
+    public function UpdatePassword($id) {
+
+        $data['sub_heading']  = 'Forgot Password Page';
+        $data['page_title']   = 'Forgot Password';
+
+        $data['id']   = $id;
+
+        return view('frontend.updatepass', $data);
+    }
+
+    public function ResetEmail(Request $request) {
+
+        $email = $request->account_email;
+
+        $User_Data         = User::where("email", $email)->get();
+
+        if(count($User_Data) > 0) {
+            $usertype   = $User_Data[0]->user_type;
+            $first_name = $User_Data[0]->first_name;
+            $userID     = $User_Data[0]->id;
+
+            Mail::send('emails.ResetPassword', ['first_name' => $first_name, 'usertype' => $usertype, "userID" => $userID], function($message)  use ($email){
+                $message->to($email);
+                $message->subject("eUniversityLondon Account password reset email !!!");
+            });
+
+            return redirect()->intended('/')->withErrors(['email' => 'Please check your email !!!']);
+        }
+
+        return redirect()->intended('/')->withErrors(['email' => 'Email does not exist !!!']);
+    }
+
+    public function ResetPassword(Request $request) {
+
+        $id              =        $request->user_id;
+        $this->validate($request, [
+            'new_password'     => 'required',
+            'confirm_password'     => 'required|same:new_password'
+        ]);
+        $users              = User::find($id);
+        $users->password    = bcrypt($request->new_password);
+
+        $saved              = $users->save();
+        if ($saved) {
+            $request->session()->flash('message', 'Password has been updated Successfully !!!');
+            return redirect()->back();
+        } else {
+            return redirect()->back()->with('error', 'Couldn\'t update Password !!!');
+        }
     }
 
 }

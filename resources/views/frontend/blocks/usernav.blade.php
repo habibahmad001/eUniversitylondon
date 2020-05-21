@@ -21,6 +21,11 @@
                 <p>Account details</p>
             </a>
         </li>
+        <li @if(collect(request()->segments())->last()=='forgotpassword') class="is-active" @endif>
+            <a href="{{ URL::to("/forgotpassword") }}">
+                <p>Forgot Password</p>
+            </a>
+        </li>
         <li>
             <a href="{{ URL::to("/logout") }}">
                 <p>Logout</p>

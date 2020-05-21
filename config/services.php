@@ -34,6 +34,10 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+    'authorize' => [
+        'login' => env('AUTHORIZE_PAYMENT_API_LOGIN_ID'),
+        'key' => env('AUTHORIZE_PAYMENT_TRANSACTION_KEY')
+    ],
 
     'facebook' => [
     'client_id' => '134699947243169',
