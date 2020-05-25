@@ -51,12 +51,19 @@ class CategoryController extends Controller
                     $course_count++;
                 }
             }
-            $course_cat_arr[trim(strtolower($CatID->category_title))] = $course_count;
+            $course_cat_arr[$CatID->id] = $course_count;
         }
         $data['course_cat'] = $course_cat_arr;
         /********** Course in categories Ends ************/
 
         return view('frontend.category-detail', $data);
+    }
+
+    public function SearchCourse() {
+
+        $Courses              = Courses::where("course_status", "yes")->get();
+
+        return Response::json($Courses);
     }
 
 

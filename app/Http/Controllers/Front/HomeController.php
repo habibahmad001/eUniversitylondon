@@ -80,6 +80,64 @@ class HomeController extends Controller
         return redirect()->intended('/')->withErrors(['email' => 'Email does not exist !!!']);
     }
 
+    public function Search(Request $request){
+        $data         = [];
+
+        $term = $request->search;
+
+        $data['sub_heading']  = 'Search Page';
+        $data['page_title']   = $this->header_title;
+
+
+        $data['Courses']    = Courses::where("course_status", "yes")->get();
+        $AllCategories      = Categories::where("category_status", "yes")->get();
+        $data['Search']     = Courses::where("course_status", "yes")->where('course_title', 'LIKE', '%' . $term . '%')->orWhere('course_desc', 'LIKE', '%' . $term . '%')->get();
+
+        /********** Course in categories starts ************/
+        $course_cat_arr = [];
+        foreach($AllCategories as $CatID) {
+            $course_count = 0;
+            foreach($data['Courses'] as $v) {
+                if(in_array($CatID->id, (array) json_decode($v->category_id))) {
+                    $course_count++;
+                }
+            }
+            $course_cat_arr[$CatID->id] = $course_count;
+        }
+        $data['course_cat'] = $course_cat_arr;
+        /********** Course in categories Ends ************/
+
+        return view('frontend.search', $data);
+    }
+
+    public function SearchType($term){
+        $data         = [];
+
+        $data['sub_heading']  = 'Search Page';
+        $data['page_title']   = $this->header_title;
+
+
+        $data['Courses']    = Courses::where("course_status", "yes")->get();
+        $AllCategories      = Categories::where("category_status", "yes")->get();
+        $data['Search']     = Courses::where("course_status", "yes")->where('course_title', 'LIKE', '%' . $term . '%')->orWhere('course_desc', 'LIKE', '%' . $term . '%')->get();
+
+        /********** Course in categories starts ************/
+        $course_cat_arr = [];
+        foreach($AllCategories as $CatID) {
+            $course_count = 0;
+            foreach($data['Courses'] as $v) {
+                if(in_array($CatID->id, (array) json_decode($v->category_id))) {
+                    $course_count++;
+                }
+            }
+            $course_cat_arr[$CatID->id] = $course_count;
+        }
+        $data['course_cat'] = $course_cat_arr;
+        /********** Course in categories Ends ************/
+
+        return view('frontend.search', $data);
+    }
+
     public function ResetPassword(Request $request) {
 
         $id              =        $request->user_id;

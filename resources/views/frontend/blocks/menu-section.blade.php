@@ -42,12 +42,12 @@
                                 </li>
                                 <li>
                                     <div class="widget widget_search">
-                                        <form role="search" method="get" class="search-form" action="http://webdesign-finder.com/">
+                                        <form role="search" method="get" class="" action="{{ URL::to("/searchtype/") }}">
                                             <label for="search-form-top">
                                                 <span class="screen-reader-text">Search for:</span>
                                             </label>
                                             <input type="search" id="search-form-top" class="search-field" placeholder="Search keyword" value="" name="search">
-                                            <button type="submit" class="search-submit">
+                                            <button type="submit" class="search-submit" id="top-bar-search">
                                                 <span class="screen-reader-text">Search</span>
                                             </button>
                                         </form>

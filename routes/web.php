@@ -85,6 +85,12 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::post('/updateuser', 'Front\UserFrontController@UpdateUser');
     /************* Front User Ends ***************/
 
+    /************* Front Search Starts ***************/
+    Route::post('/search', 'Front\HomeController@Search');
+    Route::get('/searchtype/{term}', 'Front\HomeController@SearchType');
+    Route::get('/searchcourse', 'Front\CategoryController@SearchCourse');
+    /************* Front Search Ends ***************/
+
 //});
 
 Route::middleware(['user','verified'])->group(function () {
@@ -401,21 +407,6 @@ Route::middleware(['learner'])->group(function () {
         return redirect('/' . collect(request()->segments())->first() . '/home');
     });
 });
-
-/*___________________Public Routs______________________________*/
-Route::get('/contactus', "JobsController@contact_us");
-Route::post('/email_form', "JobsController@email_form");
-
-Route::get('/jobs', "JobsController@index");
-Route::get('/alljobs/{id}', "JobsController@catjobs");
-Route::get('/jobdetail/{id}', "JobsController@jobdetail");
-Route::get('/adminjobs', "Rules@joblisting");
-
-Route::post('/search', "JobsController@search")->name('search');
-/*___________________Public Routs______________________________*/
-
-
-
 
 // Auth::routes();
 

@@ -171,75 +171,18 @@
                 </aside>
 
                 <main class="col-lg-7 col-xl-8 order-1 order-lg-2">
-                    <div class="row c-mb-30">
-                        @if(count($Courses) > 0)
-                            @foreach($Courses as $course)
-                                @if(in_array($categories->id, (array) json_decode($course->category_id)))
-                                    <div class="col-12 col-md-6">
-                                        <div class="course-flip h-100 bordered rounded">
-                                            <div class="course-front">
-                                                <div class=" vertical-item content-padding">
-                                                    <div class="item-media rounded-top">
-                                                        <img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
-                                                    </div>
-                                                    <div class="item-content">
-                                                        <h6 class="course-title">
-                                                            <a href="{{ URL::to("/course_detail/" . $course->id) }}">{{ $course->course_title }}</a>
-                                                        </h6>
-
-                                                        <div class="star-rating course-rating">
-                                                            <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                                        </div>
-
-                                                        <div class="tagcloud">
-                                                            @if(count(json_decode($course->category_id)) > 0)
-                                                                @foreach(json_decode($course->category_id) as $v)
-                                                                    <a href="{{ URL::to("/category/" . App\Http\Controllers\Category::CatID($v)->page_slug) }}" class="tag-cloud-link">
-                                                                        {{ App\Http\Controllers\Category::CatID($v)->category_title }}
-                                                                    </a>
-                                                                @endforeach
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="course-back rounded vertical-item content-padding ds">
-                                                <div class="item-content">
-                                                    <h6 class="course-title">
-                                                        <a href="{{ URL::to("/course_detail/" . $course->id) }}">{{ $course->course_title }}</a>
-                                                    </h6>
-                                                    <p>
-                                                        {{ (strlen(strip_tags($course->course_desc)) > 150) ? substr(strip_tags($course->course_desc), 0, 150) . "..." : strip_tags($course->course_desc) }}
-                                                    </p>
-                                                    <div class="star-rating course-rating">
-                                                        <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                                    </div>
-                                                    <div class="divider-48" id="itm-post-{{ $course->id }}"></div>
-                                                    <a href="javascript:void(0);" onclick="javascript:product_submit({{ $course->id }});" class="btn btn-maincolor">Start now</a>
-                                                    <div class="tagcloud">
-                                                        @if(count(json_decode($course->category_id)) > 0)
-                                                            @foreach(json_decode($course->category_id) as $v)
-                                                                <a href="{{ URL::to("/category/" . App\Http\Controllers\Category::CatID($v)->page_slug) }}" class="tag-cloud-link">
-                                                                    {{ App\Http\Controllers\Category::CatID($v)->category_title }}
-                                                                </a>
-                                                            @endforeach
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
+                    <div class="row c-mb-30 search-row-container">
+                        @if(count($Search) > 0)
+                            @foreach($Search as $val)
+                                <div><a href="{{ URL::to("/course_detail/" . $val->id) }}"><h3 class="search-title">{{ $val->course_title }}</h3></a></div>
+                                <div>{{ (strlen(strip_tags($val->course_desc)) > 200) ? substr(strip_tags($val->course_desc), 0, 200) . "..." : strip_tags($val->course_desc) }}</div><br />
+                                <div><a href="{{ URL::to("/course_detail/" . $val->id) }}">Link</a></div>
+                                <hr width="100%" color="#555" />
                             @endforeach
+                        @else
+                                <div class="text-center">No result found !!!</div>
                         @endif
                     </div>
-                    {{--<div class="row justify-content-center">--}}
-                        {{--<div class="col-12">--}}
-                            {{--<nav class="navigation pagination @@navClass" role="navigation">--}}
-                                {{--<button type="button" class="btn btn-maincolor full-width">load more<i class="fa fa-spinner fa-pulse"></i></button>--}}
-                            {{--</nav>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
                 </main>
             </div>
         </div>
