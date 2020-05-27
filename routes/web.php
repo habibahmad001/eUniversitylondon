@@ -26,17 +26,77 @@ Route::get('/checkUserEmail', 'Rules@checkUserEmail');
 Route::get('/administrator', 'Auth\LoginController@showAdminLoginForm')->name('administrator');
 Route::get('/instructor', 'Auth\LoginController@showInstructorLoginForm')->name('instructor');
 Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learner');
-Route::get('/', 'Front\HomeController@index')->name('home');
-Route::get('category/{page_slug}', 'Front\CategoryController@GetCategories');
 /*__________________Gust Routs______________________________*/
 
 
+//Route::middleware(['guest'])->group(function () {
+
+    /************* Home Starts ***************/
+    Route::get('/', 'Front\HomeController@index')->name('home');
+    Route::post('/homelogin', 'Auth\LoginController@homelogin');
+    Route::post('/homesignup', 'Auth\RegisterController@create_user');
+    Route::get('/forgotpassword', 'Front\HomeController@ForgotPassword');
+    Route::post('/resetemail', 'Front\HomeController@ResetEmail');
+    Route::get('/updatepass/{id}', 'Front\HomeController@UpdatePassword');
+    Route::post('/updatepass', 'Front\HomeController@ResetPassword');
+    /************* Home Ends ***************/
+
+    /************* Categories Starts ***************/
+    Route::get('category/{page_slug}', 'Front\CategoryController@GetCategories');
+    Route::get('allcategories', 'Front\CategoryController@index');
+    /************* Categories Ends ***************/
+
+    /************* Cart Starts ***************/
+    Route::resource('/cart', 'Front\CartController');
+    Route::post('/addcart', 'Front\CartController@AddCart');
+    Route::post('/updatecart', 'Front\CartController@UpdateCart');
+    Route::post('/cartremoveitem', 'Front\CartController@RemoveItem');
+    Route::get('/undocart', 'Front\CartController@UndoItem');
+    Route::get('/reviewcart', 'Front\CartController@ReviewCart');
+    /************* Cart Ends ***************/
+
+    /************* Order Detail Starts ***************/
+    Route::resource('/orderdetail', 'Front\OrderDetailController');
+    Route::post('/learnerlogin', 'Auth\LoginController@LearnerLogin');
+    Route::get('/getcountries', 'Front\CartController@GetCountries');
+    Route::get('/insertdatacountries', 'Front\CartController@InsertDataCountries');
+    Route::get('/addressinfo', 'Front\CartController@AddressInfo');
+    Route::get('/selectstate/{id}', 'Front\CartController@SelectState');
+    Route::post('/saveaddress', 'Front\CartController@SaveAddress');
+    /************* Order Detail Ends ***************/
+
+    /************* Paypal Starts ***************/
+    Route::get('/paypal', 'Front\CartController@Paypal');
+    Route::get('/paypalsuccess', 'Front\CartController@PayPalSuccess');
+    Route::get('/startcourse/{id}', 'Front\CartController@StartCourse');
+    /************* Paypal Ends ***************/
+
+    /************* Course Starts ***************/
+    Route::get('/course_detail/{id}', 'Front\CourseController@Detail');
+    /************* Course Ends ***************/
+
+    /************* Front User Starts ***************/
+    Route::resource('/dashboard', 'Front\UserFrontController');
+    Route::get('/orders', 'Front\UserFrontController@Orders');
+    Route::get('/accountdetail', 'Front\UserFrontController@AccountDetail');
+    Route::get('/vieworder/{id}', 'Front\UserFrontController@ViewOrder');
+    Route::get('/orderagain/{id}', 'Front\UserFrontController@OrderAgain');
+    Route::get('/orderagainsuccess', 'Front\UserFrontController@OGSuccess');
+    Route::post('/updateuser', 'Front\UserFrontController@UpdateUser');
+    /************* Front User Ends ***************/
+
+    /************* Front Search Starts ***************/
+    Route::post('/search', 'Front\HomeController@Search');
+    Route::get('/searchtype/{term}', 'Front\HomeController@SearchType');
+    Route::get('/searchcourse', 'Front\CategoryController@SearchCourse');
+    /************* Front Search Ends ***************/
+
+//});
 
 Route::middleware(['user','verified'])->group(function () {
 	/*__________________Front Routs______________________________*/
 	Route::get('userquestion', 'QuestionUserController@index');
 	Route::get('score', 'QuestionUserController@score');
-	Route::get('dashboard', 'QuestionUserController@dashboard');
 	Route::post('saveanswer', 'QuestionUserController@store');
 	Route::get('usersearch/{id}', 'QuestionUserController@usersearch');
 	Route::get('usersearchall/{id}', 'QuestionUserController@usersearchall');
@@ -56,19 +116,36 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
-Route::post('/homelogin', 'Auth\LoginController@homelogin');
-Route::post('/homesignup', 'Auth\RegisterController@create_user');
+
 
 
 Route::get('/HasItems/{id}', 'QandAController@HasItems');
 Route::get('/AnswerCount/{id}', 'QandAController@AnswerCount');
 
+
+/********** Gernal Category Functions *********/
 Route::get('/CatChildCount/{id}', 'Category@ChildCount');
 Route::get('/HasCat/{id}', 'Category@HasSubItem');
-
 Route::get('/AllCat', 'Category@AllParentsCat');
-
 Route::get('/GetCatID/{id}', 'Category@CatID');
+/********** Gernal Category Functions *********/
+
+/********** Gernal Get Country/State Name *********/
+Route::get('/getcountryname/{id}', 'Front\CartController@GetCountryName');
+Route::get('/getstatename/{id}', 'Front\CartController@GetStateName');
+/********** Gernal Get Country/State Name *********/
+
+/********** Gernal Cart Functions *********/
+Route::get('/carttotal', 'Front\CartController@CartTotal');
+/********** Gernal Cart Functions *********/
+
+/********** Gernal Course Functions *********/
+Route::get('/getcourseonid/{id}', 'Front\UserFrontController@GetCourseOnID');
+/********** Gernal Course Functions *********/
+
+/********** Gernal User Functions *********/
+Route::get('/getuseronid/{id}', 'OrderController@GetUserOnID');
+/********** Gernal User Functions *********/
 
 
 // Route::get('admin_area', ['middleware' => 'admin', function () {
@@ -126,6 +203,14 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/update-curriculum', 'CurriCulums@UpdateCurriCulum');
     /*************** CurriCulums Ends ***************/
 
+    /*************** Course Program Starts ***************/
+    Route::resource('/admin/courseprogram', 'CourseProgramController');
+    Route::get('/admin/courseprogram', 'CourseProgramController@index');
+    Route::post('/admin/courseprogram_add', 'CourseProgramController@CourseProgramAdd');
+    Route::get('/admin/getcourseprogram/{cp_id}', 'CourseProgramController@GetCourseProgram');
+    Route::post('/admin/update-courseprogram', 'CourseProgramController@UpdateCourseProgram');
+    /*************** Course Program Ends ***************/
+
     /*************** Exam Starts ***************/
     Route::resource('/admin/exam', 'Exams');
     Route::get('/admin/exam', 'Exams@index');
@@ -177,6 +262,12 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/setproduct', 'CoursesController@SetProduct');
     /*************** Courses Ends ***************/
 
+    /*************** Order Starts ***************/
+    Route::resource('/admin/Order', 'OrderController');
+    Route::get('/admin/orders', 'OrderController@index');
+    Route::get('/admin/vieworder/{id}', 'OrderController@ViewOrder');
+    /*************** Order Ends ***************/
+
     Route::resource('facker', 'FakerController');
 
     Route::get('/admin/home', 'DashboardController@index');
@@ -184,15 +275,6 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return redirect('/' . collect(request()->segments())->first() . '/home');
     });
-
-    Route::get('/admin/orders', function () {
-        $data['sub_heading']  = 'Order Page';
-        $data['page_title']   = 'Orders';
-        $data['msg']   = 'Order admin functionality will be implemented soon!';
-
-        return view('home', $data);
-    });
-
 });
 
 Route::middleware(['instructor'])->group(function () {
@@ -217,6 +299,14 @@ Route::middleware(['instructor'])->group(function () {
     Route::get('/instructor/getcurriculum/{cc_id}', 'CurriCulums@GetCurriCulum');
     Route::post('/instructor/update-curriculum', 'CurriCulums@UpdateCurriCulum');
     /*************** CurriCulums Ends ***************/
+
+    /*************** Course Program Starts ***************/
+    Route::resource('/instructor/courseprogram', 'CourseProgramController');
+    Route::get('/instructor/courseprogram', 'CourseProgramController@index');
+    Route::post('/instructor/courseprogram_add', 'CourseProgramController@CourseProgramAdd');
+    Route::get('/instructor/getcourseprogram/{cp_id}', 'CourseProgramController@GetCourseProgram');
+    Route::post('/instructor/update-courseprogram', 'CourseProgramController@UpdateCourseProgram');
+    /*************** Course Program Ends ***************/
 
     /*************** Exam Starts ***************/
     Route::resource('/instructor/exam', 'Exams');
@@ -318,21 +408,6 @@ Route::middleware(['learner'])->group(function () {
     });
 });
 
-/*___________________Public Routs______________________________*/
-Route::get('/contactus', "JobsController@contact_us");
-Route::post('/email_form', "JobsController@email_form");
-
-Route::get('/jobs', "JobsController@index");
-Route::get('/alljobs/{id}', "JobsController@catjobs");
-Route::get('/jobdetail/{id}', "JobsController@jobdetail");
-Route::get('/adminjobs', "Rules@joblisting");
-
-Route::post('/search', "JobsController@search")->name('search');
-/*___________________Public Routs______________________________*/
-
-
-
-
 // Auth::routes();
 
 Route::get('/sendmail', 'TermAndServicesController@sendmail');
@@ -341,3 +416,10 @@ Route::get('/sendmail', 'TermAndServicesController@sendmail');
 Route::get('/get-started', function () {
     return view('demo');
 });
+
+Route::get('/404', function () {
+    return view('frontend.404');
+});
+
+Route::get('/checkout', 'AuthorizeController@index');
+Route::post('/checkout', 'AuthorizeController@chargeCreditCard');

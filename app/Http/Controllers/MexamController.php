@@ -27,16 +27,16 @@ class MexamController extends Controller
         $data['page_title']   = 'eUniversitylondon Exam';
         if(collect(request()->segments())->first() == 'instructor') {
             $data['Exams']        =  MockExam::where('mexam_user_id', Auth::user()->id)->paginate(10);
-            $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->get();
+            $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->where('course_status', "yes")->get();
         } elseif(collect(request()->segments())->first() == 'learner') {
             $data['Exams']        =  MexamWithUser::join('tablemockexam', 'tablemexamwithuser.mexam_id', '=', 'tablemockexam.id')
                 ->select('*')
                 ->where('tablemexamwithuser.user_id', '=', Auth::user()->id)
                 ->paginate(10);
-            $data['Courses']        =  Courses::All();
+            $data['Courses']        =  Courses::where('course_status', "yes")->get();
         } else {
             $data['Exams']        =  MockExam::paginate(10);
-            $data['Courses']        =  Courses::All();
+            $data['Courses']        =  Courses::where('course_status', "yes")->get();
         }
         /**************** Get Course Name **************/
         $Array_Course_Name           =  array();

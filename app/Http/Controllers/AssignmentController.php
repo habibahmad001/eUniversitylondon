@@ -13,6 +13,7 @@ use App\Exam;
 use App\MockExam;
 use App\ExamWithUser;
 use App\MexamWithUser;
+use App\CourseWithUser;
 
 use Auth;
 
@@ -26,7 +27,7 @@ class AssignmentController extends Controller
 
         $data['sub_heading']  = 'Assignment';
         $data['page_title']   = 'eUniversitylondon Assignment';
-        $data['Assignment']        =  Assignment::paginate(10);
+        $data['Assignment']   =  Assignment::where("user_id", Auth::user()->id)->paginate(10);
         
         return view('assignment/index', $data);
     }
@@ -42,6 +43,7 @@ class AssignmentController extends Controller
 
         $Assignment->assignment_title  = $request->ass_title;
         $Assignment->table_name  = $request->tab_name;
+        $Assignment->user_id  = Auth::user()->id;
         $Assignment->exam_id  = $request->exam_id;
 
         /************ File Upload ***********/
@@ -67,16 +69,29 @@ class AssignmentController extends Controller
         $data         = [];
         $Assignment         = Assignment::find($id);
         $data['assignment'] = $Assignment;
-        if($Assignment->table_name == "Exam")
-            $Exm_data =  ExamWithUser::join('tableexam', 'tableexamwithuser.exam_id', '=', 'tableexam.id')
-                ->select('*')
-                ->where('tableexamwithuser.user_id', '=', Auth::user()->id)
-                ->get();
-        else
-            $Exm_data =  MexamWithUser::join('tablemockexam', 'tablemexamwithuser.mexam_id', '=', 'tablemockexam.id')
-                ->select('*')
-                ->where('tablemexamwithuser.user_id', '=', Auth::user()->id)
-                ->get();
+        if($Assignment->table_name == "Exam") {
+            /****** Select course Enrolled by User ************/
+            $User_Course = [];
+            $Res_Course = CourseWithUser::where("user_id", Auth::user()->id)->get();
+            if(count($Res_Course) > 0) {
+                foreach($Res_Course as $val) {
+                    $User_Course[] = $val->course_id;
+                }
+                $Exm_data = Exam::whereIn("course_id", $User_Course)->get();
+            }
+            /****** Select course Enrolled by User ************/
+        } else {
+            /****** Select course Enrolled by User ************/
+            $User_Course = [];
+            $Res_Course = CourseWithUser::where("user_id", Auth::user()->id)->get();
+            if(count($Res_Course) > 0) {
+                foreach($Res_Course as $val) {
+                    $User_Course[] = $val->course_id;
+                }
+                $Exm_data = MockExam::whereIn("course_id", $User_Course)->get();
+            }
+            /****** Select course Enrolled by User ************/
+        }
         $data["Exm_data"] = $Exm_data;
         return Response::json($data);
     }
@@ -85,23 +100,41 @@ class AssignmentController extends Controller
     public function GetAssignmentExam($table_name){
         $data           = [];
         if($table_name == "MockExam") {
-            $resulset       = MexamWithUser::join('tablemockexam', 'tablemexamwithuser.mexam_id', '=', 'tablemockexam.id')
-                ->select('*')
-                ->where('tablemexamwithuser.user_id', '=', Auth::user()->id)
-                ->get();
+
+            /****** Select course Enrolled by User ************/
+            $User_Course = [];
+            $Res_Course = CourseWithUser::where("user_id", Auth::user()->id)->get();
+            if(count($Res_Course) > 0) {
+                foreach($Res_Course as $val) {
+                    $User_Course[] = $val->course_id;
+                }
+                $resulset       = MockExam::whereIn("course_id", $User_Course)->get();
+            } else {
+                $ret_msg = 'Your courses does not have any Mock Exam yet !!!';
+            }
+            /****** Select course Enrolled by User ************/
+
             if(Auth::user()->user_type == "admin") {
                 $resulset       = MockExam::All();
             }
-            $ret_msg = 'First please join any Mock Exam';
+
         } else {
-            $resulset       = ExamWithUser::join('tableexam', 'tableexamwithuser.exam_id', '=', 'tableexam.id')
-                ->select('*')
-                ->where('tableexamwithuser.user_id', '=', Auth::user()->id)
-                ->get();
+            /****** Select course Enrolled by User ************/
+            $User_Course = [];
+            $Res_Course = CourseWithUser::where("user_id", Auth::user()->id)->get();
+            if(count($Res_Course) > 0) {
+                foreach($Res_Course as $val) {
+                    $User_Course[] = $val->course_id;
+                }
+                $resulset       = Exam::whereIn("course_id", $User_Course)->get();
+            } else {
+                $ret_msg = 'Your courses does not have any Exam yet !!!';
+            }
+            /****** Select course Enrolled by User ************/
             if(Auth::user()->user_type == "admin") {
                 $resulset       = Exam::All();
             }
-            $ret_msg = 'First please join any Exam';
+
         }
         if(count($resulset) > 0) {
             $res_var = '<select name="exam_id" id="exam_id" class="full-width">';
@@ -128,10 +161,14 @@ class AssignmentController extends Controller
         $Assignment              = Assignment::find($id);
         $Assignment->assignment_title  = $request->ass_title;
         $Assignment->table_name  = $request->tab_name;
+        $Assignment->user_id  = Auth::user()->id;
         $Assignment->exam_id  = $request->exam_id;
 
         /************ File Upload ***********/
         if(!empty($request->file('assignment_f'))) {
+            if(!empty($Assignment->assignment_file)) {
+                (file_exists('uploads/assignment/' . $Assignment->assignment_file)) ? unlink('uploads/assignment/' . $Assignment->assignment_file) : "";
+            }
             $AssignmentFile = $request->file('assignment_f');
             $AssignmentFile_new_name = rand() . '.' . $AssignmentFile->getClientOriginalExtension();
             $Assignment->assignment_file = $AssignmentFile_new_name;
@@ -153,6 +190,9 @@ class AssignmentController extends Controller
     public function destroy($id) {
         //Find a user with a given id and delete
         $Assignment = Assignment::findOrFail($id);
+        if(!empty($Assignment->assignment_file)) {
+            (file_exists('uploads/assignment/' . $Assignment->assignment_file)) ? unlink('uploads/assignment/' . $Assignment->assignment_file) : "";
+        }
         $Assignment->delete();
         return redirect('/' . collect(request()->segments())->first() . '/assignment')->with('message', 'Selected Assignment has been deleted successfully!');
     }

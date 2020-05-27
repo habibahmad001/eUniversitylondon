@@ -13,7 +13,7 @@ use Auth;
 use DB;
 use App\User;
 use App\steak;
-use App\Session;
+use App\cart;
 use App\Question;
 use App\User_Question;
 use App\Super_Points;

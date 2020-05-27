@@ -63,9 +63,13 @@ header .success-message-box .cancel:hover { background: url(../images/cancel-ico
 
 .left-menu ul li .icon-detail { display: inline-block; padding: 0 0 0 10px; }
 
+.add-new-form.set-product {
+    width: 0;
+    overflow: hidden;
+}
 
 /* Content -------------------------------- */
-.content {  position: absolute; top: 70px; background: #f1f1f1; left: 0; right: 0; bottom: 0; min-width: 1024px }
+.content {  position: absolute; top: 17%; background: #f1f1f1; left: 0; right: 0; bottom: 0; min-width: 1024px }
 .sub-header { background: #959595; padding:14px 12px 14px 12px; box-shadow: 0 0 3px rgba(44, 59, 73, .25); height: 60px; }
 .sub-header::after { display: block; content: ''; clear: both; }
 .sub-header h2 { font-size: 24px; font-weight: 500; color: #fff; min-width: 184px; float: left; padding: 7px 0 0 0; }
@@ -155,6 +159,10 @@ table.table { border-collapse:collapse; }
 .table.fixed{  position:fixed; width:auto; border:none; background-image: linear-gradient(to bottom right, #BABAD8 , #e0e0e0); }
 
 .dropdown.user { padding: 19px 10px 0 0; }
+
+.content .table tbody tr:hover button.btn.btn-secondary{
+    color: #555;
+}
 
 .dropdown.user .dropdown-toggle { width: 32px; display: inline-block; padding: 0; height: 32px; border-radius: 50%; font-size: 16px; color: #ffffff; background: #35c8ac; line-height: 32px; text-align: center; }
 

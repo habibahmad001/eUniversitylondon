@@ -84,6 +84,9 @@ $(".edit-icon").click(function () {
       if(Courses.course_avatar !== null) {
         $("#avatar_div img").attr("src", img_path + Courses.course_avatar);
       }
+      if(Courses.pdf !== null) {
+        $("#edit-pdf_div").html('<a href="/uploads/coursepdf/' + Courses.pdf + '" target="_blank"><img src="/images/pdficon.png" width="150" height="150"></a>');
+      }
       // $("#edit-cou_language option").each(function() {
       //     $(this).removeAttr('selected');
       // });
@@ -95,7 +98,7 @@ $(".edit-icon").click(function () {
       // $("#edit-cou_category option").each(function() {
       //   $(this).removeAttr('selected');
       // });
-      console.log(Courses.category_id);
+      // console.log(Courses.category_id);
       $("#edit-cou_category option").each(function() {
         if(Courses.category_id.includes($(this).val())) {
           $(this).attr("selected","selected");
@@ -121,6 +124,7 @@ function reset_form() {
   $("#cou_price").val('');
   $("#cou_discounted_price").val('');
   $("#avatar_div img").attr("src", "http://via.placeholder.com/150/000000/FFFFFF/?text=File Placeholder");
+  $("#pdf_div").html('<img src="/images/pdficon.png" width="150" height="150">');
   $("#edit-cou_language option").each(function() {
     $(this).removeAttr('selected');
   });
@@ -131,15 +135,15 @@ function reset_form() {
 
 $(".approve-course, .block-course").click(function () {
   var user_folder = $("#user_folder").val();
-  // $(".fa-spinner").show();
+  $(this).children(".spinnerdiv").attr("style", 'visibility: visible;');
   $.post('/' + user_folder + '/updatestatus', {p_id: $(this).attr("data-id"), status: $(this).attr("data-status"), inputid: $(this).attr("id"), _token: $('meta[name="csrf-token"]').attr('content')}, function (data, status) {
     if(status == "success") {
       if(data.statuss == "yes"){
-        $("#" + data.itemid).addClass("btn-danger").removeClass("btn-success").text("Block It");
-        // $("#" + data.itemid).child(".fa-spinner").hide();
+        $("#" + data.itemid).addClass("btn-danger").removeClass("btn-success").html('Block It <div class="spinnerdiv" style="visibility: visible;"><i class="fa fa-spinner fa-pulse"></i></div>');
+        $("#" + data.itemid).children(".spinnerdiv").hide();
       } else {
-        $("#" + data.itemid).addClass("btn-success").removeClass("btn-danger").text("Approve It");
-        // $("#" + data.itemid).child(".fa-spinner").hide();
+        $("#" + data.itemid).addClass("btn-success").removeClass("btn-danger").html('Approve It <div class="spinnerdiv" style="visibility: visible;"><i class="fa fa-spinner fa-pulse"></i></div>');
+        $("#" + data.itemid).children(".spinnerdiv").hide();
       }
     }
   });

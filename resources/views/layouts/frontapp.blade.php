@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"/>
     <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}" class="color-switcher-link">
+    <link rel="stylesheet" href="{{ asset('css/shop.css') }}">
     <script src="{{ asset('js/vendor/modernizr-2.6.2.min.js') }}"></script>
 
     <!--[if lt IE 9]>
@@ -45,6 +46,13 @@
 <div class="preloader">
     <div class="preloader_image"></div>
 </div>
+@if ($errors->any())
+    <div class="woocommerce-message">
+        @foreach ($errors->all() as $error)
+            {{ $error }}
+        @endforeach
+    </div>
+@endif
 
 @include('frontend.blocks.model-popups')
 <!-- wrappers for visual page editor and boxed version of template -->
@@ -68,15 +76,6 @@
                 </div>
             </div>
         </section>
-        @if ($errors->any())
-            <div class="alert alert-danger" style="margin: 0px; padding: 0px;">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
         <!--eof topline-->
         @include('frontend.blocks.menu-section')
 

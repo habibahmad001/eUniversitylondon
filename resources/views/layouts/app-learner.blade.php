@@ -43,7 +43,7 @@
 				</div>
 			@endif
 			<div class="logo-txt">
-				<a href="{{ URL::to('/instructor/home') }}">Learner Panel</a>
+				<a href="{{ URL::to('/') }}"><img src="{{ asset('images/logo.png') }}" alt=""></a>
 
 			</div>
 			@if(!Auth::guest())

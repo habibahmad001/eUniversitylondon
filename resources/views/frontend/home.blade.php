@@ -21,14 +21,15 @@
                                 We are proud to say that since our opening in ’98
                             </p>
                         </div>
-                        <form role="search" method="get" class="search-form search-course animate" action="http://webdesign-finder.com/" data-animation="fadeInUp">
+                        <form method="post" class="search-course animate home-course" action="{{ URL::to("/search") }}">
+                            {{ csrf_field() }}
                             <div class="form-group has-placeholder">
                                 <label for="search-form-widget">
                                     <span class="screen-reader-text">Search for:</span>
                                 </label>
-                                <i class="fa fa-search"></i>
-                                <input type="search" id="search-form-widget" class="search-field form-control" placeholder="" value="" name="search">
-                                <button type="submit" class="search-submit btn btn-maincolor">Find courses</button>
+                                <i class="fa fa-search home-search-btn"></i>
+                                <input type="search" id="search-form-widget" class="search-field form-control" placeholder="Enter course name" value="" name="search">
+                                <button type="submit" class="search-submit btn btn-maincolor home-search-btn">Find courses</button>
                             </div>
                         </form>
                     </div> <!-- eof .intro_layers -->
@@ -55,8 +56,6 @@
         </div><!-- eof .row -->
     </div><!-- eof .container-fluid -->
 </section>
-
-
 
 <section class="s-py-40 ds gradient-background d-none d-md-block" id="feature">
 <div class="container">
@@ -113,6 +112,7 @@
 </div>
 </section>
 
+<form method="POST" name="prod" id="prod" action="{{ URL::to("/addcart") }}">
 <section class="ls s-pt-55 s-pb-30 s-pt-lg-95 s-pb-lg-70" id="courses">
     <div class="container">
         <div class="divider-3"></div>
@@ -134,59 +134,59 @@
                     @if(count($Courses) > 0)
                         @foreach($Courses as $course)
                             <div class="col-12 col-md-6 col-lg-4 @if(count(json_decode($course->setas)) > 0) @foreach(json_decode($course->setas) as $v) {{ $v }} @endforeach @endif">
-                        <div class="course-flip h-100 ">
-                            <div class="course-front rounded bordered">
-                                <div class=" vertical-item content-padding">
-                                    <div class="item-media rounded-top">
-                                        <img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
-                                    </div>
-                                    <div class="item-content">
-                                        <h6 class="course-title">
-                                            <a href="single-course.html">{{ $course->course_title }}</a>
-                                        </h6>
+                                <div class="course-flip h-100 ">
+                                    <div class="course-front rounded bordered">
+                                        <div class=" vertical-item content-padding">
+                                            <div class="item-media rounded-top">
+                                                <img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
+                                            </div>
+                                            <div class="item-content">
+                                                <h6 class="course-title">
+                                                    <a href="javascript:void(0);">{{ $course->course_title }}</a>
+                                                </h6>
 
-                                        <div class="star-rating course-rating">
-                                            <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
+                                                <div class="star-rating course-rating">
+                                                    <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
+                                                </div>
+
+                                                <div class="tagcloud">
+                                                    @if(count(json_decode($course->category_id)) > 0)
+                                                        @foreach(json_decode($course->category_id) as $v)
+                                                            <a href="#" class="tag-cloud-link">
+                                                                {{ App\Http\Controllers\Category::CatID($v)->category_title }}
+                                                            </a>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
                                         </div>
-
-                                        <div class="tagcloud">
-                                            @if(count(json_decode($course->category_id)) > 0)
-                                                @foreach(json_decode($course->category_id) as $v)
-                                                    <a href="#" class="tag-cloud-link">
-                                                        {{ App\Http\Controllers\Category::CatID($v)->category_title }}
-                                                    </a>
-                                                @endforeach
-                                            @endif
+                                    </div>
+                                    <div class="course-back rounded vertical-item content-padding ds">
+                                        <div class="item-content">
+                                            <h6 class="course-title">
+                                                <a href="{{ URL::to("/course_detail/" . $course->id) }}">{{ $course->course_title }}</a>
+                                            </h6>
+                                            <p>
+                                                {{ (strlen(strip_tags($course->course_desc)) > 150) ? substr(strip_tags($course->course_desc), 0, 150) . "..." : strip_tags($course->course_desc) }}
+                                            </p>
+                                            <div class="star-rating course-rating">
+                                                <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
+                                            </div>{{ csrf_field() }}
+                                            <div class="divider-48" id="itm-post-{{ $course->id }}"></div>
+                                            <a href="javascript:void(0);" onclick="javascript:product_submit({{ $course->id }});" class="btn btn-maincolor">Start now</a>
+                                            <div class="tagcloud">
+                                                @if(count(json_decode($course->category_id)) > 0)
+                                                    @foreach(json_decode($course->category_id) as $v)
+                                                        <a href="category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
+                                                            {{ App\Http\Controllers\Category::CatID($v)->category_title }}
+                                                        </a>
+                                                    @endforeach
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="course-back rounded vertical-item content-padding ds">
-                                <div class="item-content">
-                                    <h6 class="course-title">
-                                        <a href="javascript:void(0);">{{ $course->course_title }}</a>
-                                    </h6>
-                                    <p>
-                                        {{ (strlen(strip_tags($course->course_desc)) > 350) ? substr(strip_tags($course->course_desc), 0, 350) : strip_tags($course->course_desc) }}
-                                    </p>
-                                    <div class="star-rating course-rating">
-                                        <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                    </div>
-                                    <div class="divider-48"></div>
-                                    <a href="javascript:void(0);" class="btn btn-maincolor">Start now</a>
-                                    <div class="tagcloud">
-                                        @if(count(json_decode($course->category_id)) > 0)
-                                            @foreach(json_decode($course->category_id) as $v)
-                                                <a href="category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
-                                                    {{ App\Http\Controllers\Category::CatID($v)->category_title }}
-                                                </a>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                         @endforeach
                     @endif
                 </div>
@@ -194,6 +194,7 @@
         </div>
     </div>
 </section>
+</form>
 
 
 <section class="ds s-py-60 s-py-lg-100 call-to-action s-parallax s-overlay text-center text-lg-left" id="action">
@@ -221,27 +222,35 @@
                 <h2 class="text-center">Popular categories</h2>
             </div>
             <div class="divider-10 d-none d-lg-block"></div>
-            @foreach(App\Http\Controllers\Category::AllParentsCat() as $k=>$catval)
-                <div class="col-lg-4 col-sm-6 animate" data-animation="fadeInUp">
-                <div class="icon-box text-center">
-                    <div class="color-main icon-styled fs-77">
-                        <i class="{{ $catval->selectedicon }}" aria-hidden="true"></i>
+            @if(count($AllParents) > 0)
+                @foreach($AllParents as $k=>$catval)
+                    <div class="col-lg-4 col-sm-6 animate" data-animation="fadeInUp">
+                    <div class="icon-box text-center">
+                        <div class="color-main icon-styled fs-77">
+                            <i class="{{ $catval->selectedicon }}" aria-hidden="true"></i>
+                        </div>
+                        <h6 class="fw-700">
+                            <a href="{{ URL::to('/category/' . $catval->page_slug) }}">{{ $catval->category_title }}</a>
+                        </h6>
+                        <p>
+                            {{ (strlen(strip_tags($catval->category_desc)) > 150) ? substr(strip_tags($catval->category_desc), 0, 150) . "..." : strip_tags($catval->category_desc) }}
+                        </p>
                     </div>
-                    <h6 class="fw-700">
-                        <a href="{{ URL::to('/category/' . $catval->page_slug) }}">{{ $catval->category_title }}</a>
-                    </h6>
-                    <p>
-                        {{ (strlen(strip_tags($catval->category_desc)) > 150) ? substr(strip_tags($catval->category_desc), 0, 150) . "..." : strip_tags($catval->category_desc) }}
-                    </p>
-                </div>
-                <span class="media-links">
-								<a class="abs-link" title="" href="{{ URL::to('/category/' . $catval->page_slug) }}"></a>
-							</span>
-            </div><!-- .col-* -->
-            @endforeach
+                    <span class="media-links">
+                        <a class="abs-link" title="" href="{{ URL::to('/category/' . $catval->page_slug) }}"></a>
+                    </span>
+                </div><!-- .col-* -->
+                @endforeach
+            @else
+                <div class="col-lg-4 col-sm-6 animate" data-animation="fadeInUp">
+                    <div class="icon-box text-center">
+                        <center>There is no record found yet !!!</center>
+                    </div>
+                </div><!-- .col-* -->
+            @endif
 
            <div class="col-12  text-center">
-                <a href="#" class="btn btn-maincolor">View More Categories</a>
+                <a href="{{ URL::to("/allcategories") }}" class="btn btn-maincolor">View More Categories</a>
             </div>
             <div class="d-none d-lg-block divider-20"></div>
         </div>
