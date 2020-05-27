@@ -69,6 +69,14 @@ class CourseProgramController extends Controller
         $CourseProgram->cp_author  = $request->author;
         $CourseProgram->cp_placement  = $request->placement;
         $CourseProgram->course_id  = $request->cour_id;
+        /************ Image PDF ***********/
+        if(!empty($request->file('cou_pdf'))) {
+            $CoursesPDF = $request->file('cou_pdf');
+            $CoursesPDF_new_name = rand() . '.' . $CoursesPDF->getClientOriginalExtension();
+            $CourseProgram->pdf = $CoursesPDF_new_name;
+            $CoursesPDF->move('uploads/courseprogrampdf', $CoursesPDF_new_name);
+        }
+        /************ Image PDF ***********/
 
         $saved          = $CourseProgram->save();
         if ($saved) {
@@ -103,6 +111,18 @@ class CourseProgramController extends Controller
         $CourseProgram->cp_placement  = $request->placement;
         $CourseProgram->course_id  = $request->cour_id;
 
+        /************ Image PDF ***********/
+        if(!empty($request->file('cou_pdf'))) {
+            if(!empty($CourseProgram->pdf)) {
+                (file_exists('uploads/courseprogrampdf/' . $CourseProgram->pdf)) ? unlink('uploads/courseprogrampdf/' . $CourseProgram->pdf) : "";
+            }
+            $CoursesPDF = $request->file('cou_pdf');
+            $CoursesPDF_new_name = rand() . '.' . $CoursesPDF->getClientOriginalExtension();
+            $CourseProgram->pdf = $CoursesPDF_new_name;
+            $CoursesPDF->move('uploads/courseprogrampdf', $CoursesPDF_new_name);
+        }
+        /************ Image PDF ***********/
+
         $saved              = $CourseProgram->save();
 
         if ($saved) {
@@ -117,6 +137,9 @@ class CourseProgramController extends Controller
     public function destroy($id) {
         //Find a user with a given id and delete
         $CourseProgram = CourseProgram::findOrFail($id);
+        if(!empty($CourseProgram->pdf)) {
+            (file_exists('uploads/courseprogrampdf/' . $CourseProgram->pdf)) ? unlink('uploads/courseprogrampdf/' . $CourseProgram->pdf) : "";
+        }
         $CourseProgram->delete();
         return redirect('/' . collect(request()->segments())->first() . '/courseprogram')->with('message', 'Selected Course Program has been deleted successfully!');
     }

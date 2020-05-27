@@ -28,6 +28,7 @@
                         </th>
                         <th>Course Program Title</th>
                         <th>Course Program Description</th>
+                        <th>PDF</th>
                         <th>Course Name</th>
                     </tr>
                 </thead>
@@ -39,6 +40,7 @@
                     </th>
                     <td>{{ $cp->cp_title }}</td>
                     <td>@if(strlen(strip_tags($cp->cp_desc)) > 150) {{ substr(strip_tags($cp->cp_desc) , 0, 150). "..." }} @else {{ strip_tags($cp->cp_desc) }} @endif</td>
+                    <td>@if($cp->pdf != NULL) <a href='/uploads/courseprogrampdf/{{ $cp->pdf }}' target='_blank'>Download PDF</a> @else No PDF Yet @endif</td>
                     <td>{{ (array_key_exists($cp->id, $Array_Course_Name)) ? $Array_Course_Name[$cp->id] : "" }}</td>
                 </tr>
                 @endforeach @else

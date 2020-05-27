@@ -84,7 +84,7 @@ $(".edit-icon").click(function () {
       if(Courses.course_avatar !== null) {
         $("#avatar_div img").attr("src", img_path + Courses.course_avatar);
       }
-      if(Courses.course_pdf !== null) {
+      if(Courses.pdf !== null) {
         $("#edit-pdf_div").html('<a href="/uploads/coursepdf/' + Courses.pdf + '" target="_blank"><img src="/images/pdficon.png" width="150" height="150"></a>');
       }
       // $("#edit-cou_language option").each(function() {

@@ -37,6 +37,14 @@
           @endif
         </select>
       </div>
+
+      <div class="form-line">
+        <input type="file" name="cou_pdf" id="cou_pdf">
+        <div id="pdf_div">
+          <img src="{{ asset('/images/pdficon.png' ) }}" width="150" height="150">
+        </div>
+      </div>
+
     </div>
     <div class="form-footer">
       <a href="javascript:void(0)" class="cancel-button">Cancel</a>

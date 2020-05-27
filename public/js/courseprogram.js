@@ -43,6 +43,9 @@ $(".edit-icon").click(function () {
           $(this).attr("selected","selected");
         }
       });
+      if(CourseProgram.pdf !== null) {
+        $("#edit-pdf_div").html('<a href="/uploads/courseprogrampdf/' + CourseProgram.pdf + '" target="_blank"><img src="/images/pdficon.png" width="150" height="150"></a>');
+      }
 
       $(".save-changes").removeClass('disable').removeAttr('disabled');
     }
@@ -58,6 +61,7 @@ function reset_form() {
   $("#author").val('');
   $("#placement").val('');
   $("#cour_id").val('');
+  $("#pdf_div").html('<img src="/images/pdficon.png" width="150" height="150">');
 }
 
 function validateEmailExist(type) {
