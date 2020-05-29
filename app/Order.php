@@ -8,6 +8,7 @@ class Order extends Model
 {
     public $timestamps = false;
     protected $table = 'tableorders';
+    protected $dates = ['created'];
 
     protected $fillable = [
         'id', 'user_id', 'key', 'val', 'order_id', 'order_items', 'order_state', 'created', 'status'

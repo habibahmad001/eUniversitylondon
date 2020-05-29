@@ -147,6 +147,7 @@ class HomeController extends Controller
         ]);
         $users              = User::find($id);
         $users->password    = bcrypt($request->new_password);
+        $users->passupdated = "yes";
 
         $saved              = $users->save();
         if ($saved) {

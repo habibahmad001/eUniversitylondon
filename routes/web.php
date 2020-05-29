@@ -118,9 +118,14 @@ Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 
 
-
+/********** Gernal Q&A Functions *********/
 Route::get('/HasItems/{id}', 'QandAController@HasItems');
 Route::get('/AnswerCount/{id}', 'QandAController@AnswerCount');
+/********** Gernal Q&A Functions *********/
+
+/********** Gernal Login User Functions *********/
+Route::get('/user_msg', 'LoginController@UserMSG');
+/********** Gernal Login User Functions *********/
 
 
 /********** Gernal Category Functions *********/

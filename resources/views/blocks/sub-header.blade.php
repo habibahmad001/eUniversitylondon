@@ -1,4 +1,10 @@
-
+@if (App\Http\Controllers\Auth\LoginController::UserMSG() != "no")
+  <div class="alert alert-success global-msg">
+    <ul>
+      <li>{{ App\Http\Controllers\Auth\LoginController::UserMSG() }}<button type="button" onclick="javascript:window.location.href = '/updatepass/{{ (Auth::user()) ? Auth::user()->id : "" }}';" class="btn btn-success">Go to</button></li>
+    </ul>
+  </div>
+@endif
 <div class="sub-header">
   <h2>{{ $sub_heading }}</h2>
 

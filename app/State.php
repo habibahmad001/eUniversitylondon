@@ -8,6 +8,7 @@ class State extends Model
 {
     public $timestamps = false;
     protected $table = 'tablestate';
+    protected $dates = ['created'];
 
     protected $fillable = [
         'id', 'state_name', 'cid', 'status', 'created'

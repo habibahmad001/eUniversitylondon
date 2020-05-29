@@ -38,12 +38,9 @@
                         @endif
                         <header class="entry-header">
                             <h1 class="entry-title">Addresses</h1>
-                            {{--<span class="edit-link">--}}
-                                {{--<a class="post-edit-link" href="#">Edit--}}
-                                    {{--<span class="screen-reader-text"> "My account"--}}
-                                    {{--</span>--}}
-                                {{--</a>--}}
-                            {{--</span>--}}
+                            <span class="back-btn-setting">
+                                <a href="{{ URL::to("/reviewcart") }}">Review Cart</a>
+                            </span>
                         </header>
                         <!-- .entry-header -->
                         <div class="entry-content">

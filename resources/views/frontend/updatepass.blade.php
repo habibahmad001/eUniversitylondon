@@ -36,7 +36,16 @@
                 <main class="col-lg-12">
                     @if(session()->has('message'))
                         <div class="woocommerce-message">
-                            {{ session()->get('message') }} @if(strpos(session()->get('message'), "removed") !== false) <a href="{{ URL::to("/undocart") }}">Undo?</a> @endif
+                            {{ session()->get('message') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
                     @endif
                     <form class="woocommerce-ResetPassword lost_reset_password text-center" name="updatepass" id="updatepass" action="{{ URL::to("/updatepass") }}" method="post" onSubmit="return update_pass_validate('');">

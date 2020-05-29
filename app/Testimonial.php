@@ -8,6 +8,7 @@ class Testimonial extends Model
 {
     public $timestamps = false;
     protected $table = 'tabletestimonial';
+    protected $dates = ['created_at', 'updated_at'];
 
     protected $fillable = [
         'id','testimonial_name','testimonial_desc','testimonial_role','testimonial_img','testimonial_status', 'created_at', 'updated_at'

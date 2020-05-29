@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 
 use App\CreateLocationTable;
 use App\JobsTable;
 use App\cart;
+use App\User;
 
 class LoginController extends Controller {
     /*
@@ -99,7 +101,25 @@ class LoginController extends Controller {
             {
                 return redirect()->intended('/learner');
             } else {
-                return redirect()->intended('/learner/home');
+                /*********** Check password updated ************/
+                if(Auth::user()->passupdated == "no") {
+                    /*********** Check for last 24 hours ************/
+                    $date = new \DateTime();
+                    $date->modify('-24 hours');
+                    $formatted_date = $date->format('Y-m-d H:i:s');
+                    if(strtotime(Auth::user()->created_at) > strtotime($formatted_date)) {
+                        return redirect()->intended('/learner/home')->withErrors(['email' => 'This password is only valid for the next ' . date("H", (strtotime(Auth::user()->created_at) - strtotime($formatted_date))) . ' hours. Reset your password For security!']);
+                    } else {
+                        $user_id = Auth::user()->id;
+                        Auth::logout();
+                        return redirect()->intended('/updatepass/' . $user_id)->withErrors(['email' => "You'r password has been expired, Please reset you'r password now!"]);
+
+                    }
+                    /*********** Check for last 24 hours ************/
+                } else {
+                    return redirect()->intended('/learner/home');
+                }
+                /*********** Check password updated ************/
             }
         }
         else
@@ -141,13 +161,57 @@ class LoginController extends Controller {
                 Auth::logout();
                 return redirect()->intended('/reviewcart')->withErrors(['email' => 'Admin did not approve you yet!!!']);
             } else {
-                return redirect()->intended('/reviewcart');
+                /*********** Check password updated ************/
+                if(Auth::user()->passupdated == "no") {
+                    /*********** Check for last 24 hours ************/
+                    $date = new \DateTime();
+                    $date->modify('-24 hours');
+                    $formatted_date = $date->format('Y-m-d H:i:s');
+                    if(strtotime(Auth::user()->created_at) > strtotime($formatted_date)) {
+                        return redirect()->intended('/reviewcart')->withErrors(['email' => 'This password is only valid for the next ' . date("H", (strtotime(Auth::user()->created_at) - strtotime($formatted_date))) . ' hours. Reset your password For security!']);
+                    } else {
+                        $user_id = Auth::user()->id;
+                        Auth::logout();
+                        return redirect()->intended('/updatepass/' . $user_id)->withErrors(['email' => "You'r password has been expired, Please reset you'r password now!"]);
+
+                    }
+                    /*********** Check for last 24 hours ************/
+                } else {
+                    return redirect()->intended('/reviewcart');
+                }
+                /*********** Check password updated ************/
             }
         }
         else
         {
             return redirect()->intended('/reviewcart')->withErrors(['email' => 'Invalid Email or password!']);
         }
+    }
+
+    public static function UserMSG() {
+        if(Auth::user()) {
+            if(Auth::user()->passupdated == "no") {
+                /*********** Check for last 24 hours ************/
+                $date = new \DateTime();
+                $date->modify('-24 hours');
+                $formatted_date = $date->format('Y-m-d H:i:s');
+                if(strtotime(Auth::user()->created_at) > strtotime($formatted_date)) {
+                    $msg = 'This password is only valid for the next ' . date("H", (strtotime(Auth::user()->created_at) - strtotime($formatted_date))) . ' hours. Reset your password For security!';
+                    return $msg;
+                } else {
+                    $user_id = Auth::user()->id;
+                    Auth::logout();
+                    echo "<script>window.location.href='/updatepass/" . $user_id . "';</script>";
+                }
+                /*********** Check for last 24 hours ************/
+            } else {
+                $msg = "no";
+                return $msg;
+            }
+        } else {
+            return redirect()->intended('/');
+        }
+
     }
 
     public function login(Request $request) {
@@ -196,22 +260,33 @@ class LoginController extends Controller {
                 return redirect()->intended('/learner');
             } else {
                 if($request->formtype == "learner") {
-                    return redirect()->intended('/learner/home');
+                    /*********** Check password updated ************/
+                    if(Auth::user()->passupdated == "no") {
+                        /*********** Check for last 24 hours ************/
+                        $date = new \DateTime();
+                        $date->modify('-24 hours');
+                        $formatted_date = $date->format('Y-m-d H:i:s');
+                        if(strtotime(Auth::user()->created_at) > strtotime($formatted_date)) {
+                            return redirect()->intended('/learner/home')->withErrors(['email' => 'This password is only valid for the next ' . date("H", (strtotime(Auth::user()->created_at) - strtotime($formatted_date))) . ' hours. Reset your password For security!']);
+                        } else {
+                            $user_id = Auth::user()->id;
+                            Auth::logout();
+                            return redirect()->intended('/updatepass/' . $user_id)->withErrors(['email' => "You'r password has been expired, Please reset you'r password now!"]);
+
+                        }
+                        /*********** Check for last 24 hours ************/
+                    } else {
+                        return redirect()->intended('/learner/home');
+                    }
+                    /*********** Check password updated ************/
                 } else {
                     Auth::logout();
-                    return redirect()->intended('/' . $request->formtype )->withErrors(['email' => 'Invalid username or password!']);
+                    return redirect()->back()->withErrors(['email' => 'Invalid username or password!']);
                 }
 
             }
-        }
-        else
-        {
-            if($request->login_flag == "admin") {
-                return redirect()->intended('/administrator')->withErrors(['email' => 'Invalid username or password!']);
-            } else {
-                return redirect()->intended('/login')->withErrors(['email' => 'Invalid username or password!']);
-            }
-
+        } else {
+            return redirect()->back()->withErrors(['email' => 'Invalid username or password!']);
         }
     }
 
