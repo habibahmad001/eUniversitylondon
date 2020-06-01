@@ -202,11 +202,17 @@ class CartController extends Controller
             /************** Remove Item From Cart **************/
 
             /************** Insert User to Course **************/
-            $CourseWithUser         = new CourseWithUser;
+
             if(count($CartItems) > 0) {
                 foreach($CartItems as $v) {
-                    $CourseWithUser = ["user_id" => Auth::user()->id, "course_id" => $v[4]];
-                    \DB::table('tableuserwithcourse')->insert($CourseWithUser);
+                    $CourseWithUser         = new CourseWithUser;
+//                    $CourseWithUser = ["user_id" => Auth::user()->id, "course_id" => $v[4]];
+//                    \DB::table('tableuserwithcourse')->insert($CourseWithUser);
+
+                    $CourseWithUser->user_id         =  Auth::user()->id;
+                    $CourseWithUser->course_id       =  $v[4];
+
+                    $saved                           =   $CourseWithUser->save();
                 }
                 return redirect()->intended('/learner/course');
             }
