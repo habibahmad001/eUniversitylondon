@@ -220,6 +220,11 @@ class CartController extends Controller
         }
         /************** Set order Table ********/
     }
+    public function CardAuth() {
+        if(!Auth::user()) {
+            return redirect()->back()->withErrors(['email' => 'Please login first !!!']);
+        }
+    }
 
     public function StartCourse($course_id) {
 
@@ -293,6 +298,20 @@ class CartController extends Controller
 
         $RES          = Country::where("id", $id)->first();
         return $RES;
+    }
+
+    public static function GetProductCount($id){
+
+        $data = [];
+        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->first();
+        if($session_result === null) {
+            $data["CartItems"] = "emp";
+        } else {
+            $CartItems = (array) json_decode($session_result->val, true);
+            $data["ItemsCount"]      =  count($CartItems);
+            $data["ItemsMSG"]        =  "Successss";
+        }
+        return $data;
     }
 
     public static function GetStateName($id){

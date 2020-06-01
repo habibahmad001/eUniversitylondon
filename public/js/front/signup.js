@@ -19,6 +19,19 @@
 
     $(".woocommerce-message").fadeOut(9000);
     $('#paypalfrm').submit();
+    $("input[name='payment']").click(function () {
+        if($(this).val() == 1) {
+            $('#card-form').slideDown( "slow", function() {
+                // Animation complete.
+            });
+        } else {
+            $('#card-form').slideUp( "slow", function() {
+                // Animation complete.
+            });
+        }
+
+    });
+
 
 })(jQuery);
 
@@ -133,6 +146,42 @@ function login_validate(type) {
 
     if(password == '') {
         errors.push("#"+ type +"password-login");
+    }
+
+    if(errors.length>0){
+        for(i=0; i < errors.length; i++){
+            $(errors[i]).addClass('error');;
+        }
+        return false;
+    }
+
+    return true;
+}
+
+function card_validate(type) {
+    $(".error").each(function(){
+        $(this).removeClass('error');
+    });
+    var errors = [];
+    var cnumber = $("#"+ type +"cnumber").val();
+    var card_expiry_month = $("#"+ type +"card_expiry_month").val();
+    var card_expiry_year = $("#"+ type +"card_expiry_year").val();
+    var ccode = $("#"+ type +"ccode").val();
+
+    if(cnumber == '') {
+        errors.push("#"+ type +"cnumber");
+    }
+
+    if(card_expiry_month == '') {
+        errors.push("#"+ type +"card_expiry_month");
+    }
+
+    if(card_expiry_year == '') {
+        errors.push("#"+ type +"card_expiry_year");
+    }
+
+    if(ccode == '') {
+        errors.push("#"+ type +"ccode");
     }
 
     if(errors.length>0){

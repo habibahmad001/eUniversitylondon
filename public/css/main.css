@@ -3611,6 +3611,26 @@ button#cat_search {
 .scrollbar-macosx > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size {
 	top: -11px;
 }
+.card-form {
+	padding: 3%;
+	position: absolute;
+	width: 34%;
+	border-radius: 7px;
+	background-color: #ebebeb;
+	z-index: 999;
+	display: none;
+}
+.card-form-div {
+	position: absolute;
+	width: 100%;
+}
+#card-frm #cnumber, #card_expiry_month, #card_expiry_year, #ccode {
+	 padding-left: 5px;
+
+}
+.card-submit {
+	width: 100%;
+}
 
 /*
 ** Bootstrap Addons

@@ -52,6 +52,6 @@ class AuthorizeController extends Controller
         {
             echo  "Charge Credit Card Null response returned";
         }
-        return redirect('/');
+        return redirect('/paypalsuccess');
     }
 }

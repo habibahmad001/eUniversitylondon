@@ -59,7 +59,7 @@
                                     <ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
 
                                         {{--<li class="woocommerce-order-overview__order order">--}}
-                                            {{--Order number: <strong>1719</strong>--}}
+                                        {{--Order number: <strong>1719</strong>--}}
                                         {{--</li>--}}
 
                                         <li class="woocommerce-order-overview__date date">
@@ -103,7 +103,7 @@
                                                     <tr class="woocommerce-table__line-item order_item">
 
                                                         <td class="woocommerce-table__product-name product-name">
-                                                            <a href="javascript:void(0);">{{ $v[1] }}</a> <strong
+                                                            <a href="shop-product-right.html">{{ $v[1] }}</a> <strong
                                                                     class="product-quantity">× {{ $v[2] }}</strong>
                                                         </td>
 
@@ -128,40 +128,7 @@
                                             </tr>
                                             <tr>
                                                 <th scope="row">Payment method:</th>
-                                                <td>
-                                                    <div class="card-form-div">
-                                                        <input type="radio" name="payment" id="paypal-chk" value="0" checked>&nbsp;PayPal
-                                                    </div><br />
-                                                    <div class="card-form-div">
-                                                        <input type="radio" name="payment" id="card" value="1">&nbsp;Credit and Debit Card Payment
-                                                        <div class="card-form" id="card-form">
-                                                            <form name="card-frm" id="card-frm" class="" action="@auth{{ url('/checkout') }} @else {{ url('/card_auth') }} @endauth" method="post" onSubmit="return card_validate('');">
-                                                                {{ csrf_field() }}
-                                                                <div class="form-group">
-                                                                    <label for="cnumber">Card Number</label>
-                                                                    <input type="text" class="form-control" id="cnumber" name="cnumber" placeholder="Enter Card Number">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="card-expiry-month">Expiration Month</label>
-                                                                    {{ Form::selectMonth(null, null, ['name' => 'card_expiry_month', 'id' => 'card_expiry_month', 'class' => 'form-control']) }}
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="card-expiry-year">Expiration Year</label>
-                                                                    {{ Form::selectYear(null, date('Y'), date('Y') + 10, null, ['name' => 'card_expiry_year', 'id' => 'card_expiry_year' , 'class' => 'form-control']) }}
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="ccode">Card Code</label>
-                                                                    <input type="hidden" id="camount" name="camount" value="0.1" placeholder="{{ (isset($Total)) ? $Total : 0 }}">
-                                                                    <input type="text" class="form-control" id="ccode" name="ccode" placeholder="Enter Card Code">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <img src="{{ asset('images/card-security-code-hint.png') }}" />
-                                                                </div>
-                                                                <button type="submit" class="btn btn-primary card-submit">Pay Now</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </td>
+                                                <td>PayPal</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Total:</th>
@@ -191,40 +158,40 @@
                                             @endif
 
                                             @guest
-                                            <form id="login" class="cart-login" method="POST" action="/learnerlogin" onSubmit="return cart_login_validate('');">
-                                                {{ csrf_field() }}
-                                                <div class="form-group has-placeholder">
-                                                    <label for="email-login-cart">Email:</label>
-                                                    <input type="email" class="form-control" id="email-login-cart" placeholder="Your email adress" name="email">
-                                                </div>
-                                                <div class="form-group has-placeholder">
-                                                    <label for="password-login-cart">Password:</label>
-                                                    <input type="password" class="form-control" id="password-login-cart" placeholder="Password" name="password">
-                                                </div>
-                                                <div class="form-check">
-                                                </div>
-                                                <button type="submit" class="btn btn-maincolor log-btn">Log In</button>
-                                            </form>
+                                                <form id="login" class="cart-login" method="POST" action="/learnerlogin" onSubmit="return cart_login_validate('');">
+                                                    {{ csrf_field() }}
+                                                    <div class="form-group has-placeholder">
+                                                        <label for="email-login-cart">Email:</label>
+                                                        <input type="email" class="form-control" id="email-login-cart" placeholder="Your email adress" name="email">
+                                                    </div>
+                                                    <div class="form-group has-placeholder">
+                                                        <label for="password-login-cart">Password:</label>
+                                                        <input type="password" class="form-control" id="password-login-cart" placeholder="Password" name="password">
+                                                    </div>
+                                                    <div class="form-check">
+                                                    </div>
+                                                    <button type="submit" class="btn btn-maincolor log-btn">Log In</button>
+                                                </form>
                                             @endguest
 
                                             @auth
-                                            <table class="woocommerce-table woocommerce-table--customer-details shop_table customer_details">
+                                                <table class="woocommerce-table woocommerce-table--customer-details shop_table customer_details">
 
 
-                                                <tbody>
-                                                <tr>
-                                                    <th>Email:</th>
-                                                    <td>{{ (Auth::user()) ? Auth::user()->email : "" }}</td>
-                                                </tr>
+                                                    <tbody>
+                                                    <tr>
+                                                        <th>Email:</th>
+                                                        <td>{{ (Auth::user()) ? Auth::user()->email : "" }}</td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <th>Phone:</th>
-                                                    <td>{{ (Auth::user()) ? Auth::user()->phone : "" }}</td>
-                                                </tr>
+                                                    <tr>
+                                                        <th>Phone:</th>
+                                                        <td>{{ (Auth::user()) ? Auth::user()->phone : "" }}</td>
+                                                    </tr>
 
 
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
                                             @endauth
 
                                             <h4 class="woocommerce-column__title">Billing address</h4>

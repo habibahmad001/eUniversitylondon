@@ -53,6 +53,7 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::post('/cartremoveitem', 'Front\CartController@RemoveItem');
     Route::get('/undocart', 'Front\CartController@UndoItem');
     Route::get('/reviewcart', 'Front\CartController@ReviewCart');
+    Route::post('/card_auth', 'Front\CartController@CardAuth');
     /************* Cart Ends ***************/
 
     /************* Order Detail Starts ***************/
@@ -142,6 +143,7 @@ Route::get('/getstatename/{id}', 'Front\CartController@GetStateName');
 
 /********** Gernal Cart Functions *********/
 Route::get('/carttotal', 'Front\CartController@CartTotal');
+Route::get('/productcount', 'Front\CartController@GetProductCount');
 /********** Gernal Cart Functions *********/
 
 /********** Gernal Course Functions *********/
