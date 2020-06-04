@@ -22,18 +22,19 @@ $(".edit-icon").click(function () {
     duration: 500,
   });
 
-  $.get('/admin/gettermservices/' + tns_id, function(data){
+  $.get('/admin/gettopics/' + tns_id, function(data){
 
     $(".loading-container").fadeOut();
     $(".form-content-box").fadeIn();
 
     var store;
 
-    if(typeof data.TermAndServices != 'undefined'){
-      TermAndServices = data.TermAndServices;
+    if(typeof data.Topics != 'undefined'){
+      Topics = data.Topics;
 
-      $("#edit-tns_title").val(TermAndServices.termandservices_title);
-      $("#edit-tns_desc").summernote('code', TermAndServices.termandservices_desc);
+      $("#edit-tns_title").val(Topics.topics_title);
+      $("#edit-tns_desc").summernote('code', Topics.topics_desc);
+      $("#edit-iconval").val(Topics.selectedicon);
       $("#tns_id").val(tns_id);
 
       $(".save-changes").removeClass('disable').removeAttr('disabled');
@@ -47,6 +48,7 @@ function reset_form() {
   });
   $("#tns_title").val('');
   $("#tns_desc").val('');
+  $("#iconval").val('');
 }
 
 function validateEmailExist(type) {
@@ -76,6 +78,7 @@ function validate(type) {
 
   var tns_title = $("#"+ type +"tns_title").val();
   var tns_desc = $("#"+ type +"tns_desc").val();
+  var iconval = $("#"+ type +"iconval").val();
 
 
   if(tns_title == '') {
@@ -84,6 +87,9 @@ function validate(type) {
 
   if(tns_desc == '') {
     errors.push("#"+ type +"tns_desc");
+  }
+  if(iconval == '') {
+    errors.push("#"+ type +"iconval");
   }
 
   if(errors.length>0){

@@ -26,6 +26,11 @@
                 <p>Update Password</p>
             </a>
         </li>
+        <li @if(collect(request()->segments())->first()=='updatepass') class="is-active" @endif>
+            <a href="{{ URL::to("/" . Auth::user()->user_type . "/home") }}">
+                <p>{{ Auth::user()->user_type }} Area</p>
+            </a>
+        </li>
         <li>
             <a href="{{ URL::to("/logout") }}">
                 <p>Logout</p>

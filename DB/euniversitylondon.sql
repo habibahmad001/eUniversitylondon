@@ -4268,22 +4268,22 @@ INSERT INTO `tablestate` (`id`, `state_name`, `cid`, `status`, `created`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tabletermandservices`
+-- Table structure for table `tabletopics`
 --
 
-CREATE TABLE `tabletermandservices` (
+CREATE TABLE `tabletopics` (
   `id` int(10) UNSIGNED NOT NULL,
-  `termandservices_title` text COLLATE utf8mb4_unicode_ci,
-  `termandservices_desc` longtext COLLATE utf8mb4_unicode_ci,
-  `termandservices_status` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes'
+  `topics_title` text COLLATE utf8mb4_unicode_ci,
+  `topics_desc` longtext COLLATE utf8mb4_unicode_ci,
+  `topics_status` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tabletermandservices`
 --
 
-INSERT INTO `tabletermandservices` (`id`, `termandservices_title`, `termandservices_desc`, `termandservices_status`) VALUES
-(1, 'First Term And Services', 'Term And Services Content', 'yes'),
+INSERT INTO `tabletopics` (`id`, `topics_title`, `topics_desc`, `topics_status`) VALUES
+(1, 'First Topics', 'Topics Content', 'yes'),
 (3, 'ccccccccccc', 'cccccccccccccccccccccccccc', 'yes');
 
 -- --------------------------------------------------------
@@ -4540,9 +4540,9 @@ ALTER TABLE `tablestate`
   ADD KEY `tablestate_cid_foreign` (`cid`);
 
 --
--- Indexes for table `tabletermandservices`
+-- Indexes for table `tabletopics`
 --
-ALTER TABLE `tabletermandservices`
+ALTER TABLE `tabletopics`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -4662,9 +4662,9 @@ ALTER TABLE `tableqanda`
 ALTER TABLE `tablestate`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3498;
 --
--- AUTO_INCREMENT for table `tabletermandservices`
+-- AUTO_INCREMENT for table `tabletopics`
 --
-ALTER TABLE `tabletermandservices`
+ALTER TABLE `tabletopics`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tabletestimonial`

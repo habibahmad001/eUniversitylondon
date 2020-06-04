@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\CourseProgram;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
@@ -17,6 +18,7 @@ use App\State;
 use App\UserAddress;
 use App\CourseWithUser;
 use App\Order;
+use App\CourseStarted;
 
 use Auth;
 
@@ -234,10 +236,19 @@ class CartController extends Controller
             return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
         }
 
-        $data['sub_heading']    = 'Cart';
-        $data['page_title']     = 'eUniversitylondon Cart';
+        $data['sub_heading']            = 'Course Detaile';
+        $data['page_title']             = 'eUniversitylondon Course Detaile';
 
-        $data['courseData']    = Courses::where("id", $course_id)->get();
+        $UserProgramData  = CourseStarted::where('course_id', $course_id)->where('user_id', Auth::user()->id)->get();
+        if(count($UserProgramData) > 0) {
+            $data['courseData']             = CourseProgram::where("id", $UserProgramData[0]->CourseProgramID)->get();
+            $pdfpath    =   "/uploads/courseprogrampdf/";
+        } else {
+            $data['courseData']             = Courses::where("id", $course_id)->get();
+            $pdfpath    =   "/uploads/coursepdf/";
+        }
+        $data['courseprogramData']          = CourseProgram::where("course_id", $course_id)->get();
+        $data['PDFpath']  = $pdfpath;
 
         return view('frontend.startcourse', $data);
     }
@@ -300,12 +311,12 @@ class CartController extends Controller
         return $RES;
     }
 
-    public static function GetProductCount($id){
+    public static function GetProductCount(){
 
         $data = [];
         $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->first();
         if($session_result === null) {
-            $data["CartItems"] = "emp";
+            $data["ItemsMSG"] = "emp";
         } else {
             $CartItems = (array) json_decode($session_result->val, true);
             $data["ItemsCount"]      =  count($CartItems);

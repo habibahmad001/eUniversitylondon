@@ -74,4 +74,32 @@
         </div>
     </section>
 
+    <section class="s-pt-60 s-pb-50 s-pt-lg-90 s-pb-lg-80 ls ms text-center text-md-left">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <div class="intro_layer animate animated fadeInRight" data-animation="fadeInRight">
+                        <h2 class="call-title">
+                            Can’t find what you are looking for?
+                        </h2>
+                        <p class="fs-20">
+                            Submit a ticket and we'll get back to you as soon as we can.
+                        </p>
+                        <form role="search" method="get" class="search-form search-course" action="http://webdesign-finder.com/">
+                            <div class="form-group has-placeholder">
+                                <label for="search-form-widget">
+                                    <span class="screen-reader-text">Search for:</span>
+                                </label>
+                                <i class="fa fa-search"></i>
+                                <input type="search" id="search-form-widget" class="search-field form-control" placeholder="" value="" name="search">
+                                <button type="submit" class="search-submit btn btn-maincolor">Find courses</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="divider-3"></div>
+    </section>
+
 @endsection

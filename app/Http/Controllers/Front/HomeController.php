@@ -48,6 +48,24 @@ class HomeController extends Controller
         return view('frontend.forgotpass', $data);
     }
 
+    public function ContactUS() {
+
+        $data['sub_heading']  = 'Contact US Page';
+        $data['page_title']   = 'Contact US';
+
+        return view('frontend.contactus', $data);
+    }
+
+    public function AboutUS() {
+
+        $data['sub_heading']  = 'About US Page';
+        $data['page_title']   = 'About US';
+
+        $data['AllClients']         = Clients::where("client_status","yes")->orderBy('id', 'desc')->get();
+
+        return view('frontend.aboutus', $data);
+    }
+
     public function UpdatePassword($id) {
 
         $data['sub_heading']  = 'Forgot Password Page';

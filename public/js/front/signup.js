@@ -535,3 +535,29 @@ function cart_item_submit(id) {
     $("#addinput").html('<input type="hidden" name="itemid" id="itemid" value="' + id + '">');
     $('#cart-update').attr("action", "/cartremoveitem").submit();
 }
+
+function Get_CP_PDF(ID) {
+    $.get('/getcppdf/' + ID, function(data){
+        /*$("#my-pdf").html('<div class="preloader">\n' +
+                            '    <div class="preloader_image"></div>\n' +
+                            '</div>');*/
+        var Courses = data;
+        var msg = "";
+        if(data.msg == "newitem") {
+            msg = "Course has been started!";
+            PDFObject.embed("/uploads/courseprogrampdf/" + Courses.pdf, "#my-pdf", options);
+        } else if(data.msg == "less") {
+            msg = "You already cleared this program!";
+        } else if(data.msg == "notexist") {
+            msg = "Congratulation you completed this course!";
+        } else if(data.msg == "wrongstep") {
+            msg = "You are not eligible for this program Yet!";
+        } else if(data.msg == "updated") {
+            msg = "Congratulation you completed this program!";
+            PDFObject.embed("/uploads/courseprogrampdf/" + Courses.pdf, "#my-pdf", options);
+        }
+        $("#msg").text(msg).show().fadeOut(6500);
+
+    });
+
+}

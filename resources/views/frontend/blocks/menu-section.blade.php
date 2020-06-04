@@ -80,7 +80,7 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle dropdown-shopping-cart" href="{{ URL::to("/cart") }}" role="button" id="dropdown-shopping-cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-shopping-basket"></i>
-                                <span class="badge bg-maincolor">3</span>
+                                <span class="badge bg-maincolor">{!! (App\Http\Controllers\Front\CartController::GetProductCount()["ItemsMSG"] == "emp") ? 0 : App\Http\Controllers\Front\CartController::GetProductCount()["ItemsCount"] !!}</span>
                                 ${{ (App\Http\Controllers\Front\CartController::CartTotal()) ? App\Http\Controllers\Front\CartController::CartTotal() : 0 }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right ls" aria-labelledby="dropdown-shopping-cart">
