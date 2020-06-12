@@ -8,6 +8,7 @@ class Exam extends Model
 {
     public $timestamps = false;
     protected $table = 'tableexam';
+    protected $dates = ['exam_date'];
 
     protected $fillable = [
         'id', 'course_id', 'exam_title', 'exam_content', 'exam_status', 'exam_date', 'exam_user_id'

@@ -62,7 +62,7 @@
 
         <div class="form-line">
           <select name="cou_category[]" id="edit-cou_category" class="form-control"  multiple>
-            @if(count($Category)) @foreach ($Category as $cat) @if($cat->category_cid == NULL)
+            @if(count($Category)) @foreach ($Category as $cat) @if($cat->category_cid == 0)
               <option value="{{ $cat->id }}">{{ $cat->category_title }}</option>
             @endif @endforeach @else
               <option value="0">No Category</option>

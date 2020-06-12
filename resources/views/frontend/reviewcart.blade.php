@@ -103,7 +103,7 @@
                                                     <tr class="woocommerce-table__line-item order_item">
 
                                                         <td class="woocommerce-table__product-name product-name">
-                                                            <a href="shop-product-right.html">{{ $v[1] }}</a> <strong
+                                                            <a href="javascript:void(0);">{{ $v[1] }}</a> <strong
                                                                     class="product-quantity">× {{ $v[2] }}</strong>
                                                         </td>
 
@@ -128,7 +128,40 @@
                                             </tr>
                                             <tr>
                                                 <th scope="row">Payment method:</th>
-                                                <td>PayPal</td>
+                                                <td>
+                                                    <div class="card-form-div">
+                                                        <input type="radio" name="payment" id="paypal-chk" value="0" checked>&nbsp;PayPal
+                                                    </div><br />
+                                                    <div class="card-form-div">
+                                                        <input type="radio" name="payment" id="card" value="1">&nbsp;Credit and Debit Card Payment
+                                                        <div class="card-form" id="card-form">
+                                                            <form name="card-frm" id="card-frm" class="" action="@auth{{ url('/checkout') }} @else {{ url('/card_auth') }} @endauth" method="post" onSubmit="return card_validate('');">
+                                                                {{ csrf_field() }}
+                                                                <div class="form-group">
+                                                                    <label for="cnumber">Card Number</label>
+                                                                    <input type="text" class="form-control" id="cnumber" name="cnumber" placeholder="Enter Card Number">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="card-expiry-month">Expiration Month</label>
+                                                                    {{ Form::selectMonth(null, null, ['name' => 'card_expiry_month', 'id' => 'card_expiry_month', 'class' => 'form-control']) }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="card-expiry-year">Expiration Year</label>
+                                                                    {{ Form::selectYear(null, date('Y'), date('Y') + 10, null, ['name' => 'card_expiry_year', 'id' => 'card_expiry_year' , 'class' => 'form-control']) }}
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="ccode">Card Code</label>
+                                                                    <input type="hidden" id="camount" name="camount" value="0.1" placeholder="{{ (isset($Total)) ? $Total : 0 }}">
+                                                                    <input type="text" class="form-control" id="ccode" name="ccode" placeholder="Enter Card Code">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <img src="{{ asset('images/card-security-code-hint.png') }}" />
+                                                                </div>
+                                                                <button type="submit" class="btn btn-primary card-submit">Pay Now</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Total:</th>

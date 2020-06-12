@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Courses;
 use App\CourseProgram;
+use App\CourseStarted;
 
 use Auth;
 
@@ -41,6 +42,71 @@ class CourseController extends Controller
         $data['CourseProgram']       = CourseProgram::where("course_id", $data['course']->id)->where("cp_status", "yes")->orderBy("cp_placement", "asc")->get();
 
         return view('frontend.course-detail', $data);
+    }
+
+    public function GetCPPDF($id) {
+
+        $RES              =     [];
+
+        $Data             = CourseProgram::where("id", $id)->first();
+
+        $UserProgramData  = CourseStarted::where('course_id', $Data->course_id)->where('user_id', Auth::user()->id)->get();
+
+        if(count($UserProgramData) > 0) {
+              if($id > $UserProgramData[0]->CourseProgramID) {
+                    /************* Get Next CP ***********/
+                    $res_CP     =   CourseProgram::where("course_id", $Data->course_id)->orderBy("id", "asc")->pluck('id')->toArray();;
+                    if(count($res_CP) > 0) {
+                        foreach($res_CP as $k=>$v) {
+                            if($v == $UserProgramData[0]->CourseProgramID) {
+                                $key = $k+1;
+                            }
+                        }
+                    }
+                    /************* Get Next CP ***********/
+                    if(array_key_exists($key, $res_CP)) {
+                        if($id > $res_CP[$key]) {
+                            $RES["msg"]  =  "wrongstep";
+                            $RES["pdf"]  =   $Data->pdf;
+                            return $RES;
+                        } else {
+                            /************* Update Next CP ***********/
+                            $CourseStarted      = CourseStarted::where('course_id', $Data->course_id)->where('user_id', Auth::user()->id)->first();
+                            $CourseStarted->CourseProgramID         =   $res_CP[$key];
+
+                            $save                                   =   $CourseStarted->save();
+                            /************* Update Next CP ***********/
+                            if($save) {
+                                $RES["msg"]  =  "updated";
+                                $RES["pdf"]  =   $Data->pdf;
+                                return $RES;
+                            }
+                        }
+                    } else {
+                        $RES["msg"]  =  "notexist";
+                        $RES["pdf"]  =   $Data->pdf;
+                        return $RES;
+                    }
+              } else {
+                  $RES["msg"]  =  "less";
+                  $RES["pdf"]  =   $Data->pdf;
+                  return $RES;
+              }
+        } else {
+            /********** Insert in Course Program *********/
+            $CourseStarted      = CourseStarted::firstOrNew(array('course_id' => $Data->course_id, 'user_id' => Auth::user()->id, 'CourseProgramID' => $id));
+
+            $CourseStarted->course_id               =   $Data->course_id;
+            $CourseStarted->user_id                 =   Auth::user()->id;
+            $CourseStarted->CourseProgramID         =   $id;
+
+            $save                                   =   $CourseStarted->save();
+            /********** Insert in Course Program *********/
+        }
+
+        $RES["msg"]  =  "newitem";
+        $RES["pdf"]  =   $Data->pdf;
+        return $RES;
     }
 
 

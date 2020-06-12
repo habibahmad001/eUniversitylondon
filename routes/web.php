@@ -41,6 +41,11 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::post('/updatepass', 'Front\HomeController@ResetPassword');
     /************* Home Ends ***************/
 
+    /************* Pages Starts ***************/
+    Route::get('/contact', 'Front\HomeController@ContactUS')->name('contact');
+    Route::get('/about', 'Front\HomeController@AboutUS')->name('about');
+    /************* Pages Ends ***************/
+
     /************* Categories Starts ***************/
     Route::get('category/{page_slug}', 'Front\CategoryController@GetCategories');
     Route::get('allcategories', 'Front\CategoryController@index');
@@ -53,6 +58,7 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::post('/cartremoveitem', 'Front\CartController@RemoveItem');
     Route::get('/undocart', 'Front\CartController@UndoItem');
     Route::get('/reviewcart', 'Front\CartController@ReviewCart');
+    Route::post('/card_auth', 'Front\CartController@CardAuth');
     /************* Cart Ends ***************/
 
     /************* Order Detail Starts ***************/
@@ -68,11 +74,12 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     /************* Paypal Starts ***************/
     Route::get('/paypal', 'Front\CartController@Paypal');
     Route::get('/paypalsuccess', 'Front\CartController@PayPalSuccess');
-    Route::get('/startcourse/{id}', 'Front\CartController@StartCourse');
     /************* Paypal Ends ***************/
 
     /************* Course Starts ***************/
     Route::get('/course_detail/{id}', 'Front\CourseController@Detail');
+    Route::get('/startcourse/{id}', 'Front\CartController@StartCourse');
+    Route::get('/getcppdf/{cpid}', 'Front\CourseController@GetCPPDF');
     /************* Course Ends ***************/
 
     /************* Front User Starts ***************/
@@ -90,6 +97,12 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/searchtype/{term}', 'Front\HomeController@SearchType');
     Route::get('/searchcourse', 'Front\CategoryController@SearchCourse');
     /************* Front Search Ends ***************/
+
+    /*************** CMS Starts ***************/
+    Route::get('/getcms/{id}', 'Front\CMSController@GetCMS');
+    Route::get('/cmsupdate/{id}', 'Front\CMSController@CMSUpdate');
+    Route::get('/cmsreload/{name}', 'Front\CMSController@PageReload');
+    /*************** CMS Ends ***************/
 
 //});
 
@@ -118,9 +131,14 @@ Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 
 
-
+/********** Gernal Q&A Functions *********/
 Route::get('/HasItems/{id}', 'QandAController@HasItems');
 Route::get('/AnswerCount/{id}', 'QandAController@AnswerCount');
+/********** Gernal Q&A Functions *********/
+
+/********** Gernal Login User Functions *********/
+Route::get('/user_msg', 'LoginController@UserMSG');
+/********** Gernal Login User Functions *********/
 
 
 /********** Gernal Category Functions *********/
@@ -137,11 +155,16 @@ Route::get('/getstatename/{id}', 'Front\CartController@GetStateName');
 
 /********** Gernal Cart Functions *********/
 Route::get('/carttotal', 'Front\CartController@CartTotal');
+Route::get('/productcount', 'Front\CartController@GetProductCount');
 /********** Gernal Cart Functions *********/
 
 /********** Gernal Course Functions *********/
 Route::get('/getcourseonid/{id}', 'Front\UserFrontController@GetCourseOnID');
 /********** Gernal Course Functions *********/
+
+/********** Gernal CMS Functions *********/
+Route::get('/cmsbtn/{cid}/{pid}', 'Front\CMSController@cmsBTN');
+/********** Gernal CMS Functions *********/
 
 /********** Gernal User Functions *********/
 Route::get('/getuseronid/{id}', 'OrderController@GetUserOnID');
@@ -192,7 +215,9 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/cms', 'cmsc@index');
     Route::post('/admin/cms_add', 'cmsc@CMSAdd');
     Route::get('/admin/getcms/{cms_id}', 'cmsc@GetCMS');
+    Route::post('/admin/savecms', 'Front\CMSController@SaveCMS');
     Route::post('/admin/update-cms', 'cmsc@UpdateCMS');
+    Route::get('/admin/cmstpage/{cms_pid}', 'cmsc@SelectPage');
     /*************** CMS Ends ***************/
 
     /*************** CurriCulums Starts ***************/
@@ -235,6 +260,14 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/update-testimonial', 'TestimonialController@UpdateTestimonial');
     /*************** Testimonial Ends ***************/
 
+    /*************** Teams Starts ***************/
+    Route::resource('/admin/teams', 'TeamsController');
+    Route::get('/admin/teams', 'TeamsController@index');
+    Route::post('/admin/teams_add', 'TeamsController@TeamsAdd');
+    Route::get('/admin/getteams/{t_id}', 'TeamsController@GetTeams');
+    Route::post('/admin/update-teams', 'TeamsController@UpdateTeams');
+    /*************** Teams Ends ***************/
+
     /*************** Clients Starts ***************/
     Route::resource('/admin/client', 'ClientController');
     Route::get('/admin/client', 'ClientController@index');
@@ -243,13 +276,13 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/update-client', 'ClientController@UpdateClient');
     /*************** Clients Ends ***************/
 
-    /*************** Term And Services Starts ***************/
-    Route::resource('/admin/termandservices', 'TermAndServicesController');
-    Route::get('/admin/termservices', 'TermAndServicesController@index');
-    Route::post('/admin/termservices_add', 'TermAndServicesController@TermAndServicesAdd');
-    Route::get('/admin/gettermservices/{tns_id}', 'TermAndServicesController@GetTermAndServices');
-    Route::post('/admin/update-cmstermservices', 'TermAndServicesController@UpdateTermAndServices');
-    /*************** Term And Services Ends ***************/
+    /*************** Topics Starts ***************/
+    Route::resource('/admin/topics', 'TopicsController');
+    Route::get('/admin/topics', 'TopicsController@index');
+    Route::post('/admin/topics_add', 'TopicsController@TopicsAdd');
+    Route::get('/admin/gettopics/{tns_id}', 'TopicsController@GetTopics');
+    Route::post('/admin/update-cmstopics', 'TopicsController@UpdateTopics');
+    /*************** Topics Ends ***************/
 
 
     /*************** Courses Starts ***************/
@@ -410,7 +443,7 @@ Route::middleware(['learner'])->group(function () {
 
 // Auth::routes();
 
-Route::get('/sendmail', 'TermAndServicesController@sendmail');
+Route::get('/sendmail', 'TopicsController@sendmail');
 
 
 Route::get('/get-started', function () {

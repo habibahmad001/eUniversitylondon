@@ -118,11 +118,19 @@
       </a>
     </li>
 
-    <li @if(collect(request()->segments())->last()=='termservices') class="active" @endif>
-      <a href="{{ URL::to('/admin/termservices') }}">
+    <li @if(collect(request()->segments())->last()=='topics') class="active" @endif>
+      <a href="{{ URL::to('/admin/topics') }}">
         {{--manage-rules--}}
         <div class="icon">TS</div>
-        <div class="icon-detail">Term & Services</div>
+        <div class="icon-detail">Topics</div>
+      </a>
+    </li>
+
+    <li @if(collect(request()->segments())->last()=='teams') class="active" @endif>
+      <a href="{{ URL::to('/admin/teams') }}">
+        {{--manage-rules--}}
+        <div class="icon">T</div>
+        <div class="icon-detail">Teams</div>
       </a>
     </li>
 

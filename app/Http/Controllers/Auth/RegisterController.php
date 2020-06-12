@@ -137,13 +137,48 @@ class RegisterController extends Controller
         $users->password    = bcrypt($request->password);
         $saved              = $users->save();
         if ($saved) {
-            $request->session()->flash('alert-success', 'User was successful added!');
-            return redirect('/admin/users');
+            if($request->user_type == "learner") {
+                return redirect()->intended('/updatepass/' . $users->id)->withErrors(['email' => "This password is only valid for the next 24 hours. Reset your password For security!"]);
+            } else {
+                return redirect()->back()->with('successmsg', 'Instructor account has been created successfully !');
+            }
         } else {
             return redirect()->back()->with('error', 'Couldn\'t create organization!');
         }
 
     }
+
+//    public function create_user(Request $request){
+//        $this->validate($request, [
+//            'first_name'=>'required|max:120',
+//            'last_name'=>'required|max:120',
+//            'email'=>'required|email|unique:users',
+//            'password'=>'required|min:6|confirmed',
+//            'phone'=>'required|max:120',
+//        ]);
+//
+//        $users              = [];
+//
+//        $users["first_name"]  = $request->first_name;
+//        $users["last_name"]   = $request->last_name;
+//        $users["phone"]       = $request->phone;
+//        $users["user_type"]   = $request->user_type;
+//        $users["status"]      = $request->status;
+//        $users["username"]    = $this->getUsername($request->first_name,$request->last_name);
+//        $users["email"]       = $request->email;
+//        $users["password"]    = bcrypt($request->password);
+//        $saved                = User::insertGetId($users);
+//        if ($saved) {
+//            if($request->user_type == "learner") {
+//                return redirect()->intended('/updatepass/' . $saved)->withErrors(['email' => "This password is only valid for the next 24 hours. Reset your password For security!"]);
+//            } else {
+//                return redirect()->back()->with('successmsg', 'Instructor account has been created successfully !');
+//            }
+//        } else {
+//            return redirect()->back()->with('error', 'Couldn\'t create organization!');
+//        }
+//
+//    }
 
 
     public function getUsername($firstName, $lastName) {

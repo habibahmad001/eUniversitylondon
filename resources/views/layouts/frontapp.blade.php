@@ -85,15 +85,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-3 animate" data-animation="fadeInUp">
-
                         <div class="widget widget_text">
                             <a href="{{ URL::to('/') }}" class="logo">
                                 <img src="{{ asset('images/logo.png') }}" alt="">
                                 <span class="logo-text color-darkgrey"></span>
                             </a>
-                            <p>
-                                Isn't days fill, after him bring. Set likeness meat seed whose for itself you can't seas itself. Herb replenish he, dry he. Firmament their.
-                            </p>
+                            {!! isset(App\Http\Controllers\Front\CMSController::CMSPageItems(12)->cms_desc) ? App\Http\Controllers\Front\CMSController::CMSPageItems(12)->cms_desc : "" !!}
+                            {{ App\Http\Controllers\Front\CMSController::cmsBTN(12, 5) }}
                         </div>
                     </div>
 
@@ -197,6 +195,27 @@
     </div><!-- eof #box_wrapper -->
 </div><!-- eof #canvas -->
 
+<!-- Modal -->
+<div id="cmsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+                <div class="modal-body">
+                    <input type="hidden" name="page_name" id="page_name" value="{{ collect(request()->segments())->last() }}">
+                    <iframe src="{{ URL::to("/cmsupdate/2") }}" id="cmsfrmid" name="cmsfrmid" style="width: 100%; min-height: 375px;overflow:hidden;"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="cmssave" class="btn btn-success">Save</button>
+                </div>
+        </div>
+
+    </div>
+</div>
 
 <script src="{{ asset('js/compressed.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
@@ -204,6 +223,5 @@
 
 <script type="text/javascript" src="{{ asset('../../../themera.net/embed/themera227f.js?id=%d1%85%d1%85%d1%85%d1%85%d1%85') }}"></script></body>
 <script src="{{ asset('js/front/signup.js') }}"></script>
-
 <!-- eUniversity London designed by BiG Inc, Fri, 20 Mar 2020 11:11:58 GMT -->
 </html>

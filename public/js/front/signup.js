@@ -19,6 +19,19 @@
 
     $(".woocommerce-message").fadeOut(9000);
     $('#paypalfrm').submit();
+    $("input[name='payment']").click(function () {
+        if($(this).val() == 1) {
+            $('#card-form').slideDown( "slow", function() {
+                // Animation complete.
+            });
+        } else {
+            $('#card-form').slideUp( "slow", function() {
+                // Animation complete.
+            });
+        }
+
+    });
+
 
 })(jQuery);
 
@@ -145,6 +158,42 @@ function login_validate(type) {
     return true;
 }
 
+function card_validate(type) {
+    $(".error").each(function(){
+        $(this).removeClass('error');
+    });
+    var errors = [];
+    var cnumber = $("#"+ type +"cnumber").val();
+    var card_expiry_month = $("#"+ type +"card_expiry_month").val();
+    var card_expiry_year = $("#"+ type +"card_expiry_year").val();
+    var ccode = $("#"+ type +"ccode").val();
+
+    if(cnumber == '') {
+        errors.push("#"+ type +"cnumber");
+    }
+
+    if(card_expiry_month == '') {
+        errors.push("#"+ type +"card_expiry_month");
+    }
+
+    if(card_expiry_year == '') {
+        errors.push("#"+ type +"card_expiry_year");
+    }
+
+    if(ccode == '') {
+        errors.push("#"+ type +"ccode");
+    }
+
+    if(errors.length>0){
+        for(i=0; i < errors.length; i++){
+            $(errors[i]).addClass('error');;
+        }
+        return false;
+    }
+
+    return true;
+}
+
 function accountdetail_validate(type) {
     $(".error").each(function(){
         $(this).removeClass('error');
@@ -250,6 +299,58 @@ function update_pass_validate(type) {
     return true;
 }
 
+$("button[name='cms']").click(function(){
+    var id = $(this).attr('data-id');
+    var pid = $(this).attr('data-pid');
+
+    $("#cmsID").val(id);
+    $("#cmsPID").val(pid);
+
+    // console.log(id + "=" + pid);
+
+    // $.get('/getcms/' + id, function(data){
+    //     if(typeof data.CMS != 'undefined') {
+    //         cms = data.CMS;
+    //         $("#cms_title").val(cms.cms_title);
+    //         $("#cms_desc").summernote('code', cms.cms_desc);
+    //     }
+    // });
+});
+
+$("button[name='cms']").click(function(){
+    var id = $(this).attr('data-id');
+
+    $('#cmsfrmid').attr("src", "/cmsupdate/" + id);
+
+});
+
+// $("#cmssave").click(function(){
+//     var iframe = document.getElementById('cmsfrmid');
+//     var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+//     alert(innerDoc.find("#cmsfrmid").html());
+//     console.log($(innerDoc).find("#cmsfrmid").html());
+//     $(innerDoc.form).submit();
+//     // $('#cmsModal').modal('hide');
+// });
+$("#cmssave").click(function(){
+
+    /*********** Set hidden variables *************/
+    var pid = $("button[data-id='"+$("#cmsID", frames['cmsfrmid'].document).val()+"']").attr('data-pid');
+
+    $("#cmsPID", frames['cmsfrmid'].document).val(pid);
+
+    // console.log(pid);
+    /*********** Set hidden variables *************/
+
+    $("#cmsformmodel", frames['cmsfrmid'].document).submit();
+    $('#cmsModal').modal('hide');
+    if($("#page_name").val() == "") {
+        window.location.href = "/cmsreload/home";
+    } else {
+        window.location.href = "/cmsreload/" + $("#page_name").val();
+    }
+
+});
 
 $("#b_edit").click(function () {
     $("p[data-msg=\"b_msg\"]").toggle(1500);
@@ -485,4 +586,30 @@ function product_submit(id) {
 function cart_item_submit(id) {
     $("#addinput").html('<input type="hidden" name="itemid" id="itemid" value="' + id + '">');
     $('#cart-update').attr("action", "/cartremoveitem").submit();
+}
+
+function Get_CP_PDF(ID) {
+    $.get('/getcppdf/' + ID, function(data){
+        /*$("#my-pdf").html('<div class="preloader">\n' +
+                            '    <div class="preloader_image"></div>\n' +
+                            '</div>');*/
+        var Courses = data;
+        var msg = "";
+        if(data.msg == "newitem") {
+            msg = "Course has been started!";
+            PDFObject.embed("/uploads/courseprogrampdf/" + Courses.pdf, "#my-pdf", options);
+        } else if(data.msg == "less") {
+            msg = "You already cleared this program!";
+        } else if(data.msg == "notexist") {
+            msg = "Congratulation you completed this course!";
+        } else if(data.msg == "wrongstep") {
+            msg = "You are not eligible for this program Yet!";
+        } else if(data.msg == "updated") {
+            msg = "Congratulation you completed this program!";
+            PDFObject.embed("/uploads/courseprogrampdf/" + Courses.pdf, "#my-pdf", options);
+        }
+        $("#msg").text(msg).show().fadeOut(6500);
+
+    });
+
 }

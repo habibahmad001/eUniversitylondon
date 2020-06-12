@@ -12,6 +12,8 @@ use App\Courses;
 use App\Testimonial;
 use App\Clients;
 use App\Categories;
+use App\Topics;
+use App\Teams;
 use Illuminate\Support\Facades\Mail;
 
 use Auth;
@@ -46,6 +48,26 @@ class HomeController extends Controller
         $data['page_title']   = 'Forgot Password';
 
         return view('frontend.forgotpass', $data);
+    }
+
+    public function ContactUS() {
+
+        $data['sub_heading']  = 'Contact US Page';
+        $data['page_title']   = 'Contact US';
+
+        return view('frontend.contactus', $data);
+    }
+
+    public function AboutUS() {
+
+        $data['sub_heading']  = 'About US Page';
+        $data['page_title']   = 'About US';
+
+        $data['AllClients']         = Clients::where("client_status","yes")->orderBy('id', 'desc')->get();
+        $data['Topics']             = Topics::where("topics_status","yes")->orderBy('id', 'asc')->get();
+        $data['Teams']              = Teams::where("teams_status","yes")->orderBy('id', 'asc')->get();
+
+        return view('frontend.aboutus', $data);
     }
 
     public function UpdatePassword($id) {
@@ -147,6 +169,7 @@ class HomeController extends Controller
         ]);
         $users              = User::find($id);
         $users->password    = bcrypt($request->new_password);
+        $users->passupdated = "yes";
 
         $saved              = $users->save();
         if ($saved) {

@@ -155,6 +155,16 @@ header .success-message-box .cancel:hover { background: url(../images/cancel-ico
 .content .add-new-form select[multiple] option { padding: 5px; }
 
 
+.global-msg {
+    /*z-index: 999;*/
+    position: absolute;
+    width: 100%;
+}
+
+.global-msg button {
+    float: right;
+}
+
 table.table { border-collapse:collapse; }
 .table.fixed{  position:fixed; width:auto; border:none; background-image: linear-gradient(to bottom right, #BABAD8 , #e0e0e0); }
 
@@ -333,6 +343,7 @@ select.search-where {
     padding: 1.5%;
     margin: 1% 0;
 }
+
 
 
 

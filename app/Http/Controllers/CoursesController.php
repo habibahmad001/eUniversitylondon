@@ -32,6 +32,7 @@ class CoursesController extends Controller
             $data['Courses']        =  CourseWithUser::join('tablecourses', 'tableuserwithcourse.course_id', '=', 'tablecourses.id')
                                         ->select('*')
                                         ->where('tableuserwithcourse.user_id', '=', Auth::user()->id)
+                                        ->where('tableuserwithcourse.isActive', '=', "yes")
                                         ->paginate(10);
         else
             $data['Courses']        =  Courses::paginate(10);

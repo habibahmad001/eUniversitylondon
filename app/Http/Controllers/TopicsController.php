@@ -9,13 +9,13 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 
 use App\User;
-use App\TermAndServices;
+use App\Topics;
 
 use Auth;
 
 use Session;
 
-class TermAndServicesController extends Controller
+class TopicsController extends Controller
 {
     public function __construct() {
         $this->middleware(['auth']); //isAdmin middleware lets only users with a //specific permission permission to access these resources
@@ -23,54 +23,58 @@ class TermAndServicesController extends Controller
 
     public function index() {
 
-        $data['sub_heading']  = 'Term And Services';
-        $data['page_title']   = 'eUniversitylondon Term And Services';
-        $data['TermAndServices']        =  TermAndServices::paginate(10);
-        return view('termservices/index', $data);
+        $data['sub_heading']  = 'Topics';
+        $data['page_title']   = 'eUniversitylondon Topics';
+        $data['Topics']        =  Topics::paginate(10);
+        return view('topics/index', $data);
     }
 
-    public function TermAndServicesAdd(Request $request){
-        $TermAndServices         = new TermAndServices;
+    public function TopicsAdd(Request $request){
+        $Topics         = new Topics;
         $this->validate($request, [
 
             'tns_title'=>'required',
+            'iconval'=>'required',
             'tns_desc'=>'required'
         ]);
-        $TermAndServices->termandservices_title  = $request->tns_title;
-        $TermAndServices->termandservices_desc  = $request->tns_desc;
+        $Topics->topics_title  = $request->tns_title;
+        $Topics->selectedicon  = $request->iconval;
+        $Topics->topics_desc  = $request->tns_desc;
 
-        $saved          = $TermAndServices->save();
+        $saved          = $Topics->save();
         if ($saved) {
-            $request->session()->flash('message', 'Term And Services successfully added!');
-            return redirect('/admin/termservices');
+            $request->session()->flash('message', 'Topics successfully added!');
+            return redirect('/admin/topics');
         } else {
-            return redirect()->back()->with('message', 'Couldn\'t create Term And Services!');
+            return redirect()->back()->with('message', 'Couldn\'t create Topics!');
         }
     }
 
-    public function GetTermAndServices($id){
+    public function GetTopics($id){
         $data         = [];
-        $TermAndServices         = TermAndServices::find($id);
-        $data['TermAndServices'] = $TermAndServices;
+        $Topics         = Topics::find($id);
+        $data['Topics'] = $Topics;
         return Response::json($data);
     }
 
-    public function UpdateTermAndServices(Request $request){
+    public function UpdateTopics(Request $request){
         $id              =        $request->tns_id;
         $this->validate($request, [
             'tns_title'=>'required',
+            'iconval'=>'required',
             'tns_desc'=>'required'
         ]);
-        $TermAndServices              = TermAndServices::find($id);
-        $TermAndServices->termandservices_title  = $request->tns_title;
-        $TermAndServices->termandservices_desc  = $request->tns_desc;
+        $Topics              = Topics::find($id);
+        $Topics->topics_title  = $request->tns_title;
+        $Topics->selectedicon  = $request->iconval;
+        $Topics->topics_desc  = $request->tns_desc;
 
-        $saved              = $TermAndServices->save();
+        $saved              = $Topics->save();
         if ($saved) {
-            $request->session()->flash('message', 'CMS was successful edited!');
-            return redirect('/admin/termservices');
+            $request->session()->flash('message', 'Topics was successful edited!');
+            return redirect('/admin/topics');
         } else {
-            return redirect()->back()->with('error', 'Couldn\'t create CMS!');
+            return redirect()->back()->with('error', 'Couldn\'t create Topics!');
         }
     }
 
@@ -101,9 +105,9 @@ class TermAndServicesController extends Controller
 
     public function destroy($id) {
         //Find a user with a given id and delete
-        $categories = TermAndServices::findOrFail($id);
-        $categories->delete();
-        return redirect('/admin/termservices')->with('message', 'Selected category has been deleted successfully!');
+        $Topics = Topics::findOrFail($id);
+        $Topics->delete();
+        return redirect('/admin/topics')->with('message', 'Selected Topics has been deleted successfully!');
     }
 
 }

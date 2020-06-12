@@ -24,11 +24,10 @@ class OrderDetailController extends Controller
     }
 
     public function index() {
+        $data                   = [];
 
         $data['sub_heading']    = 'Order Detail';
         $data['page_title']     = 'eUniversitylondon Order Detail';
-
-        $data                   = [];
 
         $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->whereDate('created', Carbon::today())->first();
         if($session_result === null) {

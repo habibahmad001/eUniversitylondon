@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TableTermAndServices extends Migration
+class TableTopics extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class TableTermAndServices extends Migration
      */
     public function up()
     {
-        Schema::create('tabletermandservices', function (Blueprint $table) {
+        Schema::create('tabletopics', function (Blueprint $table) {
             $table->increments('id',100);
-            $table->text('termandservices_title')->nullable();
-            $table->longText('termandservices_desc')->nullable();
-            $table->enum('termandservices_status', array('yes', 'no'))->default('yes');
-
+            $table->text('topics_title')->nullable();
+            $table->longText('topics_desc')->nullable();
         });
     }
 
@@ -29,6 +27,6 @@ class TableTermAndServices extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tabletermandservices');
+        Schema::dropIfExists('tabletopics');
     }
 }

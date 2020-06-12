@@ -9,6 +9,8 @@ class Clients extends Model
     public $timestamps = false;
     protected $table = 'tableclient';
 
+    protected $dates = ['created_at','updated_at'];
+
     protected $fillable = [
         'id','client_name','client_logo','client_status', 'created_at', 'updated_at'
     ];

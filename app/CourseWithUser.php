@@ -8,6 +8,7 @@ class CourseWithUser extends Model
 {
     public $timestamps = false;
     protected $table = 'tableuserwithcourse';
+    protected $dates = ['created_at','updated_at'];
 
     protected $fillable = [
         'id', 'course_id', 'user_id'

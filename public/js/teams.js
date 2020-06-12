@@ -15,38 +15,50 @@ $(".add-button").click(function () {
 
 $(".edit-icon").click(function () {
   showFormOverlay();
-  var tns_id = $(this).attr('data-id');
+  var t_id = $(this).attr('data-id');
   $(".edit-current-data").animate({
     width: "406px"
   }, {
     duration: 500,
   });
 
-  $.get('/admin/gettermservices/' + tns_id, function(data){
+  var user_folder = $("#user_folder").val();
+  $.get('/' + user_folder + '/getteams/' + t_id, function(data){
 
     $(".loading-container").fadeOut();
     $(".form-content-box").fadeIn();
 
     var store;
 
-    if(typeof data.TermAndServices != 'undefined'){
-      TermAndServices = data.TermAndServices;
+    if(typeof data.Teams != 'undefined'){
+      Teams = data.Teams;
 
-      $("#edit-tns_title").val(TermAndServices.termandservices_title);
-      $("#edit-tns_desc").summernote('code', TermAndServices.termandservices_desc);
-      $("#tns_id").val(tns_id);
+      var img_path = $("#img_path").val() + "/";
+
+      $("#edit-t_name").val(Teams.teams_name);
+      $("#edit-t_desc").summernote('code', Teams.teams_desc);
+      $("#edit-t_role").val(Teams.teams_role);
+      $("#t_id").val(t_id);
+
+      if(Teams.teams_img !== null) {
+        $("#avatar_div img").attr("src", img_path + Teams.teams_img);
+      }
 
       $(".save-changes").removeClass('disable').removeAttr('disabled');
     }
   });
 });
 
+
 function reset_form() {
+
   $(".error").each(function(){
     $(this).removeClass('error');
   });
-  $("#tns_title").val('');
-  $("#tns_desc").val('');
+  $("#t_name").val('');
+  $("#t_desc").val('');
+  $("#t_role").val('');
+  $("#avatar_div img").attr("src", "http://via.placeholder.com/150/000000/FFFFFF/?text=File Placeholder");
 }
 
 function validateEmailExist(type) {
@@ -74,16 +86,21 @@ function validate(type) {
   });
   var errors = [];
 
-  var tns_title = $("#"+ type +"tns_title").val();
-  var tns_desc = $("#"+ type +"tns_desc").val();
+  var t_name = $("#"+ type +"t_name").val();
+  var t_desc = $("#"+ type +"t_desc").val();
+  var t_role = $("#"+ type +"t_role").val();
 
 
-  if(tns_title == '') {
-    errors.push("#"+ type +"tns_title");
+  if(t_name == '') {
+    errors.push("#"+ type +"t_name");
   }
 
-  if(tns_desc == '') {
-    errors.push("#"+ type +"tns_desc");
+  if(t_desc == '') {
+    errors.push("#"+ type +"t_desc");
+  }
+
+  if(t_role == '') {
+    errors.push("#"+ type +"t_role");
   }
 
   if(errors.length>0){

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2020 at 02:01 PM
+-- Generation Time: Jun 05, 2020 at 06:31 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -77,7 +77,19 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (116, '2020_05_12_164508_Table_Course_Program', 14),
 (117, '2020_05_13_133301_Table_Course_Program', 15),
 (118, '2020_05_18_170808_Add_user_id_Assignment', 16),
-(119, '2020_05_26_081716_Add_Pdf_Course_Program', 17);
+(119, '2020_05_26_081716_Add_Pdf_Course_Program', 17),
+(120, '2020_05_27_141028_Add_UpdatePassword_to_User', 18),
+(121, '2020_05_29_190337_Add_dates_in_course_with_user', 19),
+(122, '2020_05_31_202919_Add_dates_in_course_with_user', 20),
+(123, '2020_05_31_210934_Add_dates_in_course_with_user', 21),
+(124, '2020_05_31_211700_Add_active_status_in_course_with_user', 22),
+(125, '2020_05_31_212815_Table_Course_started', 23),
+(126, '2020_05_31_214557_Table_Course_Started', 24),
+(127, '2020_05_31_215926_Table_Course_Started', 25),
+(128, '2020_05_31_220245_Table_Course_Started', 26),
+(129, '2020_05_31_220521_update_Dates_in_course_started', 27),
+(130, '2020_03_02_082922_table_topics', 28),
+(131, '2020_06_04_133736_Add_status_and_icon_In_topics', 28);
 
 -- --------------------------------------------------------
 
@@ -157,7 +169,7 @@ CREATE TABLE `tablecart` (
 --
 
 INSERT INTO `tablecart` (`id`, `session_id`, `key`, `val`, `status`, `created`, `undo_field`) VALUES
-(32, '7fW6pwKkJuE0UoMiivApXOff9Kt12UKKJQoBT3qi', NULL, NULL, 'yes', '2020-05-27 06:45:56', NULL);
+(57, '66UDBvJMVhqM1aNLWhekey43FP4HvS9NucsxuxVy', 'cartItem', '{"2":["570154661.jpg","Diploma in Legal Studies - Revised 2017",1,"666",2]}', 'yes', '2020-06-04 19:24:40', NULL);
 
 -- --------------------------------------------------------
 
@@ -472,53 +484,53 @@ CREATE TABLE `tablecourseprogram` (
 
 INSERT INTO `tablecourseprogram` (`id`, `course_id`, `cp_title`, `cp_author`, `cp_desc`, `cp_placement`, `cp_status`, `created`, `pdf`) VALUES
 (1, '1', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', '1241624266.pdf'),
-(2, '1', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', NULL),
-(3, '1', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', NULL),
-(4, '1', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', NULL),
-(5, '1', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', NULL),
-(6, '1', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', NULL),
-(7, '2', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', NULL),
-(8, '2', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', NULL),
-(9, '2', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', NULL),
-(10, '2', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', NULL),
-(11, '2', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', NULL),
-(12, '2', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', NULL),
-(13, '3', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', NULL),
-(14, '3', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', NULL),
-(15, '3', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', NULL),
-(16, '3', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', NULL),
-(17, '3', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', NULL),
-(18, '3', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', NULL),
-(19, '4', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', NULL),
-(20, '4', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', NULL),
-(21, '4', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', NULL),
-(22, '4', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', NULL),
-(23, '4', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', NULL),
-(24, '4', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', NULL),
-(25, '5', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', NULL),
-(26, '5', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', NULL),
-(27, '5', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', NULL),
-(28, '5', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', NULL),
-(29, '5', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', NULL),
-(30, '5', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', NULL),
-(31, '6', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', NULL),
-(32, '6', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', NULL),
-(33, '6', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', NULL),
-(34, '6', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', NULL),
-(35, '6', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', NULL),
-(36, '6', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', NULL),
-(37, '7', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', NULL),
-(38, '7', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', NULL),
-(39, '7', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', NULL),
-(40, '7', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', NULL),
-(41, '7', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', NULL),
-(42, '7', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', NULL),
-(43, '8', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', NULL),
-(44, '8', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', NULL),
-(45, '8', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', NULL),
-(46, '8', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', NULL),
-(47, '8', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', NULL),
-(48, '8', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', NULL);
+(2, '1', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', '1241624266.pdf'),
+(3, '1', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', '1241624266.pdf'),
+(4, '1', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', '1241624266.pdf'),
+(5, '1', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', '1241624266.pdf'),
+(6, '1', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', '1241624266.pdf'),
+(7, '2', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', '1241624266.pdf'),
+(8, '2', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', '1241624266.pdf'),
+(9, '2', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', '1241624266.pdf'),
+(10, '2', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', '1241624266.pdf'),
+(11, '2', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', '1241624266.pdf'),
+(12, '2', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', '1241624266.pdf'),
+(13, '3', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', '1241624266.pdf'),
+(14, '3', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', '1241624266.pdf'),
+(15, '3', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', '1241624266.pdf'),
+(16, '3', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', '1241624266.pdf'),
+(17, '3', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', '1241624266.pdf'),
+(18, '3', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', '1241624266.pdf'),
+(19, '4', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', '1241624266.pdf'),
+(20, '4', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', '1241624266.pdf'),
+(21, '4', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', '1241624266.pdf'),
+(22, '4', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', '1241624266.pdf'),
+(23, '4', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', '1241624266.pdf'),
+(24, '4', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', '1241624266.pdf'),
+(25, '5', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', '1241624266.pdf'),
+(26, '5', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', '1241624266.pdf'),
+(27, '5', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', '1241624266.pdf'),
+(28, '5', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', '1241624266.pdf'),
+(29, '5', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', '1241624266.pdf'),
+(30, '5', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', '1241624266.pdf'),
+(31, '6', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', '1241624266.pdf'),
+(32, '6', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', '1241624266.pdf'),
+(33, '6', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', '1241624266.pdf'),
+(34, '6', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', '1241624266.pdf'),
+(35, '6', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', '1241624266.pdf'),
+(36, '6', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', '1241624266.pdf'),
+(37, '7', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', '1241624266.pdf'),
+(38, '7', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', '1241624266.pdf'),
+(39, '7', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', '1241624266.pdf'),
+(40, '7', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', '1241624266.pdf'),
+(41, '7', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', '1241624266.pdf'),
+(42, '7', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', '1241624266.pdf'),
+(43, '8', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '1', 'yes', '2020-05-13 17:47:33', '1241624266.pdf'),
+(44, '8', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '2', 'yes', '2020-05-13 17:48:46', '1241624266.pdf'),
+(45, '8', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '3', 'yes', '2020-05-13 17:49:28', '1241624266.pdf'),
+(46, '8', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '4', 'yes', '2020-05-13 17:50:11', '1241624266.pdf'),
+(47, '8', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '5', 'yes', '2020-05-13 17:50:54', '1241624266.pdf'),
+(48, '8', 'What does Your Company Consulting do?', 'Juan L. Kobayashi', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br></p>', '6', 'yes', '2020-05-13 17:52:23', '1241624266.pdf');
 
 -- --------------------------------------------------------
 
@@ -559,6 +571,23 @@ INSERT INTO `tablecourses` (`id`, `category_id`, `course_avatar`, `course_title`
 (6, '["1","9"]', '269687077.jpg', 'General Data Protection Regulation (GDPR)', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '30', '["english","france"]', '10', '30', 'asdasd', '5555', '5', 'yes', 1, 'https://www.youtube.com/', '["most_recent","most_certified"]', '430852041.pdf'),
 (7, '["6","7","8","9"]', '1606469900.jpg', 'Why We Are', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '50', '["france"]', '7', '10', 'sdfsf', '3333', '3', 'no', 2, 'https://www.globaledulink.co.uk/', '["most_recent"]', NULL),
 (8, '["6","7","8"]', '2131853756.jpg', 'Duis autem vel eum iriure dolor', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '10', '["english"]', '8', '20', 'dfgd', '777', '7', 'no', 2, 'https://www.coursera.org/', '["most_recent"]', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tablecoursestarted`
+--
+
+CREATE TABLE `tablecoursestarted` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `course_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `CourseProgramID` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `CourseCompleted` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'no',
+  `isActive` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -704,10 +733,19 @@ CREATE TABLE `tableorders` (
 --
 
 INSERT INTO `tableorders` (`id`, `user_id`, `key`, `val`, `order_id`, `order_items`, `order_state`, `status`, `created`) VALUES
+(6, '19', 'cartItem', '{"6":["269687077.jpg","General Data Protection Regulation (GDPR)",2,"5555",6],"5":["1287658438.jpg","Skills for Speaking Effectively: The Art of Speaking",1,"6666",5]}', '42', '2', 'Completed', 'yes', '2020-05-28 14:59:29'),
+(7, '18', 'cartItem', '{"6":["269687077.jpg","General Data Protection Regulation (GDPR)",1,"5555",6]}', '44', '1', 'Completed', 'yes', '2020-05-31 19:31:33'),
 (2, '3', 'cartItem', '{"6":["269687077.jpg","General Data Protection Regulation (GDPR)",1,"5555",6],"5":["1287658438.jpg","Skills for Speaking Effectively: The Art of Speaking",1,"6666",5]}', '2', '2', 'Completed', 'yes', '2020-05-11 13:46:56'),
 (3, '13', 'cartItem', '{"5":["1287658438.jpg","Skills for Speaking Effectively: The Art of Speaking",1,"6666",5]}', '3', '1', 'Completed', 'yes', '2020-05-11 15:14:05'),
 (4, '3', 'cartItem', '{"3":["1180059600.jpg","Working with Students with Special Educational Needs",1,"33",3],"6":["269687077.jpg","General Data Protection Regulation (GDPR)",1,"5555",6]}', '5', '2', 'Completed', 'yes', '2020-05-12 16:41:50'),
-(5, '3', 'cartItem', '{"6":["269687077.jpg","General Data Protection Regulation (GDPR)",1,"5555",6]}', '16', '1', 'Completed', 'yes', '2020-05-18 15:12:14');
+(5, '3', 'cartItem', '{"6":["269687077.jpg","General Data Protection Regulation (GDPR)",1,"5555",6]}', '16', '1', 'Completed', 'yes', '2020-05-18 15:12:14'),
+(8, '18', 'cartItem', '{"5":["1287658438.jpg","Skills for Speaking Effectively: The Art of Speaking",1,"6666",5],"3":["1180059600.jpg","Working with Students with Special Educational Needs",1,"33",3]}', '45', '2', 'Completed', 'yes', '2020-05-31 20:16:44'),
+(9, '18', 'cartItem', '{"5":["1287658438.jpg","Skills for Speaking Effectively: The Art of Speaking",1,"6666",5]}', '46', '1', 'Completed', 'yes', '2020-05-31 21:11:35'),
+(10, '20', 'cartItem', '{"3":["1180059600.jpg","Working with Students with Special Educational Needs","1","33",3]}', '47', '1', 'Completed', 'yes', '2020-06-01 07:59:08'),
+(11, '20', 'cartItem', '{"1":["8589637.jpg","Diploma in Basic English Grammar",1,"4444",1]}', '48', '1', 'Completed', 'yes', '2020-06-01 11:17:14'),
+(12, '18', 'cartItem', '{"5":["1287658438.jpg","Skills for Speaking Effectively: The Art of Speaking",1,"6666",5],"1":["8589637.jpg","Diploma in Basic English Grammar",1,"4444",1]}', '49', '2', 'Completed', 'yes', '2020-06-01 11:17:42'),
+(13, '18', 'cartItem', '{"5":["1287658438.jpg","Skills for Speaking Effectively: The Art of Speaking",1,"6666",5]}', '52', '1', 'Completed', 'yes', '2020-06-02 06:54:17'),
+(14, '18', 'cartItem', '{"2":["570154661.jpg","Diploma in Legal Studies - Revised 2017",1,"666",2]}', '53', '1', 'Completed', 'yes', '2020-06-02 11:08:07');
 
 -- --------------------------------------------------------
 
@@ -4268,27 +4306,6 @@ INSERT INTO `tablestate` (`id`, `state_name`, `cid`, `status`, `created`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tabletermandservices`
---
-
-CREATE TABLE `tabletermandservices` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `termandservices_title` text COLLATE utf8mb4_unicode_ci,
-  `termandservices_desc` longtext COLLATE utf8mb4_unicode_ci,
-  `termandservices_status` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `tabletermandservices`
---
-
-INSERT INTO `tabletermandservices` (`id`, `termandservices_title`, `termandservices_desc`, `termandservices_status`) VALUES
-(1, 'First Term And Services', 'Term And Services Content', 'yes'),
-(3, 'ccccccccccc', 'cccccccccccccccccccccccccc', 'yes');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tabletestimonial`
 --
 
@@ -4313,6 +4330,32 @@ INSERT INTO `tabletestimonial` (`id`, `testimonial_name`, `testimonial_desc`, `t
 (3, 'Thelma R. Furman', '<p>I am drive by our belief in the power of free education and skills training to change people’s lives for the better and are passionate about providing an overall learning experience that meets their needs and helps them to achieve life goals.<br></p>', 'Autor courses', 'yes', NULL, NULL, '179709485.jpg'),
 (4, 'Ron M. Martin', '<p>I am inspired by the UN Declaration that “everyone is entitled to a free education”. We are committed to equality and access to education irrespective of gender, geography, economic status or any other barriers to access.<br></p>', 'Applied Researcher', 'yes', NULL, NULL, '1377252444.jpg'),
 (5, 'Keith M. Jordan', '<p>I met so many interesting people over the last couple of months, who proved to stay ahead of the modern technologies in the world of branding and web design. I loved working with you all, thank you so much!<br></p>', 'Applied Researcher', 'yes', NULL, NULL, '480332298.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tabletopics`
+--
+
+CREATE TABLE `tabletopics` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `topics_title` text COLLATE utf8mb4_unicode_ci,
+  `topics_desc` longtext COLLATE utf8mb4_unicode_ci,
+  `selectedicon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `topics_status` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tabletopics`
+--
+
+INSERT INTO `tabletopics` (`id`, `topics_title`, `topics_desc`, `selectedicon`, `topics_status`) VALUES
+(1, 'General & FAQ', 'Lorem ipsum dolor sit amet, contetur adipiscing diam', 'icon-m-faq', 'yes'),
+(2, 'Distribution', '<p>Phasellus porttitor justo elit, ac tempus ligula sodales<br></p>', 'icon-m-distribution', 'yes'),
+(3, 'Outreach', '<p>Nunc vehicula metus et massa tincidunt ultrices tincidunt<br></p>', 'icon-m-outreach', 'yes'),
+(4, 'Analytics', '<p>Curabitur pretium elit mi, non sollicitudin massa ac<br></p>', 'icon-m-analytics', 'yes'),
+(5, 'Secure Payments', '<p>In porta urna risus, ut imperdiet nisl condimentum lobortis<br></p>', 'icon-m-payments', 'yes'),
+(6, 'Help Direct Line', '<p>Sed pellentesque pulvinar arcu ac congue. Sed sed est nec<br></p>', 'icon-m-support', 'yes');
 
 -- --------------------------------------------------------
 
@@ -4343,7 +4386,9 @@ CREATE TABLE `tableuseraddress` (
 
 INSERT INTO `tableuseraddress` (`id`, `user_id`, `b_street_address`, `b_country`, `b_state`, `b_city`, `b_zip`, `s_street_address`, `s_country`, `s_state`, `s_city`, `s_zip`, `status`, `created`) VALUES
 (1, '3', 'Baker Street, 231', '8', '131', 'Ann Arbor', '48105', 'Baker Street, 231', '8', '131', 'Ann Arbor', '48105', 'yes', '2020-05-10 20:55:38'),
-(2, '13', 'Baker Street, 231', '12', '185', 'Florida', '12000', 'Baker Street, 231', '12', '185', 'Florida', '12000', 'yes', '2020-05-11 16:08:15');
+(2, '13', 'Baker Street, 231', '12', '185', 'Florida', '12000', 'Baker Street, 231', '12', '185', 'Florida', '12000', 'yes', '2020-05-11 16:08:15'),
+(3, '19', 'Baker Street, 231', '3', '47', 'Ann Arbor', '48105', 'Baker Street, 231', '3', '47', 'Ann Arbor', '48105', 'yes', '2020-05-28 17:22:15'),
+(4, '18', 'Baker Street, 231', '9', '160', 'Ann Arbor', '48105', 'Baker Street, 231', '9', '160', 'Ann Arbor', '48105', 'yes', '2020-05-31 19:33:08');
 
 -- --------------------------------------------------------
 
@@ -4354,20 +4399,34 @@ INSERT INTO `tableuseraddress` (`id`, `user_id`, `b_street_address`, `b_country`
 CREATE TABLE `tableuserwithcourse` (
   `id` int(10) UNSIGNED NOT NULL,
   `course_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `isActive` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tableuserwithcourse`
 --
 
-INSERT INTO `tableuserwithcourse` (`id`, `course_id`, `user_id`) VALUES
-(1, 6, 3),
-(2, 5, 3),
-(3, 5, 13),
-(4, 3, 3),
-(5, 6, 3),
-(6, 6, 3);
+INSERT INTO `tableuserwithcourse` (`id`, `course_id`, `user_id`, `created_at`, `updated_at`, `isActive`) VALUES
+(1, 6, 3, NULL, NULL, 'yes'),
+(2, 5, 3, NULL, NULL, 'yes'),
+(3, 5, 13, NULL, NULL, 'yes'),
+(4, 3, 3, NULL, NULL, 'yes'),
+(5, 6, 3, NULL, NULL, 'yes'),
+(6, 6, 3, NULL, NULL, 'yes'),
+(7, 6, 19, NULL, NULL, 'yes'),
+(8, 5, 19, NULL, NULL, 'yes'),
+(9, 6, 18, NULL, NULL, 'yes'),
+(11, 3, 18, NULL, '2020-06-01 02:24:49', 'yes'),
+(12, 5, 18, '2020-06-01 02:14:59', '2020-06-01 02:14:59', 'yes'),
+(13, 3, 20, '2020-06-01 16:16:56', '2020-06-01 16:16:56', 'yes'),
+(14, 1, 20, '2020-06-01 16:17:27', '2020-06-01 20:11:03', 'yes'),
+(15, 5, 18, '2020-06-01 20:08:29', '2020-06-01 20:11:25', 'no'),
+(16, 1, 18, '2020-06-01 20:08:29', '2020-06-01 20:08:29', 'yes'),
+(17, 5, 18, '2020-06-02 11:55:32', '2020-06-02 11:55:32', 'yes'),
+(18, 2, 18, '2020-06-02 16:13:07', '2020-06-02 16:13:07', 'yes');
 
 -- --------------------------------------------------------
 
@@ -4389,27 +4448,28 @@ CREATE TABLE `users` (
   `user_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `passupdated` enum('no','yes') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'no'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `phone`, `password`, `avatar`, `status`, `confirmation_code`, `user_type`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'Admin F', 'Admin L', 'admin@gmail.com', NULL, '$2y$10$eQpDdzP29iaA81Z2MOhN6O8hV3N3ityLxa.yr6EFpOw.Jic5II33i', '1582622439.png', 'active', NULL, 'admin', '8ZTLpPwtgfU2BXmXXt2aWb60ek2ru94FrOBw2sOkIpu8EgdXDsQPV174U0Yt', '2019-12-13 13:38:53', '2020-03-16 10:07:05'),
-(2, 'instructor-f-instructor-l', 'Instructor F', 'Instructor L', 'instructor@gmail.com', '123-456-7891', '$2y$10$Idff0nKgC0urjyWuRDJxu.sEwT/Y3KsLhoUHekQYk0zKDk7d31L8W', 'default.jpg', 'active', NULL, 'instructor', 'ujb0I5lgJxkHlqalnKyVBLDDsrjYpiRRj5xJZqQ7TXg8k0qi6A1x92m2NP3P', '2020-04-21 21:06:46', '2020-04-21 21:06:46'),
-(3, 'learner-f-learner-l', 'learner F', 'learner L', 'learner@gmail.com', '123-456-7891', '$2y$10$uAs/bbyxNGo.UD3y6GS4vu.qD5nss1CgXvDpmkKNOFf8BwNsXQpIa', 'default.jpg', 'active', NULL, 'learner', 'DmYvf14GVwsOi69154pBIjszhlSCZgYsspwwwp1ppsVTHHFowje6CTRWW8hP', '2020-04-21 21:08:07', '2020-05-21 07:31:06'),
-(4, 'habib-ahmad', 'habib', 'ahmad', 'admin@gmail.com', '111-111-1111', '$2y$10$3fr44VFrc8tJyEWLWqwVHeqC0lofGkVV8qlBsZ7qtwxBmmpIIGoEW', 'default.jpg', NULL, NULL, 'instructor', NULL, '2020-04-28 04:51:16', '2020-04-28 04:51:16'),
-(5, 'ahmad-ha', 'ahmad', 'ha', 'habib@gmail.com', '111-111-1111', '$2y$10$VrPYuwWHG.KpNnZjFpmEKOzY8Pu/WsZBoO5EYcIzPuZYaz2taTY/i', 'default.jpg', 'active', NULL, 'learner', 'mLV4emsQWAxSSaBGKm46wxTGhqFY1aG4KafjGSjRt4CAY4zPpJOB1meZXFLL', '2020-04-28 05:06:02', '2020-04-28 05:06:02'),
-(6, 'cx-xcv', 'cx', 'xcv', 'admin@gmail.com', '111-111-1111', '$2y$10$fkzJ5NemkSWdBjOEM7c9/uEmWn8cOBIGBc.LAqqqscVtvQJHSHhXO', 'default.jpg', 'active', NULL, 'instructor', NULL, '2020-04-29 01:53:52', '2020-04-29 01:53:52'),
-(7, '', NULL, NULL, 'admin@gmail.com', NULL, '$2y$10$DJ1GF8PJyhkxrf3xterKkesx3IEc2wB0q5aeT9PvpsUwrmj5fmAMO', 'default.jpg', 'active', NULL, 'instructor', NULL, '2020-04-29 03:07:28', '2020-04-29 03:07:28'),
-(8, '-2', NULL, NULL, 'admin@gmail.com', NULL, '$2y$10$1jAGhg6mM2qm5ybR1fFoD.QMmOsNc37IZKcVSEkS5wLCh9OCMm4m2', 'default.jpg', 'active', NULL, 'instructor', NULL, '2020-04-29 03:07:40', '2020-04-29 03:07:40'),
-(9, '-3', NULL, NULL, 'admin@gmail.com', NULL, '$2y$10$mhWrszZqg.4959R5eEmGi..TP.V7kkb39K8zdFWmq18yq927aYuP2', 'default.jpg', 'active', NULL, 'instructor', NULL, '2020-04-29 03:08:44', '2020-04-29 03:08:44'),
-(10, 'sdfsd-sdfsdf', 'sdfsd', 'sdfsdf', 'admin@gmail.com', '111-111-1111', '$2y$10$I9ftGAmrPnf.sjL.UfbWK.FI8WIkkmuwu7OuKlwAApyPdS7ADV/D2', 'default.jpg', 'active', NULL, 'instructor', NULL, '2020-04-29 03:49:53', '2020-04-29 03:49:53'),
-(11, 'ahmad-habib', 'ahmad', 'habib', 'ahmad@gmail.com', '111-111-1111', '$2y$10$M1BqzvEt.mGyYYwAdzjvjOtO4D.ojN3shvH4fiTVz5zgS5rjz3SU2', 'default.jpg', 'active', NULL, 'learner', NULL, '2020-04-29 03:51:33', '2020-04-29 03:51:33'),
-(12, 'dfg-dfg', 'dfg', 'dfg', 'adminaaaa@gmail.com', '111-111-1111', '$2y$10$jbLVjEont9DgQA2YTSWWeOEbRXkXH3VS5a/xvTb73zvhry9FOeJlS', 'default.jpg', 'active', NULL, 'instructor', NULL, '2020-04-29 04:28:21', '2020-04-29 04:28:21'),
-(13, 'newlearner-l', 'newlearner', 'l', 'habib@globaledulink.co.uk', '111-111-1111', '$2y$10$d1tY2CieB9Bnunpceau4V.AINWpHJVp6OoRJSeiKz5E0PUvCDQUtq', 'default.jpg', 'active', NULL, 'learner', 'pM8xpnXACtdrzK4LZsHPry9VV8cIiW0Nj4kEjrWjOayt8Rll3eNSAu0tv6n0', '2020-05-11 11:00:37', '2020-05-11 11:00:37');
+INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `phone`, `password`, `avatar`, `status`, `confirmation_code`, `user_type`, `remember_token`, `created_at`, `updated_at`, `passupdated`) VALUES
+(1, 'admin', 'Admin F', 'Admin L', 'admin@gmail.com', NULL, '$2y$10$eQpDdzP29iaA81Z2MOhN6O8hV3N3ityLxa.yr6EFpOw.Jic5II33i', '1582622439.png', 'active', NULL, 'admin', 'CmIViZpqSxNFpknT3dqI5KlfXhi9SJdtz0QcbpOlUfs5C2OiTjeN7BxoUSHJ', '2019-12-13 13:38:53', '2020-03-16 10:07:05', 'yes'),
+(2, 'instructor-f-instructor-l', 'Instructor F', 'Instructor L', 'instructor@gmail.com', '123-456-7891', '$2y$10$Idff0nKgC0urjyWuRDJxu.sEwT/Y3KsLhoUHekQYk0zKDk7d31L8W', 'default.jpg', 'active', NULL, 'instructor', 'RAM52IL39KgU8DSqSimTeZx9Y16veogvjo5pwXi7w63PSqhPzxwDNyxWKqP3', '2020-04-21 21:06:46', '2020-04-21 21:06:46', 'yes'),
+(3, 'learner-f-learner-l', 'learner F', 'learner L', 'learner@gmail.com', '123-456-7891', '$2y$10$uAs/bbyxNGo.UD3y6GS4vu.qD5nss1CgXvDpmkKNOFf8BwNsXQpIa', 'default.jpg', 'active', NULL, 'learner', 'rDqFBcnz24trczSskpZUzRpsFXy9HgTgAwndXNGIf3JW0kIlw8Bj2Iak9ytD', '2020-05-28 04:40:00', '2020-05-21 07:31:06', 'yes'),
+(4, 'habib-ahmad', 'habib', 'ahmad', 'admin@gmail.com', '111-111-1111', '$2y$10$3fr44VFrc8tJyEWLWqwVHeqC0lofGkVV8qlBsZ7qtwxBmmpIIGoEW', 'default.jpg', NULL, NULL, 'instructor', NULL, '2020-04-28 04:51:16', '2020-04-28 04:51:16', 'yes'),
+(5, 'ahmad-ha', 'ahmad', 'ha', 'habib@gmail.com', '111-111-1111', '$2y$10$VrPYuwWHG.KpNnZjFpmEKOzY8Pu/WsZBoO5EYcIzPuZYaz2taTY/i', 'default.jpg', 'active', NULL, 'learner', 'mLV4emsQWAxSSaBGKm46wxTGhqFY1aG4KafjGSjRt4CAY4zPpJOB1meZXFLL', '2020-04-28 05:06:02', '2020-04-28 05:06:02', 'yes'),
+(20, 'r-r', 'r', 'r', 'r@gmail.com', '111-111-1111', '$2y$10$iayrCj0yHAdKPbqmDycw7ugHuz6Vx1KJxCNNNp6C3VJ6gL6BQbUJi', 'default.jpg', 'active', NULL, 'learner', '4B4A7wOqn3A45vwEiFAW3OO3oCe4ftaGSD6RTYY8ssa0R3m7U2jXyKdLmhRF', '2020-05-28 08:01:51', '2020-06-01 03:02:48', 'yes'),
+(19, 'd-d', 'd', 'd', 'd@gmail.com', '111-111-1111', '$2y$10$JQGBJbViJkORh.Pwsj74EOQnDVgF.FBE5ldFmsD4iHPZExXZrKx.S', 'default.jpg', 'active', NULL, 'learner', '2Vn1a6Bgo6XxGMtJEFBUM3Er35fMtJ9R9Y0eoQeGXAtzmfnNedyDu8bicWGC', '2020-05-28 07:59:59', '2020-05-28 12:19:45', 'yes'),
+(18, 'x-x', 'x', 'x', 'x@gmail.com', '111-111-1111', '$2y$10$piXdEnaOr.qRHowN7zwe7.uTME7O913wC52LhjgYGcfBzF5/x0aI6', 'default.jpg', 'active', NULL, 'learner', 'nMIi0oQUmN4NtL8HwnyPSLTs0At4eAGHkYN7HPRFGBsclbDuchY5H58JuGmS', '2020-05-28 07:54:31', '2020-05-28 12:14:51', 'yes'),
+(10, 'sdfsd-sdfsdf', 'sdfsd', 'sdfsdf', 'admin@gmail.com', '111-111-1111', '$2y$10$I9ftGAmrPnf.sjL.UfbWK.FI8WIkkmuwu7OuKlwAApyPdS7ADV/D2', 'default.jpg', 'active', NULL, 'instructor', NULL, '2020-04-29 03:49:53', '2020-04-29 03:49:53', 'yes'),
+(11, 'ahmad-habib', 'ahmad', 'habib', 'ahmad@gmail.com', '111-111-1111', '$2y$10$M1BqzvEt.mGyYYwAdzjvjOtO4D.ojN3shvH4fiTVz5zgS5rjz3SU2', 'default.jpg', 'active', NULL, 'learner', NULL, '2020-04-29 03:51:33', '2020-04-29 03:51:33', 'yes'),
+(12, 'dfg-dfg', 'dfg', 'dfg', 'adminaaaa@gmail.com', '111-111-1111', '$2y$10$jbLVjEont9DgQA2YTSWWeOEbRXkXH3VS5a/xvTb73zvhry9FOeJlS', 'default.jpg', 'active', NULL, 'instructor', NULL, '2020-04-29 04:28:21', '2020-04-29 04:28:21', 'yes'),
+(13, 'newlearner-l', 'newlearner', 'l', 'habib@globaledulink.co.uk', '111-111-1111', '$2y$10$d1tY2CieB9Bnunpceau4V.AINWpHJVp6OoRJSeiKz5E0PUvCDQUtq', 'default.jpg', 'active', NULL, 'learner', 'pM8xpnXACtdrzK4LZsHPry9VV8cIiW0Nj4kEjrWjOayt8Rll3eNSAu0tv6n0', '2020-05-11 11:00:37', '2020-05-11 11:00:37', 'yes'),
+(21, 'j-j', 'j', 'j', 'j@gmail.com', '111-111-1111', '$2y$10$gpRwCvgudFi.SJ7LVseSc.QioE2/hz1/ilxxAOlfS2nHWqGJKAWSS', 'default.jpg', 'active', NULL, 'learner', 'T70B8XoQdhchXxLE6A46RnEwR7wevVA4mw70YdRQ1jtijDxSmzt81apsElbA', '2020-05-28 12:25:54', '2020-05-28 15:39:33', 'no');
 
 --
 -- Indexes for dumped tables
@@ -4478,6 +4538,12 @@ ALTER TABLE `tablecourses`
   ADD KEY `tablecourses_course_user_id_foreign` (`course_user_id`);
 
 --
+-- Indexes for table `tablecoursestarted`
+--
+ALTER TABLE `tablecoursestarted`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tablecurriculum`
 --
 ALTER TABLE `tablecurriculum`
@@ -4540,15 +4606,15 @@ ALTER TABLE `tablestate`
   ADD KEY `tablestate_cid_foreign` (`cid`);
 
 --
--- Indexes for table `tabletermandservices`
---
-ALTER TABLE `tabletermandservices`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `tabletestimonial`
 --
 ALTER TABLE `tabletestimonial`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tabletopics`
+--
+ALTER TABLE `tabletopics`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -4580,7 +4646,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 --
 -- AUTO_INCREMENT for table `tableassignment`
 --
@@ -4590,7 +4656,7 @@ ALTER TABLE `tableassignment`
 -- AUTO_INCREMENT for table `tablecart`
 --
 ALTER TABLE `tablecart`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 --
 -- AUTO_INCREMENT for table `tablecategories`
 --
@@ -4622,6 +4688,11 @@ ALTER TABLE `tablecourseprogram`
 ALTER TABLE `tablecourses`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
+-- AUTO_INCREMENT for table `tablecoursestarted`
+--
+ALTER TABLE `tablecoursestarted`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `tablecurriculum`
 --
 ALTER TABLE `tablecurriculum`
@@ -4650,7 +4721,7 @@ ALTER TABLE `tablemockexam`
 -- AUTO_INCREMENT for table `tableorders`
 --
 ALTER TABLE `tableorders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `tableqanda`
 --
@@ -4662,30 +4733,30 @@ ALTER TABLE `tableqanda`
 ALTER TABLE `tablestate`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3498;
 --
--- AUTO_INCREMENT for table `tabletermandservices`
---
-ALTER TABLE `tabletermandservices`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
 -- AUTO_INCREMENT for table `tabletestimonial`
 --
 ALTER TABLE `tabletestimonial`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT for table `tabletopics`
+--
+ALTER TABLE `tabletopics`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
 -- AUTO_INCREMENT for table `tableuseraddress`
 --
 ALTER TABLE `tableuseraddress`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tableuserwithcourse`
 --
 ALTER TABLE `tableuserwithcourse`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

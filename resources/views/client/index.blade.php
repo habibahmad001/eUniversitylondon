@@ -34,7 +34,7 @@
                 <tr>
                     <th class="edit-icon-container"><span class="edit-icon" data-id="{{ $cli->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span></th>
                     <th class="checkbox-container">
-                        <input type="checkbox" name="del_assignment[]" value="{{ $cli->id }}" class="checkbox-selector">
+                        <input type="checkbox" name="del_client[]" value="{{ $cli->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $cli->client_name }}</td>
                     <td>

@@ -190,6 +190,7 @@ class UserFrontController extends Controller
                     'password_2' => 'required|same:password_1',
                 ]);
                 $users->password    = bcrypt($request->password_1);
+                $users->passupdated = "yes";
             }
 
             $saved              = $users->save();

@@ -11,14 +11,15 @@
                 <div class="intro_layers_wrapper">
                     <div class="intro_layers">
                         <div class="intro_layer">
+                            {{ App\Http\Controllers\Front\CMSController::cmsBTN(10, 1) }}
                             <h6 class="intro_before_featured_word animate" data-animation="fadeInUp">
                                 Empower Yourself
                             </h6>
                             <h2 class="intro_featured_word animate" data-animation="fadeInUp">
-                                Free online courses from the experts
+                                {{ isset(App\Http\Controllers\Front\CMSController::CMSPageItems(10)->cms_title) ? App\Http\Controllers\Front\CMSController::CMSPageItems(10)->cms_title : "" }}
                             </h2>
                             <p class="intro_after_featured_word animate" data-animation="fadeInUp">
-                                We are proud to say that since our opening in ’98
+                                {!! isset(App\Http\Controllers\Front\CMSController::CMSPageItems(10)->cms_desc) ? App\Http\Controllers\Front\CMSController::CMSPageItems(10)->cms_desc : "" !!}
                             </p>
                         </div>
                         <form method="post" class="search-course animate home-course" action="{{ URL::to("/search") }}">
@@ -201,11 +202,12 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-8 col-xl-6">
+                {{ App\Http\Controllers\Front\CMSController::cmsBTN(8, 1) }}
                 <h6 class="special-heading fw-300">Personable Virtual Assistants</h6>
-                <h2>Why We Are</h2>
+                <h2>{{ isset(App\Http\Controllers\Front\CMSController::CMSPageItems(8)->cms_title) ? App\Http\Controllers\Front\CMSController::CMSPageItems(8)->cms_title : "" }}</h2>
                 <div class="divider-35 d-none d-md-block"></div>
                 <p class="mt-20 mb-20">
-                    We are proud to say that since our opening in ’98 we have been serving our visitors in the best possible way. In Hotel Nanovi, where each one of
+                    {!! isset(App\Http\Controllers\Front\CMSController::CMSPageItems(8)->cms_desc) ? App\Http\Controllers\Front\CMSController::CMSPageItems(8)->cms_desc : "" !!}
                 </p>
                 <div class="divider-43 d-none d-md-block"></div>
                 <a href="#" class="btn btn-maincolor">Learn More about us</a>
@@ -305,12 +307,13 @@
             </div>
             <div class="col-md-6">
                 <div class="item-content">
+                    {{ App\Http\Controllers\Front\CMSController::cmsBTN(9, 1) }}
                     <h6 class="special-heading fw-300">Personable Virtual Assistants</h6>
-                    <h2>Don't just take our</h2>
+                    <h2>{{ isset(App\Http\Controllers\Front\CMSController::CMSPageItems(9)->cms_title) ? App\Http\Controllers\Front\CMSController::CMSPageItems(9)->cms_title : "" }}</h2>
                     <div class="d-none d-lg-block divider-38"></div>
-                    <p class="mt-20">We are proud to say that since our opening in ’98 we have been serving our visitors in the best possible way. In Hotel Nanovi, where </p>
+                    <p class="mt-20">{!! isset(App\Http\Controllers\Front\CMSController::CMSPageItems(9)->cms_desc) ? App\Http\Controllers\Front\CMSController::CMSPageItems(9)->cms_desc : "" !!} </p>
                     <div class="d-none d-lg-block divider-43"></div>
-                    <a href="#" class="btn btn-maincolor">Find courses</a>
+                    <a href="{{ URL::to("/allcategories") }}" class="btn btn-maincolor">Find courses</a>
                 </div>
             </div>
         </div>

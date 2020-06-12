@@ -138,6 +138,8 @@ class UserController extends Controller {
       $users->password    = bcrypt($request->password);
       $saved              = $users->save();
      if ($saved) {
+
+         /************* User Email ************/
          $usertype = $request->user_type;
          $first_name = $request->first_name;
          $pass = $request->password;
@@ -146,6 +148,7 @@ class UserController extends Controller {
              $message->to($email);
              $message->subject("Your " . $usertype . " account has been created successfully!!!");
          });
+         /************* User Email ************/
 
        $request->session()->flash('alert-success', 'User was successful added!');
        return redirect('/admin/users');
