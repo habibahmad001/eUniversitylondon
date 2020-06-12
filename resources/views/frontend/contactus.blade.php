@@ -36,15 +36,14 @@
                     <div class="media contact-icon">
                         <div class="icon-styled color-main fs-52">
                             <i class="icon-m-location"></i>
+                            {{ App\Http\Controllers\Front\CMSController::cmsBTN(4, 2) }}
                         </div>
 
                         <div class="media-body">
                             <h6 class="fw-700">
-                                Location
+                                {{ isset(App\Http\Controllers\Front\CMSController::CMSPageItems(4)->cms_title) ? App\Http\Controllers\Front\CMSController::CMSPageItems(4)->cms_title : "" }}
                             </h6>
-                            <p>
-                                USA, 3280 Cabell Avenue Alexandria, VA 22301
-                            </p>
+                            {!! isset(App\Http\Controllers\Front\CMSController::CMSPageItems(4)->cms_desc) ? App\Http\Controllers\Front\CMSController::CMSPageItems(4)->cms_desc : "" !!}
                         </div>
                     </div>
                 </div>
@@ -52,15 +51,14 @@
                     <div class="media contact-icon">
                         <div class="icon-styled color-main fs-52">
                             <i class="icon-m-phone"></i>
+                            {{ App\Http\Controllers\Front\CMSController::cmsBTN(5, 2) }}
                         </div>
 
                         <div class="media-body">
                             <h6 class="fw-700">
-                                Phone
+                                {{ isset(App\Http\Controllers\Front\CMSController::CMSPageItems(5)->cms_title) ? App\Http\Controllers\Front\CMSController::CMSPageItems(5)->cms_title : "" }}
                             </h6>
-                            <p>
-                                Tel.: +1 703-518-6099
-                            </p>
+                            {!! isset(App\Http\Controllers\Front\CMSController::CMSPageItems(5)->cms_desc) ? App\Http\Controllers\Front\CMSController::CMSPageItems(5)->cms_desc : "" !!}
                         </div>
                     </div>
                 </div>
@@ -68,15 +66,14 @@
                     <div class="media contact-icon">
                         <div class="icon-styled color-main fs-52">
                             <i class="icon-m-fax"></i>
+                            {{ App\Http\Controllers\Front\CMSController::cmsBTN(6, 2) }}
                         </div>
 
                         <div class="media-body">
                             <h6 class="fw-700">
-                                Fax
+                                {{ isset(App\Http\Controllers\Front\CMSController::CMSPageItems(6)->cms_title) ? App\Http\Controllers\Front\CMSController::CMSPageItems(6)->cms_title : "" }}
                             </h6>
-                            <p>
-                                Fax: +1 709-834-2693
-                            </p>
+                            {!! isset(App\Http\Controllers\Front\CMSController::CMSPageItems(6)->cms_desc) ? App\Http\Controllers\Front\CMSController::CMSPageItems(6)->cms_desc : "" !!}
                         </div>
                     </div>
                 </div>
@@ -84,15 +81,14 @@
                     <div class="media contact-icon">
                         <div class="icon-styled color-main fs-52">
                             <i class="icon-m-e-mail"></i>
+                            {{ App\Http\Controllers\Front\CMSController::cmsBTN(7, 2) }}
                         </div>
 
                         <div class="media-body">
                             <h6 class="fw-700">
-                                E-mail
+                                {{ isset(App\Http\Controllers\Front\CMSController::CMSPageItems(7)->cms_title) ? App\Http\Controllers\Front\CMSController::CMSPageItems(7)->cms_title : "" }}
                             </h6>
-                            <p>
-                                info@tutor.com
-                            </p>
+                            {!! isset(App\Http\Controllers\Front\CMSController::CMSPageItems(7)->cms_desc) ? App\Http\Controllers\Front\CMSController::CMSPageItems(7)->cms_desc : "" !!}
                         </div>
                     </div>
                 </div>

@@ -126,5 +126,13 @@
       </a>
     </li>
 
+    <li @if(collect(request()->segments())->last()=='teams') class="active" @endif>
+      <a href="{{ URL::to('/admin/teams') }}">
+        {{--manage-rules--}}
+        <div class="icon">T</div>
+        <div class="icon-detail">Teams</div>
+      </a>
+    </li>
+
   </ul>
 </div>

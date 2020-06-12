@@ -12,6 +12,8 @@ use App\Courses;
 use App\Testimonial;
 use App\Clients;
 use App\Categories;
+use App\Topics;
+use App\Teams;
 use Illuminate\Support\Facades\Mail;
 
 use Auth;
@@ -62,6 +64,8 @@ class HomeController extends Controller
         $data['page_title']   = 'About US';
 
         $data['AllClients']         = Clients::where("client_status","yes")->orderBy('id', 'desc')->get();
+        $data['Topics']             = Topics::where("topics_status","yes")->orderBy('id', 'asc')->get();
+        $data['Teams']              = Teams::where("teams_status","yes")->orderBy('id', 'asc')->get();
 
         return view('frontend.aboutus', $data);
     }

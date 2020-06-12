@@ -7,6 +7,22 @@
 
 <!-- Edit form -->
 <div class="center-content-area table-set">
+    <div class="row">
+        <div class="col-lg-8"></div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <select name="pagename" id="pagename" class="form-control w-50 text-right" onchange="javascript:($(this).val() == 0) ? window.location.href='/admin/cms' : window.location.href='/admin/cmstpage/' + $(this).val()">
+                    <option value="">--- Select Page ---</option>
+                    <option value="0">All</option>
+                    <option value="1">Home Page</option>
+                    <option value="3">About Us Page</option>
+                    <option value="2">Contact Us Page</option>
+                    <option value="4">Category Page</option>
+                    <option value="5">Footer</option>
+                </select>
+            </div>
+        </div>
+    </div>
     <div class="table-responsive">
         @if ($errors->any())
         <div class="alert alert-danger">

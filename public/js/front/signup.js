@@ -299,6 +299,58 @@ function update_pass_validate(type) {
     return true;
 }
 
+$("button[name='cms']").click(function(){
+    var id = $(this).attr('data-id');
+    var pid = $(this).attr('data-pid');
+
+    $("#cmsID").val(id);
+    $("#cmsPID").val(pid);
+
+    // console.log(id + "=" + pid);
+
+    // $.get('/getcms/' + id, function(data){
+    //     if(typeof data.CMS != 'undefined') {
+    //         cms = data.CMS;
+    //         $("#cms_title").val(cms.cms_title);
+    //         $("#cms_desc").summernote('code', cms.cms_desc);
+    //     }
+    // });
+});
+
+$("button[name='cms']").click(function(){
+    var id = $(this).attr('data-id');
+
+    $('#cmsfrmid').attr("src", "/cmsupdate/" + id);
+
+});
+
+// $("#cmssave").click(function(){
+//     var iframe = document.getElementById('cmsfrmid');
+//     var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+//     alert(innerDoc.find("#cmsfrmid").html());
+//     console.log($(innerDoc).find("#cmsfrmid").html());
+//     $(innerDoc.form).submit();
+//     // $('#cmsModal').modal('hide');
+// });
+$("#cmssave").click(function(){
+
+    /*********** Set hidden variables *************/
+    var pid = $("button[data-id='"+$("#cmsID", frames['cmsfrmid'].document).val()+"']").attr('data-pid');
+
+    $("#cmsPID", frames['cmsfrmid'].document).val(pid);
+
+    // console.log(pid);
+    /*********** Set hidden variables *************/
+
+    $("#cmsformmodel", frames['cmsfrmid'].document).submit();
+    $('#cmsModal').modal('hide');
+    if($("#page_name").val() == "") {
+        window.location.href = "/cmsreload/home";
+    } else {
+        window.location.href = "/cmsreload/" + $("#page_name").val();
+    }
+
+});
 
 $("#b_edit").click(function () {
     $("p[data-msg=\"b_msg\"]").toggle(1500);

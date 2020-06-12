@@ -98,6 +98,12 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/searchcourse', 'Front\CategoryController@SearchCourse');
     /************* Front Search Ends ***************/
 
+    /*************** CMS Starts ***************/
+    Route::get('/getcms/{id}', 'Front\CMSController@GetCMS');
+    Route::get('/cmsupdate/{id}', 'Front\CMSController@CMSUpdate');
+    Route::get('/cmsreload/{name}', 'Front\CMSController@PageReload');
+    /*************** CMS Ends ***************/
+
 //});
 
 Route::middleware(['user','verified'])->group(function () {
@@ -156,6 +162,10 @@ Route::get('/productcount', 'Front\CartController@GetProductCount');
 Route::get('/getcourseonid/{id}', 'Front\UserFrontController@GetCourseOnID');
 /********** Gernal Course Functions *********/
 
+/********** Gernal CMS Functions *********/
+Route::get('/cmsbtn/{cid}/{pid}', 'Front\CMSController@cmsBTN');
+/********** Gernal CMS Functions *********/
+
 /********** Gernal User Functions *********/
 Route::get('/getuseronid/{id}', 'OrderController@GetUserOnID');
 /********** Gernal User Functions *********/
@@ -205,7 +215,9 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/cms', 'cmsc@index');
     Route::post('/admin/cms_add', 'cmsc@CMSAdd');
     Route::get('/admin/getcms/{cms_id}', 'cmsc@GetCMS');
+    Route::post('/admin/savecms', 'Front\CMSController@SaveCMS');
     Route::post('/admin/update-cms', 'cmsc@UpdateCMS');
+    Route::get('/admin/cmstpage/{cms_pid}', 'cmsc@SelectPage');
     /*************** CMS Ends ***************/
 
     /*************** CurriCulums Starts ***************/
@@ -247,6 +259,14 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/gettestimonial/{t_id}', 'TestimonialController@GetTestimonial');
     Route::post('/admin/update-testimonial', 'TestimonialController@UpdateTestimonial');
     /*************** Testimonial Ends ***************/
+
+    /*************** Teams Starts ***************/
+    Route::resource('/admin/teams', 'TeamsController');
+    Route::get('/admin/teams', 'TeamsController@index');
+    Route::post('/admin/teams_add', 'TeamsController@TeamsAdd');
+    Route::get('/admin/getteams/{t_id}', 'TeamsController@GetTeams');
+    Route::post('/admin/update-teams', 'TeamsController@UpdateTeams');
+    /*************** Teams Ends ***************/
 
     /*************** Clients Starts ***************/
     Route::resource('/admin/client', 'ClientController');

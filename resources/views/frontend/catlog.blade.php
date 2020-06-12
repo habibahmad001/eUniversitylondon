@@ -79,20 +79,22 @@
             <div class="row">
                 <div class="col-12 col-lg-8">
                     <div class="intro_layer animate animated fadeInRight" data-animation="fadeInRight">
+                        {{ App\Http\Controllers\Front\CMSController::cmsBTN(11, 4) }}
                         <h2 class="call-title">
-                            Can’t find what you are looking for?
+                            {{ isset(App\Http\Controllers\Front\CMSController::CMSPageItems(11)->cms_title) ? App\Http\Controllers\Front\CMSController::CMSPageItems(11)->cms_title : "" }}
                         </h2>
                         <p class="fs-20">
-                            Submit a ticket and we'll get back to you as soon as we can.
+                            {!! isset(App\Http\Controllers\Front\CMSController::CMSPageItems(11)->cms_desc) ? App\Http\Controllers\Front\CMSController::CMSPageItems(11)->cms_desc : "" !!}
                         </p>
-                        <form role="search" method="get" class="search-form search-course" action="http://webdesign-finder.com/">
+                        <form method="post" class="search-course animate home-course" action="{{ URL::to("/search") }}">
+                            {{ csrf_field() }}
                             <div class="form-group has-placeholder">
                                 <label for="search-form-widget">
                                     <span class="screen-reader-text">Search for:</span>
                                 </label>
                                 <i class="fa fa-search"></i>
-                                <input type="search" id="search-form-widget" class="search-field form-control" placeholder="" value="" name="search">
-                                <button type="submit" class="search-submit btn btn-maincolor">Find courses</button>
+                                <input type="search" id="search-form-widget" class="search-field form-control" value="" name="search">
+                                <button type="submit" class="search-submit btn btn-maincolor home-search-btn">Find courses</button>
                             </div>
                         </form>
                     </div>

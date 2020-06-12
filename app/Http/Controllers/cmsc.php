@@ -23,7 +23,15 @@ class cmsc extends Controller
 
         $data['sub_heading']  = 'CMS';
         $data['page_title']   = 'eUniversitylondon CMS';
-        $data['cms']        =  CMS::paginate(10);
+        $data['cms']        =  CMS::where("cms_status", "yes")->paginate(7);
+        return view('cms/index', $data);
+    }
+
+    public function SelectPage($cms_pid) {
+
+        $data['sub_heading']  = 'CMS';
+        $data['page_title']   = 'eUniversitylondon CMS';
+        $data['cms']        =  CMS::where("cms_status", "yes")->where("cms_pid", $cms_pid)->paginate(10);
         return view('cms/index', $data);
     }
 

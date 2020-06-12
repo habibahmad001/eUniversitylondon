@@ -1277,6 +1277,26 @@ select {
 }
 
 /* bootstrap buttons */
+.note-toolbar button {
+	font-size: 13px !important;
+	padding: 5px !important;
+	color: #555;
+}
+.note-toolbar button:hover {
+	background: transparent	!important;
+}
+.note-toolbar {
+	position: relative !important;
+}
+/*.note-editor .note-editing-area {*/
+	/*margin-top: 15%;*/
+/*}*/
+.note-toolbar-wrapper {
+	width: 100% !important;
+	display: block !important;
+	position: relative !important;
+	min-height: 80px !important;
+}
 .btn {
 	border-radius: 5px;
 	border-width: 2px;

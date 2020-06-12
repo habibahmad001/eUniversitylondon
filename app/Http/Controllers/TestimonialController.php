@@ -81,6 +81,9 @@ class TestimonialController extends Controller
 
         /************ Image Upload ***********/
         if(!empty($request->file('t_img'))) {
+            if(!empty($Testimonial->testimonial_img)) {
+                (file_exists('uploads/testimonial/' . $Testimonial->testimonial_img)) ? unlink('uploads/testimonial/' . $Testimonial->testimonial_img) : "";
+            }
             $TestimonialImg = $request->file('t_img');
             $TestimonialImg_new_name = rand() . '.' . $TestimonialImg->getClientOriginalExtension();
             $Testimonial->testimonial_img = $TestimonialImg_new_name;
@@ -102,6 +105,9 @@ class TestimonialController extends Controller
     public function destroy($id) {
         //Find a user with a given id and delete
         $Testimonial = Testimonial::findOrFail($id);
+        if(!empty($Testimonial->testimonial_img)) {
+            (file_exists('uploads/testimonial/' . $Testimonial->testimonial_img)) ? unlink('uploads/testimonial/' . $Testimonial->testimonial_img) : "";
+        }
         $Testimonial->delete();
         return redirect('/' . collect(request()->segments())->first() . '/testimonial')->with('message', 'Selected Testimonial has been deleted successfully!');
     }

@@ -34,7 +34,7 @@
                 <tr>
                     <th class="edit-icon-container"><span class="edit-icon" data-id="{{ $test->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span></th>
                     <th class="checkbox-container">
-                        <input type="checkbox" name="del_assignment[]" value="{{ $test->id }}" class="checkbox-selector">
+                        <input type="checkbox" name="del_testimonial[]" value="{{ $test->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $test->testimonial_name }}</td>
                     <td>{{ (strlen(strip_tags($test->testimonial_desc)) > 350) ? substr(strip_tags($test->testimonial_desc), 0, 350) : strip_tags($test->testimonial_desc) }}</td>
