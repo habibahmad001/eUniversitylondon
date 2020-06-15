@@ -123,7 +123,7 @@ function validate(type) {
 
   if(errors.length>0){
     for(i=0; i < errors.length; i++){
-      $(errors[i]).addClass('error');;
+      $(errors[i]).addClass('error');
     }
     return false;
   }
@@ -150,7 +150,7 @@ function login_validate(type) {
 
     if(errors.length>0){
         for(i=0; i < errors.length; i++){
-            $(errors[i]).addClass('error');;
+            $(errors[i]).addClass('error');
         }
         return false;
     }
@@ -186,7 +186,7 @@ function card_validate(type) {
 
     if(errors.length>0){
         for(i=0; i < errors.length; i++){
-            $(errors[i]).addClass('error');;
+            $(errors[i]).addClass('error');
         }
         return false;
     }
@@ -238,7 +238,7 @@ function accountdetail_validate(type) {
 
     if(errors.length>0){
         for(i=0; i < errors.length; i++){
-            $(errors[i]).addClass('error');;
+            $(errors[i]).addClass('error');
         }
         return false;
     }
@@ -266,7 +266,7 @@ function reset_validate(type) {
 
     if(errors.length>0){
         for(i=0; i < errors.length; i++){
-            $(errors[i]).addClass('error');;
+            $(errors[i]).addClass('error');
         }
         return false;
     }
@@ -291,7 +291,7 @@ function update_pass_validate(type) {
 
     if(errors.length>0){
         for(i=0; i < errors.length; i++){
-            $(errors[i]).addClass('error');;
+            $(errors[i]).addClass('error');
         }
         return false;
     }
@@ -392,7 +392,7 @@ function cart_login_validate(type) {
 
     if(errors.length>0){
         for(i=0; i < errors.length; i++){
-            $(errors[i]).addClass('error');;
+            $(errors[i]).addClass('error');
         }
         return false;
     }
@@ -432,7 +432,7 @@ function shipping_address_validate(type) {
     }
     if(errors.length>0){
         for(i=0; i < errors.length; i++){
-            $(errors[i]).addClass('error');;
+            $(errors[i]).addClass('error');
         }
         return false;
     }
@@ -612,4 +612,56 @@ function Get_CP_PDF(ID) {
 
     });
 
+}
+
+
+function validation_ask(type) {
+    $(".error").each(function(){
+        $(this).removeClass('error');
+    });
+    var errors = [];
+    var first_name = $("#"+ type +"first-name").val();
+    var last_name = $("#"+ type +"last-name").val();
+    var cemail = $("#"+ type +"cemail").val();
+    var cphone = $("#"+ type +"cphone").val();
+    var cmessage = $("#"+ type +"cmessage").val();
+
+    var phone_regex = /^\d{3}(-)\d{3}(-)\d{4}$/;
+    var email_rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+
+    if(first_name == '') {
+        errors.push("#"+ type +"first-name");
+    }
+
+    if(last_name == '') {
+        errors.push("#"+ type +"last-name");
+    }
+
+    if(!email_rgx.test(cemail)) {
+        errors.push("#"+ type +"cemail");
+    }
+
+    if(!phone_regex.test(cphone)) {
+        errors.push("#"+ type +"cphone");
+    }
+
+    if(cmessage == '') {
+        errors.push("#"+ type +"cmessage");
+    }
+
+    if(errors.length>0){
+        for(i=0; i < errors.length; i++){
+            if(errors[i].length) {
+                $(errors[i]).addClass('error');
+            } else {
+                alert("ID " + errors[i] + " is missing.");
+            }
+
+
+        }
+        return false;
+    }
+
+    return true;
 }
