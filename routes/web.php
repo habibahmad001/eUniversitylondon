@@ -81,6 +81,10 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/course_detail/{id}', 'Front\CourseController@Detail');
     Route::get('/startcourse/{id}', 'Front\CartController@StartCourse');
     Route::get('/getcppdf/{cpid}', 'Front\CourseController@GetCPPDF');
+    Route::get('/user/mock_exam/{mcid}', 'Front\CourseController@MockExam');
+    Route::get('/user/exam/{cid}', 'Front\CourseController@Exam');
+    Route::get('/finish_course/{cid}', 'Front\CourseController@FinishCourse');
+    Route::get('/quizstart/{cid}', 'Front\CourseController@ExamStart');
     /************* Course Ends ***************/
 
     /************* Front User Starts ***************/
@@ -157,6 +161,7 @@ Route::get('/getstatename/{id}', 'Front\CartController@GetStateName');
 /********** Gernal Cart Functions *********/
 Route::get('/carttotal', 'Front\CartController@CartTotal');
 Route::get('/productcount', 'Front\CartController@GetProductCount');
+Route::get('/cartitemsglobal', 'Front\CourseController@CartItemsGlobal');
 /********** Gernal Cart Functions *********/
 
 /********** Gernal Course Functions *********/

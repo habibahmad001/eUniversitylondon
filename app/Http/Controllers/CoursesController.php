@@ -20,23 +20,42 @@ class CoursesController extends Controller
 {
     public function __construct() {
         $this->middleware(['auth']); //isAdmin middleware lets only users with a //specific permission permission to access these resources
+        if(collect(request()->segments())->first() == 'learner') {
+            /*************** Number of days left ************/
+            $courses = CourseWithUser::get();
+            if (count($courses) > 0) {
+                foreach ($courses as $v) {
+                    $date = new \DateTime();
+                    $date_dd = $date->format('Y-m-d H:i:s');
+                    $created_date = $v->created_at;
+                    $diff_in_days = $created_date->diffInDays($date_dd);
+                    if ($diff_in_days > 365) {
+                        $CourseStatus = CourseWithUser::where("course_id", $v->course_id)->where("user_id", Auth::user()->id)->first();
+                        $CourseStatus->isActive = "no";
+                        $CourseStatus->save();
+                    }
+                }
+
+            }
+            /*************** Number of days left ************/
+        }
     }
 
     public function index() {
 
         $data['sub_heading']        = 'Courses';
         $data['page_title']         = 'eUniversitylondon Courses';
-        if(collect(request()->segments())->first() == 'instructor')
+        if(collect(request()->segments())->first() == 'instructor') {
             $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->where('course_status', "yes")->paginate(10);
-        elseif(collect(request()->segments())->first() == 'learner')
+        } elseif(collect(request()->segments())->first() == 'learner') {
             $data['Courses']        =  CourseWithUser::join('tablecourses', 'tableuserwithcourse.course_id', '=', 'tablecourses.id')
-                                        ->select('*')
-                                        ->where('tableuserwithcourse.user_id', '=', Auth::user()->id)
-                                        ->where('tableuserwithcourse.isActive', '=', "yes")
-                                        ->paginate(10);
-        else
+                ->select('*')
+                ->where('tableuserwithcourse.user_id', '=', Auth::user()->id)
+                ->where('tableuserwithcourse.isActive', '=', "yes")
+                ->paginate(10);
+        } else {
             $data['Courses']        =  Courses::paginate(10);
-
+        }
         /**************** Get User Count **************/
         $Array_User_Count           =  array();
         foreach($data['Courses'] as $course_v) {

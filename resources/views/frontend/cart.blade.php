@@ -58,22 +58,22 @@
                                     <tr class="cart_item">
 
                                         <td class="product-remove">
-                                            <a href="#" class="remove" aria-label="Remove this item" onclick="javascript:cart_item_submit({{ $v[4] }});" data-product_id="73" data-product_sku="">×</a>
+                                            <a href="javascript:void(0);" class="remove" aria-label="Remove this item" onclick="javascript:cart_item_submit({{ $v[4] }});" data-product_id="73" data-product_sku="">×</a>
                                         </td>
 
                                         <td class="product-thumbnail">
-                                            <a href="shop-product-right.html">
+                                            <a href="{{ URL::to("/course_detail/" . $v[4]) }}">
                                                 <img width="180" height="180" src="{{ asset('/uploads/pavatar/' . $v[0]) }}" class="" alt="">
                                             </a>
                                         </td>
 
                                         <td class="product-name" data-title="Product">
-                                            <a href="shop-product-right.html">{{ $v[1] }}</a>
+                                            <a href="{{ URL::to("/course_detail/" . $v[4]) }}">{{ $v[1] }}</a>
                                         </td>
 
                                         <td class="product-price" data-title="Price">
                                                         <span class="amount">
-                                                            <span>$</span>{{ $v[3] }}.00
+                                                            <span>£</span>{{ $v[3] }}.00
                                                         </span>
                                         </td>
 
@@ -89,7 +89,7 @@
 
                                         <td class="product-subtotal" data-title="Total">
                                                         <span class="amount">
-                                                            <span>$</span>{{ $v[2]*$v[3] }}.00
+                                                            <span>£</span>{{ $v[2]*$v[3] }}.00
                                                         </span>
                                         </td>
                                     </tr>
@@ -134,12 +134,12 @@
                                     @if(count($Courses) > 0)
                                         @foreach($Courses as $course)
                                             <li class="product">
-                                                <a class="link-scale" href="shop-product-%40%40type.html">
+                                                <a class="link-scale" href="{{ URL::to("/course_detail/" . $course->id) }}">
                                                     <span class="onsale">Sale!</span>
                                                     <img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
                                                 </a>
                                                 <div class="item-content ls bordered">
-                                                    <a href="shop-product-%40%40type.html">
+                                                    <a href="{{ URL::to("/course_detail/" . $course->id) }}">
                                                         <h2>{{ $course->course_title }}</h2>
                                                     </a>
                                                     <div class="star-rating">
@@ -152,7 +152,7 @@
                                                                     {{--</span>--}}
                                                                 {{--</del>--}}
                                                                 <span>
-                                                                    <span>$</span>{{ $course->course_price }}.00
+                                                                    <span>£</span>{{ $course->course_price }}.00
                                                                 </span>
                                                             </span>
                                                     <div id="itm-post-{{ $course->id }}"></div>
@@ -181,7 +181,7 @@
                                     <th>Subtotal</th>
                                     <td data-title="Subtotal">
 													<span class="amount">
-														<span>$</span>{{ (isset($SubTotal)) ? $SubTotal : 0 }}.00
+														<span>£</span>{{ (isset($SubTotal)) ? $SubTotal : 0 }}.00
 													</span>
                                     </td>
                                 </tr>
@@ -192,7 +192,7 @@
                                     <td data-title="Total">
                                         <strong>
                         <span class="amount">
-                            <span>$</span>{{ (isset($Total)) ? $Total : 0 }}.00
+                            <span>£</span>{{ (isset($Total)) ? $Total : 0 }}.00
                         </span>
                                         </strong>
                                     </td>

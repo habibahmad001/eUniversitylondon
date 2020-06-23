@@ -37,6 +37,11 @@
                 <div class="col-lg-12">
                     <div id="msg" class="woocommerce-message" style="display: none;"></div>
                 </div>
+                @if(session()->has('message'))
+                    <div class="woocommerce-message">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
             </div>
             <div class="row">
                 <div class="col-lg-8">
@@ -45,13 +50,24 @@
                     {{--<iframe width="800" height="1000" src="https://www.1training.org/them+65encode-pdf-viewer-sc/?file={{ asset('/uploads/coursepdf/' . $courseData[0]->pdf ) }}&amp;settings=111111111&amp;lang=en-US#page=&amp;zoom=auto&amp;pagemode="></iframe>--}}
                 </div>
                 <div class="col-lg-4">
+                    <ul>
+                        <li>TIME REMAINING : {{ (isset($DaysLeft)) ? $DaysLeft : "Expired" }} DAYS</li>
+                    </ul>
                     @if(count($courseprogramData) > 0)
                         <ul>
                         @foreach($courseprogramData as $data)
-                                <li><a href="javascript:void(0);" onclick="javascript:Get_CP_PDF({{ $data->id }});">{{ $data->cp_title }}</a></li>
+                                <li><a href="javascript:void(0);" onclick="javascript:Get_CP_PDF({{ $data->id }});" @if(isset($UserProgramData[0]->CourseProgramID) && $data->id == $UserProgramData[0]->CourseProgramID) class="active" @endif>{{ $data->cp_title }}</a></li>
                         @endforeach
+                            <li><a href="{{ URL::to("/user/mock_exam/" . $cid) }}">Mock Exam</a></li>
+                            <li><a href="{{ URL::to("/user/exam/" . $cid) }}">Exam</a></li>
                         </ul>
                     @endif
+                    <br />
+                    <ul>
+                        <li><a href="{{ URL::to("/course_detail/" . $cid) }}">Back to Course</a></li>
+                        <li><a href="javascript:void(0);">Review Course</a></li>
+                        <li><a href="{{ URL::to("/finish_course/" . $cid) }}">Finish Course</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -60,7 +76,7 @@
     <script src="/js/front/pdfobject.min.js"></script>
     <script>
         var options = {
-            page: '2',
+            page: '1',
             pdfOpenParams: {
                 /*view: 'FitV',
                 pagemode: 'thumbs',*/

@@ -583,9 +583,9 @@ function product_submit(id) {
     $('#prod').submit();
 }
 
-function cart_item_submit(id) {
-    $("#addinput").html('<input type="hidden" name="itemid" id="itemid" value="' + id + '">');
-    $('#cart-update').attr("action", "/cartremoveitem").submit();
+function cart_item_submit(id, addinput = 'addinput', formid = 'cart-update') {
+    $("#" + addinput).html('<input type="hidden" name="itemid" id="itemid" value="' + id + '">');
+    $('#' + formid).attr("action", "/cartremoveitem").submit();
 }
 
 function Get_CP_PDF(ID) {
@@ -604,6 +604,8 @@ function Get_CP_PDF(ID) {
             msg = "Congratulation you completed this course!";
         } else if(data.msg == "wrongstep") {
             msg = "You are not eligible for this program Yet!";
+        } else if(data.msg == "nocp") {
+            msg = "No course program added for this course Yet!";
         } else if(data.msg == "updated") {
             msg = "Congratulation you completed this program!";
             PDFObject.embed("/uploads/courseprogrampdf/" + Courses.pdf, "#my-pdf", options);

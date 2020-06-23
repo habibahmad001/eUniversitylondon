@@ -81,57 +81,53 @@
                             <a class="dropdown-toggle dropdown-shopping-cart" href="{{ URL::to("/cart") }}" role="button" id="dropdown-shopping-cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-shopping-basket"></i>
                                 <span class="badge bg-maincolor">{!! (App\Http\Controllers\Front\CartController::GetProductCount()["ItemsMSG"] == "emp") ? 0 : App\Http\Controllers\Front\CartController::GetProductCount()["ItemsCount"] !!}</span>
-                                ${{ (App\Http\Controllers\Front\CartController::CartTotal()) ? App\Http\Controllers\Front\CartController::CartTotal() : 0 }}
+                                £{{ (App\Http\Controllers\Front\CartController::CartTotal()) ? App\Http\Controllers\Front\CartController::CartTotal() : 0 }}
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right ls" aria-labelledby="dropdown-shopping-cart">
-                                <div class="widget woocommerce widget_shopping_cart">
-                                    <div class="widget_shopping_cart_content">
+                            <form class="woocommerce-cart-form" name="menu-cart" id="menu-cart" action="{{ URL::to("/cartremoveitem") }}" method="POST">
+                                <div class="dropdown-menu dropdown-menu-right ls" aria-labelledby="dropdown-shopping-cart">
+                                    <div class="widget woocommerce widget_shopping_cart">
+                                        <div class="widget_shopping_cart_content">
+                                            @if(App\Http\Controllers\Front\CourseController::CartItemsGlobal()["CartItems"] == "emp" or count(App\Http\Controllers\Front\CourseController::CartItemsGlobal()["CartItems"]) == 0)
+                                                <p class="woocommerce-mini-cart__total total text-center">
+                                                    <span class="woocommerce-Price-amount amount">Cart is empty now!</span>
+                                                </p>
+                                            @else
+                                                <ul class="woocommerce-mini-cart cart_list product_list_widget">
+                                                    @foreach(App\Http\Controllers\Front\CourseController::CartItemsGlobal()["CartItems"] as $citm)
+                                                        <li class="woocommerce-mini-cart-item mini_cart_item">
+                                                            <a href="javascript:void(0);" class="remove" aria-label="Remove this item" data-product_id="73" onclick="javascript:cart_item_submit({{ $citm[4] }}, 'menu-addinput', 'menu-cart');" data-product_sku="">×</a>
+                                                            <a href="{{ URL::to("/course_detail/" . $citm[4]) }}">
+                                                                <img src="{{ asset('/uploads/pavatar/' . $citm[0]) }}" alt="">{{ $citm[1] }}
+                                                            </a>
+                                                            <div id="menu-addinput"></div>{{ csrf_field() }}
+                                                            <span class="quantity">{{ $citm[2] }} X
+                                                                    <span class="woocommerce-Price-amount amount">
+                                                                        <span class="woocommerce-Price-currencySymbol">£</span>
+                                                                        {{ $citm[3] }}.00
+                                                                    </span>
+                                                                </span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
 
-                                        <ul class="woocommerce-mini-cart cart_list product_list_widget">
-                                            <li class="woocommerce-mini-cart-item mini_cart_item">
-                                                <a href="#" class="remove" aria-label="Remove this item" data-product_id="73" data-product_sku="">×</a>
-                                                <a href="shop-product-right.html">
-                                                    <img src="images/shop/26.jpg" alt="">Tools of Trading: Modern Marketing
-                                                </a>
+                                                <p class="woocommerce-mini-cart__total total">
+                                                    <strong>Subtotal:</strong>
+                                                    <span class="woocommerce-Price-amount amount">
+                                                            <span class="woocommerce-Price-currencySymbol">£</span>
+                                                            {{ App\Http\Controllers\Front\CourseController::CartItemsGlobal()["Total"] }}.00
+                                                        </span>
+                                                </p>
 
-                                                <span class="quantity">2 X
-															<span class="woocommerce-Price-amount amount">
-																<span class="woocommerce-Price-currencySymbol">$</span>
-																30.00
-															</span>
-														</span>
-                                            </li>
-                                            <li class="woocommerce-mini-cart-item mini_cart_item">
-                                                <a href="#" class="remove" aria-label="Remove this item" data-product_id="73" data-product_sku="">×</a>
-                                                <a href="shop-product-right.html">
-                                                    <img src="images/shop/21.jpg" alt="">Tools of Trading: Modern Marketing
-                                                </a>
-
-                                                <span class="quantity">2 X
-															<span class="woocommerce-Price-amount amount">
-																<span class="woocommerce-Price-currencySymbol">$</span>
-																30.00
-															</span>
-														</span>
-                                            </li>
-                                        </ul>
-
-                                        <p class="woocommerce-mini-cart__total total">
-                                            <strong>Subtotal:</strong>
-                                            <span class="woocommerce-Price-amount amount">
-														<span class="woocommerce-Price-currencySymbol">$</span>
-														27.00
-													</span>
-                                        </p>
-
-                                        <p class="woocommerce-mini-cart__buttons buttons">
-                                            <a href="{{ URL::to("/cart") }}" class="button btn btn-maincolor wc-forward">View cart</a>
-                                            <a href="{{ URL::to("/reviewcart") }}" class="button checkout btn btn-outline-maincolor  wc-forward">Checkout</a>
-                                        </p>
+                                                <p class="woocommerce-mini-cart__buttons buttons">
+                                                    <a href="{{ URL::to("/cart") }}" class="button btn btn-maincolor wc-forward">View cart</a>
+                                                    <a href="{{ URL::to("/reviewcart") }}" class="button checkout btn btn-outline-maincolor  wc-forward">Checkout</a>
+                                                </p>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
 
-                            </div>
+                                </div>
+                            </form>
                         </div>
 
                     </div>

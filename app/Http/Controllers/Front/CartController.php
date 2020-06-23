@@ -93,6 +93,11 @@ class CartController extends Controller
         $data['sub_heading']    = 'Cart';
         $data['page_title']     = 'eUniversitylondon Cart';
 
+        if((isset(Auth::user()->user_type) && Auth::user()->user_type == "instructor") or (isset(Auth::user()->user_type) && Auth::user()->user_type == "admin")) {
+            Auth::logout();
+            return redirect()->intended('/')->withErrors(['email' => 'Please login with the learner account to purchase any course !!!']);
+        }
+
         $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->first();
         if($session_result === null) {
             $data["CartItems"] = "emp";
@@ -176,6 +181,11 @@ class CartController extends Controller
 
 //        echo "<pre>" . print_r($request) . "</pre>";exit();
 
+        if((isset(Auth::user()->user_type) && Auth::user()->user_type == "instructor") or (isset(Auth::user()->user_type) && Auth::user()->user_type == "admin")) {
+            Auth::logout();
+            return redirect()->intended('/')->withErrors(['email' => 'Please login with the learner account to purchase any course !!!']);
+        }
+
         /************** Set order Table ********/
         $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->first();
         if($session_result === null) {
@@ -232,25 +242,41 @@ class CartController extends Controller
 
         $data                   = [];
 
+        $data['sub_heading']            = 'Course Detaile';
+        $data['page_title']             = 'eUniversitylondon Course Detaile';
+
         if(!Auth::user()) {
             return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
         }
 
-        $data['sub_heading']            = 'Course Detaile';
-        $data['page_title']             = 'eUniversitylondon Course Detaile';
+        $data['cid']            = $course_id;
 
-        $UserProgramData  = CourseStarted::where('course_id', $course_id)->where('user_id', Auth::user()->id)->get();
-        if(count($UserProgramData) > 0) {
-            $data['courseData']             = CourseProgram::where("id", $UserProgramData[0]->CourseProgramID)->get();
-            $pdfpath    =   "/uploads/courseprogrampdf/";
+        $courewithuser                  = CourseWithUser::where("user_id", Auth::user()->id)->where('course_id', $course_id)->get();
+        if(count($courewithuser) > 0) {
+            $UserProgramData  = CourseStarted::where('course_id', $course_id)->where('user_id', Auth::user()->id)->get();
+            if(count($UserProgramData) > 0) {
+                $data['courseData']             = CourseProgram::where("id", $UserProgramData[0]->CourseProgramID)->get();
+                $pdfpath    =   "/uploads/courseprogrampdf/";
+            } else {
+                $data['courseData']             = Courses::where("id", $course_id)->get();
+                $pdfpath    =   "/uploads/coursepdf/";
+            }
+            $data['UserProgramData']            = $UserProgramData;
+            $data['courseprogramData']          = CourseProgram::where("course_id", $course_id)->get();
+            $data['PDFpath']  = $pdfpath;
+
+            /*************** Number of days left ************/
+            $date = new \DateTime();
+            $date_dd = $date->format('Y-m-d H:i:s');
+            $data['DaysLeft']  = "";
+            $created_date = $courewithuser[0]->created_at;
+            $diff_in_days = $created_date->diffInDays($date_dd);
+            $data['DaysLeft']  = 365 - $diff_in_days;
+            /*************** Number of days left ************/
+            return view('frontend.startcourse', $data);
         } else {
-            $data['courseData']             = Courses::where("id", $course_id)->get();
-            $pdfpath    =   "/uploads/coursepdf/";
+            return redirect()->intended('/learner/course')->withErrors(['email' => 'Please purchase this course first !!!']);
         }
-        $data['courseprogramData']          = CourseProgram::where("course_id", $course_id)->get();
-        $data['PDFpath']  = $pdfpath;
-
-        return view('frontend.startcourse', $data);
     }
 
     public function SaveAddress(Request $request){
