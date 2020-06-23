@@ -44,6 +44,7 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     /************* Pages Starts ***************/
     Route::get('/contact', 'Front\HomeController@ContactUS')->name('contact');
     Route::get('/about', 'Front\HomeController@AboutUS')->name('about');
+    Route::post('/cfrmcontact', 'Front\HomeController@PostForm');
     /************* Pages Ends ***************/
 
     /************* Categories Starts ***************/

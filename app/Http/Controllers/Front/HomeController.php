@@ -58,6 +58,30 @@ class HomeController extends Controller
         return view('frontend.contactus', $data);
     }
 
+    public function PostForm(Request $request) {
+
+        $this->validate($request, [
+            'first_name'=>'required|max:120',
+            'last_name'=>'required|max:120',
+            'email'=>'required',
+            'phone'=>'required',
+            'message'=>'required'
+        ]);
+
+        $first_name         = $request->first_name;
+        $last_name          = $request->last_name;
+        $client_email       = $request->email;
+        $phone_number       = $request->phone;
+        $cmessage           = $request->message;
+
+        Mail::send('emails.AskQuestion', ['first_name' => $first_name, 'last_name' => $last_name, "client_email" => $client_email, "phone" => $phone_number, "cmessage" => $cmessage], function($message)  use ($first_name, $last_name){
+            $message->to("euniversitylondon@gmail.com");
+            $message->subject($first_name . " " . $last_name . " send's new request from contact us page !!!");
+        });
+
+        return redirect()->back()->withErrors(['email' => 'Your request has been submitted, Admin will contact you soon !!!']);
+    }
+
     public function AboutUS() {
 
         $data['sub_heading']  = 'About US Page';

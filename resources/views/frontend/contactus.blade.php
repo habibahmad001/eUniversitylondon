@@ -12,10 +12,7 @@
                         <h1>Contact Us</h1>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="index.html">Home</a>
-                            </li>
-                            <li class="breadcrumb-item">
-                                <a href="#">Pages</a>
+                                <a href="{{ URL::to("/") }}">Home</a>
                             </li>
                             <li class="breadcrumb-item active">
                                 Contact us
@@ -102,25 +99,33 @@
             <div class="row">
 
                 <div class="col-lg-8 offset-lg-2 animate" data-animation="scaleAppear">
-
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <h6 class="special-heading fw-300 text-center">Empower Yourself</h6>
                     <h2 class="text-center">Ask question</h2>
 
-                    <form class="contact-form c-mb-10 c-gutter-10" method="post" action="http://webdesign-finder.com/">
-
+                    <form class="mt-44 c-mb-10 c-gutter-10" method="POST" action="{{ URL::to('/cfrmcontact') }}" enctype="multipart/form-data" onsubmit="javascript:return validation_ask('');">
+                        {{ csrf_field() }}
                         <div class="row">
 
                             <div class="col-sm-6">
                                 <div class="form-group has-placeholder">
                                     <label for="first-name">First name<span class="required">*</span></label>
-                                    <input type="text" aria-required="true" size="30" value="" name="first-name" id="first-name" class="form-control" placeholder="First name">
+                                    <input type="text" aria-required="true" size="30" value="" name="first_name" id="first-name" class="form-control" placeholder="First name">
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="form-group has-placeholder">
                                     <label for="first-name">last name<span class="required">*</span></label>
-                                    <input type="text" aria-required="true" size="30" value="" name="last-name" id="last-name" class="form-control" placeholder="Last name">
+                                    <input type="text" aria-required="true" size="30" value="" name="last_name" id="last-name" class="form-control" placeholder="Last name">
                                 </div>
                             </div>
 
@@ -129,14 +134,14 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group has-placeholder">
-                                    <label for="email">Email address<span class="required">*</span></label>
-                                    <input type="email" aria-required="true" size="30" value="" name="email" id="email" class="form-control" placeholder="Your email adress">
+                                    <label for="cemail">Email address<span class="required">*</span></label>
+                                    <input type="email" aria-required="true" size="30" value="" name="email" id="cemail" class="form-control" placeholder="Your email adress">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group has-placeholder">
-                                    <label for="phone">Phone<span class="required">*</span></label>
-                                    <input type="text" aria-required="true" size="30" value="" name="phone" id="phone" class="form-control" placeholder="Phone number">
+                                    <label for="cphone">Phone<span class="required">*</span></label>
+                                    <input type="text" aria-required="true" size="30" value="" name="phone" id="cphone" class="form-control" placeholder="Phone number">
                                 </div>
                             </div>
 
@@ -147,8 +152,8 @@
                             <div class="col-sm-12">
 
                                 <div class="form-group has-placeholder">
-                                    <label for="message">Message</label>
-                                    <textarea aria-required="true" rows="4" cols="45" name="message" id="message" class="form-control" placeholder="Message"></textarea>
+                                    <label for="cmessage">Message</label>
+                                    <textarea aria-required="true" rows="4" cols="45" name="message" id="cmessage" class="form-control" placeholder="Message"></textarea>
                                 </div>
                             </div>
 
@@ -159,7 +164,7 @@
                             <div class="col-sm-12 text-center mt-20">
 
                                 <div class="form-group">
-                                    <button type="submit" id="contact_form_submit" name="contact_submit" class="btn btn-maincolor full-width">Contact Us</button>
+                                    <button type="submit" class="btn btn-maincolor full-width">Contact Us</button>
                                 </div>
                             </div>
 
