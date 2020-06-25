@@ -33,6 +33,19 @@ $(".edit-icon").click(function () {
     if(typeof data.QandA != 'undefined'){
       QandA = data.QandA;
 
+      /********** Set exam **********/
+      var user_folder = $("#user_folder").val();
+      $.get('/' + user_folder + '/getqaexam/' + QandA.table_name, function(data){
+
+        if(typeof data.ResponseData != 'undefined'){
+          // $(data.ResponseData).find("option[value='"+QandA.exam_qa_id+"']")
+          var resdata = data.ResponseData;
+          resdata = resdata.replace('value="'+QandA.exam_qa_id+'"', 'value="'+QandA.exam_qa_id+'"' + ' selected="selected"');
+          $(".exm_item").html(resdata).show();
+        }
+      });
+      /********** Set exam **********/
+
       $("#edit-qa_title").val(QandA.qa_title);
       $("#edit-qa_content").summernote('code', QandA.qa_desc);
       $("#cat_id").val(cat_id);
@@ -52,12 +65,6 @@ $(".edit-icon").click(function () {
 
       $("#edit-sel_txt option").each(function() {
         if($(this).val() == QandA.qa_cid) {
-          $(this).attr("selected","selected");
-        }
-      });
-
-      $("#sel_ex_id option").each(function() {
-        if($(this).val() == QandA.exam_qa_id) {
           $(this).attr("selected","selected");
         }
       });
@@ -94,7 +101,7 @@ $("#sel_table").change(function(){
 
     if(typeof data.ResponseData != 'undefined'){
       // alert(data.ResponseData);
-      $("#exm_item").html(data.ResponseData).show();
+      $(".exm_item").html(data.ResponseData).show();
     }
   });
 });

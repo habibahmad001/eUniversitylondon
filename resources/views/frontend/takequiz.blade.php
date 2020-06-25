@@ -33,7 +33,22 @@
             <div class="row">
                 <div class="col-lg-12">
                     @if(count($ExamData) > 0)
-                        <h1>Final Exam : {{ $ExamData[0]->exam_title }}</h1>
+                        {{--<h1>Final Exam : {{ $ExamData[0]->exam_title }}</h1>--}}
+                        @if(count($QandAData) > 0)
+                            <ul class="qa-outer">
+                            @foreach($QandAData as $v)
+                                <li class="qa-question-section"><b>Q.</b> {{ $v->qa_title }}
+                                    @if(count(App\Http\Controllers\Front\CourseController::GetAnswer($ExamData[0]->id, "Exam", $v->id)) > 0)
+                                        <ul class="qa-inner">
+                                        @foreach(App\Http\Controllers\Front\CourseController::GetAnswer($ExamData[0]->id, "Exam", $v->id) as $answer)
+                                                <li><input type="radio" name="{{ $v->id }}" value="{{ $answer->id }}">{{ $answer->qa_title }}</li>
+                                        @endforeach
+                                        </ul>
+                                    @endif
+                                </li>
+                            @endforeach
+                            </ul>
+                        @endif
                     @else
                         <div>No exam setup yet by instructor !!!</div>
                     @endif

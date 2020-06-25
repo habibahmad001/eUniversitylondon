@@ -147,6 +147,8 @@
                                                             <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
                                                         </div>
 
+                                                        <div class="product-price">£{{ $course->course_price }}.00</div>
+
                                                         <div class="tagcloud">
                                                             @if(count(json_decode($course->category_id)) > 0)
                                                                 @foreach(json_decode($course->category_id) as $v)
@@ -168,8 +170,10 @@
                                                     <div class="star-rating course-rating">
                                                         <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
                                                     </div>{{ csrf_field() }}
+                                                    <div class="product-price">£{{ $course->course_price }}.00</div>
                                                     <div class="divider-48" id="itm-post-{{ $course->id }}"></div>
-                                                    <a href="javascript:void(0);" onclick="javascript:product_submit({{ $course->id }});" class="btn btn-maincolor">Start now</a>
+                                                    <a href="{{ URL::to("/course_detail/" . $course->id) }}" class="btn btn-maincolor">View More</a>
+                                                    <a href="javascript:void(0);" onclick="javascript:product_submit({{ $course->id }});" class="btn btn-maincolor">Buy Now</a>
                                                     <div class="tagcloud">
                                                         @if(count(json_decode($course->category_id)) > 0)
                                                             @foreach(json_decode($course->category_id) as $v)

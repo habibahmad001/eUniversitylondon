@@ -31,6 +31,9 @@
                         @if(collect(request()->segments())->pull(1) != 'childitem')
                             <th>View Answers</th>
                         @endif
+                        @if(collect(request()->segments())->pull(1) == 'childqa')
+                            <th>Action</th>
+                        @endif
                     </tr>
                 </thead>
                 @if(count($QandA)) @foreach ($QandA as $qa)
@@ -39,15 +42,18 @@
                             <span class="edit-icon" data-id="{{ $qa->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span>
                     </th>
                     <th class="checkbox-container">
-                        <input type="checkbox" name="del_qanda[]" value="{{ $qa->id }}" class="checkbox-selector">
+                        <input type="checkbox" name="del_questionandanswer[]" value="{{ $qa->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $qa->qa_title }}</td>
                     <td>@if(empty($qa->qa_cid)) Yes @else No @endif</td>
                     <!--td>@if($QandA->total() > 0)<a href="/admin/childitem/{{ $qa->id }}">View Answers</a> @else No Child @endif</td-->
                     @if(collect(request()->segments())->pull(1) != 'childqa')
-                        <td> @if(App\Http\Controllers\QandAController::HasItems($qa->id) == 0) Has no answer @else <a href="/{{ collect(request()->segments())->first() }}/childqa/{{ $qa->id }}">View Answers {{ App\Http\Controllers\QandAController::AnswerCount($qa->id) }}</a> @endif </td>
+                        <td> @if(App\Http\Controllers\QandAController::HasItems($qa->id) == 0) <a href="/{{ collect(request()->segments())->first() }}/childqa/{{ $qa->id }}">Has no answer {{ App\Http\Controllers\QandAController::AnswerCount($qa->id) }}</a> @else <a href="/{{ collect(request()->segments())->first() }}/childqa/{{ $qa->id }}">View Answers {{ App\Http\Controllers\QandAController::AnswerCount($qa->id) }}</a> @endif </td>
                     @else
                         <td>It's Answers</td>
+                    @endif
+                    @if(collect(request()->segments())->pull(1) == 'childqa')
+                        <td>{!! ($qa->isCorrect == "no") ? '<button type="button" class="btn btn-danger" onclick="javascript:window.location.href=\'/'.collect(request()->segments())->first().'/updateansstatus/'.$qa->id.'\';">Mark as Correct</button>' : '<button type="button" class="btn btn-success" onclick="javascript:window.location.href=\'/'.collect(request()->segments())->first().'/updateansstatus/'.$qa->id.'\';">Mark as Wrong</button>' !!}</td>
                     @endif
                 </tr>
                 @endforeach @else
@@ -67,7 +73,7 @@
         </nav>
     </div>
 </div>
-@include('../blocks/delete-form', ['model' => 'QandA'])
+@include('../blocks/delete-form', ['model' => 'questionandanswer'])
 
 @endsection 
 

@@ -214,7 +214,7 @@
                     {!! isset(App\Http\Controllers\Front\CMSController::CMSPageItems(8)->cms_desc) ? App\Http\Controllers\Front\CMSController::CMSPageItems(8)->cms_desc : "" !!}
                 </p>
                 <div class="divider-43 d-none d-md-block"></div>
-                <a href="#" class="btn btn-maincolor">Learn More about us</a>
+                <a href="javascript:void(0);" class="btn btn-maincolor">Learn More about us</a>
             </div>
         </div>
     </div>

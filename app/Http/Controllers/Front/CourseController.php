@@ -7,11 +7,12 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 
-use App\Courses;
 use App\CourseProgram;
 use App\CourseStarted;
-use App\Exam;
 use App\MockExam;
+use App\Courses;
+use App\QandA;
+use App\Exam;
 use App\cart;
 
 use Auth;
@@ -189,9 +190,24 @@ class CourseController extends Controller
 
         $data['ExamData']          =   Exam::where("course_id", $cid)->get();
 
+        if(count($data['ExamData']) > 0) {
+            $data['QandAData']          =   QandA::where("exam_qa_id", $data['ExamData'][0]->id)->where("table_name", "Exam")->where("qa_cid", 0)->get();
+        }
+
         $data['cid']   = $cid;
 
         return view('frontend.takequiz', $data);
+    }
+
+    public static function GetAnswer($eid, $type, $qid) {
+
+        if(!Auth::user()) {
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+        }
+
+        $AnswerData          =   QandA::where("exam_qa_id", $eid)->where("table_name", $type)->where("qa_cid", $qid)->get();
+
+        return $AnswerData;
     }
 
     public function FinishCourse($cid) {

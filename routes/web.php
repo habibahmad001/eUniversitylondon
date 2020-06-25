@@ -139,6 +139,7 @@ Route::post('/login', 'Auth\LoginController@login');
 /********** Gernal Q&A Functions *********/
 Route::get('/HasItems/{id}', 'QandAController@HasItems');
 Route::get('/AnswerCount/{id}', 'QandAController@AnswerCount');
+Route::get('/qetanswer/{eid}/{type}/{qid}', 'QandAController@GetAnswer');
 /********** Gernal Q&A Functions *********/
 
 /********** Gernal Login User Functions *********/
@@ -214,6 +215,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/getquestionandanswer/{cat_id}', 'QandAController@Getqanda');
     Route::get('/admin/getqaexam/{tab_name}', 'QandAController@GeQAExam');
     Route::post('/admin/update-questionandanswer', 'QandAController@Updateqanda');
+    Route::get('/admin/updateansstatus/{id}', 'QandAController@UpdateANSStatus');
     /*************** Question & Answer Ends ***************/
 
     /*************** CMS Starts ***************/
@@ -382,6 +384,7 @@ Route::middleware(['instructor'])->group(function () {
     Route::get('/instructor/getquestionandanswer/{cat_id}', 'QandAController@Getqanda');
     Route::get('/instructor/getqaexam/{tab_name}', 'QandAController@GeQAExam');
     Route::post('/instructor/update-questionandanswer', 'QandAController@Updateqanda');
+    Route::get('/instructor/updateansstatus/{id}', 'QandAController@UpdateANSStatus');
     /*************** Question & Answer Ends ***************/
 
     Route::get('/instructor/home', 'DashboardController@InstructorDashboard');

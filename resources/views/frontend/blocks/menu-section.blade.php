@@ -120,7 +120,7 @@
 
                                                 <p class="woocommerce-mini-cart__buttons buttons">
                                                     <a href="{{ URL::to("/cart") }}" class="button btn btn-maincolor wc-forward">View cart</a>
-                                                    <a href="{{ URL::to("/reviewcart") }}" class="button checkout btn btn-outline-maincolor  wc-forward">Checkout</a>
+                                                    <a href="{{ URL::to("/reviewcart") }}" class="button checkout btn btn-outline-maincolor wc-forward popup-checkout">Checkout</a>
                                                 </p>
                                             @endif
                                         </div>
