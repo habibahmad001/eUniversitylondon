@@ -85,6 +85,9 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/user/exam/{cid}', 'Front\CourseController@Exam');
     Route::get('/finish_course/{cid}', 'Front\CourseController@FinishCourse');
     Route::get('/quizstart/{cid}', 'Front\CourseController@ExamStart');
+    Route::get('/courseresult/{cid}/{eid}', 'Front\CourseController@CourseResult');
+    Route::get('/finishquiz/{status}', 'Front\CourseController@FinishQuiz');
+    Route::post('/saveresult', 'Front\CourseController@SaveResult');
     /************* Course Ends ***************/
 
     /************* Front User Starts ***************/
@@ -122,9 +125,6 @@ Route::middleware(['user','verified'])->group(function () {
 	Route::post('reset_password', 'UserController@reset_password');
 	Route::get('ready-to-play', 'QuestionUserController@ready_quiz');
 	Route::get('result', 'QuestionUserController@result');
-	
-
-
 });
 // Registration Routes...
 Route::get('/register', 'Auth\LoginController@showLoginForm')->name('register');

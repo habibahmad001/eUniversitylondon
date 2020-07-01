@@ -27,8 +27,8 @@
         </section>
     </div>
 
-
-    <section class="ls s-pt-55 s-pb-45 s-pt-lg-95 s-pb-lg-75 shop-order-received">
+    <form method="post" name="result-frm" id="result-frm" action="{{ URL::to('/saveresult') }}">
+        <section class="ls s-pt-55 s-pb-45 s-pt-lg-95 s-pb-lg-75 shop-order-received">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -54,7 +54,20 @@
                     @endif
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div>
+                        {{ csrf_field() }}
+                        <input type="hidden" name="course" value="{{ (isset($cid)) ? $cid : 0}}">
+                        <input type="hidden" name="exam" value="{{ (isset($ExamData[0]->id)) ? $ExamData[0]->id : 0}}">
+                        <input type="hidden" name="DBTable" value="{{ (isset($DBTable)) ? $DBTable : 0}}">
+                        <button type="button" class="btn btn-danger">Save</button>
+                        <button type="button" class="btn btn-success" onclick="javascript:$('#result-frm').submit();">Submit</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+    </form>
 
 @endsection

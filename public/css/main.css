@@ -3915,6 +3915,7 @@ ul.qa-inner > li {
 ul.qa-outer > li {
 	font-size: 18px;
 	border-bottom: 3px solid #ebebeb;
+	padding: 3% 0;
 }
 
 ul.qa-outer > li:last-child {

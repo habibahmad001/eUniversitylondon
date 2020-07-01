@@ -31,7 +31,7 @@
         <div class="form-line" id="category_div">
           <select name="sel_txt" id="sel_txt" class="half-width">
               <option value="0">Select Question</option>
-            @if(count($QandA)) @foreach ($QandA as $qa) @if($qa->qa_cid == NULL)
+            @if(count($QandAALL)) @foreach ($QandAALL as $qa) @if($qa->qa_cid == NULL)
               <option value="{{ $qa->id }}">{{ $qa->qa_title }}</option>
             @endif @endforeach @else
               <option value="">No Question Listed</option>

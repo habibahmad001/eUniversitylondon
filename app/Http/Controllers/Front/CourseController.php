@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\CourseWithUser;
+use App\MexamWithUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
@@ -9,8 +11,10 @@ use App\Http\Controllers\Controller;
 
 use App\CourseProgram;
 use App\CourseStarted;
+use App\ExamWithUser;
 use App\MockExam;
 use App\Courses;
+use App\Result;
 use App\QandA;
 use App\Exam;
 use App\cart;
@@ -177,6 +181,201 @@ class CourseController extends Controller
         return view('frontend.exam', $data);
     }
 
+    public function FinishQuiz($status = "unsuccessful-1") {
+
+        if(!Auth::user()) {
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+        }
+
+        $data         = [];
+
+        $data['sub_heading']  = 'Finish Quiz Page';
+        $data['page_title']   = $this->header_title;
+        $InputArr    =   explode("-", $status);
+        $data['cid']   = $InputArr[1];
+
+        $data['status']   = $InputArr[0];
+
+        if($InputArr[0] == "success") {
+            $data['ShowMSG']   = "Congratulations, you have passed the final exam.<br />Now you complete the final exam and your are certified successfully.";
+        } else {
+            $data['ShowMSG']   = "Unfortunately, you have failed the final exam.<br />You can retake the exam at any time, simply visit the link below to pay a £19 retake fee.";
+        }
+
+        return view('frontend.finishquiz', $data);
+    }
+
+    public function CourseResult(Request $request) {
+
+        if(!Auth::user()) {
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+        }
+
+        $data         = [];
+
+        $data['sub_heading']  = 'Exam Page';
+        $data['page_title']   = $this->header_title;
+
+        $course_id  =   $request->cid;
+        $exam_id    =   $request->eid;
+
+        $ResOBJ     =   Result::where("course_id", $course_id)->where("exam_id", $exam_id)->get();
+
+        $res        =   json_decode($ResOBJ[0]->result, true);
+
+        print_r($res["ResultData"]);
+//        echo $res["ResultData"][2]["CorrectAns"];
+
+        $data['cid']   = $course_id;
+
+    }
+
+//    public function SaveResult(Request $request) {
+//
+//        if(!Auth::user()) {
+//            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+//        }
+//
+//        $data         = [];
+//
+//        $data['sub_heading']        = 'Exam Result Page';
+//        $data['page_title']         = $this->header_title;
+//
+//        $results                    =   [];
+//
+//        $RequestData                =   [];
+//        $AnswerDataarr              =   [];
+//
+//        $results["RequestData"]     =   $RequestData; // array(QuestionID => AnswerID)
+//        $results["AnswerDataarr"]      =   $AnswerDataarr; // array(QuestionID => AnswerID)
+//        $results["MarksObtain"]     =   ""; // User Marks
+//
+//        /********** Check Exam ***********/
+//        $totalmax   =   0;
+//
+//        $ExamData   =   QandA::where("exam_qa_id", $request->exam)->where("table_name", $request->DBTable)->where("qa_cid", 0)->get();
+//
+//        if(count($ExamData) > 0) {
+//            foreach($ExamData as $q) {
+//                $question_id = $q->id;
+//                $RequestData[$question_id]       =   $request->input($question_id);
+//                $AnswerData          =   QandA::where("qa_cid", $q->id)->get();
+//                if(count($AnswerData) > 0) {
+//                    foreach($AnswerData as $a) {
+//                        if($a->isCorrect == "yes") {
+//                            $AnswerDataarr[$question_id]       =   $a->id;
+//                            if($a->id == $request->input($question_id)) {
+//                                $totalmax   =   $totalmax+10;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        /********** Check Exam ***********/
+//
+//        /********** Result Data ***********/
+//        $results["RequestData"]     =   $RequestData; // array(QuestionID => AnswerID)
+//        $results["AnswerDataarr"]   =   $AnswerDataarr; // array(QuestionID => AnswerID)
+//        $results["MarksObtain"]     =   $totalmax; // User Marks
+//        $ResData = json_encode($results);
+//        /********** Result Data ***********/
+//
+//        /********** Store Results ********/
+//        $ResOBJ                 = Result::firstOrNew(array('course_id' => $request->course, "exam_id" => $request->exam, "user_id" => Auth::user()->id));
+//
+//        $ResOBJ->course_id  =   $request->course;
+//        $ResOBJ->exam_id    =   $request->exam;
+//        $ResOBJ->user_id    =   Auth::user()->id;
+//        $ResOBJ->result     =   $ResData;
+//
+//        $saved              =   $ResOBJ->save();
+//        /********** Store Results ********/
+//
+//        if($totalmax > 40)
+//            return redirect()->intended('/pass')->withErrors(['email' => 'Please login first !!!']);
+//        else
+//            return redirect()->intended('/fail')->withErrors(['email' => 'Please login first !!!']);
+//    }
+
+    public function SaveResult(Request $request) {
+
+        if(!Auth::user()) {
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+        }
+
+        $data         = [];
+
+        $data['sub_heading']        = 'Exam Result Page';
+        $data['page_title']         = $this->header_title;
+
+        $ResultData                 =   [];
+        $AnswerArr                  =   []; // array(UserAns => 2, CorrectAns => 3)
+
+        $results["ResultData"]      =   $ResultData; // array(QuestionID => $AnswerArr)
+        $results["MarksObtain"]     =   ""; // User Marks
+
+
+        /********** Check Exam ***********/
+        $totalmax   =   0;
+
+        $ExamData   =   QandA::where("exam_qa_id", $request->exam)->where("table_name", $request->DBTable)->where("qa_cid", 0)->get();
+
+        if(count($ExamData) > 0) {
+            foreach($ExamData as $q) {
+                $question_id = $q->id;
+                $AnswerArr["UserAns"]       =   $request->input($question_id);
+                $AnswerData          =   QandA::where("qa_cid", $q->id)->get();
+                $cans         =     0;
+                if(count($AnswerData) > 0) {
+                    foreach($AnswerData as $a) {
+                        if($a->isCorrect == "yes") {
+                            $cans       =   $a->id;
+                            if($a->id == $request->input($question_id)) {
+                                $totalmax   =   $totalmax+10;
+                            }
+                        }
+                    }
+                }
+                $AnswerArr["CorrectAns"]       =   $cans;
+                $ResultData[$question_id]   =   $AnswerArr;
+            }
+        }
+//        echo "<pre>" . print_r($ResultData) . "</pre>";exit();
+        /********** Check Exam ***********/
+
+        /********** Result Data ***********/
+        $results["ResultData"]     =   $ResultData;
+        $results["MarksObtain"]     =   $totalmax;
+        $ResData = json_encode($results);
+        /********** Result Data ***********/
+
+        /********** Store Results ********/
+        $ResOBJ                 = Result::firstOrNew(array('course_id' => $request->course, "exam_id" => $request->exam, "user_id" => Auth::user()->id));
+
+        $ResOBJ->course_id  =   $request->course;
+        $ResOBJ->exam_id    =   $request->exam;
+        $ResOBJ->user_id    =   Auth::user()->id;
+        $ResOBJ->result     =   $ResData;
+
+        $saved              =   $ResOBJ->save();
+        /********** Store Results ********/
+
+        /********** Store data in courese with user ********/
+        $ewuOBJ                 = ExamWithUser::firstOrNew(array('exam_id' => $request->exam, "user_id" => Auth::user()->id));
+
+        $ewuOBJ->exam_id    =   $request->exam;
+        $ewuOBJ->user_id    =   Auth::user()->id;
+
+        $saved              =   $ewuOBJ->save();
+        /********** Store data in courese with user ********/
+
+        if($totalmax > 40) //195
+            return redirect()->intended('/finishquiz/success-' . $request->course);
+        else
+            return redirect()->intended('/finishquiz/unsuccessful-' . $request->course);
+    }
+
     public function ExamStart($cid) {
 
         if(!Auth::user()) {
@@ -195,6 +394,7 @@ class CourseController extends Controller
         }
 
         $data['cid']   = $cid;
+        $data['DBTable']   = "Exam";
 
         return view('frontend.takequiz', $data);
     }
