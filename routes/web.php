@@ -60,6 +60,7 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/undocart', 'Front\CartController@UndoItem');
     Route::get('/reviewcart', 'Front\CartController@ReviewCart');
     Route::post('/card_auth', 'Front\CartController@CardAuth');
+    Route::get('/retake_exam/{cid}', 'Front\CartController@RetakeExam');
     /************* Cart Ends ***************/
 
     /************* Order Detail Starts ***************/
@@ -87,7 +88,9 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/quizstart/{cid}', 'Front\CourseController@ExamStart');
     Route::get('/courseresult/{cid}/{eid}', 'Front\CourseController@CourseResult');
     Route::get('/finishquiz/{status}', 'Front\CourseController@FinishQuiz');
+    Route::get('/user/newsubscription/{cid}', 'Front\CourseController@NewSubscription');
     Route::post('/saveresult', 'Front\CourseController@SaveResult');
+    Route::post('/saveratings', 'Front\CourseController@SaveRatings');
     /************* Course Ends ***************/
 
     /************* Front User Starts ***************/
@@ -98,6 +101,7 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/orderagain/{id}', 'Front\UserFrontController@OrderAgain');
     Route::get('/orderagainsuccess', 'Front\UserFrontController@OGSuccess');
     Route::post('/updateuser', 'Front\UserFrontController@UpdateUser');
+    Route::get('/examresult/{cid}', 'Front\CourseController@ExamResult');
     /************* Front User Ends ***************/
 
     /************* Front Search Starts ***************/
@@ -140,7 +144,15 @@ Route::post('/login', 'Auth\LoginController@login');
 Route::get('/HasItems/{id}', 'QandAController@HasItems');
 Route::get('/AnswerCount/{id}', 'QandAController@AnswerCount');
 Route::get('/qetanswer/{eid}/{type}/{qid}', 'QandAController@GetAnswer');
+Route::get('/qaonid/{id}', 'QandAController@QAonID');
 /********** Gernal Q&A Functions *********/
+
+/********** Gernal Exam Functions *********/
+Route::get('/questioncount/{eid}', 'QandAController@QuestionCount');
+Route::get('/examdata/{qid}', 'QandAController@ExamData');
+Route::get('/questiondata/{qid}', 'QandAController@QuestionData');
+Route::get('/getquizresult/{exam_id}', 'CourseController@GetQuizResult');
+/********** Gernal Exam Functions *********/
 
 /********** Gernal Login User Functions *********/
 Route::get('/user_msg', 'LoginController@UserMSG');
@@ -209,6 +221,7 @@ Route::middleware(['admin'])->group(function () {
     /*************** Question & Answer Starts ***************/
     Route::resource('/admin/questionandanswer', 'QandAController');
     Route::delete('/admin/childqa/questionandanswer/{id}', 'QandAController@destroy');
+    Route::get('/admin/questionlist/{eid}', 'QandAController@index');
     Route::get('/admin/questionandanswer', 'QandAController@index');
     Route::get('/admin/childqa/{id}', 'QandAController@ChildItem');
     Route::post('/admin/questionandanswer_add', 'QandAController@qandaAdd');
@@ -378,6 +391,7 @@ Route::middleware(['instructor'])->group(function () {
     /*************** Question & Answer Starts ***************/
     Route::resource('/instructor/questionandanswer', 'QandAController');
     Route::delete('/instructor/childqa/questionandanswer/{id}', 'QandAController@destroy');
+    Route::get('/instructor/questionlist/{eid}', 'QandAController@index');
     Route::get('/instructor/questionandanswer', 'QandAController@index');
     Route::get('/instructor/childqa/{id}', 'QandAController@ChildItem');
     Route::post('/instructor/questionandanswer_add', 'QandAController@qandaAdd');

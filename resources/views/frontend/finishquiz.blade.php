@@ -34,18 +34,38 @@
                 <div class="col-lg-12">
                     <div>
                         {!! $ShowMSG !!} <br />
-                        {!! ($status == "unsuccessful") ? '<a href="'. URL::to('/retake_exam') .'" target="_blank">Retake Exam Fee</a>' : "" !!}
+                        {!! (isset($status) && ($status == "unsuccessful")) ? '<a href="'. URL::to('/user/exam/' . $cid) .'">Retake Exam Fee</a>' : "" !!}
+                        {!! (isset($retake)) ? '<a href="'. URL::to('/retake_exam/' . $cid) .'" target="_blank">Just Pay £19 and retake exam</a>' : "" !!}
                     </div>
-
                 </div>
             </div>
+            @if(isset($status) && ($status == "success"))
+                <form name="rating-frm" id="rating-frm" method="post" action="{{ URL::to('/saveratings') }}">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="ratings-id">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="star_val" id="star_val" value="0">
+                                <input type="hidden" name="cid" id="cid" value="{{ $cid }}">
+                                <ul>
+                                    <li data-starval="1"><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    <li data-starval="2"><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    <li data-starval="3"><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    <li data-starval="4"><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    <li data-starval="5"><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                </ul>
+                            </div>
+                            <div id="comment-id">
+                                <textarea cols="10" rows="8" name="ccomments" id="ccomments" placeholder="Type some text . . ."></textarea>
+                                <button type="submit" class="btn btn-success" name="savecomment" id="savecomment">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            @endif
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="unit_prevnext">
-                        <div class="col-md-4 text-center"><a href="{{ URL::to('/startcourse/' . $cid) }}" id="prev_unit" data-unit="159231" class="unit unit_button"><span><< Back to Course</span></a></div>
-                        <div class="col-md-3 text-center"><a href="{{ URL::to('/quizstart/' . $cid) }}" class="quiz_results_popup"><span>Start Exam</span></a></div>
-                        <div class="col-md-4 text-center"><a href="{{ URL::to('/quizstart/' . $cid) }}" id="next_quiz" data-unit="159692" class="unit unit_button"><span>Proceed to Exam >></span></a></div>
-                    </div>
+                    @include('frontend.blocks.prevnext')
                 </div>
             </div>
         </div>

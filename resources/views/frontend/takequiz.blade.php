@@ -48,6 +48,8 @@
                                 </li>
                             @endforeach
                             </ul>
+                        @else
+                            <div>No Question setup yet by instructor !!!</div>
                         @endif
                     @else
                         <div>No exam setup yet by instructor !!!</div>

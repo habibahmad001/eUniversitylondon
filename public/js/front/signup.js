@@ -32,7 +32,24 @@
 
     });
 
+    $('div#ratings-id ul li').mouseover(function(e) {
+        if($("#star_val").val() == 0) {
+            $(this).find("i").attr("class", "fa fa-star");
+        }
+    });
 
+    $('div#ratings-id ul li').mouseout(function(e) {
+        if($("#star_val").val() == 0) {
+            $(this).find("i").attr("class", "fa fa-star-o");
+        }
+    });
+
+    $('div#ratings-id ul li').click(function(e) {
+        if($("#star_val").val() == 0) {
+            $("#star_val").attr("value", $(this).attr("data-starval"));
+            $(this).find("i").attr("class", "fa fa-star");
+        }
+    });
 })(jQuery);
 
 function validateEmailExist(type) {

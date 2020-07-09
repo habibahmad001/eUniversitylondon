@@ -28,7 +28,12 @@
         <div class="form-line">
           <textarea name="qa_content" id="edit-qa_content" placeholder="Type some description."></textarea>
         </div>
-        @if(collect(request()->segments())->pull(1) != 'childqa')
+        @if(collect(request()->segments())->pull(1) == 'childqa' or collect(request()->segments())->pull(1) == 'questionlist')
+          <input type="hidden" name="sel_txt" value="{{ collect(request()->segments())->pull(2) }}">
+          @if(collect(request()->segments())->pull(1) == 'questionlist')
+            <input type="hidden" name="page_name" value="{{ collect(request()->segments())->pull(1) }}">
+          @endif
+        @else
           <div class="form-line">
             <input type="checkbox" name="child" id="edit-child" >&nbsp;&nbsp;&nbsp; Is Answer
           </div>
@@ -38,7 +43,7 @@
               <option value="0">Select Questions</option>
               @if(count($QandAALL)) @foreach ($QandAALL as $qa)
                 <option value="{{ $qa->id }}">{{ $qa->qa_title }}</option>
-                @endforeach @else
+              @endforeach @else
                 <option value="">No Question Listed</option>
               @endif
             </select>
@@ -57,8 +62,6 @@
               <option value="0">Select Exam</option>
             </select>
           </div>
-        @else
-          <input type="hidden" name="sel_txt" value="{{ $id }}">
         @endif
        
       </div>

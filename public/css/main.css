@@ -3918,6 +3918,25 @@ ul.qa-outer > li {
 	padding: 3% 0;
 }
 
+td.retake_img_td {
+	padding: 2%;
+}
+
+td.retake_content_td {
+	padding: 2%;
+}
+
+div#ratings-id ul li {
+	list-style: none;
+	display: inline-block;
+	padding: 1%;
+	border-right: 1px solid #ccc;
+	margin: 2% 0;
+}
+div#ratings-id ul li:last-child {
+	border: none;
+}
+
 ul.qa-outer > li:last-child {
 border-bottom: none;
 }

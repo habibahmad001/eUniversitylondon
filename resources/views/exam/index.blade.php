@@ -27,7 +27,7 @@
                             <input type="checkbox" name="all">
                         </th>
                         <th>Exam's Title</th>
-                        <th width="40%">Exam's Content</th>
+                        <th>{!! (collect(request()->segments())->first() == "admin" || collect(request()->segments())->first() == "instructor") ? "Exam Question's" : "Obtained Mark's" !!}</th>
                         <th>Course Name</th>
                         @if(collect(request()->segments())->first() == "admin")
                             <th>Instructor Name</th>
@@ -45,7 +45,7 @@
                         <input type="checkbox" name="del_exam[]" value="{{ $Exam->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $Exam->exam_title }}</td>
-                    <td width="40%">@if(strlen(strip_tags($Exam->exam_content)) > 350) {{ substr(strip_tags($Exam->exam_content) , 0, 350). "..." }} @else {{ strip_tags($Exam->exam_content) }} @endif</td>
+                    <td>@if(collect(request()->segments())->first() == "admin" || collect(request()->segments())->first() == "instructor")<a href="/{{ collect(request()->segments())->first() }}/questionlist/{{ $Exam->id }}">No of Question's ({{ (App\Http\Controllers\QandAController::QuestionCount($Exam->id)) ? App\Http\Controllers\QandAController::QuestionCount($Exam->id) : 0 }})</a>@else <a href="javascript:void(0);">{!! (isset(App\Http\Controllers\Front\CourseController::GetQuizResult($Exam->id)->result)) ? json_decode(App\Http\Controllers\Front\CourseController::GetQuizResult($Exam->id)->result, true)["Result"]. " (".(json_decode(App\Http\Controllers\Front\CourseController::GetQuizResult($Exam->id)->result, true)["MarksObtain"]).")" : 0 !!}</a> @endif</td>
                     <td>{{ (array_key_exists($Exam->id, $Array_Course_Name)) ? $Array_Course_Name[$Exam->id] : "" }}</td>
                     @if(collect(request()->segments())->first() == "admin")
                         <td>{{ (array_key_exists($Exam->id, $Array_Instructor_Name)) ? $Array_Instructor_Name[$Exam->id] : "" }}</td>

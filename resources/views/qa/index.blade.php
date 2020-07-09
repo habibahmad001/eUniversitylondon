@@ -26,11 +26,9 @@
                         <th width="2%" class="checkbox-container">
                             <input type="checkbox" name="all">
                         </th>
-                        <th>Title</th>
-                        <th>Is Parent</th>
-                        @if(collect(request()->segments())->pull(1) != 'childitem')
-                            <th>View Answers</th>
-                        @endif
+                        <th>{!! (collect(request()->segments())->pull(1) == 'childqa') ? "Answer" : "Question" !!}</th>
+                        <th>{!! (collect(request()->segments())->pull(1) == 'childqa') ? "Question Name" : "Exam Name" !!}</th>
+                        <th>View Answers</th>
                         @if(collect(request()->segments())->pull(1) == 'childqa')
                             <th>Action</th>
                         @endif
@@ -45,7 +43,7 @@
                         <input type="checkbox" name="del_questionandanswer[]" value="{{ $qa->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $qa->qa_title }}</td>
-                    <td>@if(empty($qa->qa_cid)) Yes @else No @endif</td>
+                    <td>{!! (collect(request()->segments())->pull(1) == 'childqa') ? App\Http\Controllers\QandAController::QuestionData($qa->qa_cid)->qa_title : App\Http\Controllers\QandAController::ExamData($qa->exam_qa_id)->exam_title !!}</td>
                     <!--td>@if($QandA->total() > 0)<a href="/admin/childitem/{{ $qa->id }}">View Answers</a> @else No Child @endif</td-->
                     @if(collect(request()->segments())->pull(1) != 'childqa')
                         <td> @if(App\Http\Controllers\QandAController::HasItems($qa->id) == 0) <a href="/{{ collect(request()->segments())->first() }}/childqa/{{ $qa->id }}">Has no answer {{ App\Http\Controllers\QandAController::AnswerCount($qa->id) }}</a> @else <a href="/{{ collect(request()->segments())->first() }}/childqa/{{ $qa->id }}">View Answers {{ App\Http\Controllers\QandAController::AnswerCount($qa->id) }}</a> @endif </td>
