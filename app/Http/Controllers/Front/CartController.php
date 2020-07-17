@@ -232,6 +232,23 @@ class CartController extends Controller
         }
         /************** Set order Table ********/
     }
+
+    public function RetakeExam($cid) {
+
+        if(!Auth::user()) {
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+        }
+
+        $data         = [];
+
+        $data['sub_heading']  = 'Retake Exam Page';
+        $data['page_title']   = $this->header_title;
+
+        $data['cid']   = $cid;
+
+        return view('frontend.retake', $data);
+    }
+
     public function CardAuth() {
         if(!Auth::user()) {
             return redirect()->back()->withErrors(['email' => 'Please login first !!!']);

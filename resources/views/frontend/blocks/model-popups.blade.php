@@ -3,7 +3,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
-    <a href="index.html" class="logo">
+    <a href="{{ URL::to("/") }}" class="logo">
         <img src="{{ asset('images/logo.png') }}" alt="">
         <span class="logo-text color-darkgrey">eUniversityLondon</span>
     </a>

@@ -89,7 +89,7 @@ header .success-message-box .cancel:hover { background: url(../images/cancel-ico
 .content .table tbody tr td a { color: #555555; text-decoration: underline; }
 .content .table tbody tr:hover .edit-icon { opacity:1; }
 .content .table th.error { text-align: center; color: #ff0000; }
-.content .table th,.content .table td { color:#555555; font-size:12px; text-align: center;}
+.content .table th,.content .table td { color:#555555; font-size:12px;}
 .content .table tr a { color:#2b97df; }
 .content .table tr.yellow { background: #ababab; }
 .content .table>tbody>tr>td,.content .table>tbody>tr>th,
@@ -328,6 +328,21 @@ select.search-where {
     width: 100%;
     padding: 1.5%;
     margin: 1% 0;
+}
+
+.cancel {
+    display: block;
+    content: '';
+    background: url(../images/cancel-icon.png) no-repeat;
+    width: 11px;
+    height: 11px;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    cursor: pointer;
+}
+.cancel:hover {
+    background: url(../images/cancel-icon-hover.png) no-repeat;
 }
 
 

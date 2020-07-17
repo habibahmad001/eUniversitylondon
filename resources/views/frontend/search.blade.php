@@ -174,9 +174,9 @@
                     <div class="row c-mb-30 search-row-container">
                         @if(count($Search) > 0)
                             @foreach($Search as $val)
-                                <div><a href="{{ URL::to("/course_detail/" . $val->id) }}"><h3 class="search-title">{{ $val->course_title }}</h3></a></div>
+                                <div><a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $val->course_title))) }}"><h3 class="search-title">{{ $val->course_title }}</h3></a></div>
                                 <div>{{ (strlen(strip_tags($val->course_desc)) > 200) ? substr(strip_tags($val->course_desc), 0, 200) . "..." : strip_tags($val->course_desc) }}</div><br />
-                                <div><a href="{{ URL::to("/course_detail/" . $val->id) }}">Link</a></div>
+                                <div><a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $val->course_title))) }}">Link</a></div>
                                 <hr width="100%" color="#555" />
                             @endforeach
                         @else

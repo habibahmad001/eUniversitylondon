@@ -23,35 +23,42 @@
       <div class="form-line">
         <textarea name="qa_content" id="qa_content" placeholder="Type some description."></textarea>
       </div>
+      @if(collect(request()->segments())->pull(1) == 'childqa' or collect(request()->segments())->pull(1) == 'questionlist')
+        <input type="hidden" name="sel_txt" value="{{ collect(request()->segments())->pull(2) }}">
+        @if(collect(request()->segments())->pull(1) == 'questionlist')
+          <input type="hidden" name="page_name" value="{{ collect(request()->segments())->pull(1) }}">
+          <input type="hidden" name="table_name" value="{{ collect(request()->segments())->last() }}">
+        @endif
+      @else
+        <div class="form-line">
+          <input type="checkbox" name="child" id="child" >&nbsp;&nbsp;&nbsp; Is Answer
+        </div>
 
-      <div class="form-line">
-        <input type="checkbox" name="child" id="child" >&nbsp;&nbsp;&nbsp; Is Answer
-      </div>
-      
-      <div class="form-line" id="category_div">
-        <select name="sel_txt" id="sel_txt" class="half-width">
+        <div class="form-line" id="category_div">
+          <select name="sel_txt" id="sel_txt" class="half-width">
             <option value="0">Select Question</option>
-          @if(count($QandA)) @foreach ($QandA as $qa) @if($qa->qa_cid == NULL)
-            <option value="{{ $qa->id }}">{{ $qa->qa_title }}</option>
-          @endif @endforeach @else
-            <option value="">No Question Listed</option>
-          @endif
-        </select>
-      </div>
+            @if(count($QandAALL)) @foreach ($QandAALL as $qa) @if($qa->qa_cid == NULL)
+              <option value="{{ $qa->id }}">{{ $qa->qa_title }}</option>
+            @endif @endforeach @else
+              <option value="">No Question Listed</option>
+            @endif
+          </select>
+        </div>
 
-      <div class="form-line exm_table" id="exm_table">
-        <select name="sel_table" id="sel_table" class="half-width">
-          <option value="Exam">Select Exam Type</option>
-          <option value="Exam">Exam</option>
-          <option value="MockExam">Mock Exam</option>
-        </select>
-      </div>
+        <div class="form-line exm_table" id="exm_table">
+          <select name="sel_table" id="sel_table" class="half-width">
+            <option value="Exam">Select Exam Type</option>
+            <option value="Exam">Exam</option>
+            <option value="MockExam">Mock Exam</option>
+          </select>
+        </div>
 
-      <div class="form-line exm_item" id="exm_item" style="display: none;">
-        <select name="sel_ex_id" id="sel_ex_id" class="half-width">
-          <option value="0">Select Exam</option>
-        </select>
-      </div>
+        <div class="form-line exm_item" id="exm_item" style="display: none;">
+          <select name="sel_ex_id" id="sel_ex_id" class="half-width">
+            <option value="0">Select Exam</option>
+          </select>
+        </div>
+      @endif
     </div>
 
 

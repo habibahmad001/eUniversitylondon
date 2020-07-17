@@ -184,12 +184,13 @@
                                                     </div>
                                                     <div class="item-content">
                                                         <h6 class="course-title">
-                                                            <a href="{{ URL::to("/course_detail/" . $course->id) }}">{{ $course->course_title }}</a>
+                                                            <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $course->course_title))) }}">{{ $course->course_title }}</a>
                                                         </h6>
 
-                                                        <div class="star-rating course-rating">
-                                                            <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
+                                                        <div class="star-rating course-rating" id="{{ App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}">
+                                                            <span style="width: {{ (App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] == 0) ? 100 : App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}%">Rated <strong class="rating">5.00</strong> out of 5</span>
                                                         </div>
+                                                        <div class="product-price">£{{ $course->course_price }}.00</div>
 
                                                         <div class="tagcloud">
                                                             @if(count(json_decode($course->category_id)) > 0)
@@ -206,16 +207,18 @@
                                             <div class="course-back rounded vertical-item content-padding ds">
                                                 <div class="item-content">
                                                     <h6 class="course-title">
-                                                        <a href="{{ URL::to("/course_detail/" . $course->id) }}">{{ $course->course_title }}</a>
+                                                        <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $course->course_title))) }}">{{ $course->course_title }}</a>
                                                     </h6>
                                                     <p>
                                                         {{ (strlen(strip_tags($course->course_desc)) > 150) ? substr(strip_tags($course->course_desc), 0, 150) . "..." : strip_tags($course->course_desc) }}
                                                     </p>
-                                                    <div class="star-rating course-rating">
-                                                        <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
+                                                    <div class="star-rating course-rating" id="{{ App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}">
+                                                        <span style="width: {{ (App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] == 0) ? 100 : App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}%">Rated <strong class="rating">5.00</strong> out of 5</span>
                                                     </div>
                                                     <div class="divider-48" id="itm-post-{{ $course->id }}"></div>
-                                                    <a href="javascript:void(0);" onclick="javascript:product_submit({{ $course->id }});" class="btn btn-maincolor">Start now</a>
+                                                    <div class="product-price">£{{ $course->course_price }}.00</div>
+                                                    <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $course->course_title))) }}" class="btn btn-maincolor">View More</a>
+                                                    <a href="javascript:void(0);" onclick="javascript:product_submit({{ $course->id }});" class="btn btn-maincolor">Buy Now</a>
                                                     <div class="tagcloud">
                                                         @if(count(json_decode($course->category_id)) > 0)
                                                             @foreach(json_decode($course->category_id) as $v)

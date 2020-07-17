@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 05, 2020 at 06:31 AM
+-- Generation Time: Jun 26, 2020 at 07:34 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -89,7 +89,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (128, '2020_05_31_220245_Table_Course_Started', 26),
 (129, '2020_05_31_220521_update_Dates_in_course_started', 27),
 (130, '2020_03_02_082922_table_topics', 28),
-(131, '2020_06_04_133736_Add_status_and_icon_In_topics', 28);
+(131, '2020_06_04_133736_Add_status_and_icon_In_topics', 28),
+(132, '2020_06_05_133828_Table_Teams', 29),
+(133, '2020_06_05_134623_Update_dates_In_Teams', 30),
+(134, '2020_06_20_202616_Add_Dates_In_Exam_With_User', 31),
+(135, '2020_06_20_204254_Add_Dates_In_MExam_With_User', 32),
+(136, '2020_06_24_101400_Add_correct_answer_in_QandA_Table', 33),
+(137, '2020_06_26_105332_Table_exam_result', 34);
 
 -- --------------------------------------------------------
 
@@ -169,7 +175,8 @@ CREATE TABLE `tablecart` (
 --
 
 INSERT INTO `tablecart` (`id`, `session_id`, `key`, `val`, `status`, `created`, `undo_field`) VALUES
-(57, '66UDBvJMVhqM1aNLWhekey43FP4HvS9NucsxuxVy', 'cartItem', '{"2":["570154661.jpg","Diploma in Legal Studies - Revised 2017",1,"666",2]}', 'yes', '2020-06-04 19:24:40', NULL);
+(76, 'i8XgSf7JqAjeCMaavd2gBFECxPitwJm0BDwkl3p5', NULL, NULL, 'yes', '2020-06-26 10:25:48', NULL),
+(77, 'reIiGVQBR7p0GpiTJR7i11o6VmsxjCR5XKAKGGy2', NULL, NULL, 'yes', '2020-06-26 17:49:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -248,7 +255,18 @@ CREATE TABLE `tablecms` (
 --
 
 INSERT INTO `tablecms` (`id`, `cms_title`, `cms_desc`, `cms_status`, `cms_pid`) VALUES
-(1, 'Some', 'Some content', 'yes', NULL);
+(1, 'About us', 'Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae', 'yes', 3),
+(2, 'Technology', 'Nonumy eirmod por invidunt labore dolore magna.', 'yes', 3),
+(3, 'Language', 'At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd', 'yes', 3),
+(4, 'Location', 'USA, 3280 Cabell Avenue Alexandria, VA 22301', 'yes', 2),
+(5, 'Phone', 'Tel.: +1 703-518-6099', 'yes', 2),
+(6, 'Fax', 'Fax: +1 709-834-2693', 'yes', 2),
+(7, 'E-mail', 'info@tutor.com', 'yes', 2),
+(8, 'Why We Are', 'We are proud to say that since our opening in ’98 we have been serving our visitors in the best possible way. In Hotel Nanovi, where each one of', 'yes', 1),
+(9, 'Don\'t just take our', 'We are proud to say that since our opening in ’98 we have been serving our visitors in the best possible way. In Hotel Nanovi, where', 'yes', 1),
+(10, 'Free online courses from the experts', 'We are proud to say that since our opening in ’98', 'yes', 1),
+(11, 'Can’t find what you are looking for?', 'Submit a ticket and we\'ll get back to you as soon as we can.', 'yes', 4),
+(12, NULL, 'Isn\'t days fill, after him bring. Set likeness meat seed whose for itself you can\'t seas itself. Herb replenish he, dry he. Firmament their.', 'yes', 5);
 
 -- --------------------------------------------------------
 
@@ -568,7 +586,7 @@ INSERT INTO `tablecourses` (`id`, `category_id`, `course_avatar`, `course_title`
 (3, '["2","3"]', '1180059600.jpg', 'Working with Students with Special Educational Needs', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '30', '["english"]', '10', '30', 'fgfhgh', '33', '3', 'yes', 1, 'https://www.youtube.com/', '["most_popular","most_recent","most_certified"]', '1638580560.pdf'),
 (4, '["3","5"]', '401966259.jpg', 'Introduction to Human Nutrition', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '30', '["english"]', '8', '10', 'fhgfhf', '6666', '6', 'yes', 1, 'https://www.youtube.com/', '["most_recent","most_certified"]', '1175724685.pdf'),
 (5, '["2","4"]', '1287658438.jpg', 'Skills for Speaking Effectively: The Art of Speaking', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '20', '["english"]', '12', '30', 'dfgdfg', '6666', '3', 'yes', 1, 'https://www.youtube.com/', '["most_recent"]', '725948592.pdf'),
-(6, '["1","9"]', '269687077.jpg', 'General Data Protection Regulation (GDPR)', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '30', '["english","france"]', '10', '30', 'asdasd', '5555', '5', 'yes', 1, 'https://www.youtube.com/', '["most_recent","most_certified"]', '430852041.pdf'),
+(6, '["1","9"]', '269687077.jpg', 'General Data Protection Regulation (GDPR)', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '30', '["english","france"]', '10', '30', 'asdasd', '5555', '5', 'yes', 2, 'https://www.youtube.com/', '["most_recent","most_certified"]', '430852041.pdf'),
 (7, '["6","7","8","9"]', '1606469900.jpg', 'Why We Are', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '50', '["france"]', '7', '10', 'sdfsf', '3333', '3', 'no', 2, 'https://www.globaledulink.co.uk/', '["most_recent"]', NULL),
 (8, '["6","7","8"]', '2131853756.jpg', 'Duis autem vel eum iriure dolor', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '10', '["english"]', '8', '20', 'dfgd', '777', '7', 'no', 2, 'https://www.coursera.org/', '["most_recent"]', NULL);
 
@@ -588,6 +606,13 @@ CREATE TABLE `tablecoursestarted` (
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tablecoursestarted`
+--
+
+INSERT INTO `tablecoursestarted` (`id`, `course_id`, `user_id`, `CourseProgramID`, `CourseCompleted`, `isActive`, `created_at`, `updated_at`) VALUES
+(1, '6', '18', '31', 'yes', 'yes', '2020-06-21 00:34:56', '2020-06-21 00:34:56');
 
 -- --------------------------------------------------------
 
@@ -636,9 +661,11 @@ CREATE TABLE `tableexam` (
 
 INSERT INTO `tableexam` (`id`, `course_id`, `exam_title`, `exam_content`, `exam_status`, `exam_date`, `exam_user_id`) VALUES
 (1, 5, 'First Exam 1', 'First Exam1', 'yes', NULL, 11),
+(6, 4, 'Test Exma', '<p>dfsdfs</p>', 'yes', NULL, 1),
 (3, 1, 'vbcvbcvbc', '<p>cvbcvbc</p>', 'yes', NULL, 11),
-(4, 4, 'instructor 8 Exam 1', '<p>instructor 8 Exam 1<br></p>', 'yes', NULL, 8),
-(5, 4, 'instructor 8 Exam 2', '<p>instructor 8 Exam 2<br></p>', 'yes', NULL, 8);
+(4, 6, 'instructor 8 Exam 1', '<p>instructor 8 Exam 1<br></p>', 'yes', NULL, 2),
+(5, 4, 'instructor 8 Exam 2', '<p>instructor 8 Exam 2<br></p>', 'yes', NULL, 2),
+(7, 6, 'Exam 2', '<p>some data here</p>', 'yes', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -649,18 +676,21 @@ INSERT INTO `tableexam` (`id`, `course_id`, `exam_title`, `exam_content`, `exam_
 CREATE TABLE `tableexamwithuser` (
   `id` int(10) UNSIGNED NOT NULL,
   `exam_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  `isActive` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tableexamwithuser`
 --
 
-INSERT INTO `tableexamwithuser` (`id`, `exam_id`, `user_id`) VALUES
-(1, 1, 6),
-(2, 2, 6),
-(3, 3, 6),
-(4, 4, 6);
+INSERT INTO `tableexamwithuser` (`id`, `exam_id`, `user_id`, `isActive`, `created_at`, `updated_at`) VALUES
+(1, 1, 6, 'yes', '2020-06-20 20:39:31', '2020-06-20 20:39:31'),
+(2, 2, 6, 'yes', '2020-06-20 20:39:31', '2020-06-20 20:39:31'),
+(3, 3, 6, 'yes', '2020-06-20 20:39:31', '2020-06-20 20:39:31'),
+(4, 4, 6, 'yes', '2020-06-20 20:39:31', '2020-06-20 20:39:31');
 
 -- --------------------------------------------------------
 
@@ -671,17 +701,20 @@ INSERT INTO `tableexamwithuser` (`id`, `exam_id`, `user_id`) VALUES
 CREATE TABLE `tablemexamwithuser` (
   `id` int(10) UNSIGNED NOT NULL,
   `mexam_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  `isActive` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tablemexamwithuser`
 --
 
-INSERT INTO `tablemexamwithuser` (`id`, `mexam_id`, `user_id`) VALUES
-(1, 1, 6),
-(2, 2, 6),
-(3, 3, 6);
+INSERT INTO `tablemexamwithuser` (`id`, `mexam_id`, `user_id`, `isActive`, `created_at`, `updated_at`) VALUES
+(1, 1, 6, 'yes', '2020-06-20 20:45:01', '2020-06-20 20:45:01'),
+(2, 2, 6, 'yes', '2020-06-20 20:45:01', '2020-06-20 20:45:01'),
+(3, 3, 6, 'yes', '2020-06-20 20:45:01', '2020-06-20 20:45:01');
 
 -- --------------------------------------------------------
 
@@ -745,7 +778,9 @@ INSERT INTO `tableorders` (`id`, `user_id`, `key`, `val`, `order_id`, `order_ite
 (11, '20', 'cartItem', '{"1":["8589637.jpg","Diploma in Basic English Grammar",1,"4444",1]}', '48', '1', 'Completed', 'yes', '2020-06-01 11:17:14'),
 (12, '18', 'cartItem', '{"5":["1287658438.jpg","Skills for Speaking Effectively: The Art of Speaking",1,"6666",5],"1":["8589637.jpg","Diploma in Basic English Grammar",1,"4444",1]}', '49', '2', 'Completed', 'yes', '2020-06-01 11:17:42'),
 (13, '18', 'cartItem', '{"5":["1287658438.jpg","Skills for Speaking Effectively: The Art of Speaking",1,"6666",5]}', '52', '1', 'Completed', 'yes', '2020-06-02 06:54:17'),
-(14, '18', 'cartItem', '{"2":["570154661.jpg","Diploma in Legal Studies - Revised 2017",1,"666",2]}', '53', '1', 'Completed', 'yes', '2020-06-02 11:08:07');
+(14, '18', 'cartItem', '{"2":["570154661.jpg","Diploma in Legal Studies - Revised 2017",1,"666",2]}', '53', '1', 'Completed', 'yes', '2020-06-02 11:08:07'),
+(15, '18', 'cartItem', '{"6":["269687077.jpg","General Data Protection Regulation (GDPR)",1,"5555",6]}', '65', '1', 'Completed', 'yes', '2020-06-20 19:10:51'),
+(16, '18', 'cartItem', '{"2":["570154661.jpg","Diploma in Legal Studies - Revised 2017",1,"666",2]}', '69', '1', 'Completed', 'yes', '2020-06-23 19:15:43');
 
 -- --------------------------------------------------------
 
@@ -761,27 +796,106 @@ CREATE TABLE `tableqanda` (
   `qa_cid` int(11) NOT NULL DEFAULT '0',
   `exam_qa_id` int(10) UNSIGNED DEFAULT NULL,
   `table_name` enum('Exam','MockExam') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Exam',
-  `qa_user_id` int(10) UNSIGNED DEFAULT NULL
+  `qa_user_id` int(10) UNSIGNED DEFAULT NULL,
+  `isCorrect` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'no'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tableqanda`
 --
 
-INSERT INTO `tableqanda` (`id`, `qa_title`, `qa_desc`, `qa_status`, `qa_cid`, `exam_qa_id`, `table_name`, `qa_user_id`) VALUES
-(1, 'aaaaaaaaaa', '<p>aaaaaaaaa<br></p>', 'yes', 0, 0, 'Exam', NULL),
-(2, 'ccccccccc1', '<p>fffffffffffff<br></p>', 'yes', 0, 0, 'MockExam', NULL),
-(3, 'vvvv', '<p>vvvvvvvv<br></p>', 'yes', 0, 1, 'MockExam', NULL),
-(4, 'fffffffffff', '<p>&lt;p&gt;fffffffffffff&lt;/p&gt;<br></p>', 'yes', 5, 1, 'MockExam', NULL),
-(5, 'qqqqqqqqqq', '<p>qqqqqqqqqqq</p>', 'yes', 0, 0, 'Exam', NULL),
-(6, 'zzzzzzzzzz', '<p>&lt;p&gt;&amp;lt;p&amp;gt;&amp;amp;lt;p&amp;amp;gt;&amp;amp;amp;lt;p&amp;amp;amp;gt;&amp;amp;amp;amp;lt;p&amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;lt;p&amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;amp;lt;p&amp;amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;amp;amp;lt;p&amp;amp;amp;amp;amp;amp;amp;gt;zzzzzzzzzzzzz&amp;amp;amp;amp;amp;amp;amp;lt;br&amp;amp;amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;amp;amp;lt;/p&amp;amp;amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;amp;lt;br&amp;amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;amp;lt;/p&amp;amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;lt;br&amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;lt;/p&amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;lt;br&amp;amp;amp;amp;gt;&amp;amp;amp;amp;lt;/p&amp;amp;amp;amp;gt;&amp;amp;amp;lt;br&amp;amp;amp;gt;&amp;amp;amp;lt;/p&amp;amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;/p&amp;amp;gt;&amp;lt;br&amp;gt;&amp;lt;/p&amp;gt;&lt;br&gt;&lt;/p&gt;<br></p>', 'yes', 3, 3, 'Exam', NULL),
-(7, 'Answer for vvvv', '<p>Answer for vvvv<br></p>', 'yes', 3, 2, 'MockExam', NULL),
-(8, 'instructor 8 Question & Answer 1', '<p>instructor 8 Question &amp; Answer 1<br></p>', 'yes', 0, 5, 'MockExam', 8),
-(9, 'instructor 8 Question & Answer 2', '<p>instructor 8 Question &amp; Answer 2<br></p>', 'yes', 0, 4, 'MockExam', 8),
-(10, 'instructor 8 Question & Answer 3', '<p><span style="color: rgb(60, 64, 67); font-family: arial, sans-serif;">Super Simple WYSIWYG&nbsp;</span><span style="font-weight: bold; color: rgb(82, 86, 90); font-family: arial, sans-serif;">Editor</span><span style="color: rgb(60, 64, 67); font-family: arial, sans-serif;">&nbsp;on Bootstrap&nbsp;</span><span style="font-weight: bold; color: rgb(82, 86, 90); font-family: arial, sans-serif;">Summernote</span><span style="color: rgb(60, 64, 67); font-family: arial, sans-serif;">&nbsp;is a JavaScript library that helps you create ...&nbsp;</span><span style="font-weight: bold; color: rgb(82, 86, 90); font-family: arial, sans-serif;">Edit</span><span style="color: rgb(60, 64, 67); font-family: arial, sans-serif;">&nbsp;rich document on-the-fly, so elastic!</span></p><ul class="comments-list js-comments-list" data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true" style="margin-bottom: 0px; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-stretch: inherit; line-height: inherit; font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-size: 13px; vertical-align: baseline; box-sizing: inherit; display: grid; grid-template-columns: max-content 1fr; color: rgb(36, 39, 41);"><div class="comment-text js-comment-text-and-form" style="padding: 6px; border-bottom: 1px solid var(--black-050); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: 1.3; font-family: inherit; vertical-align: text-top; box-sizing: inherit; flex-grow: 1; min-width: 0px; flex-basis: 0px; transition: background-color 3s ease-out 0s;"><div class="comment-body js-comment-edit-hide" style="font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; vertical-align: baseline; box-sizing: inherit; overflow-wrap: break-word;"><span class="comment-copy" style="font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; vertical-align: baseline; box-sizing: inherit;">Please include a summary of what you code does and why you suggested it.</span>&nbsp;–&nbsp;<a href="https://stackoverflow.com/users/2465182/nathan-a" title="9,064 reputation" class="comment-user" style="font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; vertical-align: baseline; box-sizing: inherit; color: var(--blue-600); cursor: pointer; white-space: nowrap;">Nathan A</a>&nbsp;<span class="comment-date" dir="ltr" style="border-bottom-width: initial; border-bottom-style: none; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; vertical-align: baseline; box-sizing: inherit; color: var(--black-350);"><a class="comment-link" href="https://stackoverflow.com/questions/22068379/jquery-summernote-get-text-back-into-editor#comment36005114_23481200" style="border-bottom-width: initial; border-bottom-style: none; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; vertical-align: baseline; box-sizing: inherit; color: var(--black-350); cursor: pointer;">May 5 \'14 at 20:54</a></span></div></div><li id="comment-56317165" class="comment js-comment " data-comment-id="56317165" style="font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; vertical-align: baseline; box-sizing: inherit; transition: background-color 2s linear 0s; display: contents;"><div class="js-comment-actions comment-actions" style="padding-top: 6px; padding-right: 2px; padding-bottom: 6px; border-bottom: 1px solid var(--black-050); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; vertical-align: baseline; box-sizing: inherit; width: auto; transition: background-color 3s ease-out 0s; flex-shrink: 0; display: grid; grid-template-columns: repeat(2, max-content); align-content: flex-start;"><div class="comment-score js-comment-edit-hide" style="padding-right: 4px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; vertical-align: baseline; box-sizing: inherit; width: auto; display: inline-block; min-width: 16px;"></div></div><div class="comment-text js-comment-text-and-form" style="padding: 6px; border-bottom: 1px solid var(--black-050); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: 1.3; font-family: inherit; vertical-align: text-top; box-sizing: inherit; flex-grow: 1; min-width: 0px; flex-basis: 0px; transition: background-color 3s ease-out 0s;"><div class="comment-body js-comment-edit-hide" style="font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; vertical-align: baseline; box-sizing: inherit; overflow-wrap: break-word;"><span class="comment-copy" style="font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; vertical-align: baseline; box-sizing: inherit;">@MathieuCastets Instead of editing this post you should add the newer solution as a separate answer. You can then edit into this answer that it is outdated. See this discussion on Meta on that matter:</span></div><div class="comment-body js-comment-edit-hide" style="font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; vertical-align: baseline; box-sizing: inherit; overflow-wrap: break-word;"><span class="comment-copy" style="font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; vertical-align: baseline; box-sizing: inherit;"><br></span></div><div class="comment-body js-comment-edit-hide" style="font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; vertical-align: baseline; box-sizing: inherit; overflow-wrap: break-word;"><span class="comment-copy" style="font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; vertical-align: baseline; box-sizing: inherit;">Please include a summary of what you code does and why you suggested it.</span></div></div></li></ul>', 'yes', 0, 4, 'Exam', 8),
-(11, 'instructor 8 Question & Answer 4', '<p>instructor 8 Question &amp; Answer 4<br></p>', 'yes', 8, 0, 'Exam', 8),
-(12, 'test', '<p>&lt;p&gt;test&lt;/p&gt;&lt;p&gt;instructor 8 Question &amp;amp; Answer 3&lt;br&gt;&lt;/p&gt;&lt;p&gt;test&lt;/p&gt;<br></p>', 'yes', 9, 4, 'MockExam', 8),
-(13, 'some txt', '<p>summer text<br></p>', 'yes', 8, 4, 'Exam', 8);
+INSERT INTO `tableqanda` (`id`, `qa_title`, `qa_desc`, `qa_status`, `qa_cid`, `exam_qa_id`, `table_name`, `qa_user_id`, `isCorrect`) VALUES
+(1, 'In general, human hair is divided in to _____ basic types', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">In general, human hair is divided in to _____ basic types</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(2, 'Which technique is used to create a blurred effect with nail polish?', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">Which technique is used to create a blurred effect with nail polish?</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(3, 'What is the average number of strands in black hair?', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">What is the average number of strands in black hair?</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(4, 'A professional make up kit should contain moisturizers for,', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">A professional make up kit should contain moisturizers for,</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(5, 'Under normal conditions, human hair has a water content of,', '<ul class="quiz_questions" style="margin-bottom: 0px; -webkit-font-smoothing: antialiased; color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;"><li style="padding-top: 12px; padding-bottom: 12px; -webkit-font-smoothing: antialiased; border-bottom: 1px dotted rgba(0, 0, 0, 0.08); display: inline-block; width: 1273px;"><div class="q" style="-webkit-font-smoothing: antialiased; font-size: 16px; font-weight: 600;"><p style="-webkit-font-smoothing: antialiased;">Under normal conditions, human hair has a water content of,</p></div></li></ul>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(6, 'The heat of the hairdryer should be set to ‘medium’ to,', '<ul class="quiz_questions" style="margin-bottom: 0px; -webkit-font-smoothing: antialiased; color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;"><li style="padding-top: 12px; padding-bottom: 12px; -webkit-font-smoothing: antialiased; border-bottom: 1px dotted rgba(0, 0, 0, 0.08); display: inline-block; width: 1273px;"><div class="q" style="-webkit-font-smoothing: antialiased; font-size: 16px; font-weight: 600;"><p style="-webkit-font-smoothing: antialiased;">The heat of the hairdryer should be set to ‘medium’ to,</p></div></li></ul>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(7, 'The dry skin is actually a result of lack of,', '<ul class="quiz_questions" style="margin-bottom: 0px; -webkit-font-smoothing: antialiased; color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;"><li style="padding-top: 12px; padding-bottom: 12px; -webkit-font-smoothing: antialiased; border-bottom: 1px dotted rgba(0, 0, 0, 0.08); display: inline-block; width: 1273px;"><div class="q" style="-webkit-font-smoothing: antialiased; font-size: 16px; font-weight: 600;"><p style="-webkit-font-smoothing: antialiased;">The dry skin is actually a result of lack of,</p></div></li></ul>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(8, 'A triangular face has a,', '<ul class="quiz_questions" style="margin-bottom: 0px; -webkit-font-smoothing: antialiased; color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;"><li style="padding-top: 12px; padding-bottom: 12px; -webkit-font-smoothing: antialiased; border-bottom: 1px dotted rgba(0, 0, 0, 0.08); display: inline-block; width: 1273px;"><div class="q" style="-webkit-font-smoothing: antialiased; font-size: 16px; font-weight: 600;"><p style="-webkit-font-smoothing: antialiased;">A triangular face has a,</p></div></li></ul>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(9, 'Which of the following materials is used to remove shellac nails?', '<ul class="quiz_questions" style="margin-bottom: 0px; -webkit-font-smoothing: antialiased; color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;"><li style="padding-top: 12px; padding-bottom: 12px; -webkit-font-smoothing: antialiased; border-bottom: 1px dotted rgba(0, 0, 0, 0.08); display: inline-block; width: 1273px;"><div class="q" style="-webkit-font-smoothing: antialiased; font-size: 16px; font-weight: 600;"><p style="-webkit-font-smoothing: antialiased;">Which of the following materials is used to remove shellac nails?</p></div></li></ul>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(10, 'Which of the followings is an example for a cosmetic product?', '<ul class="quiz_questions" style="margin-bottom: 0px; -webkit-font-smoothing: antialiased; color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;"><li style="padding-top: 12px; padding-bottom: 12px; -webkit-font-smoothing: antialiased; border-bottom: 1px dotted rgba(0, 0, 0, 0.08); display: inline-block; width: 1273px;"><div class="q" style="-webkit-font-smoothing: antialiased; font-size: 16px; font-weight: 600;"><p style="-webkit-font-smoothing: antialiased;">Which of the followings is an example for a cosmetic product?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></div></li></ul>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(11, 'The skin does not need extra lipids up to the age of,', '<ul class="quiz_questions" style="margin-bottom: 0px; -webkit-font-smoothing: antialiased; color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;"><li style="padding-top: 12px; padding-bottom: 12px; -webkit-font-smoothing: antialiased; border-bottom: 1px dotted rgba(0, 0, 0, 0.08); display: inline-block; width: 1273px;"><div class="q" style="-webkit-font-smoothing: antialiased; font-size: 16px; font-weight: 600;"><p style="-webkit-font-smoothing: antialiased;">The skin does not need extra lipids up to the age of,</p></div></li></ul>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(12, 'The usual distance between eyes is roughly the length of,', '<ul class="quiz_questions" style="margin-bottom: 0px; -webkit-font-smoothing: antialiased; color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;"><li style="padding-top: 12px; padding-bottom: 12px; -webkit-font-smoothing: antialiased; border-bottom: 1px dotted rgba(0, 0, 0, 0.08); display: inline-block; width: 1273px;"><div class="q" style="-webkit-font-smoothing: antialiased; font-size: 16px; font-weight: 600;"><p style="-webkit-font-smoothing: antialiased;">The usual distance between eyes is roughly the length of,</p></div></li></ul>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(13, 'The outermost layer of hair is called,', '<ul class="quiz_questions" style="margin-bottom: 0px; -webkit-font-smoothing: antialiased; color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;"><li style="padding-top: 12px; padding-bottom: 12px; -webkit-font-smoothing: antialiased; border-bottom: 1px dotted rgba(0, 0, 0, 0.08); display: inline-block; width: 1273px;"><div class="q" style="-webkit-font-smoothing: antialiased; font-size: 16px; font-weight: 600;"><p style="-webkit-font-smoothing: antialiased;">The outermost layer of hair is called,</p></div></li></ul>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(14, 'Gloss adds luster and volume to lips', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">Gloss adds luster and volume to lips</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(15, 'Compact powder is often used for,', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">Compact powder is often used for,</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(16, 'The hair of summer type is usually,', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">The hair of summer type is usually,</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(17, 'How many sections are there in an eyebrow?', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">How many sections are there in an eyebrow?</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(18, 'Triangular faces have a,', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">Triangular faces have a,</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(19, 'Gel nails are,', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">Gel nails are,</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(20, 'Which of the following products usually has the longest life span?', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">Which of the following products usually has the longest life span?</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(21, 'Practically all colors suit,', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">Practically all colors suit,</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(22, 'What is the most used type of hair extensions?', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">What is the most used type of hair extensions?</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(23, 'The most commonly used type of false eyelashes is,', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">The most commonly used type of false eyelashes is,</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(24, 'When do you use hair conditioner?', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">When do you use hair conditioner?</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(25, 'The “T” zone does not include,', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">The “T” zone does not include,</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(26, 'Which of the followings is an external factor that influence the skin of our hands?', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">Which of the followings is an external factor that influence the skin of our hands?</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(27, 'False eyelashes were first used in,', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">False eyelashes were first used in,</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(28, 'Shellac guarantees a minimum of _____ days gloss', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">Shellac guarantees a minimum of _____ days gloss</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(29, 'Usually women experiment with make up in their,', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">Usually women experiment with make up in their,</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(30, 'Hair loss is much more common among,', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-weight: 600;">Hair loss is much more common among,</span><br></p>', 'yes', 0, 4, 'Exam', 2, 'no'),
+(31, '3', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">3</span><br></p>', 'yes', 1, 4, 'Exam', 2, 'yes'),
+(32, '2', '<p>2</p>', 'yes', 1, 4, 'Exam', 2, 'no'),
+(33, '1', '<p>1</p>', 'yes', 1, 4, 'Exam', 2, 'no'),
+(34, '4', '<p>4</p>', 'yes', 1, 4, 'Exam', 2, 'no'),
+(35, 'Stamping nail polish technique', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Stamping nail polish technique</span><br></p>', 'yes', 2, 4, 'Exam', 2, 'yes'),
+(36, 'SPONGING TECHNIQUE', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 600; text-transform: uppercase;">SPONGING TECHNIQUE</span><br></p>', 'yes', 2, 4, 'Exam', 2, 'no'),
+(37, 'Stamping nail polish technique1', 'Stamping nail polish technique1', 'yes', 2, 4, 'Exam', 2, 'no'),
+(38, 'Stamping nail polish technique2', 'Stamping nail polish technique2', 'yes', 2, 4, 'Exam', 2, 'no'),
+(39, '110000', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">110000</span><br></p>', 'yes', 3, 4, 'Exam', 2, 'yes'),
+(40, '120000', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">120000</span><br></p>', 'yes', 3, 4, 'Exam', 2, 'no'),
+(41, '140000', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">140000</span><br></p>', 'yes', 3, 4, 'Exam', 2, 'no'),
+(42, '150000', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">150000</span><br></p>', 'yes', 3, 4, 'Exam', 2, 'no'),
+(43, 'Dry skin', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Dry skin</span><br></p>', 'yes', 4, 4, 'Exam', 2, 'yes'),
+(44, 'All skin types', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">All skin types</span><br></p>', 'yes', 4, 4, 'Exam', 2, 'no'),
+(45, 'All skin types1', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">All skin types1</span><br></p>', 'yes', 4, 4, 'Exam', 2, 'no'),
+(46, '5%', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">5%</span><br></p>', 'yes', 5, 4, 'Exam', 2, 'yes'),
+(47, '10%', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">10%</span><br></p>', 'yes', 5, 4, 'Exam', 2, 'no'),
+(48, '15%', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">15%</span><br></p>', 'yes', 5, 4, 'Exam', 2, 'no'),
+(49, '25%', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">25%</span><br></p>', 'yes', 5, 4, 'Exam', 2, 'no'),
+(50, 'Dry the hair into shapes', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Dry the hair into shapes</span><br></p>', 'yes', 6, 4, 'Exam', 2, 'yes'),
+(51, 'Control the shapes', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Control the shapes</span><br></p>', 'yes', 6, 4, 'Exam', 2, 'no'),
+(52, 'Control the shapes1', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Control the shapes1</span><br></p>', 'yes', 6, 4, 'Exam', 2, 'no'),
+(53, 'Control the shapes2', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Control the shapes2</span><br></p>', 'yes', 6, 4, 'Exam', 2, 'no'),
+(54, 'Oil', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Oil</span><br></p>', 'yes', 7, 4, 'Exam', 2, 'no'),
+(55, 'Water', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Water</span><br></p>', 'yes', 7, 4, 'Exam', 2, 'no'),
+(56, 'Water1', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Water1</span><br></p>', 'yes', 7, 4, 'Exam', 2, 'no'),
+(57, 'Water2', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Water2</span><br></p>', 'yes', 7, 4, 'Exam', 2, 'no'),
+(58, 'All skin types2', '<p>All skin types2<br></p>', 'yes', 4, 4, 'Exam', 2, 'no'),
+(59, 'Wide jaw', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Wide jaw</span><br></p>', 'yes', 8, 4, 'Exam', 2, 'no'),
+(60, 'Top gel', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Top gel</span><br></p>', 'yes', 9, 4, 'Exam', 2, 'no'),
+(61, 'Pure acetone', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Pure acetone</span><br></p>', 'yes', 9, 4, 'Exam', 2, 'no'),
+(62, 'Pure acetone1', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Pure acetone1</span><br></p>', 'yes', 9, 4, 'Exam', 2, 'no'),
+(63, 'Pure acetone2', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Pure acetone2</span><br></p>', 'yes', 9, 4, 'Exam', 2, 'no'),
+(64, 'Prominent cheekbones', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Prominent cheekbones</span><br></p>', 'yes', 8, 4, 'Exam', 2, 'no'),
+(65, 'Prominent cheekbones 1', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Prominent cheekbones 1</span><br></p>', 'yes', 8, 4, 'Exam', 2, 'no'),
+(66, 'Sunscreen', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Sunscreen</span><br></p>', 'yes', 10, 4, 'Exam', 2, 'no'),
+(67, 'Sunscreen', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Sunscreen</span><br></p>', 'yes', 10, 4, 'Exam', 2, 'no');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tableresults`
+--
+
+CREATE TABLE `tableresults` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `course_id` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `exam_id` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `result` text COLLATE utf8mb4_unicode_ci,
+  `status` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tableresults`
+--
+
+INSERT INTO `tableresults` (`id`, `course_id`, `exam_id`, `user_id`, `result`, `status`, `created_at`, `updated_at`) VALUES
+(1, '6', '4', '18', '{"RequestData":{"1":"31","2":"35","3":"39","4":"43","5":"46","6":"50","7":"54","8":"59","9":"60","10":"66","11":null,"12":null,"13":null,"14":null,"15":null,"16":null,"17":null,"18":null,"19":null,"20":null,"21":null,"22":null,"23":null,"24":null,"25":null,"26":null,"27":null,"28":null,"29":null,"30":null},"AnswerDataarr":{"1":31,"2":35,"3":39,"4":43,"5":46,"6":50},"MarksObtain":60}', 'yes', '2020-06-26 17:49:55', '2020-06-26 17:49:55');
 
 -- --------------------------------------------------------
 
@@ -4306,6 +4420,34 @@ INSERT INTO `tablestate` (`id`, `state_name`, `cid`, `status`, `created`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tableteams`
+--
+
+CREATE TABLE `tableteams` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `teams_name` text COLLATE utf8mb4_unicode_ci,
+  `teams_desc` longtext COLLATE utf8mb4_unicode_ci,
+  `teams_role` text COLLATE utf8mb4_unicode_ci,
+  `teams_img` longtext COLLATE utf8mb4_unicode_ci,
+  `teams_status` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes',
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tableteams`
+--
+
+INSERT INTO `tableteams` (`id`, `teams_name`, `teams_desc`, `teams_role`, `teams_img`, `teams_status`, `created_at`, `updated_at`) VALUES
+(1, 'Jessica T. Stratton', '<p style="margin-bottom: 15px; text-align: justify; font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra, tellus eu egestas ornare, sem augue ultrices nisl, quis viverra turpis massa sed diam. Pellentesque eget varius erat. Mauris rhoncus maximus venenatis. Vivamus congue velit a est convallis accumsan. Quisque mattis ac mauris sed euismod. Maecenas elit erat, tincidunt in nunc eu, iaculis volutpat enim. Etiam id feugiat risus, at condimentum ligula. Aenean consequat nisi mi, et tincidunt massa interdum ac. Nulla dignissim lacus nec est luctus dictum. Sed scelerisque nulla nec tortor vulputate feugiat.</p><p style="margin-bottom: 15px; text-align: justify; font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Donec in ultrices leo. Cras elit dui, rhoncus eget accumsan vitae, facilisis non elit. Donec at felis vel elit malesuada blandit. Cras dapibus elementum est et ultricies. Ut gravida tincidunt cursus. Nullam lacus turpis, mollis in molestie a, sodales ut lacus. Pellentesque ac feugiat elit.</p>', 'CEO/Founder', '1349407597.jpg', 'yes', '2020-06-08 17:34:43', '2020-06-08 17:34:43'),
+(2, 'Donald J. White', '<p style="margin-bottom: 15px; text-align: justify; font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra, tellus eu egestas ornare, sem augue ultrices nisl, quis viverra turpis massa sed diam. Pellentesque eget varius erat. Mauris rhoncus maximus venenatis. Vivamus congue velit a est convallis accumsan. Quisque mattis ac mauris sed euismod. Maecenas elit erat, tincidunt in nunc eu, iaculis volutpat enim. Etiam id feugiat risus, at condimentum ligula. Aenean consequat nisi mi, et tincidunt massa interdum ac. Nulla dignissim lacus nec est luctus dictum. Sed scelerisque nulla nec tortor vulputate feugiat.</p><p style="margin-bottom: 15px; text-align: justify; font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Donec in ultrices leo. Cras elit dui, rhoncus eget accumsan vitae, facilisis non elit. Donec at felis vel elit malesuada blandit. Cras dapibus elementum est et ultricies. Ut gravida tincidunt cursus. Nullam lacus turpis, mollis in molestie a, sodales ut lacus. Pellentesque ac feugiat elit.</p>', 'Marketing Head', '2078147752.jpg', 'yes', '2020-06-08 14:08:53', '2020-06-08 14:08:53'),
+(3, 'Brian P. Turner', '<p style="margin-bottom: 15px; text-align: justify; font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra, tellus eu egestas ornare, sem augue ultrices nisl, quis viverra turpis massa sed diam. Pellentesque eget varius erat. Mauris rhoncus maximus venenatis. Vivamus congue velit a est convallis accumsan. Quisque mattis ac mauris sed euismod. Maecenas elit erat, tincidunt in nunc eu, iaculis volutpat enim. Etiam id feugiat risus, at condimentum ligula. Aenean consequat nisi mi, et tincidunt massa interdum ac. Nulla dignissim lacus nec est luctus dictum. Sed scelerisque nulla nec tortor vulputate feugiat.</p><p style="margin-bottom: 15px; text-align: justify; font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Donec in ultrices leo. Cras elit dui, rhoncus eget accumsan vitae, facilisis non elit. Donec at felis vel elit malesuada blandit. Cras dapibus elementum est et ultricies. Ut gravida tincidunt cursus. Nullam lacus turpis, mollis in molestie a, sodales ut lacus. Pellentesque ac feugiat elit.</p>', 'Creative Designer', '228941703.jpg', 'yes', '2020-06-08 14:09:33', '2020-06-08 14:09:33'),
+(4, 'John B. Lewis', '<p style="margin-bottom: 15px; text-align: justify; font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra, tellus eu egestas ornare, sem augue ultrices nisl, quis viverra turpis massa sed diam. Pellentesque eget varius erat. Mauris rhoncus maximus venenatis. Vivamus congue velit a est convallis accumsan. Quisque mattis ac mauris sed euismod. Maecenas elit erat, tincidunt in nunc eu, iaculis volutpat enim. Etiam id feugiat risus, at condimentum ligula. Aenean consequat nisi mi, et tincidunt massa interdum ac. Nulla dignissim lacus nec est luctus dictum. Sed scelerisque nulla nec tortor vulputate feugiat.</p><p style="margin-bottom: 15px; text-align: justify; font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Donec in ultrices leo. Cras elit dui, rhoncus eget accumsan vitae, facilisis non elit. Donec at felis vel elit malesuada blandit. Cras dapibus elementum est et ultricies. Ut gravida tincidunt cursus. Nullam lacus turpis, mollis in molestie a, sodales ut lacus. Pellentesque ac feugiat elit.</p>', 'Content Writer', '1183888591.jpg', 'yes', '2020-06-08 14:10:48', '2020-06-08 14:10:48'),
+(5, 'Lani C. Duffy', '<p style="margin-bottom: 15px; text-align: justify; font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra, tellus eu egestas ornare, sem augue ultrices nisl, quis viverra turpis massa sed diam. Pellentesque eget varius erat. Mauris rhoncus maximus venenatis. Vivamus congue velit a est convallis accumsan. Quisque mattis ac mauris sed euismod. Maecenas elit erat, tincidunt in nunc eu, iaculis volutpat enim. Etiam id feugiat risus, at condimentum ligula. Aenean consequat nisi mi, et tincidunt massa interdum ac. Nulla dignissim lacus nec est luctus dictum. Sed scelerisque nulla nec tortor vulputate feugiat.</p><p style="margin-bottom: 15px; text-align: justify; font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Donec in ultrices leo. Cras elit dui, rhoncus eget accumsan vitae, facilisis non elit. Donec at felis vel elit malesuada blandit. Cras dapibus elementum est et ultricies. Ut gravida tincidunt cursus. Nullam lacus turpis, mollis in molestie a, sodales ut lacus. Pellentesque ac feugiat elit.</p>', 'Autor courses', '788278614.jpg', 'yes', '2020-06-08 14:11:21', '2020-06-08 14:11:21');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tabletestimonial`
 --
 
@@ -4325,7 +4467,7 @@ CREATE TABLE `tabletestimonial` (
 --
 
 INSERT INTO `tabletestimonial` (`id`, `testimonial_name`, `testimonial_desc`, `testimonial_role`, `testimonial_status`, `created_at`, `updated_at`, `testimonial_img`) VALUES
-(1, 'Keith M. Jordan', '<p>I met so many interesting people over the last couple of months, who proved to stay ahead of the modern technologies in the world of branding and web design. I loved working with you all, thank you so much!<br></p>', 'Applied Researcher', 'yes', NULL, NULL, '270100052.jpg'),
+(1, 'Keith M. Jordan', '<p>I met so many interesting people over the last couple of months, who proved to stay ahead of the modern technologies in the world of branding and web design. I loved working with you all, thank you so much!<br></p>', 'Applied Researcher', 'yes', NULL, NULL, '1608915527.jpg'),
 (2, 'Ron M. Martin', '<p>I am inspired by the UN Declaration that “everyone is entitled to a free education”. We are committed to equality and access to education irrespective of gender, geography, economic status or any other barriers to access.<br></p>', 'Applied Researcher', 'yes', NULL, NULL, '1833727161.jpg'),
 (3, 'Thelma R. Furman', '<p>I am drive by our belief in the power of free education and skills training to change people’s lives for the better and are passionate about providing an overall learning experience that meets their needs and helps them to achieve life goals.<br></p>', 'Autor courses', 'yes', NULL, NULL, '179709485.jpg'),
 (4, 'Ron M. Martin', '<p>I am inspired by the UN Declaration that “everyone is entitled to a free education”. We are committed to equality and access to education irrespective of gender, geography, economic status or any other barriers to access.<br></p>', 'Applied Researcher', 'yes', NULL, NULL, '1377252444.jpg'),
@@ -4410,23 +4552,8 @@ CREATE TABLE `tableuserwithcourse` (
 --
 
 INSERT INTO `tableuserwithcourse` (`id`, `course_id`, `user_id`, `created_at`, `updated_at`, `isActive`) VALUES
-(1, 6, 3, NULL, NULL, 'yes'),
-(2, 5, 3, NULL, NULL, 'yes'),
-(3, 5, 13, NULL, NULL, 'yes'),
-(4, 3, 3, NULL, NULL, 'yes'),
-(5, 6, 3, NULL, NULL, 'yes'),
-(6, 6, 3, NULL, NULL, 'yes'),
-(7, 6, 19, NULL, NULL, 'yes'),
-(8, 5, 19, NULL, NULL, 'yes'),
-(9, 6, 18, NULL, NULL, 'yes'),
-(11, 3, 18, NULL, '2020-06-01 02:24:49', 'yes'),
-(12, 5, 18, '2020-06-01 02:14:59', '2020-06-01 02:14:59', 'yes'),
-(13, 3, 20, '2020-06-01 16:16:56', '2020-06-01 16:16:56', 'yes'),
-(14, 1, 20, '2020-06-01 16:17:27', '2020-06-01 20:11:03', 'yes'),
-(15, 5, 18, '2020-06-01 20:08:29', '2020-06-01 20:11:25', 'no'),
-(16, 1, 18, '2020-06-01 20:08:29', '2020-06-01 20:08:29', 'yes'),
-(17, 5, 18, '2020-06-02 11:55:32', '2020-06-02 11:55:32', 'yes'),
-(18, 2, 18, '2020-06-02 16:13:07', '2020-06-02 16:13:07', 'yes');
+(1, 6, 18, '2020-06-21 00:32:56', '2020-06-21 00:32:56', 'yes'),
+(2, 2, 18, '2020-06-24 01:18:17', '2020-06-24 01:18:17', 'yes');
 
 -- --------------------------------------------------------
 
@@ -4457,14 +4584,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `phone`, `password`, `avatar`, `status`, `confirmation_code`, `user_type`, `remember_token`, `created_at`, `updated_at`, `passupdated`) VALUES
-(1, 'admin', 'Admin F', 'Admin L', 'admin@gmail.com', NULL, '$2y$10$eQpDdzP29iaA81Z2MOhN6O8hV3N3ityLxa.yr6EFpOw.Jic5II33i', '1582622439.png', 'active', NULL, 'admin', 'CmIViZpqSxNFpknT3dqI5KlfXhi9SJdtz0QcbpOlUfs5C2OiTjeN7BxoUSHJ', '2019-12-13 13:38:53', '2020-03-16 10:07:05', 'yes'),
-(2, 'instructor-f-instructor-l', 'Instructor F', 'Instructor L', 'instructor@gmail.com', '123-456-7891', '$2y$10$Idff0nKgC0urjyWuRDJxu.sEwT/Y3KsLhoUHekQYk0zKDk7d31L8W', 'default.jpg', 'active', NULL, 'instructor', 'RAM52IL39KgU8DSqSimTeZx9Y16veogvjo5pwXi7w63PSqhPzxwDNyxWKqP3', '2020-04-21 21:06:46', '2020-04-21 21:06:46', 'yes'),
+(1, 'admin', 'Admin F', 'Admin L', 'admin@gmail.com', NULL, '$2y$10$eQpDdzP29iaA81Z2MOhN6O8hV3N3ityLxa.yr6EFpOw.Jic5II33i', '1582622439.png', 'active', NULL, 'admin', 'GAAdmYT9ml9Kj35J2BqFILRTdEzvRyJPZFW1o3UhZGjfVQXvprZZBl2RPKSr', '2019-12-13 13:38:53', '2020-03-16 10:07:05', 'yes'),
+(2, 'instructor-f-instructor-l', 'Instructor F', 'Instructor L', 'instructor@gmail.com', '123-456-7891', '$2y$10$Idff0nKgC0urjyWuRDJxu.sEwT/Y3KsLhoUHekQYk0zKDk7d31L8W', 'default.jpg', 'active', NULL, 'instructor', '4kMdyfXXINMm3Ak1RKiRxb3xA0RsYz0sqOjvQqfsdxlIoRxFU8hvEJSQ9bqe', '2020-04-21 21:06:46', '2020-04-21 21:06:46', 'yes'),
 (3, 'learner-f-learner-l', 'learner F', 'learner L', 'learner@gmail.com', '123-456-7891', '$2y$10$uAs/bbyxNGo.UD3y6GS4vu.qD5nss1CgXvDpmkKNOFf8BwNsXQpIa', 'default.jpg', 'active', NULL, 'learner', 'rDqFBcnz24trczSskpZUzRpsFXy9HgTgAwndXNGIf3JW0kIlw8Bj2Iak9ytD', '2020-05-28 04:40:00', '2020-05-21 07:31:06', 'yes'),
 (4, 'habib-ahmad', 'habib', 'ahmad', 'admin@gmail.com', '111-111-1111', '$2y$10$3fr44VFrc8tJyEWLWqwVHeqC0lofGkVV8qlBsZ7qtwxBmmpIIGoEW', 'default.jpg', NULL, NULL, 'instructor', NULL, '2020-04-28 04:51:16', '2020-04-28 04:51:16', 'yes'),
 (5, 'ahmad-ha', 'ahmad', 'ha', 'habib@gmail.com', '111-111-1111', '$2y$10$VrPYuwWHG.KpNnZjFpmEKOzY8Pu/WsZBoO5EYcIzPuZYaz2taTY/i', 'default.jpg', 'active', NULL, 'learner', 'mLV4emsQWAxSSaBGKm46wxTGhqFY1aG4KafjGSjRt4CAY4zPpJOB1meZXFLL', '2020-04-28 05:06:02', '2020-04-28 05:06:02', 'yes'),
 (20, 'r-r', 'r', 'r', 'r@gmail.com', '111-111-1111', '$2y$10$iayrCj0yHAdKPbqmDycw7ugHuz6Vx1KJxCNNNp6C3VJ6gL6BQbUJi', 'default.jpg', 'active', NULL, 'learner', '4B4A7wOqn3A45vwEiFAW3OO3oCe4ftaGSD6RTYY8ssa0R3m7U2jXyKdLmhRF', '2020-05-28 08:01:51', '2020-06-01 03:02:48', 'yes'),
 (19, 'd-d', 'd', 'd', 'd@gmail.com', '111-111-1111', '$2y$10$JQGBJbViJkORh.Pwsj74EOQnDVgF.FBE5ldFmsD4iHPZExXZrKx.S', 'default.jpg', 'active', NULL, 'learner', '2Vn1a6Bgo6XxGMtJEFBUM3Er35fMtJ9R9Y0eoQeGXAtzmfnNedyDu8bicWGC', '2020-05-28 07:59:59', '2020-05-28 12:19:45', 'yes'),
-(18, 'x-x', 'x', 'x', 'x@gmail.com', '111-111-1111', '$2y$10$piXdEnaOr.qRHowN7zwe7.uTME7O913wC52LhjgYGcfBzF5/x0aI6', 'default.jpg', 'active', NULL, 'learner', 'nMIi0oQUmN4NtL8HwnyPSLTs0At4eAGHkYN7HPRFGBsclbDuchY5H58JuGmS', '2020-05-28 07:54:31', '2020-05-28 12:14:51', 'yes'),
+(18, 'x-x', 'x', 'x', 'x@gmail.com', '111-111-1111', '$2y$10$piXdEnaOr.qRHowN7zwe7.uTME7O913wC52LhjgYGcfBzF5/x0aI6', 'default.jpg', 'active', NULL, 'learner', 'ypVmDT9ojbfH3tyLTKABbqaoCAVvmtvPFerwdyo37X5kjxVzHKP7Iq5zxH3E', '2020-05-28 07:54:31', '2020-05-28 12:14:51', 'yes'),
 (10, 'sdfsd-sdfsdf', 'sdfsd', 'sdfsdf', 'admin@gmail.com', '111-111-1111', '$2y$10$I9ftGAmrPnf.sjL.UfbWK.FI8WIkkmuwu7OuKlwAApyPdS7ADV/D2', 'default.jpg', 'active', NULL, 'instructor', NULL, '2020-04-29 03:49:53', '2020-04-29 03:49:53', 'yes'),
 (11, 'ahmad-habib', 'ahmad', 'habib', 'ahmad@gmail.com', '111-111-1111', '$2y$10$M1BqzvEt.mGyYYwAdzjvjOtO4D.ojN3shvH4fiTVz5zgS5rjz3SU2', 'default.jpg', 'active', NULL, 'learner', NULL, '2020-04-29 03:51:33', '2020-04-29 03:51:33', 'yes'),
 (12, 'dfg-dfg', 'dfg', 'dfg', 'adminaaaa@gmail.com', '111-111-1111', '$2y$10$jbLVjEont9DgQA2YTSWWeOEbRXkXH3VS5a/xvTb73zvhry9FOeJlS', 'default.jpg', 'active', NULL, 'instructor', NULL, '2020-04-29 04:28:21', '2020-04-29 04:28:21', 'yes'),
@@ -4599,11 +4726,23 @@ ALTER TABLE `tableqanda`
   ADD KEY `tableqanda_qa_user_id_foreign` (`qa_user_id`);
 
 --
+-- Indexes for table `tableresults`
+--
+ALTER TABLE `tableresults`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tablestate`
 --
 ALTER TABLE `tablestate`
   ADD PRIMARY KEY (`id`),
   ADD KEY `tablestate_cid_foreign` (`cid`);
+
+--
+-- Indexes for table `tableteams`
+--
+ALTER TABLE `tableteams`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tabletestimonial`
@@ -4646,7 +4785,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
 --
 -- AUTO_INCREMENT for table `tableassignment`
 --
@@ -4656,7 +4795,7 @@ ALTER TABLE `tableassignment`
 -- AUTO_INCREMENT for table `tablecart`
 --
 ALTER TABLE `tablecart`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 --
 -- AUTO_INCREMENT for table `tablecategories`
 --
@@ -4671,7 +4810,7 @@ ALTER TABLE `tableclient`
 -- AUTO_INCREMENT for table `tablecms`
 --
 ALTER TABLE `tablecms`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `tablecountry`
 --
@@ -4691,7 +4830,7 @@ ALTER TABLE `tablecourses`
 -- AUTO_INCREMENT for table `tablecoursestarted`
 --
 ALTER TABLE `tablecoursestarted`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tablecurriculum`
 --
@@ -4701,12 +4840,12 @@ ALTER TABLE `tablecurriculum`
 -- AUTO_INCREMENT for table `tableexam`
 --
 ALTER TABLE `tableexam`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `tableexamwithuser`
 --
 ALTER TABLE `tableexamwithuser`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tablemexamwithuser`
 --
@@ -4721,17 +4860,27 @@ ALTER TABLE `tablemockexam`
 -- AUTO_INCREMENT for table `tableorders`
 --
 ALTER TABLE `tableorders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `tableqanda`
 --
 ALTER TABLE `tableqanda`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+--
+-- AUTO_INCREMENT for table `tableresults`
+--
+ALTER TABLE `tableresults`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tablestate`
 --
 ALTER TABLE `tablestate`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3498;
+--
+-- AUTO_INCREMENT for table `tableteams`
+--
+ALTER TABLE `tableteams`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tabletestimonial`
 --
@@ -4751,7 +4900,7 @@ ALTER TABLE `tableuseraddress`
 -- AUTO_INCREMENT for table `tableuserwithcourse`
 --
 ALTER TABLE `tableuserwithcourse`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `users`
 --

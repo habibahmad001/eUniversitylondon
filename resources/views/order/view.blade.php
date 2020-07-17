@@ -44,7 +44,7 @@
                                             @foreach($CartItems as $v)
                                                 <tr class="woocommerce-table__line-item order_item">
                                                     <td class="woocommerce-table__product-name product-name">
-                                                        <a href="{{ URL::to("/course_detail/" . $v[4]) }}">{{ $v[1] }} #<?php echo $ItemCount;?></a>
+                                                        <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $v[1]))) }}">{{ $v[1] }} #<?php echo $ItemCount;?></a>
                                                         {{--<strong class="product-quantity">× {{ $v[2] }}</strong>--}}
                                                         <ul class="wc-item-downloads">
                                                             <li>

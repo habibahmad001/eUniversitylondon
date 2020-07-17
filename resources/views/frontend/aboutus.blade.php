@@ -12,10 +12,10 @@
                         <h1>About Us</h1>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="index.html">Home</a>
+                                <a href="{{ URL::to("/") }}">Home</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="#">Pages</a>
+                                <a href="javascript:void(0);">Pages</a>
                             </li>
                             <li class="breadcrumb-item active">
                                 About Us
@@ -121,7 +121,7 @@
                                     </div>
                                     <div class="item-content">
                                         <h6 class="title-content">
-                                            <a href="team-single.html">{{ $team->teams_name }}</a>
+                                            <a href="javascript:void(0);">{{ $team->teams_name }}</a>
                                         </h6>
                                         <p class="position">
                                             {{ $team->teams_role }}

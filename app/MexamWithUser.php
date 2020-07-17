@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class MexamWithUser extends Model
 {
-    public $timestamps = false;
     protected $table = 'tablemexamwithuser';
 
     protected $fillable = [

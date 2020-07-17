@@ -88,7 +88,7 @@ header .success-message-box .cancel:hover { background: url(../images/cancel-ico
 .content .table tbody tr:hover td a { color: #fff; }
 .content .table tbody tr td a { color: #ffffff; text-decoration: underline; }
 .content .table th.error { text-align: center; color: #ff0000; }
-.content .table th,.content .table td { color:#fff; font-size:12px; text-align: left; }
+.content .table th,.content .table td { color:#fff; font-size:12px; }
 .content .table tr a { color:#2b97df; }
 .content .table tr.yellow { background: #2b2b2b; }
 .content .table>tbody>tr>td,.content .table>tbody>tr>th,

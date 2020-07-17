@@ -14,7 +14,7 @@
                 <div class="row">
 
                     <div class="col-md-12">
-                        <h1>Exam: {{ App\Http\Controllers\Front\UserFrontController::GetCourseOnID($cid)->course_title }}</h1>
+                        <h1>Course: {{ App\Http\Controllers\Front\UserFrontController::GetCourseOnID($cid)->course_title }}</h1>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
                                 <a href="{{ URL::to("/") }}">Home</a>
@@ -62,11 +62,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="unit_prevnext">
-                        <div class="col-md-4 text-center"><a href="{{ URL::to('/startcourse/' . $cid) }}" id="prev_unit" data-unit="159231" class="unit unit_button"><span><< Back to Course</span></a></div>
-                        <div class="col-md-3 text-center"><a href="{{ URL::to('/quizstart/' . $cid) }}" class="quiz_results_popup"><span>Start Exam</span></a></div>
-                        <div class="col-md-4 text-center"><a href="{{ URL::to('/quizstart/' . $cid) }}" id="next_quiz" data-unit="159692" class="unit unit_button"><span>Proceed to Exam >></span></a></div>
-                    </div>
+                    @include('frontend.blocks.prevnext')
                 </div>
             </div>
         </div>

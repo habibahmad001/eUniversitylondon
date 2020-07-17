@@ -146,8 +146,8 @@
                                                     <a href="javascript:void(0);">{{ $course->course_title }}</a>
                                                 </h6>
 
-                                                <div class="star-rating course-rating">
-                                                    <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
+                                                <div class="star-rating course-rating" id="{{ App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}">
+                                                    <span style="width: {{ (App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] == 0) ? 100 : App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}%">Rated <strong class="rating">5.00</strong> out of 5</span>
                                                 </div>
 
                                                 <div class="product-price">£{{ $course->course_price }}.00</div>
@@ -167,17 +167,20 @@
                                     <div class="course-back rounded vertical-item content-padding ds">
                                         <div class="item-content">
                                             <h6 class="course-title">
-                                                <a href="{{ URL::to("/course_detail/" . $course->id) }}">{{ $course->course_title }}</a>
+                                                <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $course->course_title))) }}">{{ $course->course_title }}</a>
                                             </h6>
                                             <p>
                                                 {{ (strlen(strip_tags($course->course_desc)) > 150) ? substr(strip_tags($course->course_desc), 0, 150) . "..." : strip_tags($course->course_desc) }}
                                             </p>
-                                            <div class="star-rating course-rating">
-                                                <span style="width:91.5%">Rated <strong class="rating">4.00</strong> out of 5</span>
-                                            </div>{{ csrf_field() }}
+
+                                            <div class="star-rating course-rating" id="{{ App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}">
+                                                <span style="width: {{ (App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] == 0) ? 100 : App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}%">Rated <strong class="rating">5.00</strong> out of 5</span>
+                                            </div>
+
+                                            {{ csrf_field() }}
                                             <div class="product-price">£{{ $course->course_price }}.00</div>
                                             <div class="divider-48" id="itm-post-{{ $course->id }}"></div>
-                                            <a href="{{ URL::to("/course_detail/" . $course->id) }}" class="btn btn-maincolor">View More</a>
+                                            <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $course->course_title))) }}" class="btn btn-maincolor">View More</a>
                                             <a href="javascript:void(0);" onclick="javascript:product_submit({{ $course->id }});" class="btn btn-maincolor">Buy Now</a>
                                             <div class="tagcloud">
                                                 @if(count(json_decode($course->category_id)) > 0)
@@ -214,7 +217,7 @@
                     {!! isset(App\Http\Controllers\Front\CMSController::CMSPageItems(8)->cms_desc) ? App\Http\Controllers\Front\CMSController::CMSPageItems(8)->cms_desc : "" !!}
                 </p>
                 <div class="divider-43 d-none d-md-block"></div>
-                <a href="#" class="btn btn-maincolor">Learn More about us</a>
+                <a href="javascript:void(0);" class="btn btn-maincolor">Learn More about us</a>
             </div>
         </div>
     </div>

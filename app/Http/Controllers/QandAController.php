@@ -18,17 +18,29 @@ class QandAController extends Controller
         $this->middleware(['auth']); //isAdmin middleware lets only users with a //specific permission permission to access these resources
     }
 
-    public function index() {
+    public function index(Request $request) {
 
         $data['sub_heading']  = 'Question & Answer';
         $data['page_title']   = 'eUniversitylondon Question & Answer';
-        if(collect(request()->segments())->first() == 'instructor') {
-            $data['QandA']        =  QandA::where("qa_cid", 0)->where("qa_user_id", Auth::user()->id)->paginate(10);
-            $data['QandAALL']     =  QandA::where("qa_cid", 0)->where("qa_user_id", Auth::user()->id)->get();
+
+        if(isset($request->eid)) {
+            if(collect(request()->segments())->first() == 'instructor') {
+                $data['QandA']        =  QandA::where("qa_cid", 0)->where("exam_qa_id", $request->eid)->where("table_name", $request->table_name)->where("qa_user_id", Auth::user()->id)->paginate(30);
+                $data['QandAALL']     =  QandA::where("qa_cid", 0)->where("exam_qa_id", $request->eid)->where("table_name", $request->table_name)->where("qa_user_id", Auth::user()->id)->get();
+            } else {
+                $data['QandA']        =  QandA::where("qa_cid", 0)->where("exam_qa_id", $request->eid)->where("table_name", $request->table_name)->paginate(30);
+                $data['QandAALL']     =  QandA::where("qa_cid", 0)->where("exam_qa_id", $request->eid)->where("table_name", $request->table_name)->get();
+            }
         } else {
-            $data['QandA']        =  QandA::where("qa_cid", 0)->paginate(10);
-            $data['QandAALL']     =  QandA::where("qa_cid", 0)->get();
+            if(collect(request()->segments())->first() == 'instructor') {
+                $data['QandA']        =  QandA::where("qa_cid", 0)->where("qa_user_id", Auth::user()->id)->paginate(20);
+                $data['QandAALL']     =  QandA::where("qa_cid", 0)->where("qa_user_id", Auth::user()->id)->get();
+            } else {
+                $data['QandA']        =  QandA::where("qa_cid", 0)->paginate(20);
+                $data['QandAALL']     =  QandA::where("qa_cid", 0)->get();
+            }
         }
+
         $data['ExamList']     =  Exam::All();
 
         return view('qa/index', $data);
@@ -40,34 +52,51 @@ class QandAController extends Controller
         $data['sub_heading']    = 'Question & Answer';
         $data['page_title']     = 'eUniversitylondon Question & Answer';
         if(collect(request()->segments())->first() == 'instructor') {
-            $data['QandA']          =  QandA::where('qa_cid', $id)->where("qa_user_id", Auth::user()->id)->paginate(10);
-            $data['QandAALL']       =  QandA::where("qa_cid", 0)->where("qa_user_id", Auth::user()->id)->get();
+            $data['QandA']          =  QandA::where('qa_cid', $id)->paginate(10);
+            $data['QandAALL']       =  QandA::where("qa_cid", 0)->get();
         } else {
             $data['QandA']          =  QandA::where('qa_cid', $id)->paginate(10);
             $data['QandAALL']       =  QandA::where("qa_cid", 0)->get();
         }
+        $data['id']     =   $id;
         $data['ExamList']       =  Exam::All();
 
         return view('qa/index', $data);
 
     }
 
-    public function qandaAdd(Request $request){ //exit($request->axaxa);
+    public function qandaAdd(Request $request){ // exit(collect(request()->segments())->pull(1));
         $QandA         = new QandA;
-        $this->validate($request, [
-
-            'qa_title'=>'required',
-            'qa_content'=>'required',
-            'sel_table'=>'required',
-            'sel_ex_id'=>'required'
-        ]);
+        if($request->sel_txt == 0) {
+            $this->validate($request, [
+                'qa_title' => 'required',
+                'qa_content' => 'required',
+                'sel_table' => 'required',
+                'sel_ex_id' => 'required'
+            ]);
+        } else {
+            $this->validate($request, [
+                'qa_title' => 'required',
+                'qa_content' => 'required'
+            ]);
+        }
         $QandA->qa_title    = $request->qa_title;
         $QandA->qa_desc     = $request->qa_content;
-        $QandA->qa_cid      = $request->sel_txt;
+        if($request->page_name == 'questionlist') {
+            $QandA->qa_cid      = 0;
+        } else {
+            $QandA->qa_cid      = $request->sel_txt;
+        }
+
         if($request->sel_txt != 0) {
             $res_set_exm        = QandA::where("id", $request->sel_txt)->first();
-            $QandA->table_name  = $res_set_exm->table_name;
-            $QandA->exam_qa_id  = $res_set_exm->exam_qa_id;
+            if($request->page_name == 'questionlist') {
+                $QandA->exam_qa_id = $request->sel_txt;
+                $QandA->table_name = $request->table_name;
+            } else {
+                $QandA->exam_qa_id = $res_set_exm->exam_qa_id;
+                $QandA->table_name  = $res_set_exm->table_name;
+            }
         } else {
             $QandA->table_name  = $request->sel_table;
             $QandA->exam_qa_id  = $request->sel_ex_id;
@@ -77,7 +106,7 @@ class QandAController extends Controller
         $saved              = $QandA->save();
         if ($saved) {
             $request->session()->flash('message', 'Question & Answer successfully added!');
-            return redirect('/' . collect(request()->segments())->first() . '/questionandanswer');
+            return redirect()->back();
         } else {
             return redirect()->back()->with('message', 'Couldn\'t create Question & Answer!');
         }
@@ -89,6 +118,40 @@ class QandAController extends Controller
         $data['QandA']  = $QandA;//exit($QandA->qa_desc);
         $data['qa_desc']  = html_entity_decode($QandA->qa_desc);
         return Response::json($data);
+    }
+
+    public static function QuestionCount($eid, $table_name = "Exam"){
+        $RES          = QandA::where('qa_cid', 0)->where('exam_qa_id', $eid)->where('table_name', $table_name)->count();
+        return $RES;
+    }
+
+    public static function ExamData($qid, $table_name){
+        if($table_name == 'Exam')
+            $RES          = Exam::find($qid);
+        else
+            $RES          = MockExam::find($qid);
+        return $RES;
+    }
+
+    public static function QuestionData($qid){
+        $RES          = QandA::find($qid);
+        return $RES;
+    }
+    public function UpdateANSStatus($id){
+
+        $QandA          = QandA::find($id);
+
+        if($QandA->isCorrect  == "yes")
+            $QandA->isCorrect  = "no";
+        else
+            $QandA->isCorrect  = "yes";
+
+        $saved  =   $QandA->save();
+
+        if($saved)
+            return redirect()->back()->with('error', 'Operation executed successfully!');
+        else
+            return redirect()->back()->with('error', 'Couldn\'t able to process this operation!');
     }
 
     public static function HasItems($id){
@@ -105,6 +168,14 @@ class QandAController extends Controller
 
         $Res_qa          = QandA::where("qa_cid", $id)->count();
         return $Res_qa;
+    }
+
+    public static function QAonID($id){
+        if(isset($id) && $id!=0) {
+            $Res_qa          = QandA::where("id", $id)->first();
+            return $Res_qa->qa_title;
+        }
+
     }
 
     public function GeQAExam($table_name){
@@ -139,20 +210,36 @@ class QandAController extends Controller
 
     public function Updateqanda(Request $request){
         $id              =        $request->cat_id;
-        $this->validate($request, [
-            'qa_title'=>'required',
-            'qa_content'=>'required',
-            'sel_table'=>'required',
-            'sel_ex_id'=>'required'
-        ]);
+        if($request->sel_txt == 0) {
+            $this->validate($request, [
+                'qa_title' => 'required',
+                'qa_content' => 'required',
+                'sel_table' => 'required',
+                'sel_ex_id' => 'required'
+            ]);
+        } else {
+            $this->validate($request, [
+                'qa_title' => 'required',
+                'qa_content' => 'required'
+            ]);
+        }
         $QandA              = QandA::find($id);
         $QandA->qa_title    = $request->qa_title;
         $QandA->qa_desc     = $request->qa_content;
-        $QandA->qa_cid      = $request->sel_txt;
+        if($request->page_name == 'questionlist') {
+            $QandA->qa_cid      = 0;
+        } else {
+            $QandA->qa_cid      = $request->sel_txt;
+        }
         if($request->sel_txt != 0) {
             $res_set_exm        = QandA::where("id", $request->sel_txt)->first();
-            $QandA->table_name  = $res_set_exm->table_name;
-            $QandA->exam_qa_id  = $res_set_exm->exam_qa_id;
+            if($request->page_name == 'questionlist') {
+                $QandA->exam_qa_id = $request->sel_txt;
+                $QandA->table_name = $request->table_name;
+            } else {
+                $QandA->exam_qa_id = $res_set_exm->exam_qa_id;
+                $QandA->table_name  = $res_set_exm->table_name;
+            }
         } else {
             $QandA->table_name  = $request->sel_table;
             $QandA->exam_qa_id  = $request->sel_ex_id;
@@ -160,7 +247,7 @@ class QandAController extends Controller
         $saved              = $QandA->save();
         if ($saved) {
             $request->session()->flash('message', 'Question & Answer was successful edited!');
-            return redirect('/' . collect(request()->segments())->first() . '/questionandanswer');
+            return redirect()->back();
         } else {
             return redirect()->back()->with('error', 'Couldn\'t create Question & Answer!');
         }

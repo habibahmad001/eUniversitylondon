@@ -3898,6 +3898,73 @@ div.row.c-gutter-0 {
 	padding-right: 60px;
 }
 
+ul.qa-outer li {
+	list-style: none;
+}
+
+ul.qa-inner {
+	margin: 2%;
+}
+
+ul.qa-inner > li {
+	margin: 1% 0;
+	font-size: 18px;
+	letter-spacing: 2px;
+}
+
+ul.qa-outer > li {
+	font-size: 18px;
+	border-bottom: 3px solid #ebebeb;
+	padding: 3% 0;
+}
+
+td.retake_img_td {
+	padding: 2%;
+}
+
+td.retake_content_td {
+	padding: 2%;
+}
+
+div#ratings-id ul li {
+	list-style: none;
+	display: inline-block;
+	padding: 1%;
+	border-right: 1px solid #ccc;
+	margin: 2% 0;
+}
+
+#one-star span:before {
+	content: "\2605\f006\f006\f006\f006";
+}
+#two-star span:before {
+	content: "\2605\2605\f006\f006\f006";
+}
+#three-star span:before {
+	content: "\2605\2605\2605\f006\f006";
+}
+#four-star span:before {
+	content: "\2605\2605\2605\2605\f006";
+}
+#five-star span:before {
+	content: "\2605\2605\2605\2605\2605";
+}
+div#ratings-id ul li:last-child {
+	border: none;
+}
+
+#footer-link-nav {
+	text-align: right;
+}
+
+ul.qa-outer > li:last-child {
+border-bottom: none;
+}
+
+ul.qa-inner > li > input[type='radio'] {
+	margin: 0 1%;
+}
+
 /*
 ** Vertical margins and padding for sections and columns
 */
@@ -4259,7 +4326,12 @@ label.error {
 	font-size: 20px;
 	font-family: inherit;
 }
-
+.popup-checkout {
+	color: #5caf01 !important;
+}
+.popup-checkout:hover {
+	color: #fff !important;
+}
 .s-py-125 > [class*='container'] {
 	padding-bottom: 125px;
 	padding-top: 125px;
