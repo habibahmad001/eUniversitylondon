@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Mail;
@@ -46,7 +47,7 @@ class CoursesController extends Controller
         $data['sub_heading']        = 'Courses';
         $data['page_title']         = 'eUniversitylondon Courses';
         if(collect(request()->segments())->first() == 'instructor') {
-            $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->where('course_status', "yes")->paginate(10);
+            $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->paginate(10);
         } elseif(collect(request()->segments())->first() == 'learner') {
             $data['Courses']        =  CourseWithUser::join('tablecourses', 'tableuserwithcourse.course_id', '=', 'tablecourses.id')
                 ->select('*')
@@ -144,6 +145,30 @@ class CoursesController extends Controller
         } else {
             return redirect()->back()->with('message', 'Couldn\'t create Course!');
         }
+    }
+
+    public static function ExamCount($cid) {
+        $RES          = Exam::where('course_id', $cid)->where('exam_user_id', Auth::user()->id)->count();
+        return $RES;
+    }
+
+    public static function ExamInCourse() {
+        $Flag_MSG   =   [];
+        $Course_RES   =   Courses::where('course_user_id', Auth::user()->id)->get();
+        if(count($Course_RES) > 0) {
+            foreach($Course_RES as $v) {
+                if(CoursesController::ExamCount($v->id) == 0) {
+                    $Flag_MSG[]   =   'You did not set any exam for "<a href="/'.collect(request()->segments())->first().'/examlisting/'.$v->id.'">' . $v->course_title . '</a>"';
+                }
+                if(CoursesController::ExamCount($v->id) == 1) {
+                    $Flag_MSG[]   =   'You need to create two more exam for "<a href="/'.collect(request()->segments())->first().'/examlisting/'.$v->id.'">' . $v->course_title . '</a>"';
+                }
+                if(CoursesController::ExamCount($v->id) == 2) {
+                    $Flag_MSG[]   =   'You need to create one more exam for "<a href="/'.collect(request()->segments())->first().'/examlisting/'.$v->id.'">' . $v->course_title . '</a>"';
+                }
+            }
+        }
+        return $Flag_MSG;
     }
 
     public function GetCourse($id){

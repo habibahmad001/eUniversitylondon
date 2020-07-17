@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\CourseWithUser;
-use App\MexamWithUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 
+use App\CourseWithUser;
+use App\MexamWithUser;
 use App\CourseProgram;
 use App\CourseStarted;
 use App\ExamWithUser;
@@ -40,13 +40,16 @@ class CourseController extends Controller
         return view('categories/index', $data);
     }
 
-    public function Detail($id){
+    public function Detail($course_title){
         $data         = [];
 
         $data['sub_heading']  = 'Course Detail Page';
         $data['page_title']   = $this->header_title;
 
-        $data['course']              = Courses::where("id", $id)->first();
+        $filter_title   =   strtolower(str_replace('-', ' ', $course_title));
+        $filter_title   =   str_replace('   ', ' - ', $filter_title);
+
+        $data['course']              = Courses::where("course_title", $filter_title)->first();
         $data['AllCourse']           = Courses::where("course_status", "yes")->get();
         $data['CourseProgram']       = CourseProgram::where("course_id", $data['course']->id)->where("cp_status", "yes")->orderBy("cp_placement", "asc")->get();
 
@@ -162,7 +165,7 @@ class CourseController extends Controller
         $data['page_title']   = $this->header_title;
 
         $data['cid']   = $mcid;
-        $data['ExamType']   = "MockExam";
+        $data['DBTable']   = "MockExam";
 
         return view('frontend.exam', $data);
     }
@@ -179,7 +182,7 @@ class CourseController extends Controller
         $data['page_title']   = $this->header_title;
 
         $data['cid']   = $cid;
-        $data['ExamType']   = "Exam";
+        $data['DBTable']   = "Exam";
 
         return view('frontend.exam', $data);
     }
@@ -206,6 +209,22 @@ class CourseController extends Controller
         }
 
         return view('frontend.finishquiz', $data);
+    }
+
+    public function ReviewsPage(Request $request) {
+
+        if(!Auth::user()) {
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+        }
+
+        $data         = [];
+
+        $data['sub_heading']  = 'Review\'s Page';
+        $data['page_title']   = $this->header_title;
+
+        $data['cid']  = $request->cid;
+
+        return view('frontend.reviewsPage', $data);
     }
 
     public function NewSubscription($cid) {
@@ -242,7 +261,7 @@ class CourseController extends Controller
         $course_id  =   $request->cid;
         $exam_id    =   $request->eid;
 
-        $ResOBJ     =   Result::where("course_id", $course_id)->where("exam_id", $exam_id)->get();
+        $ResOBJ     =   Result::where("course_id", $course_id)->where("exam_id", $exam_id)->where("examType", $request->type)->get();
 
         $res        =   json_decode($ResOBJ[0]->result, true);
 
@@ -266,9 +285,12 @@ class CourseController extends Controller
 
         $course_id  =   $request->cid;
 
-        $data['ResultData']     =   Result::where("course_id", $course_id)->where("user_id", Auth::user()->id)->get();
+        $data['ResultData']         =   Result::where("course_id", $course_id)->where("user_id", Auth::user()->id)->where("examType", "Exam")->get();
+        $data['MockResultData']     =   Result::where("course_id", $course_id)->where("user_id", Auth::user()->id)->where("examType", "MockExam")->get();
 
         $data['cid']   = $course_id;
+        $data['DBTable']   = "MockExam";
+//        echo "<script>alert('Hi');</script>";
 
 
         return view('frontend.quizresults', $data);
@@ -280,7 +302,7 @@ class CourseController extends Controller
             'ccomments'=>'required'
         ]);
 
-        $Rating         = Ratings::firstOrNew(array('course_id' => $request->cid, "user_id" => Auth::user()->id));;
+        $Rating         = Ratings::firstOrNew(array('course_id' => $request->cid, "user_id" => Auth::user()->id));
 
         $Rating->course_id      = $request->cid;
         $Rating->user_id        = Auth::user()->id;
@@ -295,6 +317,47 @@ class CourseController extends Controller
         } else {
             return redirect()->back()->with('message', 'Couldn\'t saved ratings!');
         }
+    }
+
+    public static function GetStars($cid) {
+
+        $data   =   [];
+
+        $RatingRES         = Ratings::where("course_id", $cid)->get();
+        $Rating =   0;
+        $TotalRating    =   0;
+        $RatingPercent    =   0;
+        if(count($RatingRES) > 0) {
+            foreach($RatingRES as $v) {
+                $Rating =   $Rating + $v->rating;
+                $TotalRating++;
+            }
+            $RatingPercent = ($Rating/($TotalRating*5))*100;
+        }
+
+        if($RatingPercent > 0 and $RatingPercent <= 20) {
+            $data["ratingcount"]  =   "one-star";
+        } elseif($RatingPercent > 20 and $RatingPercent <= 40) {
+            $data["ratingcount"]  =   "two-star";
+        } elseif($RatingPercent > 40 and $RatingPercent <= 60) {
+            $data["ratingcount"]  =   "three-star";
+        } elseif($RatingPercent > 60 and $RatingPercent <= 80) {
+            $data["ratingcount"]  =   "four-star";
+        } elseif($RatingPercent > 80) {
+            $data["ratingcount"]  =   "five-star";
+        } else {
+            $data["ratingcount"]  =   $RatingPercent;
+        }
+
+        $data["ratingpercent"]  =   $RatingPercent;
+//        $data["ratingcount"]    =   $Rating;
+
+        return $data;
+    }
+
+    public static function StudentCount($cid) {
+        $Student_Count        =  CourseWithUser::where('course_id', $cid)->count();
+        return $Student_Count;
     }
 
     public function SaveResult(Request $request) {
@@ -358,6 +421,7 @@ class CourseController extends Controller
         $ResOBJ->course_id  =   $request->course;
         $ResOBJ->exam_id    =   $request->exam;
         $ResOBJ->user_id    =   Auth::user()->id;
+        $ResOBJ->examType   =   $request->DBTable;
         $ResOBJ->result     =   $ResData;
 
         $saved              =   $ResOBJ->save();
@@ -365,11 +429,15 @@ class CourseController extends Controller
 
         /********** Store data in courese with user ********/
 //        $ewuOBJ                 = ExamWithUser::firstOrNew(array('exam_id' => $request->exam, "user_id" => Auth::user()->id));
-        $ewuOBJ                 = new ExamWithUser();
-
-        $ewuOBJ->exam_id    =   $request->exam;
-        $ewuOBJ->user_id    =   Auth::user()->id;
-
+        if($request->DBTable == "Exam"){
+            $ewuOBJ                 = new ExamWithUser();
+            $ewuOBJ->exam_id    =   $request->exam;
+            $ewuOBJ->user_id    =   Auth::user()->id;
+        } else {
+            $ewuOBJ                 = new MexamWithUser();
+            $ewuOBJ->mexam_id    =   $request->exam;
+            $ewuOBJ->user_id     =   Auth::user()->id;
+        }
         $saved              =   $ewuOBJ->save();
         /********** Store data in courese with user ********/
 
@@ -390,7 +458,7 @@ class CourseController extends Controller
         $data['sub_heading']  = 'Exam Page';
         $data['page_title']   = $this->header_title;
 
-        $chkResult  =   Result::where("user_id", Auth::user()->id)->count();
+        $chkResult  =   Result::where("user_id", Auth::user()->id)->where("examType", "Exam")->count();
 
         if($chkResult >= 3) {
             return redirect()->intended('/user/newsubscription/' . $cid);
@@ -407,10 +475,14 @@ class CourseController extends Controller
                         return view('frontend.takequiz', $data);
                     }
                 }
+                $data['QandAData']          =   QandA::where("exam_qa_id", $data['ExamData'][0]->id)->where("table_name", "Exam")->where("qa_cid", 0)->get();
+                $data['cid']   = $cid;
+                $data['DBTable']   = "Exam";
 
+                return view('frontend.takequiz', $data);
             }
 
-            $data['QandAData']          =   QandA::where("exam_qa_id", $data['ExamData'][0]->id)->where("table_name", "Exam")->where("qa_cid", 0)->get();
+            $data['QandAData'] = array();
             $data['cid']   = $cid;
             $data['DBTable']   = "Exam";
 
@@ -418,8 +490,51 @@ class CourseController extends Controller
         }
     }
 
+    public function MockExamStart($cid) {
+
+        if(!Auth::user()) {
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+        }
+
+        $data         = [];
+
+        $data['sub_heading']  = 'MockExam Page';
+        $data['page_title']   = $this->header_title;
+
+        $chkResult  =   Result::where("user_id", Auth::user()->id)->where("examType", "MockExam")->count();
+
+
+        if($chkResult >= 3) {
+            return redirect()->intended('/user/newsubscription/' . $cid);
+        } else {
+            $data['ExamData']          =   MockExam::where("course_id", $cid)->orderBy("id", "asc")->get();
+            if(count($data['ExamData']) > 0) {
+                foreach($data['ExamData'] as $v) {
+                    if($this->ResultCHKMock($cid, $v->id) == "no") {
+                        $data['ExamData']           =   MockExam::where("id", $v->id)->orderBy("id", "asc")->get();
+                        $data['QandAData']          =   QandA::where("exam_qa_id", $v->id)->where("table_name", "MockExam")->where("qa_cid", 0)->get();
+                        $data['cid']   = $cid;
+                        $data['DBTable']   = "MockExam";
+
+                        return view('frontend.takequiz', $data);
+                    }
+                }
+                $data['QandAData']          =   QandA::where("exam_qa_id", $data['ExamData'][0]->id)->where("table_name", "MockExam")->where("qa_cid", 0)->get();
+                $data['cid']   = $cid;
+                $data['DBTable']   = "MockExam";
+
+                return view('frontend.takequiz', $data);
+            }
+            $data['QandAData'] = array();
+            $data['cid']   = $cid;
+            $data['DBTable']   = "MockExam";
+
+            return view('frontend.takequiz', $data);
+        }
+    }
+
     public function ResultCHK($course_id, $exam_id) {
-        $chkResult  =   Result::where("course_id", $course_id)->where("exam_id", $exam_id)->where("user_id", Auth::user()->id)->get();
+        $chkResult  =   Result::where("course_id", $course_id)->where("exam_id", $exam_id)->where("user_id", Auth::user()->id)->where("examType", "Exam")->get();
         if(count($chkResult) > 0) {
             return "yes";
         } else {
@@ -427,8 +542,17 @@ class CourseController extends Controller
         }
     }
 
-    public static function GetQuizResult($exam_id) {
-        $Result  =   Result::where("exam_id", $exam_id)->where("user_id", Auth::user()->id)->first();
+    public function ResultCHKMock($course_id, $exam_id) {
+        $chkResult  =   Result::where("course_id", $course_id)->where("exam_id", $exam_id)->where("user_id", Auth::user()->id)->where("examType", "MockExam")->get();
+        if(count($chkResult) > 0) {
+            return "yes";
+        } else {
+            return "no";
+        }
+    }
+
+    public static function GetQuizResult($exam_id, $examType="Exam") {
+        $Result  =   Result::where("exam_id", $exam_id)->where("user_id", Auth::user()->id)->where("examType", $examType)->first();
         return $Result;
     }
 

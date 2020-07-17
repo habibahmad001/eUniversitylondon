@@ -58,14 +58,14 @@
                         @foreach($courseprogramData as $data)
                                 <li><a href="javascript:void(0);" onclick="javascript:Get_CP_PDF({{ $data->id }});" @if(isset($UserProgramData[0]->CourseProgramID) && $data->id == $UserProgramData[0]->CourseProgramID) class="active" @endif>{{ $data->cp_title }}</a></li>
                         @endforeach
-                            <li><a href="{{ URL::to("/user/mock_exam/" . $cid) }}">Mock Exam</a></li>
-                            <li><a href="{{ URL::to("/user/exam/" . $cid) }}">Exam</a></li>
+                            <li><a name="exlink" href="{{ URL::to("/user/mock_exam/" . $cid) }}" data-exType="mquizstart">Mock Exam</a></li>
+                            <li><a name="exlink" href="{{ URL::to("/user/exam/" . $cid) }}" data-exType="quizstart">Exam</a></li>
                         </ul>
                     @endif
                     <br />
                     <ul>
                         <li><a href="{{ URL::to("/course_detail/" . $cid) }}">Back to Course</a></li>
-                        <li><a href="javascript:void(0);">Review Course</a></li>
+                        <li><a href="{{ URL::to("/reviews/" . $cid) }}">Review Course</a></li>
                         <li><a href="{{ URL::to("/finish_course/" . $cid) }}">Finish Course</a></li>
                     </ul>
                 </div>

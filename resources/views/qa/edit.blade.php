@@ -32,6 +32,7 @@
           <input type="hidden" name="sel_txt" value="{{ collect(request()->segments())->pull(2) }}">
           @if(collect(request()->segments())->pull(1) == 'questionlist')
             <input type="hidden" name="page_name" value="{{ collect(request()->segments())->pull(1) }}">
+            <input type="hidden" name="table_name" value="{{ collect(request()->segments())->last() }}">
           @endif
         @else
           <div class="form-line">

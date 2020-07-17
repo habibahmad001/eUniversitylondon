@@ -14,7 +14,7 @@
                 <div class="row">
 
                     <div class="col-md-12">
-                        <h1>Exam: {{ App\Http\Controllers\Front\UserFrontController::GetCourseOnID($cid)->course_title }}</h1>
+                        <h1>Course: {{ App\Http\Controllers\Front\UserFrontController::GetCourseOnID($cid)->course_title }}</h1>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
                                 <a href="{{ URL::to("/") }}">Home</a>

@@ -103,7 +103,7 @@
                                                     <tr class="woocommerce-table__line-item order_item">
 
                                                         <td class="woocommerce-table__product-name product-name">
-                                                            <a href="{{ URL::to("/course_detail/" . $v[4]) }}">{{ $v[1] }}</a> <strong
+                                                            <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $v[1]))) }}">{{ $v[1] }}</a> <strong
                                                                     class="product-quantity">× {{ $v[2] }}</strong>
                                                         </td>
 

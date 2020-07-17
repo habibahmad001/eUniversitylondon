@@ -3,10 +3,13 @@
     <h3>Edit Exam</h3>
     <div class="close-icon"></div>
   </div>
-  <form method="post" action="/{{ collect(request()->segments())->first() }}/update-exam" enctype="multipart/form-data" onSubmit="return validate('edit-');">
+  <form method="post" action="/{!! collect(request()->segments())->first() !!}/{{ (collect(request()->segments())->pull(1) == "examlisting") ? "update-selected-exam" : "update-exam" }}" enctype="multipart/form-data" onSubmit="return validate('edit-');">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" name="exe_id" id="exe_id">
     <input type="hidden" id="edit-email_exist">
+    @if(collect(request()->segments())->pull(1) == "examlisting")
+      <input type="hidden" id="cid" name="cid" value="{{ collect(request()->segments())->pull(2) }}">
+    @endif
     <input type="hidden" name="user_folder" id="user_folder" value="{{ collect(request()->segments())->first() }}">
     <div class="form-height-control">
       <div class="loading-container">
@@ -23,18 +26,18 @@
         <div class="form-line">
           <textarea name="exe_content" id="edit-exe_content" placeholder="Type some description."></textarea>
         </div>
-
-        <div class="form-line">
-          <select name="cour_id" id="edit-cour_id" class="full-width">
-            <option value="">Select Course</option>
-            @if(count($Courses)) @foreach ($Courses as $course)
-              <option value="{{ $course->id }}">{{ $course->course_title }}</option>
-            @endforeach @else
-              <option value="">No Course Listed</option>
-            @endif
-          </select>
-        </div>
-
+        @if(collect(request()->segments())->pull(1) != "examlisting")
+          <div class="form-line">
+            <select name="cour_id" id="edit-cour_id" class="full-width">
+              <option value="">Select Course</option>
+              @if(count($Courses)) @foreach ($Courses as $course)
+                <option value="{{ $course->id }}">{{ $course->course_title }}</option>
+              @endforeach @else
+                <option value="">No Course Listed</option>
+              @endif
+            </select>
+          </div>
+        @endif
        
       </div>
     </div>

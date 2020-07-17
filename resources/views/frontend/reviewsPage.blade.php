@@ -30,25 +30,17 @@
 
     <section class="ls s-pt-55 s-pb-45 s-pt-lg-95 s-pb-lg-75 shop-order-received">
         <div class="container">
-            <div class="row">
-                @if(session()->has('message'))
-                    <div class="woocommerce-message">
-                        {{ session()->get('message') }}
-                    </div>
-                @endif
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div>
-                        {!! $ShowMSG !!} <br />
-                        {!! (isset($status) && ($status == "unsuccessful")) ? '<a href="'. URL::to('/user/exam/' . $cid) .'">Retake Exam Fee</a>' : "" !!}
-                        {!! (isset($retake)) ? '<a href="'. URL::to('/retake_exam/' . $cid) .'" target="_blank">Just Pay £19 and retake exam</a>' : "" !!}
-                    </div>
-                </div>
-            </div>
-            @if(isset($status) && ($status == "success"))
                 <form name="rating-frm" id="rating-frm" method="post" action="{{ URL::to('/saveratings') }}">
                     <div class="row">
+                        @if(session()->has('message'))
+                            <div class="woocommerce-message">
+                                {{ session()->get('message') }}
+                            </div>
+                        @endif
+                    </div>
+                    <div class="row">
+
+                        <h5>Add Reviews</h5>
                         <div class="col-lg-12">
                             <div id="ratings-id">
                                 {{ csrf_field() }}
@@ -69,7 +61,6 @@
                         </div>
                     </div>
                 </form>
-            @endif
             <div class="row">
                 <div class="col-lg-12">
                     @include('frontend.blocks.prevnext')

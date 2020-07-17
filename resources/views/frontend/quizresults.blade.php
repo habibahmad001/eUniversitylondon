@@ -14,7 +14,7 @@
                 <div class="row">
 
                     <div class="col-md-12">
-                        <h1>Exam: {{ App\Http\Controllers\Front\UserFrontController::GetCourseOnID($cid)->course_title }}</h1>
+                        <h1>Course: {{ App\Http\Controllers\Front\UserFrontController::GetCourseOnID($cid)->course_title }}</h1>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
                                 <a href="{{ URL::to("/") }}">Home</a>
@@ -62,9 +62,55 @@
                                         </td>
                                         <td>{!! json_decode($v->result, true)["Result"] !!} ({!! json_decode($v->result, true)["MarksObtain"] !!})</td>
                                         <td>{{ Carbon\Carbon::parse($v->created_at)->format('F d, Y h:ia') }}</td>
-                                        <td><a href="{{URL::to("/courseresult/" . $cid . "/" . $v->exam_id)}}"> View Detail</a></td>
+                                        <td><a href="{{URL::to("/courseresult/Exam/" . $cid . "/" . $v->exam_id)}}"> View Detail</a></td>
                                     </tr>
                                         <?php $count++;?>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="4" class="text-center">No record found !!!</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+
+                </div>
+            </div><br /><br />
+            <div class="row">
+                <div class="col-lg-12">
+                    <div>
+                        <h3>Mock Exams Results</h3> <br />
+                        <table width="100%" border="1px">
+                            <thead>
+                            <td>Title</td>
+                            <td>Mark's</td>
+                            <td>Date</td>
+                            <td>Action</td>
+                            </thead>
+                            @if(count($MockResultData) > 0)
+                                <?php $mcount = 1;?>
+                                @foreach($MockResultData as $v)
+                                    <tr>
+                                        <td>
+                                            @if($mcount == 1)
+                                                First Attempt
+                                            @elseif($mcount == 2)
+                                                Second Attempt
+                                            @elseif($mcount == 3)
+                                                Third Attempt
+                                            @elseif($mcount == 4)
+                                                Fourth Attempt
+                                            @elseif($mcount == 5)
+                                                Fifth Attempt
+                                            @elseif($mcount == 6)
+                                                Sixth Attempt
+                                            @endif
+                                        </td>
+                                        <td>{!! json_decode($v->result, true)["Result"] !!} ({!! json_decode($v->result, true)["MarksObtain"] !!})</td>
+                                        <td>{{ Carbon\Carbon::parse($v->created_at)->format('F d, Y h:ia') }}</td>
+                                        <td><a href="{{URL::to("/courseresult/MockExam/" . $cid . "/" . $v->exam_id)}}"> View Detail</a></td>
+                                    </tr>
+                                    <?php $mcount++;?>
                                 @endforeach
                             @else
                                 <tr>

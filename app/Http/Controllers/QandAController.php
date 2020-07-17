@@ -25,18 +25,18 @@ class QandAController extends Controller
 
         if(isset($request->eid)) {
             if(collect(request()->segments())->first() == 'instructor') {
-                $data['QandA']        =  QandA::where("qa_cid", 0)->where("exam_qa_id", $request->eid)->where("qa_user_id", Auth::user()->id)->paginate(30);
-                $data['QandAALL']     =  QandA::where("qa_cid", 0)->where("exam_qa_id", $request->eid)->where("qa_user_id", Auth::user()->id)->get();
+                $data['QandA']        =  QandA::where("qa_cid", 0)->where("exam_qa_id", $request->eid)->where("table_name", $request->table_name)->where("qa_user_id", Auth::user()->id)->paginate(30);
+                $data['QandAALL']     =  QandA::where("qa_cid", 0)->where("exam_qa_id", $request->eid)->where("table_name", $request->table_name)->where("qa_user_id", Auth::user()->id)->get();
             } else {
-                $data['QandA']        =  QandA::where("qa_cid", 0)->where("exam_qa_id", $request->eid)->paginate(30);
-                $data['QandAALL']     =  QandA::where("qa_cid", 0)->where("exam_qa_id", $request->eid)->get();
+                $data['QandA']        =  QandA::where("qa_cid", 0)->where("exam_qa_id", $request->eid)->where("table_name", $request->table_name)->paginate(30);
+                $data['QandAALL']     =  QandA::where("qa_cid", 0)->where("exam_qa_id", $request->eid)->where("table_name", $request->table_name)->get();
             }
         } else {
             if(collect(request()->segments())->first() == 'instructor') {
-                $data['QandA']        =  QandA::where("qa_cid", 0)->where("qa_user_id", Auth::user()->id)->paginate(10);
+                $data['QandA']        =  QandA::where("qa_cid", 0)->where("qa_user_id", Auth::user()->id)->paginate(20);
                 $data['QandAALL']     =  QandA::where("qa_cid", 0)->where("qa_user_id", Auth::user()->id)->get();
             } else {
-                $data['QandA']        =  QandA::where("qa_cid", 0)->paginate(10);
+                $data['QandA']        =  QandA::where("qa_cid", 0)->paginate(20);
                 $data['QandAALL']     =  QandA::where("qa_cid", 0)->get();
             }
         }
@@ -90,11 +90,12 @@ class QandAController extends Controller
 
         if($request->sel_txt != 0) {
             $res_set_exm        = QandA::where("id", $request->sel_txt)->first();
-            $QandA->table_name  = $res_set_exm->table_name;
             if($request->page_name == 'questionlist') {
                 $QandA->exam_qa_id = $request->sel_txt;
+                $QandA->table_name = $request->table_name;
             } else {
                 $QandA->exam_qa_id = $res_set_exm->exam_qa_id;
+                $QandA->table_name  = $res_set_exm->table_name;
             }
         } else {
             $QandA->table_name  = $request->sel_table;
@@ -119,13 +120,16 @@ class QandAController extends Controller
         return Response::json($data);
     }
 
-    public static function QuestionCount($eid){
-        $RES          = QandA::where('qa_cid', 0)->where('exam_qa_id', $eid)->count();
+    public static function QuestionCount($eid, $table_name = "Exam"){
+        $RES          = QandA::where('qa_cid', 0)->where('exam_qa_id', $eid)->where('table_name', $table_name)->count();
         return $RES;
     }
 
-    public static function ExamData($qid){
-        $RES          = Exam::find($qid);
+    public static function ExamData($qid, $table_name){
+        if($table_name == 'Exam')
+            $RES          = Exam::find($qid);
+        else
+            $RES          = MockExam::find($qid);
         return $RES;
     }
 
@@ -229,11 +233,12 @@ class QandAController extends Controller
         }
         if($request->sel_txt != 0) {
             $res_set_exm        = QandA::where("id", $request->sel_txt)->first();
-            $QandA->table_name  = $res_set_exm->table_name;
             if($request->page_name == 'questionlist') {
                 $QandA->exam_qa_id = $request->sel_txt;
+                $QandA->table_name = $request->table_name;
             } else {
                 $QandA->exam_qa_id = $res_set_exm->exam_qa_id;
+                $QandA->table_name  = $res_set_exm->table_name;
             }
         } else {
             $QandA->table_name  = $request->sel_table;

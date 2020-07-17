@@ -3933,8 +3933,28 @@ div#ratings-id ul li {
 	border-right: 1px solid #ccc;
 	margin: 2% 0;
 }
+
+#one-star span:before {
+	content: "\2605\f006\f006\f006\f006";
+}
+#two-star span:before {
+	content: "\2605\2605\f006\f006\f006";
+}
+#three-star span:before {
+	content: "\2605\2605\2605\f006\f006";
+}
+#four-star span:before {
+	content: "\2605\2605\2605\2605\f006";
+}
+#five-star span:before {
+	content: "\2605\2605\2605\2605\2605";
+}
 div#ratings-id ul li:last-child {
 	border: none;
+}
+
+#footer-link-nav {
+	text-align: right;
 }
 
 ul.qa-outer > li:last-child {

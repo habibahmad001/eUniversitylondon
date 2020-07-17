@@ -28,6 +28,9 @@
     <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}" class="color-switcher-link">
     <link rel="stylesheet" href="{{ asset('css/shop.css') }}">
+    {{--    Auto Complete--}}
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    {{--    Auto Complete--}}
     <script src="{{ asset('js/vendor/modernizr-2.6.2.min.js') }}"></script>
 
     <!--[if lt IE 9]>
@@ -43,9 +46,9 @@
 <div class="bg-danger text-center">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/" class="color-main">upgrade your browser</a> to improve your experience.</div>
 <![endif]-->
 
-<div class="preloader">
-    <div class="preloader_image"></div>
-</div>
+{{--<div class="preloader">--}}
+{{--    <div class="preloader_image"></div>--}}
+{{--</div>--}}
 @if ($errors->any())
     <div class="woocommerce-message">
         @foreach ($errors->all() as $error)
@@ -173,6 +176,15 @@
                         </div>
                     </div>
 
+                    <div class="col-12 col-md-12 col-lg-12 animate" data-animation="fadeInUp">
+                        <nav id="footer-link-nav">
+                            <a href="{{ URL::to("/about-us") }}">About Us</a> |
+                            <a href="{{ URL::to("/contact-us") }}">Contact Us</a> |
+                            <a href="javascript:void(0);">Privacy Policy</a> |
+                            <a href="javascript:void(0);">Terms & Conditions</a>
+                        </nav>
+                    </div>
+
                 </div>
             </div>
 
@@ -223,5 +235,8 @@
 
 <script type="text/javascript" src="{{ asset('../../../themera.net/embed/themera227f.js?id=%d1%85%d1%85%d1%85%d1%85%d1%85') }}"></script></body>
 <script src="{{ asset('js/front/signup.js') }}"></script>
+{{--    Auto Complete--}}
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{{--    Auto Complete--}}
 <!-- eUniversity London designed by BiG Inc, Fri, 20 Mar 2020 11:11:58 GMT -->
 </html>
