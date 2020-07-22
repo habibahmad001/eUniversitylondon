@@ -46,7 +46,7 @@
                                             <label for="search-form-top">
                                                 <span class="screen-reader-text">Search for:</span>
                                             </label>
-                                            <input type="search" id="search-form-top" class="search-field" placeholder="Search keyword" value="" name="search">
+                                            <input type="search" id="search-form-top" class="search-field" placeholder="Search keyword" value="" autocomplete="off" name="search">
                                             <button type="submit" class="search-submit" id="top-bar-search">
                                                 <span class="screen-reader-text">Search</span>
                                             </button>
@@ -94,7 +94,7 @@
                                                         @foreach(App\Http\Controllers\Front\CourseController::CartItemsGlobal()["CartItems"] as $citm)
                                                             <li class="woocommerce-mini-cart-item mini_cart_item">
                                                                 <a href="javascript:void(0);" class="remove" aria-label="Remove this item" data-product_id="73" onclick="javascript:cart_item_submit({{ $citm[4] }}, 'menu-addinput', 'menu-cart');" data-product_sku="">×</a>
-                                                                <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $v[1]))) }}">
+                                                                <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $citm[1]))) }}">
                                                                     <img src="{{ asset('/uploads/pavatar/' . $citm[0]) }}" alt="">{{ $citm[1] }}
                                                                 </a>
                                                                 <div id="menu-addinput"></div>{{ csrf_field() }}
@@ -153,7 +153,7 @@
                                                     @foreach(App\Http\Controllers\Front\CourseController::CartItemsGlobal()["CartItems"] as $citm)
                                                         <li class="woocommerce-mini-cart-item mini_cart_item">
                                                             <a href="javascript:void(0);" class="remove" aria-label="Remove this item" data-product_id="73" onclick="javascript:cart_item_submit({{ $citm[4] }}, 'menu-addinput', 'menu-cart');" data-product_sku="">×</a>
-                                                            <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $v[1]))) }}">
+                                                            <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $citm[1]))) }}">
                                                                 <img src="{{ asset('/uploads/pavatar/' . $citm[0]) }}" alt="">{{ $citm[1] }}
                                                             </a>
                                                             <div id="menu-addinput"></div>{{ csrf_field() }}

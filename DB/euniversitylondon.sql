@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2020 at 07:34 PM
+-- Generation Time: Jul 17, 2020 at 01:26 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -95,7 +95,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (134, '2020_06_20_202616_Add_Dates_In_Exam_With_User', 31),
 (135, '2020_06_20_204254_Add_Dates_In_MExam_With_User', 32),
 (136, '2020_06_24_101400_Add_correct_answer_in_QandA_Table', 33),
-(137, '2020_06_26_105332_Table_exam_result', 34);
+(137, '2020_06_26_105332_Table_exam_result', 34),
+(138, '2020_07_07_154513_Table_Rating', 35),
+(139, '2020_07_09_122408_Add_Exam_Type_Field_in_Results_Table', 36);
 
 -- --------------------------------------------------------
 
@@ -175,8 +177,8 @@ CREATE TABLE `tablecart` (
 --
 
 INSERT INTO `tablecart` (`id`, `session_id`, `key`, `val`, `status`, `created`, `undo_field`) VALUES
-(76, 'i8XgSf7JqAjeCMaavd2gBFECxPitwJm0BDwkl3p5', NULL, NULL, 'yes', '2020-06-26 10:25:48', NULL),
-(77, 'reIiGVQBR7p0GpiTJR7i11o6VmsxjCR5XKAKGGy2', NULL, NULL, 'yes', '2020-06-26 17:49:17', NULL);
+(10, 'zTiV9vwGmw8Pkzisrl4jKCFrTY9fv4xXy3Pgua0K', 'cartItem', '[]', 'yes', '2020-07-17 11:08:34', '{"5":["1287658438.jpg","Skills for Speaking Effectively: The Art of Speaking",1,"6666",5]}'),
+(11, 'NwIVcpnGjBznHWcATs348FLlWxYcizzQBb7FTjFP', NULL, NULL, 'yes', '2020-07-17 12:29:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -585,7 +587,7 @@ INSERT INTO `tablecourses` (`id`, `category_id`, `course_avatar`, `course_title`
 (2, '["6","9"]', '570154661.jpg', 'Diploma in Legal Studies - Revised 2017', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '45', '["english","france"]', '7', '10', 'ddfgdfg', '666', '6', 'yes', 1, 'https://www.youtube.com/', '["most_popular","most_recent"]', '844652722.pdf'),
 (3, '["2","3"]', '1180059600.jpg', 'Working with Students with Special Educational Needs', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '30', '["english"]', '10', '30', 'fgfhgh', '33', '3', 'yes', 1, 'https://www.youtube.com/', '["most_popular","most_recent","most_certified"]', '1638580560.pdf'),
 (4, '["3","5"]', '401966259.jpg', 'Introduction to Human Nutrition', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '30', '["english"]', '8', '10', 'fhgfhf', '6666', '6', 'yes', 1, 'https://www.youtube.com/', '["most_recent","most_certified"]', '1175724685.pdf'),
-(5, '["2","4"]', '1287658438.jpg', 'Skills for Speaking Effectively: The Art of Speaking', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '20', '["english"]', '12', '30', 'dfgdfg', '6666', '3', 'yes', 1, 'https://www.youtube.com/', '["most_recent"]', '725948592.pdf'),
+(5, '["2","4"]', '1287658438.jpg', 'Skills for Speaking Effectively: The Art of Speaking', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '20', '["english"]', '12', '30', 'dfgdfg', '6666', '3', 'yes', 2, 'https://www.youtube.com/', '["most_recent"]', '725948592.pdf'),
 (6, '["1","9"]', '269687077.jpg', 'General Data Protection Regulation (GDPR)', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '30', '["english","france"]', '10', '30', 'asdasd', '5555', '5', 'yes', 2, 'https://www.youtube.com/', '["most_recent","most_certified"]', '430852041.pdf'),
 (7, '["6","7","8","9"]', '1606469900.jpg', 'Why We Are', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '50', '["france"]', '7', '10', 'sdfsf', '3333', '3', 'no', 2, 'https://www.globaledulink.co.uk/', '["most_recent"]', NULL),
 (8, '["6","7","8"]', '2131853756.jpg', 'Duis autem vel eum iriure dolor', '<p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><p style="margin-bottom: 23px; color: rgb(118, 130, 146); font-family: poppins, sans-serif; font-size: 16px;">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>', '10', '["english"]', '8', '20', 'dfgd', '777', '7', 'no', 2, 'https://www.coursera.org/', '["most_recent"]', NULL);
@@ -660,12 +662,16 @@ CREATE TABLE `tableexam` (
 --
 
 INSERT INTO `tableexam` (`id`, `course_id`, `exam_title`, `exam_content`, `exam_status`, `exam_date`, `exam_user_id`) VALUES
-(1, 5, 'First Exam 1', 'First Exam1', 'yes', NULL, 11),
-(6, 4, 'Test Exma', '<p>dfsdfs</p>', 'yes', NULL, 1),
-(3, 1, 'vbcvbcvbc', '<p>cvbcvbc</p>', 'yes', NULL, 11),
-(4, 6, 'instructor 8 Exam 1', '<p>instructor 8 Exam 1<br></p>', 'yes', NULL, 2),
-(5, 4, 'instructor 8 Exam 2', '<p>instructor 8 Exam 2<br></p>', 'yes', NULL, 2),
-(7, 6, 'Exam 2', '<p>some data here</p>', 'yes', NULL, 1);
+(1, 5, 'Exam of Skills for Speaking Effectively: The Art of Speaking', 'Exam of Skills for Speaking Effectively: The Art of Speaking', 'yes', NULL, 11),
+(6, 4, 'Exam of Introduction to Human Nutrition', '<p>Exam of Introduction to Human Nutrition</p>', 'yes', NULL, 1),
+(3, 1, 'Exam of Diploma in Basic English Grammar', '<p>Exam of Diploma in Basic English Grammar</p>', 'yes', NULL, 11),
+(4, 6, 'First Exam of General Data Protection Regulation (GDPR)', '<p>First&nbsp;Exam of General Data Protection Regulation (GDPR)<br></p>', 'yes', NULL, 2),
+(5, 6, 'Second Exam of General Data Protection Regulation (GDPR)', '<p>Second Exam of General Data Protection Regulation (GDPR)<br></p>', 'yes', NULL, 2),
+(7, 6, 'Exam 2', '<p>some data here</p>', 'yes', NULL, 1),
+(8, 5, 'First Exam for Skills for Speaking Effectively: The Art of Speaking', '<p>First Exam for Skills for Speaking Effectively: The Art of Speaking<br></p>', 'yes', NULL, 2),
+(9, 5, 'Second Exam for Skills for Speaking Effectively: The Art of Speaking', '<p>Second Exam for Skills for Speaking Effectively: The Art of Speaking<br></p>', 'yes', NULL, 2),
+(10, 5, 'Third Second Exam for Skills for Speaking Effectively: The Art of Speaking', '<p>Third Second Exam for Skills for Speaking Effectively: The Art of Speaking<br></p>', 'yes', NULL, 2),
+(11, 6, 'Third Exam of General Data Protection Regulation (GDPR)', '<p>Third Exam of General Data Protection Regulation (GDPR)<br></p>', 'yes', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -687,10 +693,9 @@ CREATE TABLE `tableexamwithuser` (
 --
 
 INSERT INTO `tableexamwithuser` (`id`, `exam_id`, `user_id`, `isActive`, `created_at`, `updated_at`) VALUES
-(1, 1, 6, 'yes', '2020-06-20 20:39:31', '2020-06-20 20:39:31'),
-(2, 2, 6, 'yes', '2020-06-20 20:39:31', '2020-06-20 20:39:31'),
-(3, 3, 6, 'yes', '2020-06-20 20:39:31', '2020-06-20 20:39:31'),
-(4, 4, 6, 'yes', '2020-06-20 20:39:31', '2020-06-20 20:39:31');
+(1, 4, 18, 'yes', '2020-07-10 09:50:05', '2020-07-10 09:50:05'),
+(2, 7, 18, 'yes', '2020-07-10 11:31:39', '2020-07-10 11:31:39'),
+(3, 5, 18, 'yes', '2020-07-16 13:28:31', '2020-07-16 13:28:31');
 
 -- --------------------------------------------------------
 
@@ -712,9 +717,8 @@ CREATE TABLE `tablemexamwithuser` (
 --
 
 INSERT INTO `tablemexamwithuser` (`id`, `mexam_id`, `user_id`, `isActive`, `created_at`, `updated_at`) VALUES
-(1, 1, 6, 'yes', '2020-06-20 20:45:01', '2020-06-20 20:45:01'),
-(2, 2, 6, 'yes', '2020-06-20 20:45:01', '2020-06-20 20:45:01'),
-(3, 3, 6, 'yes', '2020-06-20 20:45:01', '2020-06-20 20:45:01');
+(1, 1, 18, 'yes', '2020-07-10 16:50:52', '2020-07-10 16:50:52'),
+(2, 1, 18, 'yes', '2020-07-10 18:13:51', '2020-07-10 18:13:51');
 
 -- --------------------------------------------------------
 
@@ -737,11 +741,7 @@ CREATE TABLE `tablemockexam` (
 --
 
 INSERT INTO `tablemockexam` (`id`, `course_id`, `exam_title`, `exam_content`, `exam_status`, `exam_date`, `mexam_user_id`) VALUES
-(1, 4, 'ttttttt1', 'ttttttt1', 'yes', NULL, 11),
-(2, 6, 'nnnnnnnn', '<p>nnnnnnnn</p>', 'yes', NULL, 11),
-(3, 3, 'cvbcvbc', '<p>cvbcvbc</p>', 'yes', NULL, 11),
-(4, 4, 'instructor 8 Mock Exam 1', '<p>instructor 8 Mock Exam 1</p>', 'yes', NULL, 8),
-(5, 3, 'instructor 8 Mock Exam 2', '<p>instructor 8 Mock Exam 2<br></p>', 'yes', NULL, 8);
+(1, 6, 'Mock Exam of General Data Protection Regulation (GDPR)', '<p>Mock Exam of General Data Protection Regulation (GDPR)<br></p>', 'yes', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -858,20 +858,277 @@ INSERT INTO `tableqanda` (`id`, `qa_title`, `qa_desc`, `qa_status`, `qa_cid`, `e
 (51, 'Control the shapes', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Control the shapes</span><br></p>', 'yes', 6, 4, 'Exam', 2, 'no'),
 (52, 'Control the shapes1', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Control the shapes1</span><br></p>', 'yes', 6, 4, 'Exam', 2, 'no'),
 (53, 'Control the shapes2', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Control the shapes2</span><br></p>', 'yes', 6, 4, 'Exam', 2, 'no'),
-(54, 'Oil', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Oil</span><br></p>', 'yes', 7, 4, 'Exam', 2, 'no'),
+(54, 'Oil', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Oil</span><br></p>', 'yes', 7, 4, 'Exam', 2, 'yes'),
 (55, 'Water', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Water</span><br></p>', 'yes', 7, 4, 'Exam', 2, 'no'),
 (56, 'Water1', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Water1</span><br></p>', 'yes', 7, 4, 'Exam', 2, 'no'),
 (57, 'Water2', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Water2</span><br></p>', 'yes', 7, 4, 'Exam', 2, 'no'),
 (58, 'All skin types2', '<p>All skin types2<br></p>', 'yes', 4, 4, 'Exam', 2, 'no'),
-(59, 'Wide jaw', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Wide jaw</span><br></p>', 'yes', 8, 4, 'Exam', 2, 'no'),
-(60, 'Top gel', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Top gel</span><br></p>', 'yes', 9, 4, 'Exam', 2, 'no'),
+(59, 'Wide jaw', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Wide jaw</span><br></p>', 'yes', 8, 4, 'Exam', 2, 'yes'),
+(60, 'Top gel', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Top gel</span><br></p>', 'yes', 9, 4, 'Exam', 2, 'yes'),
 (61, 'Pure acetone', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Pure acetone</span><br></p>', 'yes', 9, 4, 'Exam', 2, 'no'),
 (62, 'Pure acetone1', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Pure acetone1</span><br></p>', 'yes', 9, 4, 'Exam', 2, 'no'),
 (63, 'Pure acetone2', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Pure acetone2</span><br></p>', 'yes', 9, 4, 'Exam', 2, 'no'),
 (64, 'Prominent cheekbones', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Prominent cheekbones</span><br></p>', 'yes', 8, 4, 'Exam', 2, 'no'),
 (65, 'Prominent cheekbones 1', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Prominent cheekbones 1</span><br></p>', 'yes', 8, 4, 'Exam', 2, 'no'),
-(66, 'Sunscreen', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Sunscreen</span><br></p>', 'yes', 10, 4, 'Exam', 2, 'no'),
-(67, 'Sunscreen', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Sunscreen</span><br></p>', 'yes', 10, 4, 'Exam', 2, 'no');
+(66, 'Sunscreen', '<p><span style="color: rgb(68, 68, 68); font-family: &quot;Open Sans&quot;, sans-serif;">Sunscreen</span><br></p>', 'yes', 10, 4, 'Exam', 2, 'yes'),
+(67, 'Sunscreen', '<p><span style="color: rgb(187, 187, 187); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 12px; font-weight: 700;">Sunscreen</span><br></p>', 'yes', 10, 4, 'Exam', 2, 'no'),
+(68, 'asdas', '<p>asdasd</p>', 'yes', 11, 4, 'Exam', 2, 'yes'),
+(69, 'aaaaaaaa', '<p>aaaaaaaaa</p>', 'yes', 11, 4, 'Exam', 2, 'no'),
+(70, 'cccccc', '<p>cccccc</p>', 'yes', 11, 4, 'Exam', 2, 'no'),
+(71, 'cccccccqqqq', '<p>cccccccccqqqqqqq</p>', 'yes', 11, 4, 'Exam', 2, 'no'),
+(72, 'dddddd', '<p>dddddddd</p>', 'yes', 12, 4, 'Exam', 2, 'yes'),
+(73, 'qwqwq', '<p>qwqwq</p>', 'yes', 12, 4, 'Exam', 2, 'no'),
+(74, 'sasdasd', '<p>asdasdasd</p>', 'yes', 12, 4, 'Exam', 2, 'no'),
+(75, 'rtrt', '<p>trt</p>', 'yes', 13, 4, 'Exam', 2, 'yes'),
+(76, 'fgfgf', '<p>fghfgh</p>', 'yes', 13, 4, 'Exam', 2, 'no'),
+(77, 'dddddd', '<p>ddddddd</p>', 'yes', 13, 4, 'Exam', 2, 'no'),
+(78, 'uuuuuuu', '<p>uuuuuuu</p>', 'yes', 13, 4, 'Exam', 2, 'no'),
+(79, 'ggggg', '<p>ggggggg</p>', 'yes', 14, 4, 'Exam', 2, 'no'),
+(80, 'dddddddd', '<p>ddddddd</p>', 'yes', 14, 4, 'Exam', 2, 'yes'),
+(81, 'nnnnnn', '<p>nnnnnnnn</p>', 'yes', 14, 4, 'Exam', 2, 'no'),
+(82, 'tttttt', '<p>ttttttt</p>', 'yes', 15, 4, 'Exam', 2, 'no'),
+(83, 'hhhhhhh', '<p>hhhhhhh</p>', 'yes', 15, 4, 'Exam', 2, 'no'),
+(84, 'dddddddd', '<p>ddddddddd</p>', 'yes', 15, 4, 'Exam', 2, 'yes'),
+(85, 'hhhhh', '<p>hhhh</p>', 'yes', 16, 4, 'Exam', 2, 'no'),
+(86, 'rrrrrrrrrr', '<p>rrrrrrrrr</p>', 'yes', 16, 4, 'Exam', 2, 'yes'),
+(87, 'qqqqq', '<p>qqqqqqq</p>', 'yes', 16, 4, 'Exam', 2, 'no'),
+(88, 'qqqqqqq', '<p>eeeeeeeee</p>', 'yes', 17, 4, 'Exam', 2, 'no'),
+(89, 'werwer', '<p>werwer</p>', 'yes', 17, 4, 'Exam', 2, 'yes'),
+(90, 'sfsdf', '<p>dfsdf</p>', 'yes', 17, 4, 'Exam', 2, 'no'),
+(91, 'xcvcv', '<p>cvxcv</p>', 'yes', 17, 4, 'Exam', 2, 'no'),
+(92, 'aaaaaaaa', '<p>aaaaaaa</p>', 'yes', 18, 4, 'Exam', 2, 'yes'),
+(93, 'bbbbbbbb', '<p>bbbbbbb</p>', 'yes', 18, 4, 'Exam', 2, 'no'),
+(94, 'tttttt', '<p>tttt</p>', 'yes', 18, 4, 'Exam', 2, 'no'),
+(95, 'yyyy', '<p>yyyyyy</p>', 'yes', 19, 4, 'Exam', 2, 'no'),
+(96, 'jjjjjjjjj', '<p>jjjjjjjj</p>', 'yes', 19, 4, 'Exam', 2, 'yes'),
+(97, 'fgfg', '<p>fgfg</p>', 'yes', 19, 4, 'Exam', 2, 'no'),
+(98, 'hgjghj', '<p>ghjhj</p>', 'yes', 19, 4, 'Exam', 2, 'no'),
+(99, 'rtytyrty', '<p>tyrty</p>', 'yes', 20, 4, 'Exam', 2, 'yes'),
+(100, 'eeeeeee', '<p>eeeeeeeeeee</p>', 'yes', 20, 4, 'Exam', 2, 'no'),
+(101, 'uuuuuuu', '<p>uuuuuu</p>', 'yes', 20, 4, 'Exam', 2, 'no'),
+(102, 'werwer', '<p>werwer</p>', 'yes', 20, 4, 'Exam', 2, 'no'),
+(103, 'sdfgdfg', '<p>dfgdfg</p>', 'yes', 21, 4, 'Exam', 2, 'no'),
+(104, 'ddddd', '<p>ddddd</p>', 'yes', 21, 4, 'Exam', 2, 'no'),
+(105, 'fffff', '<p>ffff</p>', 'yes', 21, 4, 'Exam', 2, 'no'),
+(106, 'gggggg', '<p>gggg</p>', 'yes', 21, 4, 'Exam', 2, 'yes'),
+(107, 'gggggggg', '<p>gggggggg</p>', 'yes', 22, 4, 'Exam', 2, 'no'),
+(108, 'bbbbbb', '<p>bbbbbb</p>', 'yes', 22, 4, 'Exam', 2, 'no'),
+(109, 'nnnnnnnnn', '<p>nnnnnnn</p>', 'yes', 22, 4, 'Exam', 2, 'yes'),
+(110, 'qqqqqqq', '<p>qqqqqqqqq</p>', 'yes', 22, 4, 'Exam', 2, 'no'),
+(111, 'ppppppp', '<p>ppppp</p>', 'yes', 23, 4, 'Exam', 2, 'no'),
+(112, 'jkljkl', '<p>jklkjl</p>', 'yes', 23, 4, 'Exam', 2, 'no'),
+(113, 'bnmbnm', '<p>bnmbnm</p>', 'yes', 23, 4, 'Exam', 2, 'no'),
+(114, 'nnnnnn', '<p>nnnn</p>', 'yes', 23, 4, 'Exam', 2, 'yes'),
+(115, 'llllllll', '<p>llllllll</p>', 'yes', 24, 4, 'Exam', 2, 'yes'),
+(116, 'jkljkl', '<p>kljkl</p>', 'yes', 24, 4, 'Exam', 2, 'no'),
+(117, 'sdfs', '<p>sdf</p>', 'yes', 24, 4, 'Exam', 2, 'no'),
+(118, 'sssss', '<p>ssss</p>', 'yes', 24, 4, 'Exam', 2, 'no'),
+(119, 'fghf', '<p>gh</p>', 'yes', 25, 4, 'Exam', 2, 'no'),
+(120, 'ffff', '<p>fffffff</p>', 'yes', 25, 4, 'Exam', 2, 'no'),
+(121, 'hfghf', '<p>fghfgh</p>', 'yes', 25, 4, 'Exam', 2, 'yes'),
+(122, 'ffffffff', '<p>fffffff</p>', 'yes', 25, 4, 'Exam', 2, 'no'),
+(123, 'vvvvvv', '<p>vvvvvvvvv</p>', 'yes', 26, 4, 'Exam', 1, 'yes'),
+(124, 'bbbbbbbb', '<p>bbbbbbbb</p>', 'yes', 26, 4, 'Exam', 1, 'no'),
+(125, 'jjjjjjjjj', '<p>jjjjjjjjjjj</p>', 'yes', 26, 4, 'Exam', 1, 'no'),
+(126, 'wwwwwwwww', '<p>wwwwwwwwww</p>', 'yes', 26, 4, 'Exam', 1, 'no'),
+(127, 'qqqqqq', '<p>qqqqqqqqqqqq</p>', 'yes', 30, 4, 'Exam', 1, 'yes'),
+(128, 'wwwwww', '<p>wwwwwww</p>', 'yes', 30, 4, 'Exam', 1, 'no'),
+(129, 'ggggggg', '<p>gggggggg</p>', 'yes', 30, 4, 'Exam', 1, 'no'),
+(130, 'Lorem Ipsum is simply dummy text of the printing', '<p><strong style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">Lorem Ipsum</strong><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">&nbsp;is simply dummy text of the printing</span><br></p>', 'yes', 0, 7, 'Exam', 1, 'no'),
+(131, 'typesetting industry', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">typesetting industry</span><br></p>', 'yes', 0, 7, 'Exam', 1, 'no'),
+(132, 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout</span><br></p>', 'yes', 0, 7, 'Exam', 1, 'no'),
+(133, 'The point of using Lorem Ipsum', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">The point of using Lorem Ipsum</span><br></p>', 'yes', 0, 7, 'Exam', 1, 'no'),
+(134, 'it has a more-or-less normal distribution of letters, as opposed to using', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">it has a more-or-less normal distribution of letters, as opposed to using</span><br></p>', 'yes', 0, 7, 'Exam', 1, 'no'),
+(135, 'Many desktop publishing packages and web page editors now use Lorem Ipsum', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">Many desktop publishing packages and web page editors now use Lorem Ipsum</span><br></p>', 'yes', 0, 7, 'Exam', 1, 'no'),
+(136, 'Various versions have evolved over the years, sometimes by accident', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">Various versions have evolved over the years, sometimes by accident</span><br></p>', 'yes', 0, 7, 'Exam', 1, 'no'),
+(137, 'sometimes on purpose (injected humour and the like)', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">sometimes on purpose (injected humour and the like)</span><br></p>', 'yes', 0, 7, 'Exam', 1, 'no'),
+(138, 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s</span><br></p>', 'yes', 0, 7, 'Exam', 1, 'no'),
+(139, 'when an unknown printer took a galley of type and scrambled', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">when an unknown printer took a galley of type and scrambled</span><br></p>', 'yes', 0, 7, 'Exam', 1, 'no'),
+(140, 'it to make a type specimen book', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">it to make a type specimen book</span><br></p>', 'yes', 0, 7, 'Exam', 1, 'no'),
+(141, 'It has survived not only five centuries', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">It has survived not only five centuries</span><br></p>', 'yes', 0, 7, 'Exam', 1, 'no'),
+(142, 'content here\', making it look like readable English', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">content here\', making it look like readable English</span><br></p>', 'yes', 0, 7, 'Exam', 1, 'no'),
+(143, 'zxczxc', '<p>zxczxc</p>', 'yes', 130, 7, 'Exam', 1, 'yes'),
+(144, 'zxczczzzzz', '<p>zxczxzzzz</p>', 'yes', 130, 7, 'Exam', 1, 'no'),
+(145, 'xxxxxxxx', '<p>xxxxx</p>', 'yes', 130, 7, 'Exam', 1, 'no'),
+(146, 'xxxxxxxx', '<p>xxxxxx</p>', 'yes', 131, 7, 'Exam', 1, 'yes'),
+(147, 'cccccccc', '<p>ccccccccc</p>', 'yes', 131, 7, 'Exam', 1, 'no'),
+(148, 'vvvvvvvvvvvvv', '<p>vvvvvvvv</p>', 'yes', 131, 7, 'Exam', 1, 'no'),
+(149, 'qqqqqqq', '<p>qqqqqqq</p>', 'yes', 131, 7, 'Exam', 1, 'no'),
+(150, 'vvvvvv', '<p>vvvvvvv</p>', 'yes', 132, 7, 'Exam', 1, 'yes'),
+(151, 'rrrrrrrrr', '<p>rrrrrrrrrrr</p>', 'yes', 132, 7, 'Exam', 1, 'no'),
+(152, 'tttttttttt', '<p>ttttttttt</p>', 'yes', 132, 7, 'Exam', 1, 'no'),
+(153, 'hhhhhhhhhh', '<p>hhhhhhhhhhh</p>', 'yes', 132, 7, 'Exam', 1, 'no'),
+(154, 'asdads', '<p>asdasd</p>', 'yes', 133, 7, 'Exam', 1, 'yes'),
+(155, 'aaaaaa', '<p>aaaaaaaaa</p>', 'yes', 133, 7, 'Exam', 1, 'no'),
+(156, 'ddddddd', '<p>dddddddd</p>', 'yes', 133, 7, 'Exam', 1, 'no'),
+(157, 'qqqqqq', '<p>qqqqqqqqq</p>', 'yes', 133, 7, 'Exam', 1, 'no'),
+(158, 'vvvvvvv', '<p>vvvvvvv</p>', 'yes', 134, 7, 'Exam', 1, 'yes'),
+(159, 'sssssssssss', '<p>ssssssssss</p>', 'yes', 134, 7, 'Exam', 1, 'no'),
+(160, 'bbbbbbbb', '<p>bbbbbbbbb</p>', 'yes', 134, 7, 'Exam', 1, 'no'),
+(161, 'qqqqqqqqq', '<p>qqqqqqqqqqq</p>', 'yes', 134, 7, 'Exam', 1, 'no'),
+(162, 'asdads', '<p>asdasd</p>', 'yes', 135, 7, 'Exam', 1, 'yes'),
+(163, 'aaaaaaaa', '<p>aaaaaaaaa</p>', 'yes', 135, 7, 'Exam', 1, 'no'),
+(164, 'yyyyyyyyyyy', '<p>yyyyyyy</p>', 'yes', 135, 7, 'Exam', 1, 'no'),
+(165, 'nnnnnnnn', '<p>nnnnnnnnn</p>', 'yes', 135, 7, 'Exam', 1, 'no'),
+(166, 'uuuuuuu', '<p>uuuuuuuuuu</p>', 'yes', 8, 4, 'Exam', 1, 'no'),
+(167, 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration</span><br></p>', 'yes', 0, 7, 'Exam', 1, 'no'),
+(168, 'dfdf', '<p>dfdf</p>', 'yes', 30, 4, 'Exam', 2, 'no'),
+(169, 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(170, 'when an unknown printer took a galley of type and scrambled it to make a type specimen book.', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(171, 'dsfsdf', '<p>sdfsdf</p>', 'yes', 169, 1, 'MockExam', 2, 'yes'),
+(172, 'ssssssss', '<p>ssssssss</p>', 'yes', 169, 1, 'MockExam', 2, 'no'),
+(173, 'ddddddddd', '<p>ddddddd</p>', 'yes', 169, 1, 'MockExam', 2, 'no'),
+(174, 'nnnnnnn', '<p>nnnnnnnnn</p>', 'yes', 169, 1, 'MockExam', 2, 'no'),
+(175, 'It has survived not only five centuries,', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">It has survived not only five centuries,</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(176, 'but also the leap into electronic typesetting, remaining essentially unchanged.', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">but also the leap into electronic typesetting, remaining essentially unchanged.</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(177, 'It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(178, 'and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(179, 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(180, 'The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(181, 'as opposed to using \'Content here, content here\', making it look like readable English.', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">as opposed to using \'Content here, content here\', making it look like readable English.</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(182, 'Many desktop publishing packages and web page', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">Many desktop publishing packages and web page</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(183, 'editors now use Lorem Ipsum as their default model text,', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">editors now use Lorem Ipsum as their default model text,</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(184, 'Various versions have evolved over the years, sometimes by accident,', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">Various versions have evolved over the years, sometimes by accident,</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(185, 'sometimes on purpose (injected humour and the like).', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">sometimes on purpose (injected humour and the like).</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(186, 'Contrary to popular belief, Lorem Ipsum is not simply random text.', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">Contrary to popular belief, Lorem Ipsum is not simply random text.</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(187, 'It has roots in a piece of classical Latin literature from 45 BC,', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">It has roots in a piece of classical Latin literature from 45 BC,</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(188, 'making it over 2000 years old. Richard McClintock, a Latin', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">making it over 2000 years old. Richard McClintock, a Latin</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(189, 'professor at Hampden-Sydney College in Virginia, looked up one of', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">professor at Hampden-Sydney College in Virginia, looked up one of</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(190, 'rrrrr', '<p>rrrrrrrrrr</p>', 'yes', 170, 1, 'MockExam', 2, 'yes'),
+(191, 'ttttttttttt', '<p>ttttttttt</p>', 'yes', 170, 1, 'MockExam', 2, 'no'),
+(192, 'hhhhhhh', '<p>hhhhhhh</p>', 'yes', 170, 1, 'MockExam', 2, 'no'),
+(193, 'oooooooo', '<p>oooooooooo</p>', 'yes', 175, 1, 'MockExam', 2, 'yes'),
+(194, 'kkkkk', '<p>kkkkkkkkkk</p>', 'yes', 175, 1, 'MockExam', 2, 'no'),
+(195, 'vvvvvvvvvv', '<p>vvvvvvvvvvv</p>', 'yes', 175, 1, 'MockExam', 2, 'no'),
+(196, 'wwww', '<p>wwwwwww</p>', 'yes', 175, 1, 'MockExam', 2, 'no'),
+(197, 'the more obscure Latin words, consectetur, from a Lorem Ipsum', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">the more obscure Latin words, consectetur, from a Lorem Ipsum</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(198, 'the more obscure Latin words, consectetur, from a Lorem Ipsum', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">the more obscure Latin words, consectetur, from a Lorem Ipsum</span><br></p>', 'yes', 0, 5, 'Exam', 2, 'no'),
+(199, 'bbbbbb', '<p>bbbbb</p>', 'yes', 198, 5, 'Exam', 2, 'yes'),
+(200, 'wwwwww', '<p>wwwwwwww</p>', 'yes', 198, 5, 'Exam', 2, 'no'),
+(201, 'fffff', '<p>fffffff</p>', 'yes', 198, 5, 'Exam', 2, 'no'),
+(202, 'need to be sure there isn\'t anything embarrassing hidden in the', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">need to be sure there isn\'t anything embarrassing hidden in the</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(203, 'middle of text. All the Lorem Ipsum generators on the Internet', '<p><span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; text-align: justify;">middle of text. All the Lorem Ipsum generators on the Internet</span><br></p>', 'yes', 0, 1, 'MockExam', 2, 'no'),
+(204, 'sdfsf', '<p>sdfsdf</p>', 'yes', 176, 1, 'MockExam', 2, 'yes'),
+(205, 'sss', '<p>ssssss</p>', 'yes', 176, 1, 'MockExam', 2, 'no'),
+(206, 'ddddd', '<p>ddddddd</p>', 'yes', 176, 1, 'MockExam', 2, 'no'),
+(207, 'ffffff', '<p>fffffff</p>', 'yes', 176, 1, 'MockExam', 2, 'no'),
+(208, 'sdf', '<p>sdf</p>', 'yes', 197, 1, 'MockExam', 2, 'yes'),
+(209, 'fds', '<p>fds</p>', 'yes', 197, 1, 'MockExam', 2, 'no'),
+(210, 'sss', '<p>sss</p>', 'yes', 197, 1, 'MockExam', 2, 'no'),
+(211, 'dddd', '<p>ddddd</p>', 'yes', 202, 1, 'MockExam', 2, 'yes'),
+(212, 'ffffff', '<p>fffffff</p>', 'yes', 202, 1, 'MockExam', 2, 'no'),
+(213, 'sdfsdf', '<p>sdfsdf</p>', 'yes', 202, 1, 'MockExam', 2, 'no'),
+(214, 'asdads111', '<p>asdasd111</p>', 'yes', 203, 1, 'MockExam', 2, 'yes'),
+(215, 'asd', '<p>sd</p>', 'yes', 203, 1, 'MockExam', 2, 'no'),
+(216, 'asdasd', '<p>asdsasd</p>', 'yes', 203, 1, 'MockExam', 2, 'no'),
+(217, 'asdasd', '<p>sdasd</p>', 'yes', 189, 1, 'MockExam', 2, 'yes'),
+(218, 'asdasd', '<p>asdasds</p>', 'yes', 189, 1, 'MockExam', 2, 'no'),
+(219, 'ssss', '<p>ssss</p>', 'yes', 189, 1, 'MockExam', 2, 'no'),
+(220, 'ssssss', '<p>sssssss</p>', 'yes', 188, 1, 'MockExam', 2, 'yes'),
+(221, 'dddd', '<p>ddddddd</p>', 'yes', 188, 1, 'MockExam', 2, 'no'),
+(222, 'aaa', '<p>aaaaaaa</p>', 'yes', 188, 1, 'MockExam', 2, 'no'),
+(223, 'xxxxxxxxxxx', '<p>xxxxx</p>', 'yes', 187, 1, 'MockExam', 2, 'yes'),
+(224, 'ccccc', '<p>cccccccc</p>', 'yes', 187, 1, 'MockExam', 2, 'no'),
+(225, 'ggggg', '<p>ggggggggggg</p>', 'yes', 187, 1, 'MockExam', 2, 'no'),
+(226, 'ttttttt', '<p>tttttt</p>', 'yes', 187, 1, 'MockExam', 2, 'no'),
+(227, 'jjjjj', '<p>jjjjjj</p>', 'yes', 187, 1, 'MockExam', 2, 'no'),
+(228, 'Learn Git and GitHub without any code!', 'Learn Git and GitHub without any code!', 'yes', 0, 8, 'Exam', 2, 'no'),
+(229, 'Learn Git and GitHub without any code!1', '<h2 class="shelf-title" style="color: rgba(27, 31, 35, 0.85); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;; text-align: center; background-color: rgb(254, 254, 254);">Learn Git and GitHub without any code!</h2>', 'yes', 0, 8, 'Exam', 2, 'no'),
+(230, 'Learn Git and GitHub without any code!2', '<p>Learn Git and GitHub without any code!2<br></p>', 'yes', 0, 8, 'Exam', 2, 'no'),
+(231, 'Learn Git and GitHub without any code!3', '<p>Learn Git and GitHub without any code!3<br></p>', 'yes', 0, 8, 'Exam', 2, 'no'),
+(232, 'Learn Git and GitHub without any code!5', '<p>Learn Git and GitHub without any code!5<br></p>', 'yes', 0, 8, 'Exam', 2, 'no'),
+(233, 'Learn Git and GitHub without any code!6', '<p>Learn Git and GitHub without any code!6<br></p>', 'yes', 0, 8, 'Exam', 2, 'no'),
+(234, 'Learn Git and GitHub without any code!4', '<p>Learn Git and GitHub without any code!4<br></p>', 'yes', 0, 8, 'Exam', 2, 'no'),
+(235, 'Learn Git and GitHub without any code!7', '<p>Learn Git and GitHub without any code!7<br></p>', 'yes', 0, 8, 'Exam', 2, 'no'),
+(236, 'Learn Git and GitHub without any code!8', '<p>Learn Git and GitHub without any code!8<br></p>', 'yes', 0, 8, 'Exam', 2, 'no'),
+(237, 'Learn Git and GitHub without any code!9', '<p>Learn Git and GitHub without any code!9<br></p>', 'yes', 0, 8, 'Exam', 2, 'no'),
+(238, 'sdfs', '<p>sdf</p>', 'yes', 228, 8, 'Exam', 2, 'yes'),
+(239, 'ssssssss', '<p>ssssssss</p>', 'yes', 228, 8, 'Exam', 2, 'no'),
+(240, 'fffffff', '<p>fffff</p>', 'yes', 228, 8, 'Exam', 2, 'no'),
+(241, 'vvvvv', '<p>vvvvvv</p>', 'yes', 228, 8, 'Exam', 2, 'no'),
+(242, 'sdfsdf', '<p>sdfsdf</p>', 'yes', 229, 8, 'Exam', 2, 'yes'),
+(243, 'sssssss', '<p>ssssssss</p>', 'yes', 229, 8, 'Exam', 2, 'no'),
+(244, 'ddddd', '<p>dddddd</p>', 'yes', 229, 8, 'Exam', 2, 'no'),
+(245, 'fffffff', '<p>fffffff</p>', 'yes', 229, 8, 'Exam', 2, 'no'),
+(246, 'bbbbbbb', '<p>bbbbbbbb</p>', 'yes', 230, 8, 'Exam', 2, 'yes'),
+(247, 'hhhhhhh', '<p>hhhhhhhh</p>', 'yes', 230, 8, 'Exam', 2, 'no'),
+(248, 'rrrr', '<p>rrrrr</p>', 'yes', 230, 8, 'Exam', 2, 'no'),
+(249, 'hhhhhhhhhee', '<p>hhhhhhhhhhee</p>', 'yes', 230, 8, 'Exam', 2, 'no'),
+(250, 'dfgdfg', '<p>dfgdfg</p>', 'yes', 231, 8, 'Exam', 2, 'yes'),
+(251, 'gfdgdf', '<p>gfdgdf</p>', 'yes', 231, 8, 'Exam', 2, 'no'),
+(252, 'dfggdfg', '<p>dfgddfg</p>', 'yes', 231, 8, 'Exam', 2, 'no'),
+(253, 'rrrrrrr', '<p>rrrrr</p>', 'yes', 231, 8, 'Exam', 2, 'no'),
+(254, 'ddd', '<p>ddd</p>', 'yes', 232, 8, 'Exam', 2, 'yes'),
+(255, 'ggg', '<p>ggg</p>', 'yes', 232, 8, 'Exam', 2, 'no'),
+(256, 'ssss', '<p>sss</p>', 'yes', 232, 8, 'Exam', 2, 'no'),
+(257, 'd', '<p>d</p>', 'yes', 232, 8, 'Exam', 2, 'no'),
+(258, 'ddddd', '<p>ddddddd</p>', 'yes', 233, 8, 'Exam', 2, 'yes'),
+(259, 'fffffff', '<p>ffffffff</p>', 'yes', 233, 8, 'Exam', 2, 'no'),
+(260, 'dddddddd', '<p>ddddd</p>', 'yes', 233, 8, 'Exam', 2, 'no'),
+(261, 'ccc', '<p>ccc</p>', 'yes', 233, 8, 'Exam', 2, 'no'),
+(262, 'ssss', '<p>ssss</p>', 'yes', 234, 8, 'Exam', 2, 'yes'),
+(263, 'ddd', '<p>ddd</p>', 'yes', 234, 8, 'Exam', 2, 'no'),
+(264, 'fff', '<p>fff</p>', 'yes', 234, 8, 'Exam', 2, 'no'),
+(265, 'rrr', '<p>rrr</p>', 'yes', 234, 8, 'Exam', 2, 'no'),
+(267, 'sss', '<p>sss</p>', 'yes', 235, 8, 'Exam', 2, 'yes'),
+(268, 'ddd', '<p>ddd</p>', 'yes', 235, 8, 'Exam', 2, 'no'),
+(269, 'fff', '<p>fff</p>', 'yes', 235, 8, 'Exam', 2, 'no'),
+(270, 'vvv', '<p>vvv</p>', 'yes', 235, 8, 'Exam', 2, 'no'),
+(271, 'sss', '<p>sss</p>', 'yes', 236, 8, 'Exam', 2, 'yes'),
+(272, 'ddd', '<p>ddd</p>', 'yes', 236, 8, 'Exam', 2, 'no'),
+(273, 'vvv', '<p>vvv</p>', 'yes', 236, 8, 'Exam', 2, 'no'),
+(274, 'rrr', '<p>rrr</p>', 'yes', 236, 8, 'Exam', 2, 'no'),
+(275, 'sdfsd', '<p>sdfsdf</p>', 'yes', 237, 8, 'Exam', 2, 'yes'),
+(276, 'zxczc', '<p>xczxc</p>', 'yes', 237, 8, 'Exam', 2, 'no'),
+(277, 'werw', '<p>erwer</p>', 'yes', 237, 8, 'Exam', 2, 'no'),
+(278, 's', '<p>s</p>', 'yes', 237, 8, 'Exam', 2, 'no'),
+(279, 'ElementUI和Ant Design对比', '<p><a class="_1-HJSV _1OhGeD" href="https://www.jianshu.com/p/63d8ea97d932" target="_blank" rel="noopener noreferrer" style="color: inherit; background-color: rgb(255, 255, 255); outline-style: none; outline-width: initial; cursor: pointer; transition: color 0.3s ease 0s; touch-action: manipulation; font-family: -apple-system, BlinkMacSystemFont, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;">ElementUI和Ant Design对比</a><br></p>', 'yes', 0, 9, 'Exam', 2, 'no'),
+(280, 'ElementUI和Ant Design对比1', '<p>ElementUI和Ant Design对比1<br></p>', 'yes', 0, 9, 'Exam', 2, 'no'),
+(281, 'ElementUI和Ant Design对比2', '<p>ElementUI和Ant Design对比2<br></p>', 'yes', 0, 9, 'Exam', 2, 'no'),
+(282, 'ElementUI和Ant Design对比3', '<p>ElementUI和Ant Design对比3<br></p>', 'yes', 0, 9, 'Exam', 2, 'no'),
+(283, 'ElementUI和Ant Design对比4', '<p>ElementUI和Ant Design对比4<br></p>', 'yes', 0, 9, 'Exam', 2, 'no'),
+(284, 'ElementUI和Ant Design对比5', '<p>ElementUI和Ant Design对比5<br></p>', 'yes', 0, 9, 'Exam', 2, 'no'),
+(285, 'ElementUI和Ant Design对比6', '<p>ElementUI和Ant Design对比6<br></p>', 'yes', 0, 9, 'Exam', 2, 'no'),
+(286, 'ElementUI和Ant Design对比7', '<p>ElementUI和Ant Design对比7<br></p>', 'yes', 0, 9, 'Exam', 2, 'no'),
+(287, 'ElementUI和Ant Design对比8', '<p>ElementUI和Ant Design对比8<br></p>', 'yes', 0, 9, 'Exam', 2, 'no'),
+(288, 'ElementUI和Ant Design对比9', '<p>ElementUI和Ant Design对比9<br></p>', 'yes', 0, 9, 'Exam', 2, 'no'),
+(289, 'Phpstorm idea webstrom free activation code', '<p>Phpstorm idea webstrom free activation code<br></p>', 'yes', 0, 10, 'Exam', 2, 'no'),
+(290, 'Phpstorm idea webstrom free activation code1', '<p>Phpstorm idea webstrom free activation code1<br></p>', 'yes', 0, 10, 'Exam', 2, 'no'),
+(291, 'Phpstorm idea webstrom free activation code2', '<p>Phpstorm idea webstrom free activation code2<br></p>', 'yes', 0, 10, 'Exam', 2, 'no'),
+(292, 'Phpstorm idea webstrom free activation code3', '<p>Phpstorm idea webstrom free activation code3<br></p>', 'yes', 0, 10, 'Exam', 2, 'no'),
+(293, 'Phpstorm idea webstrom free activation code4', '<p>Phpstorm idea webstrom free activation code4<br></p>', 'yes', 0, 10, 'Exam', 2, 'no'),
+(294, 'Phpstorm idea webstrom free activation code5', '<p>Phpstorm idea webstrom free activation code5<br></p>', 'yes', 0, 10, 'Exam', 2, 'no'),
+(295, 'Phpstorm idea webstrom free activation code6', '<p>Phpstorm idea webstrom free activation code6<br></p>', 'yes', 0, 10, 'Exam', 2, 'no'),
+(296, 'Phpstorm idea webstrom free activation code7', '<p>Phpstorm idea webstrom free activation code7<br></p>', 'yes', 0, 10, 'Exam', 2, 'no'),
+(297, 'Phpstorm idea webstrom free activation code8', '<p>Phpstorm idea webstrom free activation code8<br></p>', 'yes', 0, 10, 'Exam', 2, 'no'),
+(298, 'Phpstorm idea webstrom free activation code9', '<p>Phpstorm idea webstrom free activation code9<br></p>', 'yes', 0, 10, 'Exam', 2, 'no'),
+(299, 'Phpstorm idea webstrom free activation code10', '<p>Phpstorm idea webstrom free activation code10<br></p>', 'yes', 0, 10, 'Exam', 2, 'no'),
+(300, 'Phpstorm idea webstrom free activation code11', '<p>Phpstorm idea webstrom free activation code11<br></p>', 'yes', 0, 10, 'Exam', 2, 'no');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tablerating`
+--
+
+CREATE TABLE `tablerating` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `course_id` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rating` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ccomment` text COLLATE utf8mb4_unicode_ci,
+  `commentlevel` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tablerating`
+--
+
+INSERT INTO `tablerating` (`id`, `course_id`, `user_id`, `rating`, `ccomment`, `commentlevel`, `status`, `created_at`, `updated_at`) VALUES
+(1, '6', '18', '3', 'xcvxcv', '0', 'yes', '2020-07-08 00:26:13', '2020-07-16 20:30:09');
 
 -- --------------------------------------------------------
 
@@ -887,15 +1144,20 @@ CREATE TABLE `tableresults` (
   `result` text COLLATE utf8mb4_unicode_ci,
   `status` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `examType` enum('Exam','MockExam') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Exam'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tableresults`
 --
 
-INSERT INTO `tableresults` (`id`, `course_id`, `exam_id`, `user_id`, `result`, `status`, `created_at`, `updated_at`) VALUES
-(1, '6', '4', '18', '{"RequestData":{"1":"31","2":"35","3":"39","4":"43","5":"46","6":"50","7":"54","8":"59","9":"60","10":"66","11":null,"12":null,"13":null,"14":null,"15":null,"16":null,"17":null,"18":null,"19":null,"20":null,"21":null,"22":null,"23":null,"24":null,"25":null,"26":null,"27":null,"28":null,"29":null,"30":null},"AnswerDataarr":{"1":31,"2":35,"3":39,"4":43,"5":46,"6":50},"MarksObtain":60}', 'yes', '2020-06-26 17:49:55', '2020-06-26 17:49:55');
+INSERT INTO `tableresults` (`id`, `course_id`, `exam_id`, `user_id`, `result`, `status`, `created_at`, `updated_at`, `examType`) VALUES
+(1, '6', '4', '18', '{"ResultData":{"1":{"UserAns":"31","CorrectAns":31},"2":{"UserAns":"35","CorrectAns":35},"3":{"UserAns":"39","CorrectAns":39},"4":{"UserAns":"43","CorrectAns":43},"5":{"UserAns":"46","CorrectAns":46},"6":{"UserAns":"50","CorrectAns":50},"7":{"UserAns":"54","CorrectAns":54},"8":{"UserAns":"59","CorrectAns":59},"9":{"UserAns":"60","CorrectAns":60},"10":{"UserAns":"66","CorrectAns":66},"11":{"UserAns":"68","CorrectAns":68},"12":{"UserAns":"72","CorrectAns":72},"13":{"UserAns":"75","CorrectAns":75},"14":{"UserAns":"79","CorrectAns":80},"15":{"UserAns":"82","CorrectAns":84},"16":{"UserAns":"85","CorrectAns":86},"17":{"UserAns":"88","CorrectAns":89},"18":{"UserAns":"92","CorrectAns":92},"19":{"UserAns":"95","CorrectAns":96},"20":{"UserAns":"99","CorrectAns":99},"21":{"UserAns":"103","CorrectAns":106},"22":{"UserAns":"107","CorrectAns":109},"23":{"UserAns":"111","CorrectAns":114},"24":{"UserAns":"115","CorrectAns":115},"25":{"UserAns":"119","CorrectAns":121},"26":{"UserAns":"123","CorrectAns":123},"27":{"UserAns":null,"CorrectAns":0},"28":{"UserAns":null,"CorrectAns":0},"29":{"UserAns":null,"CorrectAns":0},"30":{"UserAns":"127","CorrectAns":127}},"MarksObtain":180,"Result":"FAILED"}', 'yes', '2020-07-10 09:50:05', '2020-07-10 09:50:05', 'Exam'),
+(2, '6', '1', '18', '{"ResultData":{"169":{"UserAns":"171","CorrectAns":171},"170":{"UserAns":"190","CorrectAns":190},"175":{"UserAns":"193","CorrectAns":193},"176":{"UserAns":"204","CorrectAns":204},"177":{"UserAns":null,"CorrectAns":0},"178":{"UserAns":null,"CorrectAns":0},"179":{"UserAns":null,"CorrectAns":0},"180":{"UserAns":null,"CorrectAns":0},"181":{"UserAns":null,"CorrectAns":0},"182":{"UserAns":null,"CorrectAns":0},"183":{"UserAns":null,"CorrectAns":0},"184":{"UserAns":null,"CorrectAns":0},"185":{"UserAns":null,"CorrectAns":0},"186":{"UserAns":null,"CorrectAns":0},"187":{"UserAns":"223","CorrectAns":223},"188":{"UserAns":"220","CorrectAns":220},"189":{"UserAns":"217","CorrectAns":217},"197":{"UserAns":"208","CorrectAns":208},"202":{"UserAns":"211","CorrectAns":211},"203":{"UserAns":"214","CorrectAns":214}},"MarksObtain":100,"Result":"FAILED"}', 'yes', '2020-07-10 09:50:52', '2020-07-10 09:50:52', 'MockExam'),
+(3, '6', '1', '18', '{"ResultData":{"169":{"UserAns":"171","CorrectAns":171},"170":{"UserAns":"190","CorrectAns":190},"175":{"UserAns":"193","CorrectAns":193},"176":{"UserAns":"204","CorrectAns":204},"177":{"UserAns":null,"CorrectAns":0},"178":{"UserAns":null,"CorrectAns":0},"179":{"UserAns":null,"CorrectAns":0},"180":{"UserAns":null,"CorrectAns":0},"181":{"UserAns":null,"CorrectAns":0},"182":{"UserAns":null,"CorrectAns":0},"183":{"UserAns":null,"CorrectAns":0},"184":{"UserAns":null,"CorrectAns":0},"185":{"UserAns":null,"CorrectAns":0},"186":{"UserAns":null,"CorrectAns":0},"187":{"UserAns":"223","CorrectAns":223},"188":{"UserAns":"220","CorrectAns":220},"189":{"UserAns":"217","CorrectAns":217},"197":{"UserAns":"208","CorrectAns":208},"202":{"UserAns":"211","CorrectAns":211},"203":{"UserAns":"214","CorrectAns":214}},"MarksObtain":100,"Result":"FAILED"}', 'yes', '2020-07-10 11:13:51', '2020-07-10 11:13:51', 'MockExam'),
+(4, '6', '7', '18', '{"ResultData":{"130":{"UserAns":"143","CorrectAns":143},"131":{"UserAns":"146","CorrectAns":146},"132":{"UserAns":"150","CorrectAns":150},"133":{"UserAns":"154","CorrectAns":154},"134":{"UserAns":"158","CorrectAns":158},"135":{"UserAns":"162","CorrectAns":162},"136":{"UserAns":null,"CorrectAns":0},"137":{"UserAns":null,"CorrectAns":0},"138":{"UserAns":null,"CorrectAns":0},"139":{"UserAns":null,"CorrectAns":0},"140":{"UserAns":null,"CorrectAns":0},"141":{"UserAns":null,"CorrectAns":0},"142":{"UserAns":null,"CorrectAns":0},"167":{"UserAns":null,"CorrectAns":0}},"MarksObtain":60,"Result":"FAILED"}', 'yes', '2020-07-10 11:31:39', '2020-07-10 11:31:39', 'Exam'),
+(5, '6', '5', '18', '{"ResultData":{"198":{"UserAns":"199","CorrectAns":199}},"MarksObtain":10,"Result":"FAILED"}', 'yes', '2020-07-16 13:28:31', '2020-07-16 13:28:31', 'Exam');
 
 -- --------------------------------------------------------
 
@@ -4552,8 +4814,7 @@ CREATE TABLE `tableuserwithcourse` (
 --
 
 INSERT INTO `tableuserwithcourse` (`id`, `course_id`, `user_id`, `created_at`, `updated_at`, `isActive`) VALUES
-(1, 6, 18, '2020-06-21 00:32:56', '2020-06-21 00:32:56', 'yes'),
-(2, 2, 18, '2020-06-24 01:18:17', '2020-06-24 01:18:17', 'yes');
+(1, 6, 18, '2020-06-30 07:55:29', '2020-06-30 07:55:29', 'yes');
 
 -- --------------------------------------------------------
 
@@ -4584,14 +4845,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `email`, `phone`, `password`, `avatar`, `status`, `confirmation_code`, `user_type`, `remember_token`, `created_at`, `updated_at`, `passupdated`) VALUES
-(1, 'admin', 'Admin F', 'Admin L', 'admin@gmail.com', NULL, '$2y$10$eQpDdzP29iaA81Z2MOhN6O8hV3N3ityLxa.yr6EFpOw.Jic5II33i', '1582622439.png', 'active', NULL, 'admin', 'GAAdmYT9ml9Kj35J2BqFILRTdEzvRyJPZFW1o3UhZGjfVQXvprZZBl2RPKSr', '2019-12-13 13:38:53', '2020-03-16 10:07:05', 'yes'),
-(2, 'instructor-f-instructor-l', 'Instructor F', 'Instructor L', 'instructor@gmail.com', '123-456-7891', '$2y$10$Idff0nKgC0urjyWuRDJxu.sEwT/Y3KsLhoUHekQYk0zKDk7d31L8W', 'default.jpg', 'active', NULL, 'instructor', '4kMdyfXXINMm3Ak1RKiRxb3xA0RsYz0sqOjvQqfsdxlIoRxFU8hvEJSQ9bqe', '2020-04-21 21:06:46', '2020-04-21 21:06:46', 'yes'),
+(1, 'admin', 'Admin F', 'Admin L', 'admin@gmail.com', NULL, '$2y$10$eQpDdzP29iaA81Z2MOhN6O8hV3N3ityLxa.yr6EFpOw.Jic5II33i', '1582622439.png', 'active', NULL, 'admin', 'uluDJ6UCWNH0skGUsxPk0iWhuMwbmveoFqZzI7vlya6CMVIfoSHkKZ9vqYL7', '2019-12-13 13:38:53', '2020-03-16 10:07:05', 'yes'),
+(2, 'instructor-f-instructor-l', 'Instructor F', 'Instructor L', 'instructor@gmail.com', '123-456-7891', '$2y$10$Idff0nKgC0urjyWuRDJxu.sEwT/Y3KsLhoUHekQYk0zKDk7d31L8W', 'default.jpg', 'active', NULL, 'instructor', 'Bsc457zIrAGsDXvBUNx45D2vQpN6jAnqlBB3rCmoycrDrtI7mQUx6HS1zRBb', '2020-04-21 21:06:46', '2020-04-21 21:06:46', 'yes'),
 (3, 'learner-f-learner-l', 'learner F', 'learner L', 'learner@gmail.com', '123-456-7891', '$2y$10$uAs/bbyxNGo.UD3y6GS4vu.qD5nss1CgXvDpmkKNOFf8BwNsXQpIa', 'default.jpg', 'active', NULL, 'learner', 'rDqFBcnz24trczSskpZUzRpsFXy9HgTgAwndXNGIf3JW0kIlw8Bj2Iak9ytD', '2020-05-28 04:40:00', '2020-05-21 07:31:06', 'yes'),
 (4, 'habib-ahmad', 'habib', 'ahmad', 'admin@gmail.com', '111-111-1111', '$2y$10$3fr44VFrc8tJyEWLWqwVHeqC0lofGkVV8qlBsZ7qtwxBmmpIIGoEW', 'default.jpg', NULL, NULL, 'instructor', NULL, '2020-04-28 04:51:16', '2020-04-28 04:51:16', 'yes'),
 (5, 'ahmad-ha', 'ahmad', 'ha', 'habib@gmail.com', '111-111-1111', '$2y$10$VrPYuwWHG.KpNnZjFpmEKOzY8Pu/WsZBoO5EYcIzPuZYaz2taTY/i', 'default.jpg', 'active', NULL, 'learner', 'mLV4emsQWAxSSaBGKm46wxTGhqFY1aG4KafjGSjRt4CAY4zPpJOB1meZXFLL', '2020-04-28 05:06:02', '2020-04-28 05:06:02', 'yes'),
 (20, 'r-r', 'r', 'r', 'r@gmail.com', '111-111-1111', '$2y$10$iayrCj0yHAdKPbqmDycw7ugHuz6Vx1KJxCNNNp6C3VJ6gL6BQbUJi', 'default.jpg', 'active', NULL, 'learner', '4B4A7wOqn3A45vwEiFAW3OO3oCe4ftaGSD6RTYY8ssa0R3m7U2jXyKdLmhRF', '2020-05-28 08:01:51', '2020-06-01 03:02:48', 'yes'),
 (19, 'd-d', 'd', 'd', 'd@gmail.com', '111-111-1111', '$2y$10$JQGBJbViJkORh.Pwsj74EOQnDVgF.FBE5ldFmsD4iHPZExXZrKx.S', 'default.jpg', 'active', NULL, 'learner', '2Vn1a6Bgo6XxGMtJEFBUM3Er35fMtJ9R9Y0eoQeGXAtzmfnNedyDu8bicWGC', '2020-05-28 07:59:59', '2020-05-28 12:19:45', 'yes'),
-(18, 'x-x', 'x', 'x', 'x@gmail.com', '111-111-1111', '$2y$10$piXdEnaOr.qRHowN7zwe7.uTME7O913wC52LhjgYGcfBzF5/x0aI6', 'default.jpg', 'active', NULL, 'learner', 'ypVmDT9ojbfH3tyLTKABbqaoCAVvmtvPFerwdyo37X5kjxVzHKP7Iq5zxH3E', '2020-05-28 07:54:31', '2020-05-28 12:14:51', 'yes'),
+(18, 'x-x', 'x', 'x', 'x@gmail.com', '111-111-1111', '$2y$10$piXdEnaOr.qRHowN7zwe7.uTME7O913wC52LhjgYGcfBzF5/x0aI6', 'default.jpg', 'active', NULL, 'learner', 'ATD0b02MmmuQdMk1ls0nTshVhU5zpOgsNLaP16sjB3wgx56MJ9RiGYMoR3au', '2020-05-28 07:54:31', '2020-05-28 12:14:51', 'yes'),
 (10, 'sdfsd-sdfsdf', 'sdfsd', 'sdfsdf', 'admin@gmail.com', '111-111-1111', '$2y$10$I9ftGAmrPnf.sjL.UfbWK.FI8WIkkmuwu7OuKlwAApyPdS7ADV/D2', 'default.jpg', 'active', NULL, 'instructor', NULL, '2020-04-29 03:49:53', '2020-04-29 03:49:53', 'yes'),
 (11, 'ahmad-habib', 'ahmad', 'habib', 'ahmad@gmail.com', '111-111-1111', '$2y$10$M1BqzvEt.mGyYYwAdzjvjOtO4D.ojN3shvH4fiTVz5zgS5rjz3SU2', 'default.jpg', 'active', NULL, 'learner', NULL, '2020-04-29 03:51:33', '2020-04-29 03:51:33', 'yes'),
 (12, 'dfg-dfg', 'dfg', 'dfg', 'adminaaaa@gmail.com', '111-111-1111', '$2y$10$jbLVjEont9DgQA2YTSWWeOEbRXkXH3VS5a/xvTb73zvhry9FOeJlS', 'default.jpg', 'active', NULL, 'instructor', NULL, '2020-04-29 04:28:21', '2020-04-29 04:28:21', 'yes'),
@@ -4726,6 +4987,12 @@ ALTER TABLE `tableqanda`
   ADD KEY `tableqanda_qa_user_id_foreign` (`qa_user_id`);
 
 --
+-- Indexes for table `tablerating`
+--
+ALTER TABLE `tablerating`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tableresults`
 --
 ALTER TABLE `tableresults`
@@ -4785,7 +5052,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
 --
 -- AUTO_INCREMENT for table `tableassignment`
 --
@@ -4795,7 +5062,7 @@ ALTER TABLE `tableassignment`
 -- AUTO_INCREMENT for table `tablecart`
 --
 ALTER TABLE `tablecart`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `tablecategories`
 --
@@ -4840,22 +5107,22 @@ ALTER TABLE `tablecurriculum`
 -- AUTO_INCREMENT for table `tableexam`
 --
 ALTER TABLE `tableexam`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `tableexamwithuser`
 --
 ALTER TABLE `tableexamwithuser`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tablemexamwithuser`
 --
 ALTER TABLE `tablemexamwithuser`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tablemockexam`
 --
 ALTER TABLE `tablemockexam`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tableorders`
 --
@@ -4865,12 +5132,17 @@ ALTER TABLE `tableorders`
 -- AUTO_INCREMENT for table `tableqanda`
 --
 ALTER TABLE `tableqanda`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
+--
+-- AUTO_INCREMENT for table `tablerating`
+--
+ALTER TABLE `tablerating`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tableresults`
 --
 ALTER TABLE `tableresults`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tablestate`
 --
@@ -4900,7 +5172,7 @@ ALTER TABLE `tableuseraddress`
 -- AUTO_INCREMENT for table `tableuserwithcourse`
 --
 ALTER TABLE `tableuserwithcourse`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `users`
 --

@@ -1,5 +1,5 @@
 @extends("layouts.app-" . collect(request()->segments())->first())
-@section('content') 
+@section('content')
 @include('blocks.sub-header')
 @include('blocks.left-menu-' . collect(request()->segments())->first())
 @include('users.edit')
@@ -7,6 +7,19 @@
 
 <!-- Edit form -->
 <div class="center-content-area table-set">
+    <div class="row">
+        <div class="col-lg-8"></div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <select name="pagename" id="pagename" class="form-control w-50 text-right" onchange="javascript:($(this).val() == 0) ? window.location.href='/admin/users' : window.location.href='/admin/' + $(this).val()">
+                    <option value="0">-------- Select one ---------</option>
+                    <option value="users">All</option>
+                    <option value="instructor">Instructor</option>
+                    <option value="learner">Learner</option>
+                </select>
+            </div>
+        </div>
+    </div>
     <div class="table-responsive">
         @if ($errors->any())
         <div class="alert alert-danger">

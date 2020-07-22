@@ -12,6 +12,7 @@ use App\MexamWithUser;
 use App\CourseProgram;
 use App\CourseStarted;
 use App\ExamWithUser;
+use App\Comments;
 use App\MockExam;
 use App\Ratings;
 use App\Courses;
@@ -154,11 +155,6 @@ class CourseController extends Controller
     }
 
     public function MockExam($mcid) {
-
-        if(!Auth::user()) {
-            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
-        }
-
         $data         = [];
 
         $data['sub_heading']  = 'Mock Exam Page';
@@ -539,6 +535,30 @@ class CourseController extends Controller
             return "yes";
         } else {
             return "no";
+        }
+    }
+
+    public function StoreComments(Request $request) {
+
+        $Comments         = new Comments;
+
+        $this->validate($request, [
+            'cuser'=>'required',
+            'cemail'=>'required',
+            'ccomment'=>'required'
+        ]);
+        $Comments->name         = $request->cuser;
+        $Comments->email        = $request->cemail;
+        $Comments->subComment   = 0;
+        $Comments->message      = $request->ccomment;
+        $Comments->course_id    = $request->cid;
+        $Comments->liked        = json_encode(array("likes" => 0, "Comments" => 0));
+
+        $save   =   $Comments->save();
+        if($save) {
+            return redirect()->back()->with('message', 'Comment has been added successfully !!!');
+        } else {
+            return redirect()->back()->with('message', 'Faild to add comment !!!');
         }
     }
 

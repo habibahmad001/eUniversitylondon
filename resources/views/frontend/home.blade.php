@@ -29,7 +29,7 @@
                                     <span class="screen-reader-text">Search for:</span>
                                 </label>
                                 <i class="fa fa-search home-search-btn"></i>
-                                <input type="search" id="search-form-widget" class="search-field form-control" placeholder="Enter course name" value="" name="search">
+                                <input type="search" id="search-form-widget" autocomplete="off" class="search-field form-control" placeholder="Enter course name" value="" name="search">
                                 <button type="submit" class="search-submit btn btn-maincolor home-search-btn">Find courses</button>
                             </div>
                         </form>
@@ -131,7 +131,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row isotope-wrapper c-mb-30" data-filters=".course-filters">
+                <div class="row isotope-wrapper c-mb-30" id="HomeCourses" data-filters=".course-filters">
                     @if(count($Courses) > 0)
                         @foreach($Courses as $course)
                             <div class="col-12 col-md-6 col-lg-4 @if(count(json_decode($course->setas)) > 0) @foreach(json_decode($course->setas) as $v) {{ $v }} @endforeach @endif">

@@ -55,7 +55,7 @@
                         @if(count($courses)) @foreach ($courses as $course)
                             <tr>
                                 <td>{{ $course->course_title }}</td>
-                                <td>{{ (strlen(strip_tags($course->course_desc)) > 350) ? substr(strip_tags($course->course_desc), 0, 350) : strip_tags($course->course_desc) }}</td>
+                                <td>{{ (strlen(strip_tags($course->course_desc)) > 100) ? substr(strip_tags($course->course_desc), 0, 100) : strip_tags($course->course_desc) }}</td>
                             </tr>
                         @endforeach @else
                             <tr>
@@ -83,7 +83,7 @@
                         @if(count($exam)) @foreach ($exam as $exm)
                             <tr>
                                 <td>{{ $exm->exam_title }}</td>
-                                <td>{{ (strlen(strip_tags($exm->exam_content)) > 350) ? substr(strip_tags($exm->exam_content), 0, 350) : strip_tags($exm->exam_content) }}</td>
+                                <td>{{ (strlen(strip_tags($exm->exam_content)) > 100) ? substr(strip_tags($exm->exam_content), 0, 100) : strip_tags($exm->exam_content) }}</td>
                             </tr>
                         @endforeach @else
                             <tr>
@@ -113,7 +113,7 @@
                         @if(count($mexam)) @foreach ($mexam as $mexm)
                             <tr>
                                 <td>{{ $mexm->exam_title }}</td>
-                                <td>{{ (strlen(strip_tags($mexm->exam_content)) > 350) ? substr(strip_tags($mexm->exam_content), 0, 350) : strip_tags($mexm->exam_content) }}</td>
+                                <td>{{ (strlen(strip_tags($mexm->exam_content)) > 100) ? substr(strip_tags($mexm->exam_content), 0, 100) : strip_tags($mexm->exam_content) }}</td>
                             </tr>
                         @endforeach @else
                             <tr>

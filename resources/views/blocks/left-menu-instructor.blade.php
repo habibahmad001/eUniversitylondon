@@ -17,20 +17,21 @@
     </li>
 
     <li @if(collect(request()->segments())->last()=='courseprogram') class="active" @endif>
-      <a href="{{ URL::to('/instructor/courseprogram') }}">
-        {{--manage-rules--}}
-        <div class="icon">CP</div>
-        <div class="icon-detail">Course Program</div>
-      </a>
-    </li>
-
-    <li @if(collect(request()->segments())->last()=='curriculum') class="active" @endif>
-      <a href="{{ URL::to('/instructor/curriculum') }}">
+      <a href="{{ URL::to('/admin/courseprogram') }}">
         {{--manage-rules--}}
         <div class="icon">CC</div>
+        {{--        <div class="icon-detail">Course Program</div>--}}
         <div class="icon-detail">Curriculum</div>
       </a>
     </li>
+
+    {{--    <li @if(collect(request()->segments())->last()=='curriculum') class="active" @endif>--}}
+    {{--      <a href="{{ URL::to('/admin/curriculum') }}">--}}
+    {{--        --}}{{--manage-rules--}}
+    {{--        <div class="icon">CC</div>--}}
+    {{--        <div class="icon-detail">Curriculum</div>--}}
+    {{--      </a>--}}
+    {{--    </li>--}}
 
     <li @if(collect(request()->segments())->last()=='exam') class="active" @endif>
       <a href="{{ URL::to('/instructor/exam') }}">

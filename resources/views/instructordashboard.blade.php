@@ -39,6 +39,22 @@
 <div class="center-content-area table-set">
     <br />
     <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            @auth
+                @if(count(App\Http\Controllers\CoursesController::ExamInCourse()) > 0)
+                    <div class="alert alert-danger" id="examMSG" role="alert" style="color: #843534; background: #f2dede;border-color: #ebccd1;">
+                        <ul>
+                            @foreach(App\Http\Controllers\CoursesController::ExamInCourse() as $k=>$v)
+                                <li>{!! $v !!}</li>
+                            @endforeach
+                        </ul>
+                        <div class="cancel"></div>
+                    </div>
+                @endif
+            @endauth
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-9 col-md-4 col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Recent Course</div>
@@ -56,7 +72,7 @@
                         @if(count($courses)) @foreach ($courses as $course)
                             <tr>
                                 <td>{{ $course->course_title }}</td>
-                                <td>{{ (strlen(strip_tags($course->course_desc)) > 350) ? substr(strip_tags($course->course_desc), 0, 350) : strip_tags($course->course_desc) }}</td>
+                                <td>{{ (strlen(strip_tags($course->course_desc)) > 70) ? substr(strip_tags($course->course_desc), 0, 70) : strip_tags($course->course_desc) }}</td>
                             </tr>
                         @endforeach @else
                             <tr>
@@ -85,7 +101,7 @@
                         @if(count($exam)) @foreach ($exam as $exm)
                             <tr>
                                 <td>{{ $exm->exam_title }}</td>
-                                <td>@if(strlen(strip_tags($exm->exam_content)) > 350) {{ substr(strip_tags($exm->exam_content) , 0, 350). "..." }} @else {{ strip_tags($exm->exam_content) }} @endif</td>
+                                <td>@if(strlen(strip_tags($exm->exam_content)) > 70) {{ substr(strip_tags($exm->exam_content) , 0, 70). "..." }} @else {{ strip_tags($exm->exam_content) }} @endif</td>
                             </tr>
                         @endforeach @else
                             <tr>
@@ -116,7 +132,7 @@
                         @if(count($mexam)) @foreach ($mexam as $mexm)
                             <tr>
                                 <td>{{ $mexm->exam_title }}</td>
-                                <td>@if(strlen(strip_tags($mexm->exam_content)) > 350) {{ substr(strip_tags($mexm->exam_content) , 0, 350). "..." }} @else {{ strip_tags($mexm->exam_content) }} @endif</td>
+                                <td>@if(strlen(strip_tags($mexm->exam_content)) > 70) {{ substr(strip_tags($mexm->exam_content) , 0, 70). "..." }} @else {{ strip_tags($mexm->exam_content) }} @endif</td>
                             </tr>
                         @endforeach @else
                             <tr>
@@ -145,7 +161,7 @@
                         @if(count($coursecurriculum)) @foreach ($coursecurriculum as $curriculum)
                             <tr>
                                 <td>{{ $curriculum->curriculum_title }}</td>
-                                <td>@if(strlen(strip_tags($curriculum->curriculum_content)) > 350) {{ substr(strip_tags($curriculum->curriculum_content) , 0, 350). "..." }} @else {{ strip_tags($curriculum->curriculum_content) }} @endif</td>
+                                <td>@if(strlen(strip_tags($curriculum->curriculum_content)) > 70) {{ substr(strip_tags($curriculum->curriculum_content) , 0, 70). "..." }} @else {{ strip_tags($curriculum->curriculum_content) }} @endif</td>
                             </tr>
                         @endforeach @else
                             <tr>

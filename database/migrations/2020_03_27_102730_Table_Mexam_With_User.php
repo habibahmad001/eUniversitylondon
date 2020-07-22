@@ -17,6 +17,7 @@ class TableMexamWithUser extends Migration
             $table->increments('id',100);
             $table->integer('mexam_id')->nullable();
             $table->integer('user_id')->nullable();
+            $table->timestamps();
 
             $table->foreign('mexam_id')
                 ->references('id')

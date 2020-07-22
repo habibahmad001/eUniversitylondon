@@ -345,6 +345,10 @@ select.search-where {
     background: url(../images/cancel-icon-hover.png) no-repeat;
 }
 
+.modal-backdrop.in {
+    display: none;
+}
+
 
 
 /*  Animation --------- */

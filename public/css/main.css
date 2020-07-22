@@ -3952,6 +3952,23 @@ div#ratings-id ul li {
 div#ratings-id ul li:last-child {
 	border: none;
 }
+ul#autoul {
+	position: absolute;
+	background-color: #fff;
+	color: #555;
+	padding: 4%;
+	border-radius: 8px;
+	z-index: 999;
+	border: 1px solid #ccc;
+}
+
+ul#autoul li {
+	list-style: none;
+}
+
+ul#autoul li b {
+	color: #000;
+}
 
 #footer-link-nav {
 	text-align: right;

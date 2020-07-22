@@ -28,7 +28,9 @@ h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
 .login-container .forgot-password a { color: #818181; text-decoration: none; font-weight: normal; font-size: 12px; }
 .login-container .forgot-password a:hover { text-decoration: underline; }
 
-
+.modal-backdrop.in {
+    display: none;
+}
 
 /* Header -------------------------------- */
 header { background-image: linear-gradient(to bottom right, #333333 , #000000); min-height: 70px; padding:0; box-shadow: 0 0 3px rgba(44, 59, 73, .25); position: relative; z-index:11; min-width: 1024px; }

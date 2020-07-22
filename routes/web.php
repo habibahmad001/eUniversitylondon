@@ -93,6 +93,7 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/user/newsubscription/{cid}', 'Front\CourseController@NewSubscription');
     Route::post('/saveresult', 'Front\CourseController@SaveResult');
     Route::post('/saveratings', 'Front\CourseController@SaveRatings');
+    Route::post('/storecomments', 'Front\CourseController@StoreComments');
     /************* Course Ends ***************/
 
     /************* Front User Starts ***************/
@@ -257,6 +258,14 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/getcurriculum/{cc_id}', 'CurriCulums@GetCurriCulum');
     Route::post('/admin/update-curriculum', 'CurriCulums@UpdateCurriCulum');
     /*************** CurriCulums Ends ***************/
+
+    /*************** Coupan Starts ***************/
+    Route::resource('/admin/coupan', 'CoupanController');
+    Route::get('/admin/coupan', 'CoupanController@index');
+    Route::post('/admin/coupan_add', 'CoupanController@CoupanAdd');
+    Route::get('/admin/getcoupan/{id}', 'CoupanController@GetCoupan');
+    Route::post('/admin/update-coupan', 'CoupanController@UpdateCoupan');
+    /*************** Coupan Ends ***************/
 
     /*************** Course Program Starts ***************/
     Route::resource('/admin/courseprogram', 'CourseProgramController');

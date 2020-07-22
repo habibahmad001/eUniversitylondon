@@ -15,20 +15,20 @@
       </a>
     </li>
 
-    <li @if(collect(request()->segments())->last()=='instructor') class="active" @endif>
-      <a href="{{ URL::to('/admin/instructor') }}">
-        <div class="icon">I</div>
-        <div class="icon-detail">Instructor</div>
-      </a>
-    </li>
+{{--    <li @if(collect(request()->segments())->last()=='instructor') class="active" @endif>--}}
+{{--      <a href="{{ URL::to('/admin/instructor') }}">--}}
+{{--        <div class="icon">I</div>--}}
+{{--        <div class="icon-detail">Instructor</div>--}}
+{{--      </a>--}}
+{{--    </li>--}}
 
-    <li @if(collect(request()->segments())->last()=='learner') class="active" @endif>
-      <a href="{{ URL::to('/admin/learner') }}">
-        {{--manage-rules--}}
-        <div class="icon">L</div>
-        <div class="icon-detail">Learner</div>
-      </a>
-    </li>
+{{--    <li @if(collect(request()->segments())->last()=='learner') class="active" @endif>--}}
+{{--      <a href="{{ URL::to('/admin/learner') }}">--}}
+{{--        --}}{{--manage-rules--}}
+{{--        <div class="icon">L</div>--}}
+{{--        <div class="icon-detail">Learner</div>--}}
+{{--      </a>--}}
+{{--    </li>--}}
 
     <li @if(collect(request()->segments())->last()=='category') class="active" @endif>
       <a href="{{ URL::to('/admin/category') }}">
@@ -49,16 +49,25 @@
     <li @if(collect(request()->segments())->last()=='courseprogram') class="active" @endif>
       <a href="{{ URL::to('/admin/courseprogram') }}">
         {{--manage-rules--}}
-        <div class="icon">CP</div>
-        <div class="icon-detail">Course Program</div>
+        <div class="icon">CC</div>
+{{--        <div class="icon-detail">Course Program</div>--}}
+        <div class="icon-detail">Curriculum</div>
       </a>
     </li>
 
-    <li @if(collect(request()->segments())->last()=='curriculum') class="active" @endif>
-      <a href="{{ URL::to('/admin/curriculum') }}">
+{{--    <li @if(collect(request()->segments())->last()=='curriculum') class="active" @endif>--}}
+{{--      <a href="{{ URL::to('/admin/curriculum') }}">--}}
+{{--        --}}{{--manage-rules--}}
+{{--        <div class="icon">CC</div>--}}
+{{--        <div class="icon-detail">Curriculum</div>--}}
+{{--      </a>--}}
+{{--    </li>--}}
+
+    <li @if(collect(request()->segments())->last()=='coupan') class="active" @endif>
+      <a href="{{ URL::to('/admin/coupan') }}">
         {{--manage-rules--}}
-        <div class="icon">CC</div>
-        <div class="icon-detail">Curriculum</div>
+        <div class="icon">PC</div>
+        <div class="icon-detail">Promo code</div>
       </a>
     </li>
 

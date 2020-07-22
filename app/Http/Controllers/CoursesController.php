@@ -153,6 +153,9 @@ class CoursesController extends Controller
     }
 
     public static function ExamInCourse() {
+        if(!Auth::user()) {
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+        }
         $Flag_MSG   =   [];
         $Course_RES   =   Courses::where('course_user_id', Auth::user()->id)->get();
         if(count($Course_RES) > 0) {
@@ -276,10 +279,10 @@ class CoursesController extends Controller
             $first_name = $user_data->first_name;
             $email = $user_data->email;
 
-            Mail::send('emails.CourseApprove', ['first_name' => $first_name, 'title' => $title], function($message)  use ($email, $title){
-                $message->to($email);
-                $message->subject("Congratulation your course '" . $title . "' has been approved!!!");
-            });
+//            Mail::send('emails.CourseApprove', ['first_name' => $first_name, 'title' => $title], function($message)  use ($email, $title){
+//                $message->to($email);
+//                $message->subject("Congratulation your course '" . $title . "' has been approved!!!");
+//            });
             /********* Email ***********/
 
             $data['statuss'] = $Courses->course_status;

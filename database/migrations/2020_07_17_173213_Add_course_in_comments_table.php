@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDatesFieldsInMockExamWithUser extends Migration
+class AddCourseInCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddDatesFieldsInMockExamWithUser extends Migration
      */
     public function up()
     {
-        Schema::table('tablemexamwithuser', function (Blueprint $table) {
-            $table->timestamps();
+        Schema::table('tablecomments', function (Blueprint $table) {
+            $table->string('course_id', 250)->nullable();
         });
     }
 
@@ -25,6 +25,8 @@ class AddDatesFieldsInMockExamWithUser extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('tablecomments', function (Blueprint $table) {
+            $table->dropColumn(['course_id']);
+        });
     }
 }

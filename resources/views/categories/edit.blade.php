@@ -43,9 +43,9 @@
           <textarea name="c_content" id="edit-c_content" placeholder="Type some description."></textarea>
         </div>
 
-        <div class="form-line">
-          <input type="checkbox" name="child" id="edit-child" >&nbsp;&nbsp;&nbsp; Is Child
-        </div>
+{{--        <div class="form-line">--}}
+{{--          <input type="checkbox" name="child" id="edit-child" >&nbsp;&nbsp;&nbsp; Is Child--}}
+{{--        </div>--}}
 
         <div class="form-line" id="edit-category_div">
           <select name="sel_txt" id="edit-sel_txt" class="half-width">

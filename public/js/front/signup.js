@@ -485,6 +485,7 @@ function pickstate(id, itemId="") {
 }
 
 /************ Auto-Complete JS *************/
+
 var AutoCompArr = [];
 
 $.get('/searchcourse', function(data){
@@ -494,15 +495,51 @@ $.get('/searchcourse', function(data){
     }
 });
 // autocomplete(document.getElementById("search-form-widget"), AutoCompArr);
-$( function() {
-    var availableTags = AutoCompArr;
-    $( "#search-form-widget" ).autocomplete({
-        source: availableTags
-    });
-    $( "#search-form-top" ).autocomplete({
-        source: availableTags
-    });
-} );
+// $( function() {
+//
+//     var availableTags = AutoCompArr;
+//     $( "#search-form-widget" ).autocomplete({
+//         source: availableTags
+//     });
+//     $( "#search-form-top" ).autocomplete({
+//         source: availableTags
+//     });
+// } );
+(function( $ ) {
+    function autocompl(inputID = "search-form-top") {
+        $("#" + inputID).keyup(function(){
+            $("ul#autoul").remove();
+            var lichk = 0;
+            var appendele = "<ul id='autoul'>";
+            for(var i=0; AutoCompArr.length >= i; i++) {
+                if(typeof AutoCompArr[i] != "undefined") {
+                    var temmatch    =   "";
+                    temmatch    =   AutoCompArr[i].toLowerCase();
+                    if (temmatch.indexOf($(this).val()) >= 0) {
+                        // console.log(AutoCompArr[i]);
+                        replacetxt = temmatch.replace($(this).val(), "<b>" + $(this).val() + "</b>");
+                        appendele += "<li id='"+i+"'>" + replacetxt + "</li>";
+                        if($(this).val() != "") {
+                            lichk = 1;
+                        }
+                    }
+                }
+            }
+            appendele += "</ul>";
+            // console.log(appendele);
+            if(lichk == 1) {
+                $(appendele).insertAfter("#" + inputID);
+            }
+        });
+        $(document).on('click', "#autoul li", function(e) {
+            $("#" + inputID).val($(this).text());
+            $("ul#autoul").remove();
+        });
+    }
+    autocompl();
+    autocompl("search-form-widget");
+})( jQuery );
+
 /************ Auto-Complete JS *************/
 
 
