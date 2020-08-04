@@ -139,6 +139,7 @@
                                     <div class="course-front rounded bordered">
                                         <div class=" vertical-item content-padding">
                                             <div class="item-media rounded-top">
+                                                {!! ($course->OfferData && (strtotime($course->EndDate) >= strtotime(Carbon\Carbon::now()))) ? '<span class="onsale">'.$course->OfferData.'% Off</span>' : '' !!}
                                                 <img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
                                             </div>
                                             <div class="item-content">

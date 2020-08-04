@@ -17,36 +17,67 @@
       <div class="form-content-box">
 
         <div class="form-line">
+          <label>Curriculum Title</label>
           <input type="text" name="title" id="edit-title" placeholder="Course Curriculum Title" >
         </div>
 
         <div class="form-line">
+          <label>Curriculum Description</label>
           <textarea name="desc" id="edit-desc" placeholder="Type some description."></textarea>
         </div>
 
         <div class="form-line">
+          <label>Curriculum Author</label>
           <input type="text" name="author" id="edit-author" placeholder="Author" >
         </div>
 
         <div class="form-line">
+          <label>YouTube</label>
+          <input type="text" name="youtube" id="edit-youtube" placeholder="YouTube Link . . ." >
+        </div>
+
+        <div class="form-line">
+          <label>Curriculum Order</label>
           <input type="number" name="placement" id="edit-placement" min="1" max="1000" >
         </div>
 
-        <div class="form-line">
-          <select name="cour_id" id="edit-cour_id" class="full-width">
-            <option value="">Select Course</option>
-            @if(count($Courses)) @foreach ($Courses as $course)
-              <option value="{{ $course->id }}">{{ $course->course_title }}</option>
-            @endforeach @else
-              <option value="">No Course Listed</option>
-            @endif
-          </select>
-        </div>
+        @if(collect(request()->segments())->pull(1) == "cplisting")
+          <input type="hidden" name="cour_id" id="cour_id" value="{{ collect(request()->segments())->last() }}" />
+        @else
+          <div class="form-line">
+            <label>Select Course</label>
+            <select name="cour_id" id="edit-cour_id" class="full-width">
+              <option value="">Select Course</option>
+              @if(count($Courses)) @foreach ($Courses as $course)
+                <option value="{{ $course->id }}">{{ $course->course_title }}</option>
+              @endforeach @else
+                <option value="">No Course Listed</option>
+              @endif
+            </select>
+          </div>
+        @endif
 
         <div class="form-line">
+          <label>PDF</label>
           <input type="file" name="cou_pdf" id="edit-cou_pdf">
           <div id="edit-pdf_div">
             <img src="{{ asset('/images/pdficon.png' ) }}" width="150" height="150">
+          </div>
+        </div>
+
+        <div class="form-line">
+          <label>Document</label>
+          <input type="file" name="cou_doc" id="edit-cou_doc"><br />
+          <div id="edit-doc_div">
+            <img src="{{ asset('/images/word-icon.png' ) }}" width="150" height="150">
+          </div>
+        </div>
+
+        <div class="form-line">
+          <label>ZIP Upload</label>
+          <input type="file" name="cou_zip" id="edit-cou_zip"><br />
+          <div id="edit-zip_div">
+            <img src="{{ asset('/images/zip-icon.png' ) }}" width="150" height="150">
           </div>
         </div>
        

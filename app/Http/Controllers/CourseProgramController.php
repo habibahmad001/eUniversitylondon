@@ -53,6 +53,39 @@ class CourseProgramController extends Controller
         return view('courseprogram/index', $data);
     }
 
+    public function CPListing(Request $request) {
+
+        $data['sub_heading']  = 'Curriculum';
+        $data['page_title']   = 'eUniversitylondon Curriculum';
+        if(collect(request()->segments())->first() == 'instructor') {
+            $data['CourseProgram']          =  CourseProgram::join('tablecourses', 'tablecourseprogram.course_id', '=', 'tablecourses.id')
+                                        ->select('*')
+                                        ->where('tablecourses.course_user_id', '=', Auth::user()->id)
+                                        ->where('tablecourseprogram.course_id', '=', $request->cid)
+                                        ->orderBy('tablecourses.id', 'asc')
+                                        ->paginate(10);
+            $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->paginate(10);
+        } elseif(collect(request()->segments())->first() == 'admin') {
+            $data['CourseProgram']          =  CourseProgram::where('cp_status', "yes")->where('course_id', $request->cid)->paginate(10);
+            $data['Courses']        =  Courses::where('course_status', "yes")->get();
+        }
+
+        /**************** Get Course Name **************/
+        $Array_Course_Name           =  array();
+        foreach($data['CourseProgram'] as $CourseProgram_data) {
+            if(!empty($CourseProgram_data->course_id)) {
+                $Course_Name        =  Courses::where('id', $CourseProgram_data->course_id)->first();
+                if(isset($Course_Name->course_title)) {
+                    $Array_Course_Name[$CourseProgram_data->id] = $Course_Name->course_title;
+                }
+            }
+        }
+        $data['Array_Course_Name']           =  $Array_Course_Name;
+        /**************** Get Course Name **************/
+
+        return view('courseprogram/index', $data);
+    }
+
     public function CourseProgramAdd(Request $request){
         $CourseProgram         = new CourseProgram;
         $this->validate($request, [
@@ -61,7 +94,8 @@ class CourseProgramController extends Controller
             'desc'=>'required',
             'author'=>'required',
             'placement'=>'required',
-            'cour_id'=>'required'
+            'cour_id'=>'required',
+            'youtube'=>'required'
         ]);
 
         $CourseProgram->cp_title  = $request->title;
@@ -69,6 +103,8 @@ class CourseProgramController extends Controller
         $CourseProgram->cp_author  = $request->author;
         $CourseProgram->cp_placement  = $request->placement;
         $CourseProgram->course_id  = $request->cour_id;
+        $CourseProgram->videoLink  = $request->youtube;
+
         /************ Image PDF ***********/
         if(!empty($request->file('cou_pdf'))) {
             $CoursesPDF = $request->file('cou_pdf');
@@ -78,10 +114,28 @@ class CourseProgramController extends Controller
         }
         /************ Image PDF ***********/
 
+        /************ Doc Upload ***********/
+        if(!empty($request->file('cou_doc'))) {
+            $CoursesDOC = $request->file('cou_doc');
+            $CoursesDOC_new_name = rand() . '.' . $CoursesDOC->getClientOriginalExtension();
+            $CourseProgram->doc = $CoursesDOC_new_name;
+            $CoursesDOC->move('uploads/courseprogramdoc', $CoursesDOC_new_name);
+        }
+        /************ Doc Upload ***********/
+
+        /************ Zip Upload ***********/
+        if(!empty($request->file('cou_zip'))) {
+            $CoursesZIP = $request->file('cou_zip');
+            $CoursesZIP_new_name = rand() . '.' . $CoursesZIP->getClientOriginalExtension();
+            $CourseProgram->OtherData = $CoursesZIP_new_name;
+            $CoursesZIP->move('uploads/courseprogramzip', $CoursesZIP_new_name);
+        }
+        /************ Zip Upload ***********/
+
         $saved          = $CourseProgram->save();
         if ($saved) {
             $request->session()->flash('message', '$Course Program successfully added!');
-            return redirect('/' . collect(request()->segments())->first() . '/courseprogram');
+            return redirect()->back();
         } else {
             return redirect()->back()->with('message', 'Couldn\'t create Course Program!');
         }
@@ -101,7 +155,8 @@ class CourseProgramController extends Controller
             'desc'=>'required',
             'author'=>'required',
             'placement'=>'required',
-            'cour_id'=>'required'
+            'cour_id'=>'required',
+            'youtube'=>'required'
         ]);
         $CourseProgram              = CourseProgram::find($id);
 
@@ -110,6 +165,7 @@ class CourseProgramController extends Controller
         $CourseProgram->cp_author  = $request->author;
         $CourseProgram->cp_placement  = $request->placement;
         $CourseProgram->course_id  = $request->cour_id;
+        $CourseProgram->videoLink  = $request->youtube;
 
         /************ Image PDF ***********/
         if(!empty($request->file('cou_pdf'))) {
@@ -123,11 +179,35 @@ class CourseProgramController extends Controller
         }
         /************ Image PDF ***********/
 
+        /************ Doc Upload ***********/
+        if(!empty($request->file('cou_doc'))) {
+            if(!empty($CourseProgram->doc)) {
+                (file_exists('uploads/courseprogramdoc/' . $CourseProgram->doc)) ? unlink('uploads/courseprogramdoc/' . $CourseProgram->doc) : "";
+            }
+            $CoursesDOC = $request->file('cou_doc');
+            $CoursesDOC_new_name = rand() . '.' . $CoursesDOC->getClientOriginalExtension();
+            $CourseProgram->doc = $CoursesDOC_new_name;
+            $CoursesDOC->move('uploads/courseprogramdoc', $CoursesDOC_new_name);
+        }
+        /************ Doc Upload ***********/
+
+        /************ Zip Upload ***********/
+        if(!empty($request->file('cou_zip'))) {
+            if(!empty($CourseProgram->OtherData)) {
+                (file_exists('uploads/courseprogramzip/' . $CourseProgram->OtherData)) ? unlink('uploads/courseprogramzip/' . $CourseProgram->OtherData) : "";
+            }
+            $CoursesZIP = $request->file('cou_zip');
+            $CoursesZIP_new_name = rand() . '.' . $CoursesZIP->getClientOriginalExtension();
+            $CourseProgram->OtherData = $CoursesZIP_new_name;
+            $CoursesZIP->move('uploads/courseprogramzip', $CoursesZIP_new_name);
+        }
+        /************ Zip Upload ***********/
+
         $saved              = $CourseProgram->save();
 
         if ($saved) {
             $request->session()->flash('message', 'Course Program was successful edited!');
-            return redirect('/' . collect(request()->segments())->first() . '/courseprogram');
+            return redirect()->back();
         } else {
             return redirect()->back()->with('error', 'Couldn\'t create Course Program!');
         }

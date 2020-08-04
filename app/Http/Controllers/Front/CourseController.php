@@ -553,6 +553,9 @@ class CourseController extends Controller
         $Comments->message      = $request->ccomment;
         $Comments->course_id    = $request->cid;
         $Comments->liked        = json_encode(array("likes" => 0, "Comments" => 0));
+        if(!Auth::user()) {
+            $Comments->isActive    = "no";
+        }
 
         $save   =   $Comments->save();
         if($save) {

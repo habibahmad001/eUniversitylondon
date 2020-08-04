@@ -65,11 +65,12 @@ function validateEmailExist(type) {
   var email = $("#"+type+"email").val();
   var email_rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if(email_rgx.test(email)) {
-    var user_id = $("#user_id").val();
+    // var user_id = $("#user_id").val();
+    var user_id = 0;
     $.get('/email-exist?id=' + user_id +'&email=' + email, function(data){
       if(data.exist) {
         $("#"+type+"email_exist").val('1');
-        $("#"+type+"email-exist").css('color','#ff0000');
+        $("#"+type+"email-exist").css({"box-shadow": "0 0 0 2px #5caf01", "color": "#5caf01"});
         $("#"+type+"email-exist").html('E-mail already exists.');
       } else {
         $("#"+type+"email-exist").html('');
@@ -96,6 +97,7 @@ function validate(type) {
   var user_type = $("#"+ type +"user_type").val();
   var updates = $("#"+ type +"updates").val();
   var agree = $("#"+ type +"agree").val();
+  validateEmailExist("");
 
   var phone_regex = /^\d{3}(-)\d{3}(-)\d{4}$/;
   var email_rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

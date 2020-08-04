@@ -30,6 +30,23 @@
           <input type="text" name="t_role" id="edit-t_role" placeholder="Teams Role/Position" >
         </div>
 
+        <div class="form-line add-social">
+          <select name="social_icon[]" id="edit-social_icon-1" class="custom-select mr-sm-2 w-40-percent">
+            <option value="">Choose...</option>
+            <option value="fa fa-facebook">Facebook</option>
+            <option value="fa fa-paper-plane">Link External</option>
+            <option value="fa fa-linkedin">LinkeDin</option>
+            <option value="fa fa-instagram">Instagram</option>
+            <option value="fa fa-youtube-play">YouTube</option>
+          </select>
+          <input type="text" name="link[]" id="edit-link-1" class="w-40-percent" placeholder="Link Here ..." >
+          <button type="button" class="btn btn-success btn-sm" style="" name="button" onclick='javascript:social_item("","","edit-");'> <i class="fa fa-plus"></i> </button>
+        </div>
+
+        <div class="form-line add-social edit-add-social-item">
+          <input type="hidden" name="idcount" id="edit-idcount" value="1">
+        </div>
+
         <div class="form-line">
           <input type="file" name="t_img" id="edit-t_img">
           <div id="avatar_div">

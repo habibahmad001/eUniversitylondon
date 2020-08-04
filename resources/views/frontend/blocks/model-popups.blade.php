@@ -125,7 +125,8 @@
                     <div class="form-group has-placeholder">
                         <label for="email">Email:</label>
                         <input id="email" type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}">
-
+                        <div id="email-exist"></div>
+                        <input type="hidden" id="email_exist" value="0">
                         @if ($errors->has('email'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('email') }}</strong>

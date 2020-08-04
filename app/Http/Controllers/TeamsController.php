@@ -39,7 +39,15 @@ class TeamsController extends Controller
         $Teams->teams_name  = $request->t_name;
         $Teams->teams_desc  = $request->t_desc;
         $Teams->teams_role  = $request->t_role;
-
+        $SocialIconArr  =   [];
+        $SocialLinkArr  =   [];
+        foreach($request->social_icon as $v) {
+            $SocialIconArr[]  =   $v;
+        }
+        foreach($request->link as $v) {
+            $SocialLinkArr[]  =   $v;
+        }
+        $Teams->SocialMedia  = json_encode(array("SocialIcon" => $SocialIconArr, "SocialLink" => $SocialLinkArr));
         /************ Image Upload ***********/
         if(!empty($request->file('t_img'))) {
             $TeamsImg = $request->file('t_img');
@@ -78,6 +86,14 @@ class TeamsController extends Controller
         $Teams->teams_name  = $request->t_name;
         $Teams->teams_desc  = $request->t_desc;
         $Teams->teams_role  = $request->t_role;
+
+        foreach($request->social_icon as $v) {
+            $SocialIconArr[]  =   $v;
+        }
+        foreach($request->link as $v) {
+            $SocialLinkArr[]  =   $v;
+        }
+        $Teams->SocialMedia  = json_encode(array("SocialIcon" => $SocialIconArr, "SocialLink" => $SocialLinkArr));
 
         /************ Image Upload ***********/
         if(!empty($request->file('t_img'))) {

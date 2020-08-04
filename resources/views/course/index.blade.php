@@ -5,6 +5,7 @@
 @include('course.edit')
 @include('course.create')
 @include('course.set_product')
+@include('course.specialOffer')
 
 <style>
     .spinnerdiv {
@@ -12,6 +13,12 @@
         display: inline-block;
         position: absolute;
         /*margin-left: 3px;*/
+    }
+    #startdate, #enddate{
+         width: 70%;
+     }
+    .spacialOffer .form-line * {
+        display: inline-block;
     }
 </style>
 

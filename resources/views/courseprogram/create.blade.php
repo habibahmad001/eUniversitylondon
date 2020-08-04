@@ -24,24 +24,46 @@
       </div>
 
       <div class="form-line">
+        <input type="text" name="youtube" id="youtube" placeholder="YouTube Link . . ." >
+      </div>
+
+      <div class="form-line">
         <input type="number" name="placement" id="placement" min="1" max="1000" >
       </div>
-      
-      <div class="form-line">
-        <select name="cour_id" id="cour_id" class="half-width">
+
+      @if(collect(request()->segments())->pull(1) == "cplisting")
+        <input type="hidden" name="cour_id" id="cour_id" value="{{ collect(request()->segments())->last() }}" />
+      @else
+        <div class="form-line">
+          <select name="cour_id" id="cour_id" class="half-width">
             <option value="">Select Course</option>
-          @if(count($Courses)) @foreach ($Courses as $course)
-            <option value="{{ $course->id }}">{{ $course->course_title }}</option>
-          @endforeach @else
-            <option value="">No Course Listed</option>
-          @endif
-        </select>
-      </div>
+            @if(count($Courses)) @foreach ($Courses as $course)
+              <option value="{{ $course->id }}">{{ $course->course_title }}</option>
+            @endforeach @else
+              <option value="">No Course Listed</option>
+            @endif
+          </select>
+        </div>
+      @endif
 
       <div class="form-line">
         <input type="file" name="cou_pdf" id="cou_pdf">
         <div id="pdf_div">
           <img src="{{ asset('/images/pdficon.png' ) }}" width="150" height="150">
+        </div>
+      </div>
+
+      <div class="form-line">
+        <input type="file" name="cou_doc" id="cou_doc"><br />
+        <div id="doc_div">
+          <img src="{{ asset('/images/word-icon.png' ) }}" width="150" height="150">
+        </div>
+      </div>
+
+      <div class="form-line">
+        <input type="file" name="cou_zip" id="cou_zip"><br />
+        <div id="zip_div">
+          <img src="{{ asset('/images/zip-icon.png' ) }}" width="150" height="150">
         </div>
       </div>
 

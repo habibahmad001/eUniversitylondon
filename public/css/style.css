@@ -32,6 +32,11 @@ h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
     display: none;
 }
 
+.w-93px {
+    width: 93px;
+}
+
+
 /* Header -------------------------------- */
 header { background-image: linear-gradient(to bottom right, #333333 , #000000); min-height: 70px; padding:0; box-shadow: 0 0 3px rgba(44, 59, 73, .25); position: relative; z-index:11; min-width: 1024px; }
 header::after { display: block; content: ''; clear: both; }
@@ -252,7 +257,43 @@ table.table { border-collapse:collapse; }
     width: 0;
     overflow: hidden;
 }
+.add-new-form.spacialOffer {
+    width: 0;
+    overflow: hidden;
+}
 
+.open>.dropdown-menu {
+    display: block;
+    background: #555;
+    border: 1px solid #ccc;
+    padding: 13px;
+}
+.dropdown-menu > a {
+    display: block;
+    margin: 4% 0;
+}
+.BTNMenu {
+    border-radius: 20px;
+    padding-bottom: 10px;
+}
+.expiried {
+    color: #d9534f !important;
+}
+.active-offer {
+    color: #5caf01 !important;
+}
+.add-social * {
+    display: inline-block;
+}
+
+.w-40-percent {
+    width: 40% !important;
+}
+
+div.socialItem {
+    width: 100%;
+    margin: 1% 0;
+}
 .error::-webkit-input-placeholder { color: #e68888; }
 .error:-moz-placeholder { color: #e68888; }
 .error::-moz-placeholder { color: #e68888; }

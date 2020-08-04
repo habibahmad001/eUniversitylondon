@@ -37,6 +37,7 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="mb-40">
+                        {!! ($course->OfferData && (strtotime($course->EndDate) >= strtotime(Carbon\Carbon::now()))) ? '<span class="onsale">'.$course->OfferData.'% Off</span>' : '' !!}
                         <img class="w-100 rounded" src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
                     </div>
 
@@ -143,6 +144,7 @@
                                             <div class="course-front bordered rounded">
                                                 <div class=" vertical-item content-padding">
                                                     <div class="item-media rounded-top">
+                                                        {!! ($course->OfferData && (strtotime($course->EndDate) >= strtotime(Carbon\Carbon::now()))) ? '<span class="onsale">'.$course->OfferData.'% Off</span>' : '' !!}
                                                         <img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
                                                     </div>
                                                     <div class="item-content">

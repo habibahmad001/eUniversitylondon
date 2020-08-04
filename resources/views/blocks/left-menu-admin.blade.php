@@ -55,13 +55,13 @@
       </a>
     </li>
 
-{{--    <li @if(collect(request()->segments())->last()=='curriculum') class="active" @endif>--}}
-{{--      <a href="{{ URL::to('/admin/curriculum') }}">--}}
-{{--        --}}{{--manage-rules--}}
-{{--        <div class="icon">CC</div>--}}
-{{--        <div class="icon-detail">Curriculum</div>--}}
-{{--      </a>--}}
-{{--    </li>--}}
+    <li @if(collect(request()->segments())->last()=='comment') class="active" @endif>
+      <a href="{{ URL::to('/admin/comment') }}">
+{{--        manage-rules--}}
+        <div class="icon">C</div>
+        <div class="icon-detail">Comments</div>
+      </a>
+    </li>
 
     <li @if(collect(request()->segments())->last()=='coupan') class="active" @endif>
       <a href="{{ URL::to('/admin/coupan') }}">

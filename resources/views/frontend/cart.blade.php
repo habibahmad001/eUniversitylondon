@@ -135,6 +135,7 @@
                                         @foreach($Courses as $course)
                                             <li class="product">
                                                 <a class="link-scale" href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $course->course_title))) }}">
+                                                    {!! ($course->OfferData && (strtotime($course->EndDate) >= strtotime(Carbon\Carbon::now()))) ? '<span class="onsale">'.$course->OfferData.'% Off</span>' : '' !!}
                                                     <span class="onsale">Sale!</span>
                                                     <img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
                                                 </a>

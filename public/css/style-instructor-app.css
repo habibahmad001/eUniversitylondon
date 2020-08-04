@@ -195,6 +195,11 @@ table.table { border-collapse:collapse; }
     overflow: hidden;
 }
 
+.add-new-form.spacialOffer {
+    width: 0;
+    overflow: hidden;
+}
+
 /* My Account -------------------------------- */
 .information-form { padding: 20px 0 0 0; vertical-align: top; }
 .information-form .left-box { width: 596px; }
@@ -347,6 +352,10 @@ select.search-where {
 
 .modal-backdrop.in {
     display: none;
+}
+
+.global-msg ul li .btn-success {
+    float: right;
 }
 
 

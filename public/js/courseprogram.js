@@ -37,6 +37,7 @@ $(".edit-icon").click(function () {
       $("#edit-desc").summernote('code', CourseProgram.cp_desc);
       $("#edit-author").val(CourseProgram.cp_author);
       $("#edit-placement").val(CourseProgram.cp_placement);
+      $("#edit-youtube").val(CourseProgram.videoLink);
       $("#cp_id").val(cp_id);
       $("#edit-cour_id option").each(function() {
         if($(this).val() == CourseProgram.course_id) {
@@ -45,6 +46,12 @@ $(".edit-icon").click(function () {
       });
       if(CourseProgram.pdf !== null) {
         $("#edit-pdf_div").html('<a href="/uploads/courseprogrampdf/' + CourseProgram.pdf + '" target="_blank"><img src="/images/pdficon.png" width="150" height="150"></a>');
+      }
+      if(CourseProgram.pdf !== null) {
+        $("#edit-word_div").html('<a href="/uploads/courseprogramdoc/' + CourseProgram.doc + '" target="_blank"><img src="/images/word-icon.png" width="150" height="150"></a>');
+      }
+      if(CourseProgram.pdf !== null) {
+        $("#edit-zip_div").html('<a href="/uploads/courseprogramzip/' + CourseProgram.OtherData + '" target="_blank"><img src="/images/zip-icon.png" width="150" height="150"></a>');
       }
 
       $(".save-changes").removeClass('disable').removeAttr('disabled');
@@ -60,27 +67,11 @@ function reset_form() {
   $("#desc").val('');
   $("#author").val('');
   $("#placement").val('');
-  $("#cour_id").val('');
+  $("#youtube").val('');
+  ($("#cour_id").attr('type') == "hidden") ? "" : $("#cour_id").val('');
   $("#pdf_div").html('<img src="/images/pdficon.png" width="150" height="150">');
-}
-
-function validateEmailExist(type) {
-  var email = $("#"+type+"email").val();
-  var email_rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if(email_rgx.test(email)) {
-    var user_id = $("#user_id").val();
-    $.get('/email-exist?id=' + user_id +'&email=' + email, function(data){
-      if(data.exist) {
-        $("#"+type+"email_exist").val('1');
-        $("#"+type+"email-exist").css('color','#ff0000');
-        $("#"+type+"email-exist").html('E-mail already exists.');
-      } else {
-        $("#"+type+"email-exist").html('');
-        $("#"+type+"email_exist").val('');
-      }
-    })
-
-  }
+  $("#doc_div").html('<img src="/images/word-icon.png" width="150" height="150">');
+  $("#zip_div").html('<img src="/images/zip-icon.png" width="150" height="150">');
 }
 
 function validate(type) {
