@@ -65,11 +65,12 @@ function validateEmailExist(type) {
   var email = $("#"+type+"email").val();
   var email_rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if(email_rgx.test(email)) {
-    var user_id = $("#user_id").val();
+    // var user_id = $("#user_id").val();
+    var user_id = 0;
     $.get('/email-exist?id=' + user_id +'&email=' + email, function(data){
       if(data.exist) {
         $("#"+type+"email_exist").val('1');
-        $("#"+type+"email-exist").css('color','#ff0000');
+        $("#"+type+"email-exist").css({"box-shadow": "0 0 0 2px #5caf01", "color": "#5caf01"});
         $("#"+type+"email-exist").html('E-mail already exists.');
       } else {
         $("#"+type+"email-exist").html('');
@@ -96,6 +97,7 @@ function validate(type) {
   var user_type = $("#"+ type +"user_type").val();
   var updates = $("#"+ type +"updates").val();
   var agree = $("#"+ type +"agree").val();
+  validateEmailExist("");
 
   var phone_regex = /^\d{3}(-)\d{3}(-)\d{4}$/;
   var email_rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -485,6 +487,7 @@ function pickstate(id, itemId="") {
 }
 
 /************ Auto-Complete JS *************/
+
 var AutoCompArr = [];
 
 $.get('/searchcourse', function(data){
@@ -494,15 +497,51 @@ $.get('/searchcourse', function(data){
     }
 });
 // autocomplete(document.getElementById("search-form-widget"), AutoCompArr);
-$( function() {
-    var availableTags = AutoCompArr;
-    $( "#search-form-widget" ).autocomplete({
-        source: availableTags
-    });
-    $( "#search-form-top" ).autocomplete({
-        source: availableTags
-    });
-} );
+// $( function() {
+//
+//     var availableTags = AutoCompArr;
+//     $( "#search-form-widget" ).autocomplete({
+//         source: availableTags
+//     });
+//     $( "#search-form-top" ).autocomplete({
+//         source: availableTags
+//     });
+// } );
+(function( $ ) {
+    function autocompl(inputID = "search-form-top") {
+        $("#" + inputID).keyup(function(){
+            $("ul#autoul").remove();
+            var lichk = 0;
+            var appendele = "<ul id='autoul'>";
+            for(var i=0; AutoCompArr.length >= i; i++) {
+                if(typeof AutoCompArr[i] != "undefined") {
+                    var temmatch    =   "";
+                    temmatch    =   AutoCompArr[i].toLowerCase();
+                    if (temmatch.indexOf($(this).val()) >= 0) {
+                        // console.log(AutoCompArr[i]);
+                        replacetxt = temmatch.replace($(this).val(), "<b>" + $(this).val() + "</b>");
+                        appendele += "<li id='"+i+"'>" + replacetxt + "</li>";
+                        if($(this).val() != "") {
+                            lichk = 1;
+                        }
+                    }
+                }
+            }
+            appendele += "</ul>";
+            // console.log(appendele);
+            if(lichk == 1) {
+                $(appendele).insertAfter("#" + inputID);
+            }
+        });
+        $(document).on('click', "#autoul li", function(e) {
+            $("#" + inputID).val($(this).text());
+            $("ul#autoul").remove();
+        });
+    }
+    autocompl();
+    autocompl("search-form-widget");
+})( jQuery );
+
 /************ Auto-Complete JS *************/
 
 
@@ -536,10 +575,20 @@ function Get_CP_PDF(ID) {
         if(data.msg == "newitem") {
             msg = "Course has been started!";
             PDFObject.embed("/uploads/courseprogrampdf/" + Courses.pdf, "#my-pdf", options);
+            $(".course_timeline li").removeClass("activeli");
+            $(".course_timeline li a").removeClass("active");
+            $(".course_timeline li>span").remove();
+            $("#li-"+ID).addClass("activeli").prepend("<span></span>");
+            $("#aid-"+ID).addClass("active");
         } else if(data.msg == "less") {
             msg = "You already cleared this program!";
         } else if(data.msg == "notexist") {
             msg = "Congratulation you completed this course!";
+            $(".course_timeline li").removeClass("activeli");
+            $(".course_timeline li a").removeClass("active");
+            $(".course_timeline li>span").remove();
+            $("#li-"+ID).addClass("activeli").prepend("<span></span>");
+            $("#aid-"+ID).addClass("active");
         } else if(data.msg == "wrongstep") {
             msg = "You are not eligible for this program Yet!";
         } else if(data.msg == "nocp") {
@@ -547,11 +596,14 @@ function Get_CP_PDF(ID) {
         } else if(data.msg == "updated") {
             msg = "Congratulation you completed this program!";
             PDFObject.embed("/uploads/courseprogrampdf/" + Courses.pdf, "#my-pdf", options);
+            $(".course_timeline li").removeClass("activeli");
+            $(".course_timeline li a").removeClass("active");
+            $(".course_timeline li>span").remove();
+            $("#li-"+ID).addClass("activeli").prepend("<span></span>");
+            $("#aid-"+ID).addClass("active");
         }
         $("#msg").text(msg).show().fadeOut(6500);
-
     });
-
 }
 
 
@@ -604,4 +656,24 @@ function validation_ask(type) {
     }
 
     return true;
+}
+
+$("#couponSubmit").click(function() {
+    $("#cart-update").attr("action", "/promo");
+    $("#cart-update").submit();
+});
+
+function likeit(ID) {
+    $.get('/likepost/' + ID, function(data){
+        if(data.cont == "login") {
+            $("#commentID"+data.id).prepend('<div class="alert alert-danger commentmsg">Please login first !!!</div>');
+            $(".commentmsg").fadeOut(6000);
+        } else {
+            $("#mainlike"+ID).html('<i class="fw-600 color-dark fa fa-heart-o"></i>'+data);
+        }
+    });
+}
+
+function replyit(ID) {
+    $("#reply"+ID).toggle();
 }

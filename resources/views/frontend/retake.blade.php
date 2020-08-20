@@ -4,6 +4,17 @@
         .page_title h1 {
             line-height: 2;
         }
+        td.retake_img_td img {
+            width: 100%;
+            height: 260px;
+        }
+        .retake_content_td b {
+            display: inline-block;
+        }
+        .price {
+            float: right;
+            margin: 0;
+        }
     </style>
     <div class="header_absolute ds s-parallax s-overlay title-bg2">
 
@@ -33,17 +44,18 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div>
-                        <form method="POST" name="prod" id="prod" action="{{ URL::to("/addcart") }}">
+                        <form method="POST" name="prod" id="prod" action="{{ URL::to("/retakecart") }}">
                         <h3>Purchase Subscription</h3> <br />
                             <table width="100%" border="1px">
                                 <tr>
                                     <td style="width: 30%" class="retake_img_td">
-                                        <img src="{{URL::asset('/images/retake-exam.png')}}" width="200px" />
+                                        <img src="{{ asset('/uploads/pavatar/' . App\Http\Controllers\Front\UserFrontController::GetCourseOnID($cid)->course_avatar ) }}" width="200px" />
                                     </td>
                                     <td class="retake_content_td">
                                         <div id="itm-post-{{ $cid }}"></div>
-                                        <b>What is Lorem Ipsum?</b>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages</p>
+                                        <b>Retake - {{ App\Http\Controllers\Front\UserFrontController::GetCourseOnID($cid)->course_title }}</b>
+                                        <b class="price">Price £ 10</b>
+                                        <p>{!! App\Http\Controllers\Front\UserFrontController::GetCourseOnID($cid)->course_desc !!}</p>
                                         {{ csrf_field() }}
                                         <button type="button" class="btn btn-success" onclick="javascript:product_submit({{ $cid }});">Process to pay</button>
                                     </td>

@@ -15,7 +15,10 @@
                                 <a href="{{ URL::to('/') }}">Home</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="javascript:void(0);">Page</a>
+                                <a href="{{ URL::to('/#HomeCourses') }}">Courses</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ URL::to('/category/' . App\Http\Controllers\Category::CatID(json_decode($course->category_id)[0])->page_slug) }}">{{ App\Http\Controllers\Category::CatID(json_decode($course->category_id)[0])->category_title }}</a>
                             </li>
                             <li class="breadcrumb-item active">
                                 {{ $course->course_title }}
@@ -34,6 +37,7 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="mb-40">
+                        {!! ($course->OfferData && (strtotime($course->EndDate) >= strtotime(Carbon\Carbon::now()))) ? '<span class="onsale">'.$course->OfferData.'% Off</span>' : '' !!}
                         <img class="w-100 rounded" src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
                     </div>
 
@@ -41,7 +45,7 @@
 
                     {!! $course->course_desc !!}
 
-                    <h5 class="program-title">Course program</h5>
+                    <h5 class="program-title">Course CurriCulum</h5>
 
                     <div id="accordion01" role="tablist" class="course-tab bordered rounded">
                         @if(count($CourseProgram) > 0)
@@ -57,7 +61,7 @@
                                                 {{ $val->cp_title }}
                                             </a>
                                         </h6>
-                                        <span class="author-course">Autor courses:<a href="jascript:void(0);"> {{ $val->cp_author }}</a> </span>
+                                        <span class="author-course">Author courses:<a href="jascript:void(0);"> {{ $val->cp_author }}</a> </span>
                                     </div>
                                     <div id="{{ $val->id }}" class="collapse <?php if($cp_count == 0) echo 'show'; else echo 'hide'; ?>" role="tabpanel" aria-labelledby="collapse01_header" data-parent="#{{ $val->id }}">
                                         <div class="card-body">
@@ -81,6 +85,10 @@
                     <div class="mb-50">
                         <div class="vertical-item content-padding bordered border-color2 rounded">
                             <div class="item-content">
+                                <div class="tagcloud">
+                                    <div class="divider-48" id="itm-post-{{ $course->id }}"></div>
+                                    <a href="javascript:void(0);" onclick="javascript:product_submit({{ $course->id }});" class="btn btn-maincolor">Buy Now</a>
+                                </div>
                                 <div class="enrolled d-flex justify-content-between">
                                     <div class="star-rating course-rating" id="{{ App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}">
                                         <span style="width: {{ (App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] == 0) ? 100 : App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}%">Rated <strong class="rating">5.00</strong> out of 5</span>
@@ -94,7 +102,7 @@
                                 <div class="tagcloud">
                                     @if(count(json_decode($course->category_id)) > 0)
                                         @foreach(json_decode($course->category_id) as $v)
-                                            <a href="category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
+                                            <a href="/category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
                                                 {{ App\Http\Controllers\Category::CatID($v)->category_title }}
                                             </a>
                                         @endforeach
@@ -136,18 +144,19 @@
                                             <div class="course-front bordered rounded">
                                                 <div class=" vertical-item content-padding">
                                                     <div class="item-media rounded-top">
+                                                        {!! ($course->OfferData && (strtotime($course->EndDate) >= strtotime(Carbon\Carbon::now()))) ? '<span class="onsale">'.$course->OfferData.'% Off</span>' : '' !!}
                                                         <img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
                                                     </div>
                                                     <div class="item-content">
                                                         <h6 class="course-title">
-                                                            <a href="{{ URL::to('course_detail/' . strtolower(str_replace(' ', '-', $course->course_title))) }}">{{ (strlen(strip_tags($course->course_title)) > 32) ? substr(strip_tags($course->course_title), 0, 32) . "..." : strip_tags($course->course_title) }}</a>
+                                                            <a href="{{ URL::to('/course_detail/' . strtolower(str_replace(' ', '-', $course->course_title))) }}">{{ (strlen(strip_tags($course->course_title)) > 32) ? substr(strip_tags($course->course_title), 0, 32) . "..." : strip_tags($course->course_title) }}</a>
                                                         </h6>
 
                                                         <div class="star-rating course-rating" id="{{ App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}">
                                                             <span style="width: {{ (App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] == 0) ? 100 : App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}%">Rated <strong class="rating">5.00</strong> out of 5</span>
                                                         </div>
 
-                                                        <div class="product-price">£{{ $course->course_price }}.00</div>
+                                                        <div class="product-price">£{{ $course->course_price }}</div>
 
                                                         <div class="tagcloud">
                                                             @if(count(json_decode($course->category_id)) > 0)
@@ -164,20 +173,20 @@
                                             <div class="course-back rounded vertical-item content-padding ds">
                                                 <div class="item-content">
                                                     <h6 class="course-title">
-                                                        <a href="{{ URL::to('course_detail/' . strtolower(str_replace(' ', '-', $course->course_title))) }}">{{ (strlen(strip_tags($course->course_title)) > 32) ? substr(strip_tags($course->course_title), 0, 32) . "..." : strip_tags($course->course_title) }}</a>
+                                                        <a href="{{ URL::to('/course_detail/' . strtolower(str_replace(' ', '-', $course->course_title))) }}">{{ (strlen(strip_tags($course->course_title)) > 32) ? substr(strip_tags($course->course_title), 0, 32) . "..." : strip_tags($course->course_title) }}</a>
                                                     </h6>
                                                     {{ (strlen(strip_tags($course->course_desc)) > 150) ? substr(strip_tags($course->course_desc), 0, 150) . "..." : strip_tags($course->course_desc) }}
                                                     <div class="star-rating course-rating" id="{{ App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}">
                                                         <span style="width: {{ (App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] == 0) ? 100 : App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}%">Rated <strong class="rating">5.00</strong> out of 5</span>
                                                     </div>{{ csrf_field() }}
-                                                    <div class="product-price">£{{ $course->course_price }}.00</div>
+                                                    <div class="product-price">£{{ $course->course_price }}</div>
                                                     <div class="divider-48" id="itm-post-{{ $course->id }}"></div>
                                                     <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $course->course_title))) }}" class="btn btn-maincolor">View More</a>
                                                     <a href="javascript:void(0);" onclick="javascript:product_submit({{ $course->id }});" class="btn btn-maincolor">Buy Now</a>
                                                     <div class="tagcloud">
                                                         @if(count(json_decode($course->category_id)) > 0)
                                                             @foreach(json_decode($course->category_id) as $v)
-                                                                <a href="category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
+                                                                <a href="/category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
                                                                     {{ App\Http\Controllers\Category::CatID($v)->category_title }}
                                                                 </a>
                                                             @endforeach
@@ -244,238 +253,164 @@
                             <div class="form-avatar w-38 h-100">
                                 <img src="images/empty-avatar.png" alt="">
                             </div>
-                            <form action="http://webdesign-finder.com/" method="post" id="commentform" class="comment-form" novalidate="">
+                            <form action="{{ URL::to("/storecomments") }}" method="post" id="savecomment" name="savecomment" class="comment-form" novalidate="">
                                 <div class="comment-form-author form-group has-placeholder">
                                     <label for="author">Name</label>
-                                    <input class="form-control" id="author" name="author" type="text" value="" size="30" maxlength="245" aria-required="true" required="required" placeholder="Name*">
+                                    <input class="form-control" id="cuser" name="cuser" type="text" value="{{ (isset(Auth::user()->first_name)) ? Auth::user()->first_name . " " . Auth::user()->last_name : "" }}" size="30" maxlength="245" aria-required="true" required="required" placeholder="Name*">
                                 </div>
                                 <p class="comment-form-email form-group has-placeholder">
                                     <label for="email">Email </label>
-                                    <input class="form-control" id="email" name="email" type="email" value="" size="30" maxlength="100" aria-required="true" required="required" placeholder="Email*">
+                                    <input class="form-control" id="cemail" name="cemail" type="cemail" value="{{ isset(Auth::user()->email) ? Auth::user()->email : "" }}" size="30" maxlength="100" aria-required="true" required="required" placeholder="Email*">
                                 </p>
-
+                                <input type="hidden" name="cid" id="cid" value="{{ $course->id }}">
                                 <p class="comment-form-comment form-group has-placeholder">
                                     <label for="comment">Comment</label>
-                                    <textarea class="form-control" id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required" placeholder="Message*"></textarea>
-                                </p>
+                                    <textarea class="form-control" id="ccomment" name="ccomment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required" placeholder="Message*"></textarea>
+                                </p>{{ csrf_field() }}
                                 <p class="form-submit">
-                                    <button type="button" class="w-100 d-block btn btn-maincolor">Send comment</button>
+                                    <button type="submit" class="w-100 d-block btn btn-maincolor">Send comment</button>
                                 </p>
                             </form>
                         </div>
                         <!-- #respond -->
                         <ol class="comment-list">
-                            <li class="comment">
-                                <article class="comment-body">
-                                    <footer class="comment-meta">
-                                        <div class="comment-author vcard">
-                                            <img alt="" src="images/team/testimonials_01.jpg">
-                                        </div>
-                                        <!-- .comment-author -->
-                                        <div class="comment-name">
-                                            <span class="says">By:</span>
-                                            <b class="fn">
-                                                <a href="#" rel="nofollow" class="url fw-500">Keith M. Jordan</a>
-                                            </b>
-                                            <span class="comment-metadata d-block">
-														<a href="#">
-															<time datetime="2019-03-14T08:01:21+00:00">
-																17 Jan, 11:32 AM
-															</time>
-														</a>
-													</span>
-                                            <!-- .comment-metadata -->
-                                        </div>
-                                    </footer>
-                                    <!-- .comment-meta -->
-                                    <div class="comment-content">
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
-                                        </p>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-													<span class="like">
-														<a class="like-link fw-500" href="#" aria-label="Reply to John Doe">Like</a>
-													</span>
-                                            <span class="reply">
-														<a rel="nofollow" class="comment-reply-link fw-500" href="#comments" aria-label="Reply to John Doe">Reply</a>
-													</span>
-                                        </div>
-                                        <div>
-													<span class="like-count color-dark">
-														<i class="fw-600 color-dark fa fa-heart-o"></i>
-														12
-													</span>
-                                            <span class="comment-count color-dark">
-														<i class="color-dark icon-m-comment-alt"></i>
-														1 Comment
-													</span>
-                                        </div>
-                                    </div>
-                                </article>
-                                <!-- .comment-body -->
-                                <ol class="children">
-                                    <li class="comment">
+                            @if(count($MainComments) > 0)
+                                @foreach($MainComments as $v)
+                                    <li class="comment" id="commentID{{$v->id}}">
                                         <article class="comment-body">
                                             <footer class="comment-meta">
                                                 <div class="comment-author vcard">
-                                                    <img alt="" src="images/team/testimonials_02.jpg">
+                                                    <img alt="" src="images/team/testimonials_01.jpg">
                                                 </div>
                                                 <!-- .comment-author -->
                                                 <div class="comment-name">
                                                     <span class="says">By:</span>
                                                     <b class="fn">
-                                                        <a href="#" rel="nofollow" class="url fw-500">John B. Lewis</a>
+                                                        <a href="javascript:void(0);" rel="nofollow" class="url fw-500">{{ $v->name }}</a>
                                                     </b>
                                                     <span class="comment-metadata d-block">
-																<a href="#">
-																	<time datetime="2019-03-14T08:01:21+00:00">
-																		17 Jan, 11:32 AM
-																	</time>
-																</a>
-															</span>
+                                                        <a href="javascript:void(0);">
+                                                            <time datetime="2019-03-14T08:01:21+00:00">
+                                                                {{ Carbon\Carbon::parse($v->created_at)->format('F d, h:ia') }}
+                                                            </time>
+                                                        </a>
+                                                    </span>
                                                     <!-- .comment-metadata -->
                                                 </div>
                                             </footer>
                                             <!-- .comment-meta -->
                                             <div class="comment-content">
                                                 <p>
-                                                    Ut wisi enim ad minim veniam, quis nostrud exerci tation. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
+                                                    {!! $v->message !!}
                                                 </p>
                                             </div>
                                             <div class="d-flex justify-content-between">
                                                 <div>
-															<span class="like">
-																<a class="like-link fw-500" href="#" aria-label="Reply to John Doe">Like</a>
-															</span>
+                                                    <span class="like">
+                                                        <a class="like-link fw-500" href="javascript:void(0);" onclick="javascript:likeit({{ $v->id }});" aria-label="Reply to {{ $v->name }}">Like</a>
+                                                    </span>
                                                     <span class="reply">
-																<a rel="nofollow" class="comment-reply-link fw-500" href="#comments" aria-label="Reply to John Doe">Reply</a>
-															</span>
+                                                        <a rel="nofollow" class="comment-reply-link fw-500" href="javascript:void(0);" onclick="javascript:replyit({{ $v->id }});" aria-label="Reply to {{ $v->name }}">Reply</a>
+                                                    </span>
                                                 </div>
                                                 <div>
-															<span class="like-count color-dark">
-																<i class="fw-600 color-dark fa fa-heart-o"></i>
-																0
-															</span>
+                                                    <span class="like-count color-dark" id="mainlike{{ $v->id }}">
+                                                        <i class="fw-600 color-dark fa fa-heart-o"></i>
+                                                        {{ json_decode($v->liked, true)["likes"] }}
+                                                    </span>
                                                     <span class="comment-count color-dark">
-																<i class="color-dark icon-m-comment-alt"></i>
-																0 Comment
-															</span>
+                                                        <i class="color-dark icon-m-comment-alt"></i>
+                                                        {{ json_decode($v->liked, true)["Comments"] }} Comment
+                                                    </span>
                                                 </div>
                                             </div>
                                         </article>
-                                        <!-- .comment-body -->
-                                    </li>
-                                    <!-- #comment-## -->
-                                    <li class="comment">
-                                        <article class="comment-body">
-                                            <footer class="comment-meta">
-                                                <div class="comment-author vcard">
-                                                    <img alt="" src="images/team/testimonials_03.jpg">
-                                                </div>
-                                                <!-- .comment-author -->
-                                                <div class="comment-name">
-                                                    <span class="says">By:</span>
-                                                    <b class="fn">
-                                                        <a href="#" rel="nofollow" class="url fw-500">Lani C. Duffy</a>
-                                                    </b>
-                                                    <span class="comment-metadata d-block">
-																<a href="#">
-																	<time datetime="2019-03-14T08:01:21+00:00">
-																		17 Jan, 11:32 AM
-																	</time>
-																</a>
-															</span>
-                                                    <!-- .comment-metadata -->
-                                                </div>
-                                            </footer>
-                                            <!-- .comment-meta -->
-                                            <div class="comment-content">
-                                                <p>
-                                                    Ut wisi enim ad minim veniam, quis nostrud exerci tation. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-                                                </p>
-                                            </div>
-                                            <div class="d-flex justify-content-between">
-                                                <div>
-															<span class="like">
-																<a class="like-link fw-500" href="#" aria-label="Reply to John Doe">Like</a>
-															</span>
-                                                    <span class="reply">
-																<a rel="nofollow" class="comment-reply-link fw-500" href="#comments" aria-label="Reply to John Doe">Reply</a>
-															</span>
-                                                </div>
-                                                <div>
-															<span class="like-count color-dark">
-																<i class="fw-600 color-dark fa fa-heart-o"></i>
-																0
-															</span>
-                                                    <span class="comment-count color-dark">
-																<i class="color-dark icon-m-comment-alt"></i>
-																0 Comment
-															</span>
-                                                </div>
-                                            </div>
-                                        </article>
-                                        <!-- .comment-body -->
-                                    </li>
-                                    <!-- #comment-## -->
-                                </ol>
-                                <!-- .children -->
-                            </li>
-                            <!-- #comment-## -->
 
-                            <li class="comment">
-                                <article class="comment-body">
-                                    <footer class="comment-meta">
-                                        <div class="comment-author vcard">
-                                            <img alt="" src="images/team/testimonials_01.jpg">
+                                        <div class="reply" id="reply{{ $v->id }}">
+                                            <div id="respond" class="comment-respond ls d-flex">
+                                                <form action="{{ URL::to("/storecomments") }}" method="post" id="savecomment" name="savecomment" class="comment-form" novalidate="">
+                                                    <div class="comment-form-author form-group has-placeholder">
+                                                        <label for="author">Name</label>
+                                                        <input class="form-control" id="cuser" name="cuser" type="text" value="{{ (isset(Auth::user()->first_name)) ? Auth::user()->first_name . " " . Auth::user()->last_name : "" }}" size="30" maxlength="245" aria-required="true" required="required" placeholder="Name*">
+                                                    </div>
+                                                    <p class="comment-form-email form-group has-placeholder">
+                                                        <label for="email">Email </label>
+                                                        <input class="form-control" id="cemail" name="cemail" type="cemail" value="{{ isset(Auth::user()->email) ? Auth::user()->email : "" }}" size="30" maxlength="100" aria-required="true" required="required" placeholder="Email*">
+                                                    </p>
+                                                    <input type="hidden" name="cid" id="cid" value="{{ $course->id }}">
+                                                    <input type="hidden" name="commentid" id="commentid" value="{{ $v->id }}">
+                                                    <p class="comment-form-comment form-group has-placeholder">
+                                                        <label for="comment">Comment</label>
+                                                        <textarea class="form-control" id="ccomment" name="ccomment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required" placeholder="Message*"></textarea>
+                                                    </p>{{ csrf_field() }}
+                                                    <p class="form-submit">
+                                                        <button type="submit" class="w-100 d-block btn btn-maincolor">Send comment</button>
+                                                    </p>
+                                                </form>
+                                            </div>
                                         </div>
-                                        <!-- .comment-author -->
-                                        <div class="comment-name">
-                                            <span class="says">By:</span>
-                                            <b class="fn">
-                                                <a href="#" rel="nofollow" class="url fw-500">Keith M. Jordan</a>
-                                            </b>
-                                            <span class="comment-metadata d-block">
-														<a href="#">
-															<time datetime="2019-03-14T08:01:21+00:00">
-																17 Jan, 11:32 AM
-															</time>
-														</a>
-													</span>
-                                            <!-- .comment-metadata -->
-                                        </div>
-                                    </footer>
-                                    <!-- .comment-meta -->
-                                    <div class="comment-content">
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
-                                        </p>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-													<span class="like">
-														<a class="like-link fw-500" href="#" aria-label="Reply to John Doe">Like</a>
-													</span>
-                                            <span class="reply">
-														<a rel="nofollow" class="comment-reply-link fw-500" href="#comments" aria-label="Reply to John Doe">Reply</a>
-													</span>
-                                        </div>
-                                        <div>
-													<span class="like-count color-dark">
-														<i class="fw-600 color-dark fa fa-heart-o"></i>
-														12
-													</span>
-                                            <span class="comment-count color-dark">
-														<i class="color-dark icon-m-comment-alt"></i>
-														1 Comment
-													</span>
-                                        </div>
-                                    </div>
-                                </article>
-                                <!-- .comment-body -->
-                            </li>
+
+
+                                        <!-- .comment-body -->
+                                        <ol class="children">
+                                            @if(count(App\Http\Controllers\Front\CourseController::GetSubComment($v->id)) > 0)
+                                                @foreach(App\Http\Controllers\Front\CourseController::GetSubComment($v->id) as $subv)
+                                                    <li class="comment" id="commentID{{$subv->id}}">
+                                                        <article class="comment-body">
+                                                            <footer class="comment-meta">
+                                                                <div class="comment-author vcard">
+                                                                    <img alt="" src="images/team/testimonials_02.jpg">
+                                                                </div>
+                                                                <!-- .comment-author -->
+                                                                <div class="comment-name">
+                                                                    <span class="says">By:</span>
+                                                                    <b class="fn">
+                                                                        <a href="javascript:void(0);" rel="nofollow" class="url fw-500">{{ $subv->name }}</a>
+                                                                    </b>
+                                                                    <span class="comment-metadata d-block">
+                                                                        <a href="javascript:void(0);">
+                                                                            <time datetime="2019-03-14T08:01:21+00:00">
+                                                                                {{ Carbon\Carbon::parse($subv->created_at)->format('F d, h:ia') }}
+                                                                            </time>
+                                                                        </a>
+                                                                    </span>
+                                                                    <!-- .comment-metadata -->
+                                                                </div>
+                                                            </footer>
+                                                            <!-- .comment-meta -->
+                                                            <div class="comment-content">
+                                                                <p>{!! $subv->message !!}</p>
+                                                            </div>
+                                                            <div class="d-flex justify-content-between">
+                                                                <div>
+                                                                    <span class="like">
+                                                                        <a class="like-link fw-500" href="javascript:void(0);" onclick="javascript:likeit({{ $subv->id }});" aria-label="Reply to {{ $subv->name }}">Like</a>
+                                                                    </span>
+{{--                                                                    <span class="reply">--}}
+{{--                                                                        <a rel="nofollow" class="comment-reply-link fw-500" href="#comments" aria-label="Reply to {{ $subv->name }}">Reply</a>--}}
+{{--                                                                    </span>--}}
+                                                                </div>
+                                                                <div>
+                                                                    <span class="like-count color-dark" id="mainlike{{ $subv->id }}">
+                                                                        <i class="fw-600 color-dark fa fa-heart-o"></i>
+                                                                        {{ json_decode($subv->liked, true)["likes"] }}
+                                                                    </span>
+                                                                    <span class="comment-count color-dark">
+                                                                        <i class="color-dark icon-m-comment-alt"></i>
+                                                                        {{ json_decode($subv->liked, true)["Comments"] }} Comment
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </article>
+                                                        <!-- .comment-body -->
+                                                    </li>
+                                                @endforeach
+                                            @endif
+                                        </ol>
+                                        <!-- .children -->
+                                </li>
+                                @endforeach
+                            @endif
                             <!-- #comment-## -->
                         </ol>
                         <!-- .comment-list -->

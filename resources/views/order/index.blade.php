@@ -42,7 +42,7 @@
                     <td>{{ App\Http\Controllers\OrderController::GetUserOnID($v->user_id)->first_name }}</td>
                     <td>{{ Carbon\Carbon::parse($v->created)->format('F d, Y') }}</td>
                     <td>{{ $v->order_state }}</td>
-                    <td>${{ ($TotalPrice[$v->id]) ? $TotalPrice[$v->id] : 0 }}.00 for {{ $v->order_items }} items</td>
+                    <td>${{ ($TotalPrice[$v->id]) ? $TotalPrice[$v->id] : 0 }} for {{ $v->order_items }} items</td>
                     {{--<td><a href="{{ URL::to("/admin/vieworder/" . $v->id) }}" class="woocommerce-button btn btn-outline-maincolor view">View</a></td>--}}
                 </tr>
                 @endforeach @else

@@ -23,6 +23,7 @@ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 Route::post('password/reset_password', 'Auth\ForgotPasswordController@reset_password');
 Route::get('/checkUsername', 'Rules@checkUsername');
 Route::get('/checkUserEmail', 'Rules@checkUserEmail');
+Route::get('/email-exist', 'Front\UserFrontController@isEmailExist');
 Route::get('/administrator', 'Auth\LoginController@showAdminLoginForm')->name('administrator');
 Route::get('/instructor', 'Auth\LoginController@showInstructorLoginForm')->name('instructor');
 Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learner');
@@ -54,7 +55,9 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
 
     /************* Cart Starts ***************/
     Route::resource('/cart', 'Front\CartController');
+    Route::post('/promo', 'Front\CartController@promoCode');
     Route::post('/addcart', 'Front\CartController@AddCart');
+    Route::post('/retakecart', 'Front\CartController@RetakeCart');
     Route::post('/updatecart', 'Front\CartController@UpdateCart');
     Route::post('/cartremoveitem', 'Front\CartController@RemoveItem');
     Route::get('/undocart', 'Front\CartController@UndoItem');
@@ -78,6 +81,10 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/paypalsuccess', 'Front\CartController@PayPalSuccess');
     /************* Paypal Ends ***************/
 
+    /************* Comment & Like Starts ***************/
+    Route::get('/likepost/{cid}', 'Front\CourseController@LikeThis');
+    /************* Comment & Like Starts ***************/
+
     /************* Course Starts ***************/
     Route::get('/course_detail/{course_title}', 'Front\CourseController@Detail');
     Route::get('/startcourse/{id}', 'Front\CartController@StartCourse');
@@ -93,6 +100,7 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/user/newsubscription/{cid}', 'Front\CourseController@NewSubscription');
     Route::post('/saveresult', 'Front\CourseController@SaveResult');
     Route::post('/saveratings', 'Front\CourseController@SaveRatings');
+    Route::post('/storecomments', 'Front\CourseController@StoreComments');
     /************* Course Ends ***************/
 
     /************* Front User Starts ***************/
@@ -184,6 +192,8 @@ Route::get('/cartitemsglobal', 'Front\CourseController@CartItemsGlobal');
 Route::get('/getcourseonid/{id}', 'Front\UserFrontController@GetCourseOnID');
 Route::get('/examincourse', 'CoursesController@ExamInCourse');
 Route::get('/studentcount/{cid}', 'Front\CourseController@StudentCount');
+Route::get('/curriculumcount/{cid}', 'CoursesController@CurriculumCount');
+Route::get('/offerapplied/{id}', 'CoursesController@OfferApplied');
 /********** Gernal Course Functions *********/
 
 /********** Gernal CMS Functions *********/
@@ -198,6 +208,10 @@ Route::get('/getuseronid/{id}', 'OrderController@GetUserOnID');
 Route::get('/getstars/{cid}', 'Front\CourseController@GetStars');
 /********** Gernal Ratings Functions *********/
 
+/********** Gernal Comment Functions *********/
+Route::get('/getcomments/{cid}', 'Front\CourseController@GetSubComment');
+/********** Gernal Comment Functions *********/
+
 
 // Route::get('admin_area', ['middleware' => 'admin', function () {
 Route::middleware(['admin'])->group(function () {	
@@ -207,7 +221,6 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/students/{cid}', 'UserController@User_enrolled_in_course');
     Route::get('/admin/user-create', 'UserController@user_create');
     Route::get('/admin/getusers/{id}', 'UserController@getusers');
-    Route::get('/email-exist', 'UserController@isEmailExist');
     Route::delete('/admin/user/{id}', 'UserController@destroy');
     Route::get('/user-edit/{squirrel}', 'UserController@edit_user');
     Route::post('/admin/update-user', 'UserController@update_user');
@@ -258,12 +271,30 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/update-curriculum', 'CurriCulums@UpdateCurriCulum');
     /*************** CurriCulums Ends ***************/
 
+    /*************** Comment Starts ***************/
+    Route::resource('/admin/comment', 'CommentController');
+    Route::get('/admin/comment', 'CommentController@index');
+    Route::post('/admin/comment_add', 'CommentController@CommentAdd');
+    Route::get('/admin/getcomment/{id}', 'CommentController@GetComment');
+    Route::post('/admin/update-comment', 'CommentController@UpdateComment');
+    Route::get('/admin/comments_blocked/{id}', 'CommentController@CommentsBlocked');
+    /*************** Comment Ends ***************/
+
+    /*************** Coupan Starts ***************/
+    Route::resource('/admin/coupan', 'CoupanController');
+    Route::get('/admin/coupan', 'CoupanController@index');
+    Route::post('/admin/coupan_add', 'CoupanController@CoupanAdd');
+    Route::get('/admin/getcoupan/{id}', 'CoupanController@GetCoupan');
+    Route::post('/admin/update-coupan', 'CoupanController@UpdateCoupan');
+    /*************** Coupan Ends ***************/
+
     /*************** Course Program Starts ***************/
     Route::resource('/admin/courseprogram', 'CourseProgramController');
     Route::get('/admin/courseprogram', 'CourseProgramController@index');
     Route::post('/admin/courseprogram_add', 'CourseProgramController@CourseProgramAdd');
     Route::get('/admin/getcourseprogram/{cp_id}', 'CourseProgramController@GetCourseProgram');
     Route::post('/admin/update-courseprogram', 'CourseProgramController@UpdateCourseProgram');
+    Route::get('/admin/cplisting/{cid}', 'CourseProgramController@CPListing');
     /*************** Course Program Ends ***************/
 
     /*************** Exam Starts ***************/
@@ -326,6 +357,7 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/updatestatus', 'CoursesController@UpdateCourseStatus');
     Route::post('/admin/update-course', 'CoursesController@UpdateCourse');
     Route::post('/admin/setproduct', 'CoursesController@SetProduct');
+    Route::post('/admin/applyoffer', 'CoursesController@ApplyOffer');
     /*************** Courses Ends ***************/
 
     /*************** Order Starts ***************/
@@ -333,6 +365,12 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/orders', 'OrderController@index');
     Route::get('/admin/vieworder/{id}', 'OrderController@ViewOrder');
     /*************** Order Ends ***************/
+
+    /*************** Reports Starts ***************/
+    Route::resource('/admin/areports', 'ReportsController');
+    Route::get('/admin/areports', 'ReportsController@index');
+    Route::get('/admin/ireports', 'ReportsController@InstructorRreports');
+    /*************** Reports Ends ***************/
 
     Route::resource('facker', 'FakerController');
 

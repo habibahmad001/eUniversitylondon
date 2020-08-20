@@ -18,18 +18,22 @@
       <div class="form-content-box">
 
         <div class="form-line">
+          <label>Course Title</label>
           <input type="text" name="cou_title" id="edit-cou_title" placeholder="Course Title" >
         </div>
 
         <div class="form-line">
+          <label>Course Description</label>
           <textarea name="cou_desc" id="edit-cou_desc" placeholder="Type some description."></textarea>
         </div>
 
         <div class="form-line">
+          <label>Number of Lectures</label>
           <input type="text" name="cou_lectures" id="edit-cou_lectures" placeholder="Lectures e.g(30 Lectures)" >
         </div>
 
         <div class="form-line">
+          <label>Course Language</label>
           <select name="cou_language[]" id="edit-cou_language" class="form-control"  multiple>
             <option value="english">English</option>
             <option value="france">France</option>
@@ -37,30 +41,37 @@
         </div>
 
         <div class="form-line">
+          <label>Course Session in hour's</label>
           <input type="text" name="cou_video" id="edit-cou_video" placeholder="Video Hours e.g (8 Hours)" >
         </div>
 
         <div class="form-line">
+          <label>Course Duration</label>
           <input type="text" name="cou_duration" id="edit-cou_duration" placeholder="Course Duration e.g (20 Days)" >
         </div>
 
         <div class="form-line">
+          <label>Course Includes</label>
           <input type="text" name="cou_includes" id="edit-cou_includes" placeholder="Course Includes e.g (Personal support)" >
         </div>
 
         <div class="form-line">
+          <label>YouTube Link</label>
           <input type="text" name="youtube" id="edit-youtube" placeholder="YouTube Video Link" >
         </div>
 
         <div class="form-line">
+          <label>Course Price</label>
           <input type="text" name="cou_price" id="edit-cou_price" placeholder="Course Price" >
         </div>
 
         <div class="form-line">
+          <label>Discounted Price</label>
           <input type="text" name="cou_discounted_price" id="edit-cou_discounted_price" placeholder="Course Discounted Price" >
         </div>
 
         <div class="form-line">
+          <label>Course Category</label>
           <select name="cou_category[]" id="edit-cou_category" class="form-control"  multiple>
             @if(count($Category)) @foreach ($Category as $cat) @if($cat->category_cid == 0)
               <option value="{{ $cat->id }}">{{ $cat->category_title }}</option>
@@ -71,13 +82,15 @@
         </div>
 
         <div class="form-line">
-          <input type="file" name="cou_avatar" id="cou_avatar">
+          <label>Course Image</label>
+          <input type="file" name="cou_avatar" id="edit-cou_avatar">
           <div id="avatar_div">
             <img src="http://via.placeholder.com/150x150" width="150" height="150">
           </div>
         </div>
 
         <div class="form-line">
+          <label>Course PDF</label>
           <input type="file" name="cou_pdf" id="edit-cou_pdf">
           <div id="edit-pdf_div">
             <img src="{{ asset('/images/pdficon.png' ) }}" width="150" height="150">

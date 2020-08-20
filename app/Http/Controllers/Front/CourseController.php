@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Coupan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
@@ -12,6 +15,7 @@ use App\MexamWithUser;
 use App\CourseProgram;
 use App\CourseStarted;
 use App\ExamWithUser;
+use App\Comments;
 use App\MockExam;
 use App\Ratings;
 use App\Courses;
@@ -51,9 +55,55 @@ class CourseController extends Controller
 
         $data['course']              = Courses::where("course_title", $filter_title)->first();
         $data['AllCourse']           = Courses::where("course_status", "yes")->get();
+        $data['MainComments']            = Comments::where("course_id", $data['course']->id)->where("subComment", 0)->orderBy("id", "desc")->where("isActive", "yes")->get();
         $data['CourseProgram']       = CourseProgram::where("course_id", $data['course']->id)->where("cp_status", "yes")->orderBy("cp_placement", "asc")->get();
 
         return view('frontend.course-detail', $data);
+    }
+
+    public static function GetSubComment($cid){
+        $Comments            = Comments::where("subComment", $cid)->orderBy("id", "desc")->where("isActive", "yes")->get();
+        return $Comments;
+    }
+
+    public function LikeThis($cid){
+        if(!Auth::user()) {
+            $data = [];
+            $data["id"] = $cid;
+            $data["cont"] = "login";
+            return $data;
+        } else {
+            $Comments            = Comments::where("id", $cid)->first();
+            if($Comments) {
+                $resArr = json_decode($Comments->liked, true);
+                if(array_key_exists($cid, $resArr["likeIDs"])) {
+                    if(in_array(Auth::user()->id, $resArr["likeIDs"][$cid])) {
+                        $resArr["likes"] = $resArr["likes"]-1;
+                        if (($key = array_search(Auth::user()->id, $resArr["likeIDs"][$cid])) !== false) {
+                            unset($resArr["likeIDs"][$cid][$key]);
+                        }
+                    } else {
+                        $resArr["likes"] = $resArr["likes"]+1;
+                        $resArr["likeIDs"][$cid][] = Auth::user()->id;
+                    }
+                } else {
+                    $resArr["likeIDs"][$cid] = array();
+                    if (in_array(Auth::user()->id, $resArr["likeIDs"][$cid])) {
+                        $resArr["likes"] = $resArr["likes"]-1;
+                        if (($key = array_search(Auth::user()->id, $resArr["likeIDs"][$cid])) !== false) {
+                            unset($resArr["likeIDs"][$cid][$key]);
+                        }
+                    } else {
+                        $resArr["likes"] = $resArr["likes"]+1;
+                        $resArr["likeIDs"][$cid][] = Auth::user()->id;
+                    }
+                }
+            }
+            $Comments->liked = json_encode($resArr);
+            $Comments->save();
+        }
+
+        return json_decode($Comments->liked, true)["likes"];
     }
 
     public static function CartItemsGlobal() {
@@ -75,6 +125,15 @@ class CourseController extends Controller
             }
             $data["SubTotal"] = $SubTotal;
             $data["Total"] = $Total;
+            if($session_result->promo) {
+                $promo = Coupan::find($session_result->promo);
+                if($promo) {
+                    if(strtotime($promo->endsTo) >= strtotime(Carbon::now())) {
+                        $data["Total"] = ($Total - (($promo->value)/100)*$Total);
+                        $data['promo'] = $promo->title;
+                    }
+                }
+            }
             /*************** Totals *************/
         }
 
@@ -154,11 +213,6 @@ class CourseController extends Controller
     }
 
     public function MockExam($mcid) {
-
-        if(!Auth::user()) {
-            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
-        }
-
         $data         = [];
 
         $data['sub_heading']  = 'Mock Exam Page';
@@ -540,6 +594,48 @@ class CourseController extends Controller
         } else {
             return "no";
         }
+    }
+
+    public function StoreComments(Request $request) {
+
+        $Comments         = new Comments;
+
+        $this->validate($request, [
+            'cuser'=>'required',
+            'cemail'=>'required',
+            'ccomment'=>'required'
+        ]);
+        $Comments->name         = $request->cuser;
+        $Comments->email        = $request->cemail;
+        if(isset($request->commentid)) {
+            $Comments->subComment   = $request->commentid;
+            $this->AddcommentID($request->commentid);
+        } else {
+            $Comments->subComment   = 0;
+        }
+        $Comments->message      = $request->ccomment;
+        $Comments->course_id    = $request->cid;
+        $Comments->liked        = json_encode(array("likes" => 0, "Comments" => 0, "likeIDs" => array("postID" => array("userID")), "CommentIDs" => array("postID" => array("userID"))));
+        if(!Auth::user()) {
+            $Comments->isActive    = "no";
+        }
+
+        $save   =   $Comments->save();
+        if($save) {
+            return redirect()->back()->with('message', 'Comment has been added successfully !!!');
+        } else {
+            return redirect()->back()->with('message', 'Faild to add comment !!!');
+        }
+    }
+
+    public function AddcommentID($cid=0) {
+        $Comments            = Comments::where("id", $cid)->first();
+        if($Comments) {
+            $resArr = json_decode($Comments->liked, true);
+            $resArr["Comments"] = $resArr["Comments"]+1;
+        }
+        $Comments->liked = json_encode($resArr);
+        $Comments->save();
     }
 
     public function ResultCHKMock($course_id, $exam_id) {

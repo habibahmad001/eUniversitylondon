@@ -43,6 +43,24 @@ class UserFrontController extends Controller
         return view('frontend.dashboard', $data);
     }
 
+    public function isEmailExist(Request $request) {
+        $email            = $request->email;
+        $id               = $request->id;
+        $exist            = false;
+        if($id > 0){
+            $user           = User::where('email', $email)->where('id', '!=', $id)->first();
+            if($user){
+                $exist        = true;
+            }
+        } else {
+            $user         = User::where('email', $email)->first();
+            if($user){
+                $exist      = true;
+            }
+        }
+        return Response::json(['exist'=> $exist]);
+    }
+
     public function ViewOrder($id) {
 
         $data                   = [];

@@ -36,7 +36,7 @@
                             <label for="search-form-widget">
                                 <span class="screen-reader-text">Search for:</span>
                             </label>
-                            <input type="search" id="search-form-widget" class="search-field" placeholder="" value="" name="search">
+                            <input type="search" id="search-form-widget" class="search-field" autocomplete="off" placeholder="" value="" name="search">
                             <button type="submit" class="search-submit" id="cat_search">
                                 <span class="screen-reader-text">Search</span>
                             </button>

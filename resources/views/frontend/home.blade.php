@@ -29,7 +29,7 @@
                                     <span class="screen-reader-text">Search for:</span>
                                 </label>
                                 <i class="fa fa-search home-search-btn"></i>
-                                <input type="search" id="search-form-widget" class="search-field form-control" placeholder="Enter course name" value="" name="search">
+                                <input type="search" id="search-form-widget" autocomplete="off" class="search-field form-control" placeholder="Enter course name" value="" name="search">
                                 <button type="submit" class="search-submit btn btn-maincolor home-search-btn">Find courses</button>
                             </div>
                         </form>
@@ -131,7 +131,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row isotope-wrapper c-mb-30" data-filters=".course-filters">
+                <div class="row isotope-wrapper c-mb-30" id="HomeCourses" data-filters=".course-filters">
                     @if(count($Courses) > 0)
                         @foreach($Courses as $course)
                             <div class="col-12 col-md-6 col-lg-4 @if(count(json_decode($course->setas)) > 0) @foreach(json_decode($course->setas) as $v) {{ $v }} @endforeach @endif">
@@ -139,6 +139,7 @@
                                     <div class="course-front rounded bordered">
                                         <div class=" vertical-item content-padding">
                                             <div class="item-media rounded-top">
+                                                {!! ($course->OfferData && (strtotime($course->EndDate) >= strtotime(Carbon\Carbon::now()))) ? '<span class="onsale">'.$course->OfferData.'% Off</span>' : '' !!}
                                                 <img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
                                             </div>
                                             <div class="item-content">
@@ -150,7 +151,7 @@
                                                     <span style="width: {{ (App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] == 0) ? 100 : App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}%">Rated <strong class="rating">5.00</strong> out of 5</span>
                                                 </div>
 
-                                                <div class="product-price">£{{ $course->course_price }}.00</div>
+                                                <div class="product-price">£{{ $course->course_price }}</div>
 
                                                 <div class="tagcloud">
                                                     @if(count(json_decode($course->category_id)) > 0)
@@ -178,7 +179,7 @@
                                             </div>
 
                                             {{ csrf_field() }}
-                                            <div class="product-price">£{{ $course->course_price }}.00</div>
+                                            <div class="product-price">£{{ $course->course_price }}</div>
                                             <div class="divider-48" id="itm-post-{{ $course->id }}"></div>
                                             <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $course->course_title))) }}" class="btn btn-maincolor">View More</a>
                                             <a href="javascript:void(0);" onclick="javascript:product_submit({{ $course->id }});" class="btn btn-maincolor">Buy Now</a>

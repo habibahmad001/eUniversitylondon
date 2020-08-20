@@ -77,7 +77,12 @@ class LoginController extends Controller {
         $password = $request->password;
 
         if (Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'admin'])) {
-            //exit($password);
+            /********** Update Cart Session ID Starts *************/
+            $update_session                 = cart::firstOrNew(array('session_id' => $Old_Sess_ID));
+            $update_session->session_id     = session()->getId();
+
+            $update_session->save();
+            /********** Update Cart Session ID Ends *************/
             return redirect()->intended('/admin/home');
         }
         else if(Auth::attempt(['email' => $email, 'password' => $password, 'user_type' => 'instructor']))
@@ -86,6 +91,12 @@ class LoginController extends Controller {
             {
                 return redirect()->intended('/instructor');
             } else {
+                /********** Update Cart Session ID Starts *************/
+                $update_session                 = cart::firstOrNew(array('session_id' => $Old_Sess_ID));
+                $update_session->session_id     = session()->getId();
+
+                $update_session->save();
+                /********** Update Cart Session ID Ends *************/
                 return redirect()->intended('/instructor/home');
             }
         }

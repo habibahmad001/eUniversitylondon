@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CourseProgram;
 use App\Exam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -10,6 +11,7 @@ use Illuminate\Support\Str;
 
 use App\User;
 use App\Courses;
+use Carbon\Carbon;
 use App\Categories;
 use App\CourseWithUser;
 
@@ -148,11 +150,23 @@ class CoursesController extends Controller
     }
 
     public static function ExamCount($cid) {
-        $RES          = Exam::where('course_id', $cid)->where('exam_user_id', Auth::user()->id)->count();
+        if(Auth::user()->user_type == "admin") {
+            $RES          = Exam::where('course_id', $cid)->count();
+        } else {
+            $RES          = Exam::where('course_id', $cid)->where('exam_user_id', Auth::user()->id)->count();
+        }
+        return $RES;
+    }
+
+    public static function CurriculumCount($cid) {
+        $RES          = CourseProgram::where('course_id', $cid)->count();
         return $RES;
     }
 
     public static function ExamInCourse() {
+        if(!Auth::user()) {
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+        }
         $Flag_MSG   =   [];
         $Course_RES   =   Courses::where('course_user_id', Auth::user()->id)->get();
         if(count($Course_RES) > 0) {
@@ -176,6 +190,24 @@ class CoursesController extends Controller
         $Courses         = Courses::find($id);
         $data['Courses'] = $Courses;
         return Response::json($data);
+    }
+
+    public static function OfferApplied($id) {
+        $res = "";
+        $Courses         = Courses::where("id", $id)->where("OfferData", "!=", NULL)->first();
+        if($Courses) {
+            $enddate = strtotime($Courses->EndDate);
+            $newdate = Carbon::now();
+            $newdate = strtotime($newdate);
+            if($newdate > $enddate) {
+                $res = "Offer Is Expired";
+            } else {
+                $res = "Offer Is Active";
+            }
+        } else {
+            $res = "Apply Offer Now";
+        }
+        return $res;
     }
 
     public function UpdateCourse(Request $request){
@@ -249,13 +281,35 @@ class CoursesController extends Controller
 
         $saved              = $Courses->save();
         if ($saved) {
-            $request->session()->flash('message', 'Course was successful edited!');
+            $request->session()->flash('message', 'Course categories has been updated!');
             return redirect('/' . collect(request()->segments())->first() . '/course');
         } else {
             return redirect()->back()->with('error', 'Couldn\'t create Courses!');
         }
     }
 
+    public function ApplyOffer(Request $request){
+        $id              =        $request->app_cou_id;
+        $this->validate($request, [
+            'offer'=>'required',
+            'startdate'=>'required',
+            'enddate'=>'required'
+        ]);
+
+        $Courses              = Courses::find($id);
+
+        $Courses->OfferData  = $request->offer;
+        $Courses->StartDate  = $request->startdate;
+        $Courses->EndDate    = $request->enddate;
+
+        $saved              = $Courses->save();
+        if ($saved) {
+            $request->session()->flash('message', 'Discount has been applied!');
+            return redirect()->back();
+        } else {
+            return redirect()->back()->with('error', 'Couldn\'t create Courses!');
+        }
+    }
 
     public function UpdateCourseStatus(Request $request){
         $id              =        $request->p_id;

@@ -28,6 +28,13 @@ h1,h2,h3,h4,h5,h6 { margin: 0; padding: 0; }
 .login-container .forgot-password a { color: #818181; text-decoration: none; font-weight: normal; font-size: 12px; }
 .login-container .forgot-password a:hover { text-decoration: underline; }
 
+.modal-backdrop.in {
+    display: none;
+}
+
+.w-93px {
+    width: 93px;
+}
 
 
 /* Header -------------------------------- */
@@ -250,7 +257,53 @@ table.table { border-collapse:collapse; }
     width: 0;
     overflow: hidden;
 }
+.add-new-form.spacialOffer {
+    width: 0;
+    overflow: hidden;
+}
 
+.inner-menu {
+    display: none;
+}
+
+.inner-menu .icon-detail {
+    font-size: 11px;
+    font-weight: normal;
+    margin-left: 35px;
+}
+
+.open>.dropdown-menu {
+    display: block;
+    background: #555;
+    border: 1px solid #ccc;
+    padding: 13px;
+}
+.dropdown-menu > a {
+    display: block;
+    margin: 4% 0;
+}
+.BTNMenu {
+    border-radius: 20px;
+    padding-bottom: 10px;
+}
+.expiried {
+    color: #d9534f !important;
+}
+.active-offer {
+    color: #5caf01 !important;
+}
+.add-social * {
+    display: inline-block;
+}
+
+.w-40-percent {
+    width: 40% !important;
+}
+
+div.socialItem {
+    width: 100%;
+    margin: 1% 0;
+}
 .error::-webkit-input-placeholder { color: #e68888; }
 .error:-moz-placeholder { color: #e68888; }
 .error::-moz-placeholder { color: #e68888; }

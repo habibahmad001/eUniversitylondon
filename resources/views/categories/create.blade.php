@@ -39,10 +39,10 @@
         <textarea name="c_content" id="c_content" placeholder="Type some description."></textarea>
       </div>
 
-      <div class="form-line">
-        <input type="checkbox" name="child" id="child" >&nbsp;&nbsp;&nbsp; Is Child
-      </div>
-      
+{{--      <div class="form-line">--}}
+{{--        <input type="checkbox" name="child" id="child" >&nbsp;&nbsp;&nbsp; Is Child--}}
+{{--      </div>--}}
+
       <div class="form-line" id="category_div">
         <select name="sel_txt" id="sel_txt" class="half-width">
             <option value="0">Select Categories</option>

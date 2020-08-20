@@ -93,7 +93,7 @@
                                     <span class="screen-reader-text">Search for:</span>
                                 </label>
                                 <i class="fa fa-search"></i>
-                                <input type="search" id="search-form-widget" class="search-field form-control" value="" name="search">
+                                <input type="search" id="search-form-widget" autocomplete="off" class="search-field form-control" value="" name="search">
                                 <button type="submit" class="search-submit btn btn-maincolor home-search-btn">Find courses</button>
                             </div>
                         </form>

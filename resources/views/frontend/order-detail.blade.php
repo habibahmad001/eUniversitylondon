@@ -91,7 +91,7 @@
 
                                                 <td class="woocommerce-table__product-total product-total">
 																<span class="woocommerce-Price-amount amount">
-																	<span class="woocommerce-Price-currencySymbol">$</span>12.00
+																	<span class="woocommerce-Price-currencySymbol">$</span>12
 																</span>
                                                 </td>
 
@@ -104,7 +104,7 @@
                                                 <th scope="row">Subtotal:</th>
                                                 <td>
 																<span class="woocommerce-Price-amount amount">
-																	<span class="woocommerce-Price-currencySymbol">$</span>12.00</span>
+																	<span class="woocommerce-Price-currencySymbol">$</span>12</span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -115,7 +115,7 @@
                                                 <th scope="row">Total:</th>
                                                 <td>
 																<span class="woocommerce-Price-amount amount">
-																	<span class="woocommerce-Price-currencySymbol">$</span>12.00</span>
+																	<span class="woocommerce-Price-currencySymbol">$</span>12</span>
                                                 </td>
                                             </tr>
                                             </tfoot>

@@ -127,9 +127,15 @@
                                             {{ $team->teams_role }}
                                         </p>
                                         <p class="social-icons">
-                                            <a href="javascript:void(0);" class="fa fa-facebook" title="facebook"></a>
-                                            <a href="javascript:void(0);" class="fa fa-instagram" title="instagram"></a>
-                                            <a href="javascript:void(0);" class="fa fa-youtube-play" title="youtube"></a>
+                                            @if($team->SocialMedia)
+                                                @if(count(json_decode($team->SocialMedia, true)["SocialIcon"]) > 0)
+                                                    <?php $count=0;?>
+                                                    @foreach(json_decode($team->SocialMedia, true)["SocialIcon"] as $v)
+                                                        <a href="{!! json_decode($team->SocialMedia, true)['SocialLink'][$count] !!}" class="{!! $v !!}" title="facebook"></a>
+                                                            <?php $count++;?>
+                                                    @endforeach
+                                                @endif
+                                            @endif
                                         </p>
                                     </div>
                                 </div>

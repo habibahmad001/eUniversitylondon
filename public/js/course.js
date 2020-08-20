@@ -12,17 +12,17 @@ $(".add-button").click(function () {
 });
 
 $(".set-as").click(function () {
-  showFormOverlay();
-  var cou_id = $(this).attr('data-id');
+    showFormOverlay();
+    var cou_id = $(this).attr('data-id');
 
-  $(".set-product").animate({
-    width: "406px"
-  }, {
-    duration: 500,
+    $(".set-product").animate({
+      width: "406px"
+    }, {
+      duration: 500,
 
-  });
+    });
 
-  var user_folder = $("#puser_folder").val();
+  var user_folder = $("#p_puser_folder").val();
   $.get('/' + user_folder + '/getcourse/' + cou_id, function(data){
 
     $(".loading-container").fadeOut();
@@ -38,6 +38,47 @@ $(".set-as").click(function () {
           $(this).attr("selected","selected");
         }
       });
+
+      $(".save-changes").removeClass('disable').removeAttr('disabled');
+    }
+  });
+});
+
+$(".offer").click(function () {
+  showFormOverlay();
+  var cou_id = $(this).attr('data-id');
+
+  $(".spacialOffer").animate({
+    width: "406px"
+  }, {
+    duration: 500,
+
+  });
+
+  var user_folder = $("#app_puser_folder").val();
+  $.get('/' + user_folder + '/getcourse/' + cou_id, function(data){
+
+    $(".loading-container").fadeOut();
+    $(".form-content-box").fadeIn();
+
+    if(typeof data.Courses != 'undefined'){
+      Courses = data.Courses;
+
+      if(Courses.StartDate) {
+        var std = Courses.StartDate.split(" ");
+        $("#startdate").val(std[0]);
+      }
+
+      if(Courses.EndDate) {
+        var etd = Courses.EndDate.split(" ");
+        $("#enddate").val(etd[0]);
+      }
+
+      $("#app_cou_id").val(cou_id);
+      $("#offer").val(Courses.OfferData);
+
+
+
 
       $(".save-changes").removeClass('disable').removeAttr('disabled');
     }
@@ -149,25 +190,6 @@ $(".approve-course, .block-course").click(function () {
   });
 });
 
-function validateEmailExist(type) {
-  var email = $("#"+type+"email").val();
-  var email_rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if(email_rgx.test(email)) {
-    var user_id = $("#user_id").val();
-    $.get('/email-exist?id=' + user_id +'&email=' + email, function(data){
-      if(data.exist) {
-        $("#"+type+"email_exist").val('1');
-        $("#"+type+"email-exist").css('color','#ff0000');
-        $("#"+type+"email-exist").html('E-mail already exists.');
-      } else {
-        $("#"+type+"email-exist").html('');
-        $("#"+type+"email_exist").val('');
-      }
-    })
-
-  }
-}
-
 function validate(type) {
   $(".error").each(function(){
     $(this).removeClass('error');
@@ -239,3 +261,17 @@ function validate(type) {
 
   return true;
 }
+
+$(".dropdown-menu > a").click(function(){
+  $(".dropdown-menu").hide();
+});
+
+$( function() {
+  $( "#startdate, #enddate" ).datepicker({
+    showOn: "button",
+    buttonImage: "../images/calendar.gif",
+    buttonImageOnly: true,
+    buttonText: "Select date",
+    dateFormat: "yy-mm-dd"
+  });
+});

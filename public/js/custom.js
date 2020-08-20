@@ -47,6 +47,10 @@
     setTimeout(function() {
         $(".success-message-box").fadeOut(1000)
     }, 3000);
+
+    $(".outer-menu").click(function() { console.log("Hi");
+        $(this).find(".inner-menu").toggle(200);
+    });
 })(jQuery);
 
 

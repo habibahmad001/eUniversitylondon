@@ -19,6 +19,7 @@ use App\UserAddress;
 use App\CourseWithUser;
 use App\Order;
 use App\CourseStarted;
+use App\Coupan;
 
 use Auth;
 
@@ -59,7 +60,65 @@ class CartController extends Controller
             }
             $data["SubTotal"] = $SubTotal;
             $data["Total"] = $Total;
+            if($session_result->promo) {
+                $promo = Coupan::find($session_result->promo);
+                if($promo) {
+                    if(strtotime($promo->endsTo) >= strtotime(Carbon::now())) {
+                        $data["Total"] = ($Total - (($promo->value)/100)*$Total);
+                        $data['promo'] = $promo->title;
+                    }
+                }
+            }
             /*************** Totals *************/
+        }
+        $data['Courses']            = Courses::where("course_status","yes")->take(10)->orderBy('id', 'desc')->get();
+
+        return view('frontend.cart', $data);
+    }
+
+    public function promoCode(Request $request) {
+
+        $data                   = [];
+
+        $data['sub_heading']    = 'Cart';
+        $data['page_title']     = 'eUniversitylondon Cart';
+
+        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->first();
+        if($session_result === null) {
+            $data["CartItems"] = "emp";
+        } else {
+            $CartItems = (array) json_decode($session_result->val, true);
+            $data["CartItems"] = $CartItems;
+            /*************** Totals *************/
+            $SubTotal = 0;
+            $Total = 0;
+            foreach($CartItems as $v) {
+                $SubTotal = $SubTotal + ($v[3]*$v[2]);
+                $Total = $Total + ($v[3]*$v[2]);
+            }
+            $data["SubTotal"] = $SubTotal;
+            $data["Total"] = $Total;
+            $promo = Coupan::where('title', $request->coupon_code)->first();
+            if($promo) {
+                if(strtotime($promo->endsTo) >= strtotime(Carbon::now())) {
+                    $data["Total"] = ($Total - (($promo->value)/100)*$Total);
+                    /*************** Update Cart Table *************/
+                    $session_result = cart::where('session_id', session()->getId())->first();
+                    if($session_result) {
+                        $session_result->promo = $promo->id;
+                        $session_result->save();
+                    }
+                    /*************** Update Cart Table *************/
+                    $data['promo'] = $request->coupon_code;
+                } else {
+                    return redirect()->intended('/')->withErrors(['email' => 'This promo code is expired !!!']);
+                }
+            } else {
+                return redirect()->intended('/')->withErrors(['email' => 'This promo code does not exist, Please confirm and then apply it !!!']);
+            }
+
+            /*************** Totals *************/
+
         }
         $data['Courses']            = Courses::where("course_status","yes")->take(10)->orderBy('id', 'desc')->get();
 
@@ -79,7 +138,15 @@ class CartController extends Controller
             foreach($CartItems as $v) {
                 $Total = $Total + ($v[3]*$v[2]);
             }
-            $Total = $Total;
+
+            if($session_result->promo) {
+                $promo = Coupan::find($session_result->promo);
+                if($promo) {
+                    if(strtotime($promo->endsTo) >= strtotime(Carbon::now())) {
+                        $Total = ($Total - (($promo->value)/100)*$Total);
+                    }
+                }
+            }
             /*************** Totals *************/
 
             return $Total;
@@ -113,6 +180,15 @@ class CartController extends Controller
             }
             $data["SubTotal"] = $SubTotal;
             $data["Total"] = $Total;
+            if($session_result->promo) {
+                $promo = Coupan::find($session_result->promo);
+                if($promo) {
+                    if(strtotime($promo->endsTo) >= strtotime(Carbon::now())) {
+                        $data["Total"] = ($Total - (($promo->value)/100)*$Total);
+                        $data['promo'] = $promo->title;
+                    }
+                }
+            }
             /*************** Totals *************/
         }
 
@@ -166,7 +242,17 @@ class CartController extends Controller
         if($session_result === null) {
             $data["CartItems"] = "emp";
         } else {
-            $CartItems = (array) json_decode($session_result->val, true);
+            $CartItems = json_decode($session_result->val, true);
+            if($session_result->promo) {
+                $promo = Coupan::find($session_result->promo);
+                if($promo) {
+                    if(strtotime($promo->endsTo) >= strtotime(Carbon::now())) {
+                        foreach($CartItems as $k=>$v) {
+                            $CartItems[$k][3] = ($v[3] - (($promo->value)/100)*$v[3]);
+                        }
+                    }
+                }
+            }
             $data["CartItems"] = $CartItems;
         }
 
@@ -404,7 +490,9 @@ class CartController extends Controller
                 } else {
                     $sess           = cart::firstOrNew(array('session_id' => session()->getId()));
                     $prod_data      = Courses::where("id", $request->pid)->first();
-                    $CartItems[$request->pid] = array($prod_data->course_avatar, $prod_data->course_title, 1, $prod_data->course_price, $prod_data->id);
+                    $price = $prod_data->course_price;
+                    ($prod_data->OfferData && (strtotime($prod_data->EndDate) >= strtotime(Carbon::now()))) ? ($price = ($prod_data->course_price - (($prod_data->OfferData)/100)*$prod_data->course_price)) : ($price = $prod_data->course_price);
+                    $CartItems[$request->pid] = array($prod_data->course_avatar, $prod_data->course_title, 1, $price, $prod_data->id);
                     $sess->val      = json_encode($CartItems);
 
                     $sess->save();
@@ -415,7 +503,9 @@ class CartController extends Controller
                 $cartSession = [];
 
                 $prod_data      = Courses::where("id", $request->pid)->first();
-                $cartSession[$request->pid] = array($prod_data->course_avatar, $prod_data->course_title, 1, $prod_data->course_price, $prod_data->id);
+                $price = $prod_data->course_price;
+                ($prod_data->OfferData && (strtotime($prod_data->EndDate) >= strtotime(Carbon::now()))) ? ($price = ($prod_data->course_price - (($prod_data->OfferData)/100)*$prod_data->course_price)) : ($price = $prod_data->course_price);
+                $cartSession[$request->pid] = array($prod_data->course_avatar, $prod_data->course_title, 1, $price, $prod_data->id);
 
                 $sessNewItem    = cart::firstOrNew(array('session_id' => session()->getId()));
                 $sessNewItem->session_id = session()->getId();
@@ -440,6 +530,56 @@ class CartController extends Controller
 //        $sess->val = json_encode($cartSession);
 //
 //        $sess->save();
+
+    }
+
+    public function RetakeCart(Request $request){
+
+        $session_result = cart::where('session_id', session()->getId())->where("key", "cartItem")->get();
+        if(count($session_result) > 0) {
+            $CartItems = (array) json_decode($session_result[0]->val, true);
+            if(array_key_exists($request->pid, $CartItems)) {
+                foreach($CartItems as $k=>$v) {
+                    if($request->pid == $k) {
+                        unset($CartItems[$k]);
+                        $prod_data      = Courses::find($request->pid);
+                        $CartItems[$request->pid] = array($prod_data->course_avatar, "Retake - " . $prod_data->course_title, 1, 10, $prod_data->id);
+                        $prod_name = $prod_data->course_title;
+                    }
+                }
+                $sess         = cart::firstOrNew(array('session_id' => session()->getId()));
+                $sess->val = json_encode($CartItems);
+
+                $sess->save();
+
+                return redirect()->intended('/cart')->with('message', $prod_name . '" is set as Retake course!!!');
+            } else {
+                $sess           = cart::firstOrNew(array('session_id' => session()->getId()));
+                $prod_data      = Courses::where("id", $request->pid)->first();
+                $CartItems[$request->pid] = array($prod_data->course_avatar, "Retake - " . $prod_data->course_title, 1, 10, $prod_data->id);
+                $sess->val      = json_encode($CartItems);
+
+                $sess->save();
+
+                return redirect()->intended('/cart')->with('message', '"' . $prod_data->course_title . '" has been added to Cart!!!');
+            }
+        } else {
+            $cartSession = [];
+
+            $prod_data      = Courses::where("id", $request->pid)->first();
+            $price = 10;
+//            ($prod_data->OfferData && (strtotime($prod_data->EndDate) >= strtotime(Carbon::now()))) ? ($price = ($prod_data->course_price - (($prod_data->OfferData)/100)*$prod_data->course_price)) : ($price = $prod_data->course_price);
+            $cartSession[$request->pid] = array($prod_data->course_avatar, "Retake - " . $prod_data->course_title, 1, $price, $prod_data->id);
+
+            $sessNewItem    = cart::firstOrNew(array('session_id' => session()->getId()));
+            $sessNewItem->session_id = session()->getId();
+            $sessNewItem->key = "cartItem";
+            $sessNewItem->val = json_encode($cartSession);
+
+            $sessNewItem->save();
+
+            return redirect()->intended('/cart')->with('message', 'Cart has setup!!!');
+        }
 
     }
 

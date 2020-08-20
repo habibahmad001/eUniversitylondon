@@ -73,7 +73,7 @@
 
                                         <td class="product-price" data-title="Price">
                                                         <span class="amount">
-                                                            <span>£</span>{{ $v[3] }}.00
+                                                            <span>£</span>{{ $v[3] }}
                                                         </span>
                                         </td>
 
@@ -89,7 +89,7 @@
 
                                         <td class="product-subtotal" data-title="Total">
                                                         <span class="amount">
-                                                            <span>£</span>{{ $v[2]*$v[3] }}.00
+                                                            <span>£</span>{{ $v[2]*$v[3] }}
                                                         </span>
                                         </td>
                                     </tr>
@@ -108,8 +108,8 @@
 
                                     <div class="coupon">
                                         <label for="coupon_code">Coupon:</label>
-                                        <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Coupon code">
-                                        <input type="submit" class="btn btn-maincolor apply" name="apply_coupon" value="Apply coupon">
+                                        <input type="text" name="coupon_code" id="coupon_code" class="input-text" value="" placeholder="Coupon code">
+                                        <input type="button" class="btn btn-maincolor apply" name="couponSubmit" id="couponSubmit" value="Apply coupon">
                                     </div>
                                     <div id="addinput"></div>
                                     {{ csrf_field() }}
@@ -135,6 +135,7 @@
                                         @foreach($Courses as $course)
                                             <li class="product">
                                                 <a class="link-scale" href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $course->course_title))) }}">
+                                                    {!! ($course->OfferData && (strtotime($course->EndDate) >= strtotime(Carbon\Carbon::now()))) ? '<span class="onsale">'.$course->OfferData.'% Off</span>' : '' !!}
                                                     <span class="onsale">Sale!</span>
                                                     <img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
                                                 </a>
@@ -152,7 +153,7 @@
                                                                     {{--</span>--}}
                                                                 {{--</del>--}}
                                                                 <span>
-                                                                    <span>£</span>{{ $course->course_price }}.00
+                                                                    <span>£</span>{{ $course->course_price }}
                                                                 </span>
                                                             </span>
                                                     <div id="itm-post-{{ $course->id }}"></div>
@@ -180,20 +181,30 @@
                                 <tr class="cart-subtotal">
                                     <th>Subtotal</th>
                                     <td data-title="Subtotal">
-													<span class="amount">
-														<span>£</span>{{ (isset($SubTotal)) ? $SubTotal : 0 }}.00
-													</span>
+                                        <span class="amount">
+                                            <span>£</span>{{ (isset($SubTotal)) ? $SubTotal : 0 }}
+                                        </span>
                                     </td>
                                 </tr>
 
+                                @if(isset($promo))
+                                <tr class="cart-subtotal">
+                                    <th>Promo Code</th>
+                                    <td data-title="Subtotal">
+                                        <span class="amount">
+                                            {!! $promo !!}
+                                        </span>
+                                    </td>
+                                </tr>
+                                @endif
 
                                 <tr class="order-total">
                                     <th>Total</th>
                                     <td data-title="Total">
                                         <strong>
-                        <span class="amount">
-                            <span>£</span>{{ (isset($Total)) ? $Total : 0 }}.00
-                        </span>
+                                        <span class="amount">
+                                            <span>£</span>{{ (isset($Total)) ? $Total : 0 }}
+                                        </span>
                                         </strong>
                                     </td>
                                 </tr>

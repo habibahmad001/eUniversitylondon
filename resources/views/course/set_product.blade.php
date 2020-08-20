@@ -7,7 +7,7 @@
   <form method="POST" action="/{{ collect(request()->segments())->first() }}/setproduct" enctype="multipart/form-data">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" id="email_exist">
-    <input type="hidden" name="puser_folder" id="puser_folder" value="{{ collect(request()->segments())->first() }}">
+    <input type="hidden" name="p_puser_folder" id="p_puser_folder" value="{{ collect(request()->segments())->first() }}">
     <input type="hidden" name="p_cou_id" id="p_cou_id">
     <div class="form-height-control">
       <div style="color:red" id="form-errors">

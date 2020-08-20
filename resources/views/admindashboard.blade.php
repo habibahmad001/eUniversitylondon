@@ -141,7 +141,7 @@
                     @if(count($courses)) @foreach ($courses as $course)
                         <tr>
                             <td>{{ $course->course_title }}</td>
-                            <td>{{ (strlen(strip_tags($course->course_desc)) > 350) ? substr(strip_tags($course->course_desc), 0, 350) : strip_tags($course->course_desc) }}</td>
+                            <td>{{ (strlen(strip_tags($course->course_desc)) > 70) ? substr(strip_tags($course->course_desc), 0, 70) : strip_tags($course->course_desc) }}</td>
                         </tr>
                     @endforeach @else
                         <tr>

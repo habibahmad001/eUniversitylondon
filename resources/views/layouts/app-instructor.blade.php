@@ -42,16 +42,6 @@
 						<div class="cancel"></div>
 				</div>
 			@endif
-			@if(count(App\Http\Controllers\CoursesController::ExamInCourse()) > 0)
-					<div class="alert alert-danger" id="examMSG" role="alert" style="color: #843534; background: #f2dede;border-color: #ebccd1;">
-						<ul>
-							@foreach(App\Http\Controllers\CoursesController::ExamInCourse() as $k=>$v)
-								<li>{!! $v !!}</li>
-							@endforeach
-						</ul>
-						<div class="cancel"></div>
-					</div>
-			@endif
 			<div class="logo-txt">
 				<a href="{{ URL::to('/') }}"><img src="{{ asset('images/logo.png') }}" alt=""></a>
 
