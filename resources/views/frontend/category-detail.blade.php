@@ -191,7 +191,7 @@
                                                         <div class="star-rating course-rating" id="{{ App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}">
                                                             <span style="width: {{ (App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] == 0) ? 100 : App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}%">Rated <strong class="rating">5.00</strong> out of 5</span>
                                                         </div>
-                                                        <div class="product-price">£{{ $course->course_price }}.00</div>
+                                                        <div class="product-price">£{{ $course->course_price }}</div>
 
                                                         <div class="tagcloud">
                                                             @if(count(json_decode($course->category_id)) > 0)
@@ -217,7 +217,7 @@
                                                         <span style="width: {{ (App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] == 0) ? 100 : App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}%">Rated <strong class="rating">5.00</strong> out of 5</span>
                                                     </div>
                                                     <div class="divider-48" id="itm-post-{{ $course->id }}"></div>
-                                                    <div class="product-price">£{{ $course->course_price }}.00</div>
+                                                    <div class="product-price">£{{ $course->course_price }}</div>
                                                     <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $course->course_title))) }}" class="btn btn-maincolor">View More</a>
                                                     <a href="javascript:void(0);" onclick="javascript:product_submit({{ $course->id }});" class="btn btn-maincolor">Buy Now</a>
                                                     <div class="tagcloud">

@@ -22,14 +22,6 @@
 {{--      </a>--}}
 {{--    </li>--}}
 
-{{--    <li @if(collect(request()->segments())->last()=='learner') class="active" @endif>--}}
-{{--      <a href="{{ URL::to('/admin/learner') }}">--}}
-{{--        --}}{{--manage-rules--}}
-{{--        <div class="icon">L</div>--}}
-{{--        <div class="icon-detail">Learner</div>--}}
-{{--      </a>--}}
-{{--    </li>--}}
-
     <li @if(collect(request()->segments())->last()=='category') class="active" @endif>
       <a href="{{ URL::to('/admin/category') }}">
         {{--manage-rules--}}
@@ -38,21 +30,63 @@
       </a>
     </li>
 
-    <li @if(collect(request()->segments())->last()=='course') class="active" @endif>
-      <a href="{{ URL::to('/admin/course') }}">
+    <li class="outer-menu {!! (collect(request()->segments())->last()=='course' || collect(request()->segments())->last()=='courseprogram' || collect(request()->segments())->last()=='exam' || collect(request()->segments())->last()=='mexam') ? "active" : "" !!}">
+      <a href="javascript:void(0);">
+        <div class="icon">L</div>
+        <div class="icon-detail">LMS</div>
+      </a>
+      <ul class="inner-menu" {!! (collect(request()->segments())->last()=='course' || collect(request()->segments())->last()=='courseprogram' || collect(request()->segments())->last()=='exam' || collect(request()->segments())->last()=='mexam') ? "style='display: block'" : "" !!}>
+        <li>
+          <a href="{{ URL::to('/admin/course') }}">
+            <div class="icon-detail">Course</div>
+          </a>
+          <a href="{{ URL::to('/admin/courseprogram') }}">
+            <div class="icon-detail">Curriculum</div>
+          </a>
+          <a href="{{ URL::to('/admin/exam') }}">
+            <div class="icon-detail">Exams</div>
+          </a>
+          <a href="{{ URL::to('/admin/mexam') }}">
+            <div class="icon-detail">Mock Exams</div>
+          </a>
+          <a href="javascript:void(0);">
+            <div class="icon-detail">Certificates</div>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li @if(collect(request()->segments())->last()=='questionandanswer') class="active" @endif>
+      <a href="{{ URL::to('/admin/questionandanswer') }}">
         {{--manage-rules--}}
-        <div class="icon">C</div>
-        <div class="icon-detail">Course</div>
+        <div class="icon">QA</div>
+        <div class="icon-detail">Question & Ans</div>
       </a>
     </li>
 
-    <li @if(collect(request()->segments())->last()=='courseprogram') class="active" @endif>
-      <a href="{{ URL::to('/admin/courseprogram') }}">
+    <li @if(collect(request()->segments())->last()=='cms') class="active" @endif>
+      <a href="{{ URL::to('/admin/cms') }}">
         {{--manage-rules--}}
-        <div class="icon">CC</div>
-{{--        <div class="icon-detail">Course Program</div>--}}
-        <div class="icon-detail">Curriculum</div>
+        <div class="icon">P</div>
+        <div class="icon-detail">Pages</div>
       </a>
+    </li>
+
+    <li class="outer-menu {{ (collect(request()->segments())->last()=='areports' || collect(request()->segments())->last()=='ireports') ? "active" : "" }}">
+      <a href="javascript:void(0);">
+        <div class="icon">R</div>
+        <div class="icon-detail">Reports</div>
+      </a>
+      <ul class="inner-menu" {!! (collect(request()->segments())->last()=='areports' || collect(request()->segments())->last()=='ireports') ? "style='display: block'" : "" !!}>
+        <li>
+          <a href="{{ URL::to('/admin/areports') }}">
+            <div class="icon-detail">Admin revenue</div>
+          </a>
+          <a href="{{ URL::to('/admin/ireports') }}">
+            <div class="icon-detail">Instructor revenue</div>
+          </a>
+        </li>
+      </ul>
     </li>
 
     <li @if(collect(request()->segments())->last()=='comment') class="active" @endif>
@@ -71,30 +105,6 @@
       </a>
     </li>
 
-    <li @if(collect(request()->segments())->last()=='exam') class="active" @endif>
-      <a href="{{ URL::to('/admin/exam') }}">
-        {{--manage-rules--}}
-        <div class="icon">E</div>
-        <div class="icon-detail">Exams</div>
-      </a>
-    </li>
-
-    <li @if(collect(request()->segments())->last()=='mexam') class="active" @endif>
-      <a href="{{ URL::to('/admin/mexam') }}">
-        {{--manage-rules--}}
-        <div class="icon">ME</div>
-        <div class="icon-detail">Mock Exams</div>
-      </a>
-    </li>
-
-    <li @if(collect(request()->segments())->last()=='questionandanswer') class="active" @endif>
-      <a href="{{ URL::to('/admin/questionandanswer') }}">
-        {{--manage-rules--}}
-        <div class="icon">QA</div>
-        <div class="icon-detail">Question & Ans</div>
-      </a>
-    </li>
-
     <li @if(collect(request()->segments())->last()=='testimonial') class="active" @endif>
       <a href="{{ URL::to('/admin/testimonial') }}">
         {{--manage-rules--}}
@@ -108,14 +118,6 @@
         {{--manage-rules--}}
         <div class="icon">OC</div>
         <div class="icon-detail">Our Clients</div>
-      </a>
-    </li>
-
-    <li @if(collect(request()->segments())->last()=='cms') class="active" @endif>
-      <a href="{{ URL::to('/admin/cms') }}">
-        {{--manage-rules--}}
-        <div class="icon">C</div>
-        <div class="icon-detail">CMS</div>
       </a>
     </li>
 

@@ -55,7 +55,9 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
 
     /************* Cart Starts ***************/
     Route::resource('/cart', 'Front\CartController');
+    Route::post('/promo', 'Front\CartController@promoCode');
     Route::post('/addcart', 'Front\CartController@AddCart');
+    Route::post('/retakecart', 'Front\CartController@RetakeCart');
     Route::post('/updatecart', 'Front\CartController@UpdateCart');
     Route::post('/cartremoveitem', 'Front\CartController@RemoveItem');
     Route::get('/undocart', 'Front\CartController@UndoItem');
@@ -78,6 +80,10 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/paypal', 'Front\CartController@Paypal');
     Route::get('/paypalsuccess', 'Front\CartController@PayPalSuccess');
     /************* Paypal Ends ***************/
+
+    /************* Comment & Like Starts ***************/
+    Route::get('/likepost/{cid}', 'Front\CourseController@LikeThis');
+    /************* Comment & Like Starts ***************/
 
     /************* Course Starts ***************/
     Route::get('/course_detail/{course_title}', 'Front\CourseController@Detail');
@@ -201,6 +207,10 @@ Route::get('/getuseronid/{id}', 'OrderController@GetUserOnID');
 /********** Gernal Ratings Functions *********/
 Route::get('/getstars/{cid}', 'Front\CourseController@GetStars');
 /********** Gernal Ratings Functions *********/
+
+/********** Gernal Comment Functions *********/
+Route::get('/getcomments/{cid}', 'Front\CourseController@GetSubComment');
+/********** Gernal Comment Functions *********/
 
 
 // Route::get('admin_area', ['middleware' => 'admin', function () {
@@ -355,6 +365,12 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/orders', 'OrderController@index');
     Route::get('/admin/vieworder/{id}', 'OrderController@ViewOrder');
     /*************** Order Ends ***************/
+
+    /*************** Reports Starts ***************/
+    Route::resource('/admin/areports', 'ReportsController');
+    Route::get('/admin/areports', 'ReportsController@index');
+    Route::get('/admin/ireports', 'ReportsController@InstructorRreports');
+    /*************** Reports Ends ***************/
 
     Route::resource('facker', 'FakerController');
 

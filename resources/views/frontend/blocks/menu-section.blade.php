@@ -101,7 +101,7 @@
                                                                 <span class="quantity">{{ $citm[2] }} X
                                                                     <span class="woocommerce-Price-amount amount">
                                                                         <span class="woocommerce-Price-currencySymbol">£</span>
-                                                                        {{ $citm[3] }}.00
+                                                                        {{ $citm[3] }}
                                                                     </span>
                                                                 </span>
                                                             </li>
@@ -112,7 +112,7 @@
                                                         <strong>Subtotal:</strong>
                                                         <span class="woocommerce-Price-amount amount">
                                                             <span class="woocommerce-Price-currencySymbol">£</span>
-                                                            {{ App\Http\Controllers\Front\CourseController::CartItemsGlobal()["Total"] }}.00
+                                                            {{ App\Http\Controllers\Front\CourseController::CartItemsGlobal()["Total"] }}
                                                         </span>
                                                     </p>
 
@@ -160,7 +160,7 @@
                                                             <span class="quantity">{{ $citm[2] }} X
                                                                     <span class="woocommerce-Price-amount amount">
                                                                         <span class="woocommerce-Price-currencySymbol">£</span>
-                                                                        {{ $citm[3] }}.00
+                                                                        {{ $citm[3] }}
                                                                     </span>
                                                                 </span>
                                                         </li>
@@ -171,7 +171,7 @@
                                                     <strong>Subtotal:</strong>
                                                     <span class="woocommerce-Price-amount amount">
                                                             <span class="woocommerce-Price-currencySymbol">£</span>
-                                                            {{ App\Http\Controllers\Front\CourseController::CartItemsGlobal()["Total"] }}.00
+                                                            {{ App\Http\Controllers\Front\CourseController::CartItemsGlobal()["Total"] }}
                                                         </span>
                                                 </p>
 

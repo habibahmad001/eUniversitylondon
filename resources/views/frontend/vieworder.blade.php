@@ -88,7 +88,7 @@
                                                         </td>
                                                         <td class="woocommerce-table__product-total product-total">
                                                             <span class="woocommerce-Price-amount amount">
-                                                                <span class="woocommerce-Price-currencySymbol">$</span>{{ $v[2]*$v[3] }}.00
+                                                                <span class="woocommerce-Price-currencySymbol">$</span>{{ $v[2]*$v[3] }}
                                                             </span>
                                                         </td>
                                                     </tr><?php $ItemCount++;?>
@@ -101,7 +101,7 @@
                                                 <th scope="row">Subtotal:</th>
                                                 <td>
 																<span class="woocommerce-Price-amount amount">
-																	<span class="woocommerce-Price-currencySymbol">$</span>{{ ($SubTotal) ? $SubTotal : 0 }}.00</span>
+																	<span class="woocommerce-Price-currencySymbol">$</span>{{ ($SubTotal) ? $SubTotal : 0 }}</span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -112,7 +112,7 @@
                                                 <th scope="row">Total:</th>
                                                 <td>
 																<span class="woocommerce-Price-amount amount">
-																	<span class="woocommerce-Price-currencySymbol">$</span>{{ ($Total) ? $Total : 0 }}.00</span>
+																	<span class="woocommerce-Price-currencySymbol">$</span>{{ ($Total) ? $Total : 0 }}</span>
                                                 </td>
                                             </tr>
                                             </tfoot>

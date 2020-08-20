@@ -84,7 +84,7 @@
                                                         {{ $val->order_state }}
                                                     </td>
                                                     <td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-total" data-title="Total">
-                                                        <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{{ ($TotalPrice[$val->id]) ? $TotalPrice[$val->id] : 0 }}.00</span> for {{ $val->order_items }} items
+                                                        <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{{ ($TotalPrice[$val->id]) ? $TotalPrice[$val->id] : 0 }}</span> for {{ $val->order_items }} items
                                                     </td>
                                                     <td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-order-actions text-right" data-title="Actions">
                                                         <a href="{{ URL::to("/vieworder/" . $val->id) }}" class="woocommerce-button btn btn-outline-maincolor view">View</a> </td>

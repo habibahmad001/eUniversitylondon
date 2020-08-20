@@ -575,10 +575,20 @@ function Get_CP_PDF(ID) {
         if(data.msg == "newitem") {
             msg = "Course has been started!";
             PDFObject.embed("/uploads/courseprogrampdf/" + Courses.pdf, "#my-pdf", options);
+            $(".course_timeline li").removeClass("activeli");
+            $(".course_timeline li a").removeClass("active");
+            $(".course_timeline li>span").remove();
+            $("#li-"+ID).addClass("activeli").prepend("<span></span>");
+            $("#aid-"+ID).addClass("active");
         } else if(data.msg == "less") {
             msg = "You already cleared this program!";
         } else if(data.msg == "notexist") {
             msg = "Congratulation you completed this course!";
+            $(".course_timeline li").removeClass("activeli");
+            $(".course_timeline li a").removeClass("active");
+            $(".course_timeline li>span").remove();
+            $("#li-"+ID).addClass("activeli").prepend("<span></span>");
+            $("#aid-"+ID).addClass("active");
         } else if(data.msg == "wrongstep") {
             msg = "You are not eligible for this program Yet!";
         } else if(data.msg == "nocp") {
@@ -586,11 +596,14 @@ function Get_CP_PDF(ID) {
         } else if(data.msg == "updated") {
             msg = "Congratulation you completed this program!";
             PDFObject.embed("/uploads/courseprogrampdf/" + Courses.pdf, "#my-pdf", options);
+            $(".course_timeline li").removeClass("activeli");
+            $(".course_timeline li a").removeClass("active");
+            $(".course_timeline li>span").remove();
+            $("#li-"+ID).addClass("activeli").prepend("<span></span>");
+            $("#aid-"+ID).addClass("active");
         }
         $("#msg").text(msg).show().fadeOut(6500);
-
     });
-
 }
 
 
@@ -643,4 +656,24 @@ function validation_ask(type) {
     }
 
     return true;
+}
+
+$("#couponSubmit").click(function() {
+    $("#cart-update").attr("action", "/promo");
+    $("#cart-update").submit();
+});
+
+function likeit(ID) {
+    $.get('/likepost/' + ID, function(data){
+        if(data.cont == "login") {
+            $("#commentID"+data.id).prepend('<div class="alert alert-danger commentmsg">Please login first !!!</div>');
+            $(".commentmsg").fadeOut(6000);
+        } else {
+            $("#mainlike"+ID).html('<i class="fw-600 color-dark fa fa-heart-o"></i>'+data);
+        }
+    });
+}
+
+function replyit(ID) {
+    $("#reply"+ID).toggle();
 }
