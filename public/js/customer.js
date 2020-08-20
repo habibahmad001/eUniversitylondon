@@ -10,7 +10,7 @@ $(".edit-icon").click(function () {
   var customer_id = $(this).attr('data-id');
   $("#edit-customer-form").attr('action', "/customers/"+ customer_id);
   $(".edit-current-data").animate({
-    width: "406px"
+    width: "650px"
   }, {
     duration: 500,
   });
@@ -122,7 +122,7 @@ function updateLocation() {
               $("#suggested_address").html(google_formated_address);
 
               $("#google-suggestion").animate({
-                width: "406px"
+                width: "650px"
               }, {
                 duration: 500,
               });
@@ -134,7 +134,7 @@ function updateLocation() {
 
           } else {
             $("#google-suggestion").animate({
-              width: "406px"
+              width: "650px"
             }, {
               duration: 500,
             });

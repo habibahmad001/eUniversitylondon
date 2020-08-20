@@ -4,7 +4,7 @@ $(".add-button").click(function () {
   showFormOverlay();
 
   $(".add-new-data").animate({
-    width: "406px"
+    width: "650px"
   }, {
     duration: 500,
 
@@ -16,7 +16,7 @@ $(".set-as").click(function () {
     var cou_id = $(this).attr('data-id');
 
     $(".set-product").animate({
-      width: "406px"
+      width: "650px"
     }, {
       duration: 500,
 
@@ -49,7 +49,7 @@ $(".offer").click(function () {
   var cou_id = $(this).attr('data-id');
 
   $(".spacialOffer").animate({
-    width: "406px"
+    width: "650px"
   }, {
     duration: 500,
 
@@ -94,7 +94,7 @@ $(".edit-icon").click(function () {
   showFormOverlay();
   var cou_id = $(this).attr('data-id');
   $(".edit-current-data").animate({
-    width: "406px"
+    width: "650px"
   }, {
     duration: 500,
   });

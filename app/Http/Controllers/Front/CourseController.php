@@ -169,12 +169,14 @@ class CourseController extends Controller
                             /************* Update Next CP ***********/
                             $CourseStarted      = CourseStarted::where('course_id', $Data->course_id)->where('user_id', Auth::user()->id)->first();
                             $CourseStarted->CourseProgramID         =   $res_CP[$key];
+                            $CourseStarted->ProgramCount            =   $CourseStarted->ProgramCount+1;
 
                             $save                                   =   $CourseStarted->save();
                             /************* Update Next CP ***********/
                             if($save) {
                                 $RES["msg"]  =  "updated";
                                 $RES["pdf"]  =   $Data->pdf;
+                                $RES["width"]=   floor((($CourseStarted->ProgramCount)/count($res_CP))*100);
                                 return $RES;
                             }
                         }
@@ -202,7 +204,12 @@ class CourseController extends Controller
                 /********** Insert in Course Program *********/
 
                 $RES["msg"]  =  "newitem";
-                $RES["pdf"]  =   $Data->pdf;
+                if(file_exists("uploads/courseprogrampdf/" . $Data->pdf)) {
+                    $RES["pdf"]  =   $Data->pdf;
+                } else {
+                    $RES["pdf"]  =   "pdfnotfound";
+                }
+                $RES["width"]=   floor((($CourseStarted->ProgramCount+1)/count($CPFirstID))*100);
                 return $RES;
             } else {
                 $RES["msg"]  =  "nocp";

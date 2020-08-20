@@ -4,7 +4,7 @@ $(".add-button").click(function () {
   showFormOverlay();
 
   $(".add-new-data").animate({
-    width: "406px"
+    width: "650px"
   }, {
     duration: 500,
 
@@ -17,7 +17,7 @@ $(".edit-icon").click(function () {
   showFormOverlay();
   var exm_id = $(this).attr('data-id');
   $(".edit-current-data").animate({
-    width: "406px"
+    width: "650px"
   }, {
     duration: 500,
   });
