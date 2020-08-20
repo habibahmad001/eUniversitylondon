@@ -13,7 +13,7 @@
         }
 
         #myBar {
-            width: 20%;
+            width: {!! (isset($UserProgramData[0]->CourseProgramID)) ? floor(($UserProgramData[0]->ProgramCount/count($courseprogramData))*100) : 0 !!}%;
             height: 30px;
             background-color: #4CAF50;
             text-align: center; /* To center it horizontally (if you want) */
@@ -57,9 +57,12 @@
                 @endif
             </div>
             <div class="row">
-                <div class="col-lg-8">
-                    <div class="pdfobject-container" id="my-pdf"></div>
-
+                <div class="col-lg-8 pdf-8-div">
+                    @if(file_exists("uploads/coursepdf/" . $courseData[0]->pdf))
+                        <div class="pdfobject-container" id="my-pdf"></div>
+                    @else
+                        <div class="pdfobject-container">This section have no content yet.</div>
+                    @endif
                     {{--<iframe width="800" height="1000" src="https://www.1training.org/them+65encode-pdf-viewer-sc/?file={{ asset('/uploads/coursepdf/' . $courseData[0]->pdf ) }}&amp;settings=111111111&amp;lang=en-US#page=&amp;zoom=auto&amp;pagemode="></iframe>--}}
                 </div>
                 <div class="col-lg-4">
@@ -67,7 +70,7 @@
                         <li>TIME REMAINING : {{ (isset($DaysLeft)) ? $DaysLeft : "Expired" }} DAYS</li>
                         <li>
                             <div id="myProgress">
-                                <div id="myBar">20%</div>
+                                <div id="myBar">{!! (isset($UserProgramData[0]->CourseProgramID)) ? floor(($UserProgramData[0]->ProgramCount/count($courseprogramData))*100) . "%" : "" !!}</div>
                             </div>
                         </li>
                     </ul>

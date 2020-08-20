@@ -120,7 +120,7 @@ header .success-message-box .cancel:hover { background: url(../images/cancel-ico
 .content .add-new-form h5 span.small { font-style: italic; }
 .content .add-new-form .form-height-control { position: absolute; min-width: 405px; top: 36px; bottom: 60px; right: 0; left: 0; padding: 3px 10px 10px 10px; }
 .content .add-new-form .form-height-control2 { position: absolute; min-width: 405px; top: 36px; bottom: 60px; right: 0; left: 0; padding: 3px 10px 10px 10px; }
-.content .add-new-form .form-line { padding: 20px 0 0 0; width:385px; }
+.content .add-new-form .form-line { padding: 20px 0 0 0; width:620px; }
 .content .add-new-form .form-line2 { padding: 6px 0 0 0; width:385px; }
 .content .add-new-form .form-line2::after { display: block; content: ''; clear: both; }
 .content .add-new-form .form-line::after { display: block; content: ''; clear: both; }

@@ -2,7 +2,7 @@ $(".edit-icon").click(function () {
   showFormOverlay();
   var store_id = $(this).attr('data-id');
   $(".edit-current-data").animate({
-    width: "406px"
+    width: "650px"
   }, {
     duration: 500,
   });
@@ -132,7 +132,7 @@ $('.material-checkbox').on('click', function(){
 })
 /*$(".add-button").click(function () {
   $(".add-new-data").animate({
-    width: "406px"
+    width: "650px"
   }, {
     duration: 500,
 

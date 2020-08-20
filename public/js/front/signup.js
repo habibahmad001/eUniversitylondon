@@ -574,12 +574,19 @@ function Get_CP_PDF(ID) {
         var msg = "";
         if(data.msg == "newitem") {
             msg = "Course has been started!";
-            PDFObject.embed("/uploads/courseprogrampdf/" + Courses.pdf, "#my-pdf", options);
+            if( Courses.pdf != "pdfnotfound") {
+                PDFObject.embed("/uploads/courseprogrampdf/" + Courses.pdf, "#my-pdf", options);
+            } else {
+                $(".pdf-8-div").html('<div class="pdfobject-container">This section have no content yet.</div>');
+            }
+
             $(".course_timeline li").removeClass("activeli");
             $(".course_timeline li a").removeClass("active");
             $(".course_timeline li>span").remove();
             $("#li-"+ID).addClass("activeli").prepend("<span></span>");
             $("#aid-"+ID).addClass("active");
+            $("#myBar").css({"width": data.width + "%"});
+            $("#myBar").text(data.width + "%");
         } else if(data.msg == "less") {
             msg = "You already cleared this program!";
         } else if(data.msg == "notexist") {
@@ -601,6 +608,8 @@ function Get_CP_PDF(ID) {
             $(".course_timeline li>span").remove();
             $("#li-"+ID).addClass("activeli").prepend("<span></span>");
             $("#aid-"+ID).addClass("active");
+            $("#myBar").css({"width": data.width + "%"});
+            $("#myBar").text(data.width + "%");
         }
         $("#msg").text(msg).show().fadeOut(6500);
     });
