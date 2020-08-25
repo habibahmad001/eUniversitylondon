@@ -41,7 +41,7 @@
                             <div class="dropdown-menu">
                                 <a href="javascript:void(0);" class="dropdown-item set-as" data-id="{{ $Course->id }}">Set As</a>
                                 <a href="javascript:void(0);" class="dropdown-item offer @if(App\Http\Controllers\CoursesController::OfferApplied($Course->id) == "Offer Is Expired") {{ "expiried" }} @elseif(App\Http\Controllers\CoursesController::OfferApplied($Course->id) == "Offer Is Active") {{ "active-offer" }} @endif" data-id="{{ $Course->id }}">{!! App\Http\Controllers\CoursesController::OfferApplied($Course->id) !!}</a>
-                                <a href="{{ URL::to("/" . collect(request()->segments())->first() . "/cplisting/" . $Course->id) }}">Add Curriculum ({!! App\Http\Controllers\CoursesController::CurriculumCount($Course->id) !!})</a>
+                                <a href="{{ URL::to("/" . collect(request()->segments())->first() . "/cplisting/" . $Course->id) }}">Sections / Units ({!! App\Http\Controllers\CoursesController::CurriculumCount($Course->id) !!})</a>
                                 <a href="{{ URL::to('/' . collect(request()->segments())->first() .'/students/' . $Course->id) }}" class="dropdown-item">View Student's({{ (array_key_exists($Course->id, $Array_User_Count)) ? $Array_User_Count[$Course->id] : 0 }}) </a>
                             </div>
                         </div>

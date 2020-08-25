@@ -444,6 +444,159 @@ table th {
 	vertical-align: middle;
 }
 
+.bodyrowItem1 {
+	font-size: 13px;
+}
+
+.bodyrow div {
+	display: inline-block;
+}
+
+.bodyrowItem2 {
+	font-size: 13px;
+	float: right;
+}
+
+.bodyrow {
+	margin: 2%;
+}
+.bodyrowItem1 a {
+	color: #8dc74d;
+	text-decoration: underline;
+}
+.bodyrowItem1 a:hover {
+	color: #467512f7;
+}
+
+.bodyrowItem1 i {
+	margin-right: 3%;
+}
+
+.bodyrowItem1 {
+	width: 90%;
+}
+
+/********** Detail Page new sections ****/
+.stu-row > div {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.stu-course > div {
+	display: inline-block;
+}
+.stu-rating {
+	width: 4%;
+	margin: 0 0 0 3%;
+}
+
+.stu-students {
+	width: 4%;
+	margin: 0 0 0 3%;
+}
+
+.stu-price {
+	width: 10%;
+	margin: 0 0 0 3%;
+}
+
+.stu-course-avt {
+	margin-right: 2%;
+}
+
+.stu-course {
+	width: 60%;
+}
+
+.stu-course-content-title b {
+	font-size: 20px;
+}
+
+.stu-course-content {
+	width: 70%;
+}
+
+.programButton button {
+	font-size: 11px;
+	border: 1px solid;
+	float: right;
+	margin: 3% 0;
+}
+
+.btnsetting {
+	margin-bottom: 9%;
+}
+
+.programItems ul li {
+	padding: 4% 0;
+	font-size: 12px;
+}
+
+.programItems {
+	width: 100%;
+	display: none;
+}
+
+.btn-outline-danger:hover {
+	background-color: #dc3545 !important;
+}
+.pdf-8-div iframe {
+	width: 100%;
+	height: 516px;
+}
+
+.programButton {
+	width: 100%;
+	margin: 5px;
+}
+
+.btn-outline-primary:hover {
+	background-color: #007bff !important;
+}
+
+.stu-course-avt {
+	vertical-align: top;
+}
+
+.stu-course-avt img {
+	width: 80px;
+	border-radius: 5px;
+	height: 70px;
+}
+.stu-row {
+	margin: 2% 0;
+}
+/********** Detail Page new sections ****/
+
+#VideoModal input[type="submit"]:hover, button:hover {
+	background-color: transparent !important;
+}
+.program-states {
+	font-size: 13px;
+}
+
+/* ---- Play Video ----- */
+.modal-dialog {
+	max-width: 800px;
+	margin: 30px auto;
+}
+
+.modal-body {
+	position:relative;
+	padding:0px;
+}
+.close {
+	position:absolute;
+	right:-30px;
+	top:0;
+	z-index:999;
+	font-size:2rem;
+	font-weight: normal;
+	color:#fff;
+	opacity:1;
+}
+/* ---- Play Video ----- */
+
 canvas {
 	-moz-user-select: none;
 	-webkit-user-select: none;
@@ -1272,7 +1425,7 @@ select {
 }
 
 .course-tab .card-body {
-	padding: 13px 40px 2px 75px;
+	padding: 13px 40px 2px 25px;
 }
 
 @media (max-width: 767px) {

@@ -12,23 +12,13 @@
       </div>
 
       <div class="form-line">
-        <input type="text" name="title" id="title" placeholder="Course Curriculum Title" >
+        <label>Section Title</label>
+        <input type="text" name="title" id="title" placeholder="Section Title" >
       </div>
 
       <div class="form-line">
-        <textarea name="desc" id="desc" placeholder="Type some description."></textarea>
-      </div>
-
-      <div class="form-line">
-        <input type="text" name="author" id="author" placeholder="Author" >
-      </div>
-
-      <div class="form-line">
-        <input type="text" name="youtube" id="youtube" placeholder="YouTube Link . . ." >
-      </div>
-
-      <div class="form-line">
-        <input type="number" name="placement" id="placement" min="1" max="1000" >
+        <label>Section Order</label>
+        <input type="number" name="placement" id="placement" min="1" max="1000" placeholder="Section Order">
       </div>
 
       @if(collect(request()->segments())->pull(1) == "cplisting")
@@ -46,26 +36,26 @@
         </div>
       @endif
 
-      <div class="form-line">
-        <input type="file" name="cou_pdf" id="cou_pdf">
-        <div id="pdf_div">
-          <img src="{{ asset('/images/pdficon.png' ) }}" width="150" height="150">
-        </div>
-      </div>
+      {{--<div class="form-line">--}}
+        {{--<input type="file" name="cou_pdf" id="cou_pdf">--}}
+        {{--<div id="pdf_div">--}}
+          {{--<img src="{{ asset('/images/pdficon.png' ) }}" width="150" height="150">--}}
+        {{--</div>--}}
+      {{--</div>--}}
 
-      <div class="form-line">
-        <input type="file" name="cou_doc" id="cou_doc"><br />
-        <div id="doc_div">
-          <img src="{{ asset('/images/word-icon.png' ) }}" width="150" height="150">
-        </div>
-      </div>
+      {{--<div class="form-line">--}}
+        {{--<input type="file" name="cou_doc" id="cou_doc"><br />--}}
+        {{--<div id="doc_div">--}}
+          {{--<img src="{{ asset('/images/word-icon.png' ) }}" width="150" height="150">--}}
+        {{--</div>--}}
+      {{--</div>--}}
 
-      <div class="form-line">
-        <input type="file" name="cou_zip" id="cou_zip"><br />
-        <div id="zip_div">
-          <img src="{{ asset('/images/zip-icon.png' ) }}" width="150" height="150">
-        </div>
-      </div>
+      {{--<div class="form-line">--}}
+        {{--<input type="file" name="cou_zip" id="cou_zip"><br />--}}
+        {{--<div id="zip_div">--}}
+          {{--<img src="{{ asset('/images/zip-icon.png' ) }}" width="150" height="150">--}}
+        {{--</div>--}}
+      {{--</div>--}}
 
     </div>
     <div class="form-footer">

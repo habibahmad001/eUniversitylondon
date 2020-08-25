@@ -56,9 +56,54 @@
         sessionStorage.setItem("examtype", linkName);
     });
 
-    jQuery("#next_quiz").click(function(){
+    jQuery("#moreItems").click(function(){
         jQuery(this).attr("href", "/" + sessionStorage.getItem('examtype') + $(this).attr("href"));
     });
+
+    // ---------- content POPUP setting ---------
+    $('.content-field').click(function() {
+        var idc =   $(this).attr("data-id");
+        $(".popup-data-div").html($(".relative-content"+idc).html()).css({"padding": "10%"});
+    });
+    // ---------- content POPUP setting ---------
+
+    // ---------- IMG POPUP setting ---------
+    $('.content-field').click(function() {
+        var idc =   $(this).attr("data-id");
+        $(".puiframe").attr("src", $(".relative-img"+idc).text());
+    });
+    // ---------- IMG POPUP setting ---------
+
+    // ---------- Video setting ---------
+    $('.content-field').click(function() {
+        var idc =   $(this).attr("data-id");
+        $(".relative-video"+idc).removeClass("playedvideos");
+        $(".playedvideos").hide();
+        $(".relative-video"+idc).toggle();
+        $(".relative-video"+idc).addClass("playedvideos");
+    });
+    // ---------- Video setting ---------
+
+    // ---------- Play Video ---------
+        // Gets the video src from the data-src on each button
+        var $videoSrc;
+        $('.video-link').click(function() {
+            $videoSrc = $(this).data( "src" );
+        });
+        console.log($videoSrc);
+        // when the modal is opened autoplay it
+        $('#YouTubeModal').on('shown.bs.modal', function (e) {
+
+        // set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
+            $("#video").attr('src',$videoSrc + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0" );
+        })
+        // stop playing the youtube video when I close the modal
+        $('#YouTubeModal').on('hide.bs.modal', function (e) {
+            // a poor man's stop video
+            $("#video").attr('src',$videoSrc);
+        })
+        // document ready
+    // ---------- Play Video ---------
 })(jQuery);
 
 function validateEmailExist(type) {
@@ -587,6 +632,7 @@ function Get_CP_PDF(ID) {
             $("#aid-"+ID).addClass("active");
             $("#myBar").css({"width": data.width + "%"});
             $("#myBar").text(data.width + "%");
+            window.location.reload();
         } else if(data.msg == "less") {
             msg = "You already cleared this program!";
         } else if(data.msg == "notexist") {
@@ -596,6 +642,7 @@ function Get_CP_PDF(ID) {
             $(".course_timeline li>span").remove();
             $("#li-"+ID).addClass("activeli").prepend("<span></span>");
             $("#aid-"+ID).addClass("active");
+            window.location.reload();
         } else if(data.msg == "wrongstep") {
             msg = "You are not eligible for this program Yet!";
         } else if(data.msg == "nocp") {
@@ -610,9 +657,26 @@ function Get_CP_PDF(ID) {
             $("#aid-"+ID).addClass("active");
             $("#myBar").css({"width": data.width + "%"});
             $("#myBar").text(data.width + "%");
+            window.location.reload();
         }
         $("#msg").text(msg).show().fadeOut(6500);
     });
+}
+
+function programItemOPT(ID, BTNOPT) {
+    if($("#"+ID).attr("data-chk") == 1) {
+        $("#"+ID).attr("data-chk", 2);
+        $("#"+ID).slideDown();
+        $("#"+BTNOPT).removeClass("btn-outline-primary").addClass("btn-outline-danger");
+        $("#"+BTNOPT+" i").removeClass("fa-plus").addClass("fa-minus");
+    } else {
+        $("#"+ID).attr("data-chk", 1);
+        $("#"+ID).slideUp();
+        $("#"+BTNOPT).removeClass("btn-outline-danger").addClass("btn-outline-primary");
+        $("#"+BTNOPT+" i").removeClass("fa-minus").addClass("fa-plus");
+    }
+
+
 }
 
 

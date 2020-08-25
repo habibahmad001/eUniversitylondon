@@ -31,23 +31,23 @@
                             <input type="checkbox" name="all">
                         </th>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Message</th>
+                        <th>Comment Text</th>
+                        <th>Course</th>
                         <th>Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 @if(count($Comment)) @foreach ($Comment as $v)
                 <tr>
-                    <th class="edit-icon-container"><span class="edit-icon" data-id="{{ $v->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span></th>
+                    <th class="edit-icon-container">{{--<span class="edit-icon" data-id="{{ $v->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span>--}}</th>
                     <th class="checkbox-container">
                         <input type="checkbox" name="del_comment[]" value="{{ $v->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $v->name }}</td>
-                    <td>{{ $v->email }}</td>
-                    <td>@if(strlen(strip_tags($v->message)) > 100) {{ substr(strip_tags($v->message) , 0, 100). "..." }} @else {{ strip_tags($v->message) }} @endif</td>
+                    <td>@if(strlen(strip_tags($v->ccomment)) > 100) {{ substr(strip_tags($v->ccomment) , 0, 100). "..." }} @else {{ strip_tags($v->ccomment) }} @endif</td>
+                    <td>{{ App\Http\Controllers\Front\UserFrontController::GetCourseOnID($v->course_id)->course_title }}</td>
                     <td>{{ Carbon\Carbon::parse($v->created_at)->format('F d, Y h:ia') }}</td>
-                    <td><button type="button" class="btn btn-{{ ($v->isActive == "yes") ? "danger" : "success" }} w-93px" onclick="javascript:window.location.href='{{ URL::to('/admin/comments_blocked/' . $v->id) }}';">{!! ($v->isActive == "yes") ? "Block It" : "Approve It" !!}</button></td>
+                    <td><button type="button" class="btn btn-{{ ($v->status == "yes") ? "danger" : "success" }} w-93px" onclick="javascript:window.location.href='{{ URL::to('/admin/comments_blocked/' . $v->id) }}';">{!! ($v->status == "yes") ? "Block It" : "Approve It" !!}</button></td>
                 </tr>
                 @endforeach @else
                 <tr>

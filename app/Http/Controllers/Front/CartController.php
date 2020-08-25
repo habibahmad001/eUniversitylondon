@@ -365,7 +365,7 @@ class CartController extends Controller
                 $pdfpath    =   "/uploads/coursepdf/";
             }
             $data['UserProgramData']            = $UserProgramData;
-            $data['courseprogramData']          = CourseProgram::where("course_id", $course_id)->get();
+            $data['courseprogramData']          = CourseProgram::where("course_id", $course_id)->orderBy('id', 'asc')->get();
             $data['PDFpath']  = $pdfpath;
 
             /*************** Number of days left ************/

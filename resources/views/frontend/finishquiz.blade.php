@@ -55,11 +55,11 @@
                                 <input type="hidden" name="star_val" id="star_val" value="0">
                                 <input type="hidden" name="cid" id="cid" value="{{ $cid }}">
                                 <ul>
-                                    <li data-starval="1"><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                                    <li data-starval="2"><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                                    <li data-starval="3"><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                                    <li data-starval="4"><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></li>
                                     <li data-starval="5"><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    <li data-starval="4"><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    <li data-starval="3"><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    <li data-starval="2"><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    <li data-starval="1"><i class="fa fa-star-o" aria-hidden="true"></i></li>
                                 </ul>
                             </div>
                             <div id="comment-id">

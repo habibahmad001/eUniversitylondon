@@ -55,7 +55,7 @@ class CourseController extends Controller
 
         $data['course']              = Courses::where("course_title", $filter_title)->first();
         $data['AllCourse']           = Courses::where("course_status", "yes")->get();
-        $data['MainComments']            = Comments::where("course_id", $data['course']->id)->where("subComment", 0)->orderBy("id", "desc")->where("isActive", "yes")->get();
+        $data['MainComments']        = Ratings::where("course_id", $data['course']->id)->orderBy("id", "desc")->where("status", "yes")->get();
         $data['CourseProgram']       = CourseProgram::where("course_id", $data['course']->id)->where("cp_status", "yes")->orderBy("cp_placement", "asc")->get();
 
         return view('frontend.course-detail', $data);
@@ -356,29 +356,7 @@ class CourseController extends Controller
 
         return view('frontend.quizresults', $data);
     }
-    public function SaveRatings(Request $request) {
 
-        $this->validate($request, [
-            'star_val'=>'required',
-            'ccomments'=>'required'
-        ]);
-
-        $Rating         = Ratings::firstOrNew(array('course_id' => $request->cid, "user_id" => Auth::user()->id));
-
-        $Rating->course_id      = $request->cid;
-        $Rating->user_id        = Auth::user()->id;
-        $Rating->rating         = $request->star_val;
-        $Rating->ccomment       = $request->ccomments;
-        $Rating->commentlevel   = 0;
-
-        $saved          = $Rating->save();
-        if ($saved) {
-            $request->session()->flash('message', 'Rating has been saved successfully!');
-            return redirect()->back();
-        } else {
-            return redirect()->back()->with('message', 'Couldn\'t saved ratings!');
-        }
-    }
 
     public static function GetStars($cid) {
 
@@ -398,16 +376,22 @@ class CourseController extends Controller
 
         if($RatingPercent > 0 and $RatingPercent <= 20) {
             $data["ratingcount"]  =   "one-star";
+            $data["RateNumb"]  =   1;
         } elseif($RatingPercent > 20 and $RatingPercent <= 40) {
             $data["ratingcount"]  =   "two-star";
+            $data["RateNumb"]  =   2;
         } elseif($RatingPercent > 40 and $RatingPercent <= 60) {
             $data["ratingcount"]  =   "three-star";
+            $data["RateNumb"]  =   3;
         } elseif($RatingPercent > 60 and $RatingPercent <= 80) {
             $data["ratingcount"]  =   "four-star";
+            $data["RateNumb"]  =   4;
         } elseif($RatingPercent > 80) {
             $data["ratingcount"]  =   "five-star";
+            $data["RateNumb"]  =   5;
         } else {
             $data["ratingcount"]  =   $RatingPercent;
+            $data["RateNumb"]  =   0;
         }
 
         $data["ratingpercent"]  =   $RatingPercent;
@@ -521,7 +505,7 @@ class CourseController extends Controller
 
         $chkResult  =   Result::where("user_id", Auth::user()->id)->where("examType", "Exam")->count();
 
-        if($chkResult >= 3) {
+        if($chkResult >= 1) {
             return redirect()->intended('/user/newsubscription/' . $cid);
         } else {
             $data['ExamData']          =   Exam::where("course_id", $cid)->orderBy("id", "asc")->get();
@@ -600,6 +584,59 @@ class CourseController extends Controller
             return "yes";
         } else {
             return "no";
+        }
+    }
+
+    public function SaveRatings(Request $request) {
+
+        $this->validate($request, [
+            'star_val'=>'required',
+            'ccomments'=>'required'
+        ]);
+
+        $Rating         = Ratings::firstOrNew(array('course_id' => $request->cid, "user_id" => Auth::user()->id));
+
+        $Rating->course_id      = $request->cid;
+        $Rating->user_id        = Auth::user()->id;
+        $Rating->rating         = $request->star_val;
+        $Rating->ccomment       = $request->ccomments;
+        $Rating->commentlevel   = 0;
+
+        $saved          = $Rating->save();
+        if ($saved) {
+            $request->session()->flash('message', 'Rating has been saved successfully!');
+            return redirect()->back();
+        } else {
+            return redirect()->back()->with('message', 'Couldn\'t saved ratings!');
+        }
+    }
+
+    public function SaveReviews(Request $request) {
+
+        if(!Auth::user()) {
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+        }
+
+        $this->validate($request, [
+            'star_val'=>'required',
+            'ccomments'=>'required'
+        ]);
+
+        $Rating                 = Ratings::firstOrNew(array('course_id' => $request->cid, "user_id" => Auth::user()->id));
+
+        $Rating->course_id      = $request->cid;
+        $Rating->user_id        = Auth::user()->id;
+        $Rating->name           = Auth::user()->first_name . " " . Auth::user()->last_name;
+        $Rating->rating         = $request->star_val;
+        $Rating->ccomment       = $request->ccomments;
+        $Rating->commentlevel   = 0;
+
+        $saved          = $Rating->save();
+        if ($saved) {
+            $request->session()->flash('message', 'Rating has been saved successfully!');
+            return redirect()->back();
+        } else {
+            return redirect()->back()->with('message', 'Couldn\'t saved ratings!');
         }
     }
 

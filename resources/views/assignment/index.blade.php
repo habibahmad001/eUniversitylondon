@@ -28,7 +28,7 @@
                         </th>
                         <th>Assignment Title</th>
                         <th>Assignment File</th>
-                        <th width="40%">Exam Name</th>
+                        <th width="40%">Course Name</th>
                     </tr>
                 </thead>
                 @if(count($Assignment)) @foreach ($Assignment as $assignment)
@@ -45,7 +45,7 @@
                        No file Uploaded
                     @endif
                     </td>
-                    <td width="40%">{{ $assignment->table_name }}</td>
+                    <td width="40%">{{ App\Http\Controllers\Front\UserFrontController::GetCourseOnID($assignment->course_id)->course_title }}</td>
                 </tr>
                 @endforeach @else
                 <tr>

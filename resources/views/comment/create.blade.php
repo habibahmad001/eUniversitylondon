@@ -16,10 +16,6 @@
       </div>
 
       <div class="form-line">
-        <input type="email" name="cemail" id="cemail" placeholder="Email" >
-      </div>
-
-      <div class="form-line">
         <textarea name="ccomments" id="ccomments" placeholder="Message..."></textarea>
       </div>
 

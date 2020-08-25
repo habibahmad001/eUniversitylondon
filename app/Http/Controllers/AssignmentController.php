@@ -14,6 +14,7 @@ use App\MockExam;
 use App\ExamWithUser;
 use App\MexamWithUser;
 use App\CourseWithUser;
+use App\Courses;
 
 use Auth;
 
@@ -28,6 +29,7 @@ class AssignmentController extends Controller
         $data['sub_heading']  = 'Assignment';
         $data['page_title']   = 'eUniversitylondon Assignment';
         $data['Assignment']   =  Assignment::where("user_id", Auth::user()->id)->paginate(10);
+        $data['Courses']      =  Courses::where('course_status', "yes")->get();
         
         return view('assignment/index', $data);
     }
@@ -37,14 +39,17 @@ class AssignmentController extends Controller
         $this->validate($request, [
 
             'ass_title'=>'required',
-            'tab_name'=>'required',
-            'exam_id'=>'required'
+            'contents'=>'required',
+            'cour_id'=>'required'
         ]);
 
         $Assignment->assignment_title  = $request->ass_title;
-        $Assignment->table_name  = $request->tab_name;
+        $Assignment->contents  = $request->contents;
+        $Assignment->course_id  = $request->cour_id;
         $Assignment->user_id  = Auth::user()->id;
-        $Assignment->exam_id  = $request->exam_id;
+
+//        $Assignment->table_name  = $request->tab_name;
+//        $Assignment->exam_id  = $request->exam_id;
 
         /************ File Upload ***********/
         if(!empty($request->file('assignment_f'))) {
@@ -65,34 +70,40 @@ class AssignmentController extends Controller
         }
     }
 
+//    public function GetAssignment($id){
+//        $data         = [];
+//        $Assignment         = Assignment::find($id);
+//        $data['assignment'] = $Assignment;
+//        if($Assignment->table_name == "Exam") {
+//            /****** Select course Enrolled by User ************/
+//            $User_Course = [];
+//            $Res_Course = CourseWithUser::where("user_id", Auth::user()->id)->get();
+//            if(count($Res_Course) > 0) {
+//                foreach($Res_Course as $val) {
+//                    $User_Course[] = $val->course_id;
+//                }
+//                $Exm_data = Exam::whereIn("course_id", $User_Course)->get();
+//            }
+//            /****** Select course Enrolled by User ************/
+//        } else {
+//            /****** Select course Enrolled by User ************/
+//            $User_Course = [];
+//            $Res_Course = CourseWithUser::where("user_id", Auth::user()->id)->get();
+//            if(count($Res_Course) > 0) {
+//                foreach($Res_Course as $val) {
+//                    $User_Course[] = $val->course_id;
+//                }
+//                $Exm_data = MockExam::whereIn("course_id", $User_Course)->get();
+//            }
+//            /****** Select course Enrolled by User ************/
+//        }
+//        $data["Exm_data"] = $Exm_data;
+//        return Response::json($data);
+//    }
+
     public function GetAssignment($id){
         $data         = [];
-        $Assignment         = Assignment::find($id);
-        $data['assignment'] = $Assignment;
-        if($Assignment->table_name == "Exam") {
-            /****** Select course Enrolled by User ************/
-            $User_Course = [];
-            $Res_Course = CourseWithUser::where("user_id", Auth::user()->id)->get();
-            if(count($Res_Course) > 0) {
-                foreach($Res_Course as $val) {
-                    $User_Course[] = $val->course_id;
-                }
-                $Exm_data = Exam::whereIn("course_id", $User_Course)->get();
-            }
-            /****** Select course Enrolled by User ************/
-        } else {
-            /****** Select course Enrolled by User ************/
-            $User_Course = [];
-            $Res_Course = CourseWithUser::where("user_id", Auth::user()->id)->get();
-            if(count($Res_Course) > 0) {
-                foreach($Res_Course as $val) {
-                    $User_Course[] = $val->course_id;
-                }
-                $Exm_data = MockExam::whereIn("course_id", $User_Course)->get();
-            }
-            /****** Select course Enrolled by User ************/
-        }
-        $data["Exm_data"] = $Exm_data;
+        $data["Assignment"]         = Assignment::find($id);
         return Response::json($data);
     }
 
@@ -155,14 +166,16 @@ class AssignmentController extends Controller
         $id              =        $request->a_id;
         $this->validate($request, [
             'ass_title'=>'required',
-            'tab_name'=>'required',
-            'exam_id'=>'required'
+            'contents'=>'required',
+            'cour_id'=>'required'
         ]);
         $Assignment              = Assignment::find($id);
         $Assignment->assignment_title  = $request->ass_title;
-        $Assignment->table_name  = $request->tab_name;
+        $Assignment->contents  = $request->contents;
+        $Assignment->course_id  = $request->cour_id;
         $Assignment->user_id  = Auth::user()->id;
-        $Assignment->exam_id  = $request->exam_id;
+//        $Assignment->table_name  = $request->tab_name;
+//        $Assignment->exam_id  = $request->exam_id;
 
         /************ File Upload ***********/
         if(!empty($request->file('assignment_f'))) {

@@ -99,7 +99,8 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/finishquiz/{status}', 'Front\CourseController@FinishQuiz');
     Route::get('/user/newsubscription/{cid}', 'Front\CourseController@NewSubscription');
     Route::post('/saveresult', 'Front\CourseController@SaveResult');
-    Route::post('/saveratings', 'Front\CourseController@SaveRatings');
+//    Route::post('/saveratings', 'Front\CourseController@SaveRatings');
+    Route::post('/saveratings', 'Front\CourseController@SaveReviews');
     Route::post('/storecomments', 'Front\CourseController@StoreComments');
     /************* Course Ends ***************/
 
@@ -200,6 +201,11 @@ Route::get('/offerapplied/{id}', 'CoursesController@OfferApplied');
 Route::get('/cmsbtn/{cid}/{pid}', 'Front\CMSController@cmsBTN');
 /********** Gernal CMS Functions *********/
 
+/********** Gernal Course Program Functions *********/
+Route::get('/getcpid/{cpid}', 'CourseProgramController@GetCPONID');
+Route::get('/ratingoncourse/{cpid}', 'CourseProgramController@TotalRatingOnCourse');
+/********** Gernal Course Program Functions *********/
+
 /********** Gernal User Functions *********/
 Route::get('/getuseronid/{id}', 'OrderController@GetUserOnID');
 /********** Gernal User Functions *********/
@@ -294,7 +300,9 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/courseprogram_add', 'CourseProgramController@CourseProgramAdd');
     Route::get('/admin/getcourseprogram/{cp_id}', 'CourseProgramController@GetCourseProgram');
     Route::post('/admin/update-courseprogram', 'CourseProgramController@UpdateCourseProgram');
+    Route::post('/admin/update-unit', 'CourseProgramController@UpdateUnits');
     Route::get('/admin/cplisting/{cid}', 'CourseProgramController@CPListing');
+    Route::get('/admin/cpunits/{cid}', 'CourseProgramController@Units');
     /*************** Course Program Ends ***************/
 
     /*************** Exam Starts ***************/
@@ -359,6 +367,15 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/setproduct', 'CoursesController@SetProduct');
     Route::post('/admin/applyoffer', 'CoursesController@ApplyOffer');
     /*************** Courses Ends ***************/
+
+    /*************** Assignment Starts ***************/
+    Route::resource('/admin/assignment', 'AssignmentController');
+    Route::get('/admin/assignment', 'AssignmentController@index');
+    Route::post('/admin/assignment_add', 'AssignmentController@AssignmentAdd');
+    Route::get('/admin/getassignment/{a_id}', 'AssignmentController@GetAssignment');
+    Route::post('/admin/update-assignment', 'AssignmentController@UpdateAssignment');
+    Route::get('/admin/getassignmentexam/{tab_name}', 'AssignmentController@GetAssignmentExam');
+    /*************** Assignment Ends ***************/
 
     /*************** Order Starts ***************/
     Route::resource('/admin/Order', 'OrderController');
@@ -439,6 +456,15 @@ Route::middleware(['instructor'])->group(function () {
     Route::get('/instructor/getcourse/{cou_id}', 'CoursesController@GetCourse');
     Route::post('/instructor/update-course', 'CoursesController@UpdateCourse');
     /*************** Courses Ends ***************/
+
+    /*************** Assignment Starts ***************/
+    Route::resource('/instructor/assignment', 'AssignmentController');
+    Route::get('/instructor/assignment', 'AssignmentController@index');
+    Route::post('/instructor/assignment_add', 'AssignmentController@AssignmentAdd');
+    Route::get('/instructor/getassignment/{a_id}', 'AssignmentController@GetAssignment');
+    Route::post('/instructor/update-assignment', 'AssignmentController@UpdateAssignment');
+    Route::get('/instructor/getassignmentexam/{tab_name}', 'AssignmentController@GetAssignmentExam');
+    /*************** Assignment Ends ***************/
 
 
     /*************** Question & Answer Starts ***************/
@@ -528,6 +554,13 @@ Route::get('/get-started', function () {
 
 Route::get('/404', function () {
     return view('frontend.404');
+});
+
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('view:clear');
+    return "Cache is cleared";
 });
 
 Route::get('/checkout', 'AuthorizeController@index');
