@@ -513,6 +513,52 @@
         </div>
     </section>
 
+    <section class="ls course-comment">{{--s-pt-55 s-pb-60 s-pt-lg-95 s-pb-lg-100 c-gutter-50--}}
+        <div class="container">
+            <div class="row">
+                <h4 class="fw-500">More Courses by Eneida F. Withrow</h4>
+            </div>
+            <div class="row writer-card">
+                <div class="col-lg-3 col-xl-3">
+                    <img src="http://127.0.0.1:8000/uploads/pavatar/269687077.jpg" width="300" height="300" />
+                    <div class="writer-content">
+                        <b>The Complete Financial Analyst Training & Investing Course Chris Haroun</b>
+                        <div class="writer-rate">Rating: 4.5 out of 5
+                            4.5
+                            (20,960)</div>
+                        <div class="writer-hours">22.5 total hours . 225 lectures</div>
+                        <div class="writer-levels">. All Levels</div>
+                        <div class="writer-price">&pound; 88</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-3">
+                    <img src="http://127.0.0.1:8000/uploads/pavatar/1287658438.jpg" width="300" height="300" />
+                    <div class="writer-content">
+                        <b>The Complete Financial Analyst Training & Investing Course Chris Haroun</b>
+                        <div class="writer-rate">Rating: 4.5 out of 5
+                            4.5
+                            (20,960)</div>
+                        <div class="writer-hours">22.5 total hours . 225 lectures</div>
+                        <div class="writer-levels">. All Levels</div>
+                        <div class="writer-price">&pound; 22</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-3">
+                    <img src="http://127.0.0.1:8000/uploads/pavatar/401966259.jpg" width="300" height="300" />
+                    <div class="writer-content">
+                        <b>The Complete Financial Analyst Training & Investing Course Chris Haroun</b>
+                        <div class="writer-rate">Rating: 4.5 out of 5
+                            4.5
+                            (20,960)</div>
+                        <div class="writer-hours">22.5 total hours . 225 lectures</div>
+                        <div class="writer-levels">. All Levels</div>
+                        <div class="writer-price">&pound; 99</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Video Modal -->
     <div class="modal fade" id="YouTubeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

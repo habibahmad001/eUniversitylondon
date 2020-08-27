@@ -56,7 +56,7 @@
         sessionStorage.setItem("examtype", linkName);
     });
 
-    jQuery("#moreItems").click(function(){
+    jQuery("#next_quiz").click(function(){
         jQuery(this).attr("href", "/" + sessionStorage.getItem('examtype') + $(this).attr("href"));
     });
 
