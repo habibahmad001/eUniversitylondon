@@ -20,10 +20,63 @@
     .spacialOffer .form-line * {
         display: inline-block;
     }
+
+
+    .card {
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid #e3eaef;
+        border-radius: .25rem;
+    }
+    .p-0 {
+        padding: 0!important;
+    }
+    .card-body {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1.5rem;
+    }
+    .no-gutters {
+        margin-right: 0;
+        margin-left: 0;
+    }
+    .text-secondary {
+        color: #6c757d!important;
+    }
+    .card {
+        border: none;
+        -webkit-box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
+        box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
+        margin-bottom: 30px;
+    }
+    .card-body {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1.5rem;
+    }
+    .text-muted {
+        color: #98a6ad!important;
+    }
+    .font-15 {
+        font-size: 15px!important;
+    }
 </style>
 
 <!-- Edit form -->
 <div class="center-content-area table-set">
+
     <div class="table-responsive">
         @if ($errors->any())
         <div class="alert alert-danger">

@@ -34,14 +34,23 @@
                         @endif
                     </td>
                     <td width="15%">{{ (array_key_exists($Course->id, $Array_Instructor_Name)) ? $Array_Instructor_Name[$Course->id] : "" }}</td>
-                    <td width="15%"><a href="{{ URL::to("/" . collect(request()->segments())->first() . "/examlisting/" . $Course->id) }}">Total Exam's ({!! App\Http\Controllers\CoursesController::ExamCount($Course->id) !!})</a></td>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success BTNMenu dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">...</button>
+                            <div class="dropdown-menu course-menu-class">
+                                <a href="{{ URL::to("/" . collect(request()->segments())->first() . "/examlisting/" . $Course->id) }}">Total Exam's ({!! App\Http\Controllers\CoursesController::ExamCount($Course->id) !!})</a>
+                                <a href="{{ URL::to("/" . collect(request()->segments())->first() . "/mexamlisting/" . $Course->id) }}">Total Mock Exam's ({!! App\Http\Controllers\CoursesController::MExamCount($Course->id) !!})</a>
+                                <a href="{{ URL::to("/" . collect(request()->segments())->first() . "/quizlisting/" . $Course->id) }}">Total Quiz's ({!! App\Http\Controllers\CoursesController::QuizCount($Course->id) !!})</a>
+                            </div>
+                        </div>
+                    </td>
                     <td width="15%">
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary BTNMenu dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">...</button>
-                            <div class="dropdown-menu">
+                            <div class="dropdown-menu course-menu-class">
                                 <a href="javascript:void(0);" class="dropdown-item set-as" data-id="{{ $Course->id }}">Set As</a>
                                 <a href="javascript:void(0);" class="dropdown-item offer @if(App\Http\Controllers\CoursesController::OfferApplied($Course->id) == "Offer Is Expired") {{ "expiried" }} @elseif(App\Http\Controllers\CoursesController::OfferApplied($Course->id) == "Offer Is Active") {{ "active-offer" }} @endif" data-id="{{ $Course->id }}">{!! App\Http\Controllers\CoursesController::OfferApplied($Course->id) !!}</a>
-                                <a href="{{ URL::to("/" . collect(request()->segments())->first() . "/cplisting/" . $Course->id) }}">Add Curriculum ({!! App\Http\Controllers\CoursesController::CurriculumCount($Course->id) !!})</a>
+                                <a href="{{ URL::to("/" . collect(request()->segments())->first() . "/cplisting/" . $Course->id) }}">Sections / Units ({!! App\Http\Controllers\CoursesController::CurriculumCount($Course->id) !!})</a>
                                 <a href="{{ URL::to('/' . collect(request()->segments())->first() .'/students/' . $Course->id) }}" class="dropdown-item">View Student's({{ (array_key_exists($Course->id, $Array_User_Count)) ? $Array_User_Count[$Course->id] : 0 }}) </a>
                             </div>
                         </div>

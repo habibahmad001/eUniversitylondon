@@ -19,20 +19,40 @@
       <div class="form-content-box">
 
         <div class="form-line">
+          <label>Title</label>
           <input type="text" name="ass_title" id="edit-ass_title" placeholder="Assignment Title" >
         </div>
 
         <div class="form-line">
-          <select name="tab_name" id="edit-tab_name" class="full-width">
-            <option value="">Select Exam</option>
-            <option value="Exam">Exam</option>
-            <option value="MockExam">Mock Exam</option>
-          </select>
+          <label>Content</label>
+          <textarea name="contents" id="edit-contents" placeholder="Type some description."></textarea>
         </div>
 
-        <div class="form-line exam_div">
-          <select name="exam_id" id="edit-exam_id" class="full-width">
-            <option value="">Select Exam</option>
+        {{--<div class="form-line">--}}
+          {{--<label>Exam Type</label>--}}
+          {{--<select name="tab_name" id="edit-tab_name" class="full-width">--}}
+            {{--<option value="">Select Exam</option>--}}
+            {{--<option value="Exam">Exam</option>--}}
+            {{--<option value="MockExam">Mock Exam</option>--}}
+          {{--</select>--}}
+        {{--</div>--}}
+
+        {{--<div class="form-line exam_div">--}}
+          {{--<label>Exam</label>--}}
+          {{--<select name="exam_id" id="edit-exam_id" class="full-width">--}}
+            {{--<option value="">Select Exam</option>--}}
+          {{--</select>--}}
+        {{--</div>--}}
+
+        <div class="form-line">
+          <label>Course</label>
+          <select name="cour_id" id="edit-cour_id" class="full-width">
+            <option value="">Select Course</option>
+            @if(count($Courses)) @foreach ($Courses as $course)
+              <option value="{{ $course->id }}">{{ $course->course_title }}</option>
+            @endforeach @else
+              <option value="">No Course Listed</option>
+            @endif
           </select>
         </div>
 

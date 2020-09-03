@@ -11,7 +11,35 @@ $(".add-button").click(function () {
   });
 });
 
+// ---------- remove all --------
+$(".custonDelete").click(function(e) {
+  var c = confirm('Are you sure you want to delete selected exam?');
+  if(c) {
+    $(".delfrm").submit();
+  }
+});
 
+$('.content .table .checkbox-container-new :checkbox').change(function(event) {
+  if($('.content .table .checkbox-container-new :checkbox').is(":checked")) {
+    $('.custonDelete').addClass("show-btn");
+  } else {
+    $('.custonDelete').removeClass("show-btn");
+  }
+});
+
+$('input[name="allnew"]').change(function(){
+  var status = $(this).is(':checked');
+  if (status==true) {
+    $('input.checkbox-selector:checkbox').prop('checked',true);
+    $('.custonDelete').addClass("show-btn");
+    $('.edit-icon').removeClass('show');
+  } else {
+    $('input.checkbox-selector:checkbox').prop('checked', false);
+    $('.custonDelete').removeClass("show-btn");
+    $('tbody tr').removeClass('yellow');
+  }
+});
+// ---------- remove all --------
 
 $(".edit-icon").click(function () {
   showFormOverlay();
@@ -56,24 +84,6 @@ function reset_form() {
   $("#cour_id").val('');
 }
 
-function validateEmailExist(type) {
-  var email = $("#"+type+"email").val();
-  var email_rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if(email_rgx.test(email)) {
-    var user_id = $("#user_id").val();
-    $.get('/email-exist?id=' + user_id +'&email=' + email, function(data){
-      if(data.exist) {
-        $("#"+type+"email_exist").val('1');
-        $("#"+type+"email-exist").css('color','#ff0000');
-        $("#"+type+"email-exist").html('E-mail already exists.');
-      } else {
-        $("#"+type+"email-exist").html('');
-        $("#"+type+"email_exist").val('');
-      }
-    })
-
-  }
-}
 
 function validate(type) {
   $(".error").each(function(){

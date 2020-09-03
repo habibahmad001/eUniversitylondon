@@ -18,6 +18,7 @@ class TableRating extends Migration
             $table->string('course_id', 250)->nullable();
             $table->string('user_id', 250)->nullable();
             $table->string('rating', 250)->nullable();
+            $table->string('name', 250)->nullable();
             $table->text('ccomment')->nullable();
             $table->string('commentlevel', 250)->nullable();
             $table->enum('status', array('yes', 'no'))->default('yes');

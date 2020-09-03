@@ -130,6 +130,11 @@ header .bars{ margin-left:187px; position:relative; padding-top:10px; }
 .admin-login-form-wraper {
     width: 100%;
 }
+
+.logo-txt a img {
+    height: 31px;
+}
+
 .admin-login-form-container {
     width: 35%;
     padding: 4%;

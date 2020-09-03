@@ -45,8 +45,8 @@
 
                     {!! $course->course_desc !!}
 
-                    <h5 class="program-title">Course CurriCulum</h5>
-
+                    <h5 class="program-title">Course Content</h5>
+                    <b class="program-states">{!! count($CourseProgram) !!} sections • 08 lectures</b>
                     <div id="accordion01" role="tablist" class="course-tab bordered rounded">
                         @if(count($CourseProgram) > 0)
                             <?php $cp_count = 0; ?>
@@ -61,11 +61,98 @@
                                                 {{ $val->cp_title }}
                                             </a>
                                         </h6>
-                                        <span class="author-course">Author courses:<a href="jascript:void(0);"> {{ $val->cp_author }}</a> </span>
+                                        {{--<span class="author-course">Author courses:<a href="jascript:void(0);"> {{ $val->cp_author }}</a> </span>--}}
                                     </div>
                                     <div id="{{ $val->id }}" class="collapse <?php if($cp_count == 0) echo 'show'; else echo 'hide'; ?>" role="tabpanel" aria-labelledby="collapse01_header" data-parent="#{{ $val->id }}">
                                         <div class="card-body">
-                                            {!! $val->cp_desc !!}
+                                            {{--{!! $val->cp_desc !!}--}}
+                                            {{--<div class="bodyrow">--}}
+                                                {{--<div class="bodyrowItem1">--}}
+                                                    {{--<a href="javascript:void(0);" data-toggle="modal" data-target="#VideoModal" class="video-link" data-src="https://www.youtube.com/embed/Jfrjeg26Cwk"> How to Start a Successful Company + Qualities of the Top Business People</a>--}}
+                                                {{--</div>--}}
+                                                {{--<div class="bodyrowItem2">--}}
+                                                    {{--17:58--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                            @if(is_array(json_decode($val->cp_desc, true)))
+                                                <?php $count = 0;?>
+                                                @foreach(json_decode($val->cp_desc, true) as $v)
+                                                    @if($v["Type"] == "Youtube_" . $count)
+                                                        <div class="bodyrow">
+                                                            <div class="bodyrowItem1">
+                                                                <i class="fa fa-youtube-play" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#YouTubeModal" class="video-link" data-src="{!! $v["Content"] !!}"> {!! $v["Title"] !!}</a>
+                                                            </div>
+                                                            <div class="bodyrowItem2">
+                                                                {!! $v["Duration"] !!}
+                                                            </div>
+                                                        </div>
+                                                    @elseif($v["Type"] == "Content_" . $count)
+                                                        <div class="bodyrow">
+                                                            <div class="bodyrowItem1">
+                                                                <i class="fa fa-file-text-o" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#ContentModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                <div class="relative-content<?=$val->id.$count?>" style="display: none;">{!! $v["Content"] !!}</div>
+                                                            </div>
+                                                            <div class="bodyrowItem2">
+                                                                {!! $v["Duration"] !!}
+                                                            </div>
+                                                        </div>
+                                                    @elseif($v["Type"] == "Iframe_" . $count)
+                                                        <div class="bodyrow">
+                                                            <div class="bodyrowItem1">
+                                                                <i class="fa fa-picture-o" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#ContentModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                <div class="relative-content<?=$val->id.$count?>" style="display: none;">{!! $v["Content"] !!}</div>
+                                                            </div>
+                                                            <div class="bodyrowItem2">
+                                                                {!! $v["Duration"] !!}
+                                                            </div>
+                                                        </div>
+                                                    @elseif($v["Type"] == "Video_" . $count)
+                                                        <div class="bodyrow">
+                                                            <div class="bodyrowItem1">
+                                                                <i class="fa fa-video-camera" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#VideoModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                <div class="relative-video<?=$val->id.$count?> playedvideos" style="width: 100%; display: none;">
+                                                                    <video width="100%" controls>
+                                                                        <source src="{!! "/uploads/courseprogramVIDEO/" . $v["Content"] !!}" type="video/mp4">
+                                                                        <source src="{!! "/uploads/courseprogramVIDEO/" . $v["Content"] !!}" type="video/ogg">
+                                                                        Your browser does not support HTML video.
+                                                                    </video>
+                                                                </div>
+                                                            </div>
+                                                            <div class="bodyrowItem2">
+                                                                {!! $v["Duration"] !!}
+                                                            </div>
+                                                        </div>
+                                                    @elseif($v["Type"] == "Image_" . $count)
+                                                        <div class="bodyrow">
+                                                            <div class="bodyrowItem1">
+                                                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#IMGModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                <div class="relative-img<?=$val->id.$count?>" style="display: none;">{!! "/uploads/courseprogramIMG/" . $v["Content"] !!}</div>
+                                                            </div>
+                                                            <div class="bodyrowItem2">
+                                                                {!! $v["Duration"] !!}
+                                                            </div>
+                                                        </div>
+                                                    @elseif($v["Type"] == "Quiz_" . $count)
+                                                        <div class="bodyrow">
+                                                            <div class="bodyrowItem1">
+                                                                <i class="fa fa-pied-piper-pp" aria-hidden="true"></i> {!! $v["Title"] !!}
+                                                            </div>
+                                                            <div class="bodyrowItem2">
+                                                                {!! $v["Duration"] !!}
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                <?php $count++;?>
+                                                @endforeach
+                                            @endif
+                                            {{--<div class="bodyrow">--}}
+                                                {{--<div class="bodyrowItem1">--}}
+                                                    {{--Chapter 1 Quiz--}}
+                                                {{--</div>--}}
+                                                {{--<div class="bodyrowItem2">--}}
+                                                    {{--10 questions--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
                                         </div>
                                     </div>
                                 </div><?php $cp_count++; ?>
@@ -161,7 +248,7 @@
                                                         <div class="tagcloud">
                                                             @if(count(json_decode($course->category_id)) > 0)
                                                                 @foreach(json_decode($course->category_id) as $v)
-                                                                    <a href="category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
+                                                                    <a href="/category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
                                                                         {{ App\Http\Controllers\Category::CatID($v)->category_title }}
                                                                     </a>
                                                                 @endforeach
@@ -210,7 +297,7 @@
         <div class="container">
             <div class="row align-items-center text-center text-lg-left">
                 <div class="col-lg-4">
-                    <img class="rounded" src="images/team/single-course.jpg" alt="">
+                    <img class="rounded" src="/images/team/single-course.jpg" alt="">
                 </div>
                 <div class="col-lg-8 text-center text-lg-left">
                     <div>
@@ -240,38 +327,50 @@
             </div>
         </div>
     </section>
-
     <section class="ls s-pt-55 s-pb-60 s-pt-lg-95 s-pb-lg-100 c-gutter-50 course-comment">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-xl-12">
+                    <h4 class="fw-500">Students also bought</h4>
+                    <div class="stu-container">
+                        @if(count($AllCourse) > 0)
+                            @foreach($AllCourse as $course)
+                                {{--@if(in_array("most_popular", json_decode($course->setas)))--}}
+                                    <div class="stu-row">
+                                        <div class="stu-course">
+                                            <div class="stu-course-avt"><img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" /></div>
+                                            <div class="stu-course-content">
+                                                <div class="stu-course-content-title"><b>{{ $course->course_title }}</b></div>
+                                                <div class="stu-course-content-detail">
+                                                    @if(count(json_decode($course->category_id)) > 0)
+                                                        @foreach(json_decode($course->category_id) as $v)
+                                                            <a href="/category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
+                                                                {{ App\Http\Controllers\Category::CatID($v)->category_title }}
+                                                            </a> .
+                                                        @endforeach
+                                                    @endif  3.5 total hours . Updated</div>
+                                            </div>
+                                        </div>
+                                        <div class="stu-rating">{{ App\Http\Controllers\Front\CourseController::GetStars($course->id)["RateNumb"] }} <i class="fa fa-star" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="stu-students">65,000</div>
+                                        <div class="stu-price">&pound; {{ $course->course_price }}</div>
+                                    </div>
+                                {{--@endif--}}
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ls course-comment">{{--s-pt-55 s-pb-60 s-pt-lg-95 s-pb-lg-100 c-gutter-50--}}
         <div class="container">
             <div class="row">
                 <div class="col-lg-7 col-xl-8">
 
                     <div id="comments" class="comments-area rounded">
-                        <h5 id="reply-title" class="comment-reply-title">Leave a comment</h5>
-
-                        <div id="respond" class="comment-respond ls d-flex">
-                            <div class="form-avatar w-38 h-100">
-                                <img src="images/empty-avatar.png" alt="">
-                            </div>
-                            <form action="{{ URL::to("/storecomments") }}" method="post" id="savecomment" name="savecomment" class="comment-form" novalidate="">
-                                <div class="comment-form-author form-group has-placeholder">
-                                    <label for="author">Name</label>
-                                    <input class="form-control" id="cuser" name="cuser" type="text" value="{{ (isset(Auth::user()->first_name)) ? Auth::user()->first_name . " " . Auth::user()->last_name : "" }}" size="30" maxlength="245" aria-required="true" required="required" placeholder="Name*">
-                                </div>
-                                <p class="comment-form-email form-group has-placeholder">
-                                    <label for="email">Email </label>
-                                    <input class="form-control" id="cemail" name="cemail" type="cemail" value="{{ isset(Auth::user()->email) ? Auth::user()->email : "" }}" size="30" maxlength="100" aria-required="true" required="required" placeholder="Email*">
-                                </p>
-                                <input type="hidden" name="cid" id="cid" value="{{ $course->id }}">
-                                <p class="comment-form-comment form-group has-placeholder">
-                                    <label for="comment">Comment</label>
-                                    <textarea class="form-control" id="ccomment" name="ccomment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required" placeholder="Message*"></textarea>
-                                </p>{{ csrf_field() }}
-                                <p class="form-submit">
-                                    <button type="submit" class="w-100 d-block btn btn-maincolor">Send comment</button>
-                                </p>
-                            </form>
-                        </div>
                         <!-- #respond -->
                         <ol class="comment-list">
                             @if(count($MainComments) > 0)
@@ -280,7 +379,7 @@
                                         <article class="comment-body">
                                             <footer class="comment-meta">
                                                 <div class="comment-author vcard">
-                                                    <img alt="" src="images/team/testimonials_01.jpg">
+                                                    <img alt="" src="/images/team/testimonials_01.jpg">
                                                 </div>
                                                 <!-- .comment-author -->
                                                 <div class="comment-name">
@@ -291,7 +390,7 @@
                                                     <span class="comment-metadata d-block">
                                                         <a href="javascript:void(0);">
                                                             <time datetime="2019-03-14T08:01:21+00:00">
-                                                                {{ Carbon\Carbon::parse($v->created_at)->format('F d, h:ia') }}
+                                                                <div class="star-rating course-rating" style="margin-bottom: 0;" id="{{ App\Http\Controllers\Front\CourseController::GetStars($v->course_id)["ratingcount"] }}"><span style="width: {{ (App\Http\Controllers\Front\CourseController::GetStars($v->course_id)["ratingcount"] == 0) ? 100 : App\Http\Controllers\Front\CourseController::GetStars($v->course_id)["ratingcount"] }}%">Rated <strong class="rating">5.00</strong> out of 5</span></div> {{ Carbon\Carbon::parse($v->created_at)->format('F d, h:ia') }}
                                                             </time>
                                                         </a>
                                                     </span>
@@ -301,112 +400,112 @@
                                             <!-- .comment-meta -->
                                             <div class="comment-content">
                                                 <p>
-                                                    {!! $v->message !!}
+                                                    {!! $v->ccomment !!}
                                                 </p>
                                             </div>
-                                            <div class="d-flex justify-content-between">
-                                                <div>
-                                                    <span class="like">
-                                                        <a class="like-link fw-500" href="javascript:void(0);" onclick="javascript:likeit({{ $v->id }});" aria-label="Reply to {{ $v->name }}">Like</a>
-                                                    </span>
-                                                    <span class="reply">
-                                                        <a rel="nofollow" class="comment-reply-link fw-500" href="javascript:void(0);" onclick="javascript:replyit({{ $v->id }});" aria-label="Reply to {{ $v->name }}">Reply</a>
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <span class="like-count color-dark" id="mainlike{{ $v->id }}">
-                                                        <i class="fw-600 color-dark fa fa-heart-o"></i>
-                                                        {{ json_decode($v->liked, true)["likes"] }}
-                                                    </span>
-                                                    <span class="comment-count color-dark">
-                                                        <i class="color-dark icon-m-comment-alt"></i>
-                                                        {{ json_decode($v->liked, true)["Comments"] }} Comment
-                                                    </span>
-                                                </div>
-                                            </div>
+                                            {{--<div class="d-flex justify-content-between">--}}
+                                                {{--<div>--}}
+                                                    {{--<span class="like">--}}
+                                                        {{--<a class="like-link fw-500" href="javascript:void(0);" onclick="javascript:likeit({{ $v->id }});" aria-label="Reply to {{ $v->name }}">Like</a>--}}
+                                                    {{--</span>--}}
+                                                    {{--<span class="reply">--}}
+                                                        {{--<a rel="nofollow" class="comment-reply-link fw-500" href="javascript:void(0);" onclick="javascript:replyit({{ $v->id }});" aria-label="Reply to {{ $v->name }}">Reply</a>--}}
+                                                    {{--</span>--}}
+                                                {{--</div>--}}
+                                                {{--<div>--}}
+                                                    {{--<span class="like-count color-dark" id="mainlike{{ $v->id }}">--}}
+                                                        {{--<i class="fw-600 color-dark fa fa-heart-o"></i>--}}
+                                                        {{--{{ json_decode($v->liked, true)["likes"] }}--}}
+                                                    {{--</span>--}}
+                                                    {{--<span class="comment-count color-dark">--}}
+                                                        {{--<i class="color-dark icon-m-comment-alt"></i>--}}
+                                                        {{--{{ json_decode($v->liked, true)["Comments"] }} Comment--}}
+                                                    {{--</span>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
                                         </article>
 
-                                        <div class="reply" id="reply{{ $v->id }}">
-                                            <div id="respond" class="comment-respond ls d-flex">
-                                                <form action="{{ URL::to("/storecomments") }}" method="post" id="savecomment" name="savecomment" class="comment-form" novalidate="">
-                                                    <div class="comment-form-author form-group has-placeholder">
-                                                        <label for="author">Name</label>
-                                                        <input class="form-control" id="cuser" name="cuser" type="text" value="{{ (isset(Auth::user()->first_name)) ? Auth::user()->first_name . " " . Auth::user()->last_name : "" }}" size="30" maxlength="245" aria-required="true" required="required" placeholder="Name*">
-                                                    </div>
-                                                    <p class="comment-form-email form-group has-placeholder">
-                                                        <label for="email">Email </label>
-                                                        <input class="form-control" id="cemail" name="cemail" type="cemail" value="{{ isset(Auth::user()->email) ? Auth::user()->email : "" }}" size="30" maxlength="100" aria-required="true" required="required" placeholder="Email*">
-                                                    </p>
-                                                    <input type="hidden" name="cid" id="cid" value="{{ $course->id }}">
-                                                    <input type="hidden" name="commentid" id="commentid" value="{{ $v->id }}">
-                                                    <p class="comment-form-comment form-group has-placeholder">
-                                                        <label for="comment">Comment</label>
-                                                        <textarea class="form-control" id="ccomment" name="ccomment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required" placeholder="Message*"></textarea>
-                                                    </p>{{ csrf_field() }}
-                                                    <p class="form-submit">
-                                                        <button type="submit" class="w-100 d-block btn btn-maincolor">Send comment</button>
-                                                    </p>
-                                                </form>
-                                            </div>
-                                        </div>
+                                        {{--<div class="reply" id="reply{{ $v->id }}">--}}
+                                            {{--<div id="respond" class="comment-respond ls d-flex">--}}
+                                                {{--<form action="{{ URL::to("/storecomments") }}" method="post" id="savecomment" name="savecomment" class="comment-form" novalidate="">--}}
+                                                    {{--<div class="comment-form-author form-group has-placeholder">--}}
+                                                        {{--<label for="author">Name</label>--}}
+                                                        {{--<input class="form-control" id="cuser" name="cuser" type="text" value="{{ (isset(Auth::user()->first_name)) ? Auth::user()->first_name . " " . Auth::user()->last_name : "" }}" size="30" maxlength="245" aria-required="true" required="required" placeholder="Name*">--}}
+                                                    {{--</div>--}}
+                                                    {{--<p class="comment-form-email form-group has-placeholder">--}}
+                                                        {{--<label for="email">Email </label>--}}
+                                                        {{--<input class="form-control" id="cemail" name="cemail" type="cemail" value="{{ isset(Auth::user()->email) ? Auth::user()->email : "" }}" size="30" maxlength="100" aria-required="true" required="required" placeholder="Email*">--}}
+                                                    {{--</p>--}}
+                                                    {{--<input type="hidden" name="cid" id="cid" value="{{ $course->id }}">--}}
+                                                    {{--<input type="hidden" name="commentid" id="commentid" value="{{ $v->id }}">--}}
+                                                    {{--<p class="comment-form-comment form-group has-placeholder">--}}
+                                                        {{--<label for="comment">Comment</label>--}}
+                                                        {{--<textarea class="form-control" id="ccomment" name="ccomment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required" placeholder="Message*"></textarea>--}}
+                                                    {{--</p>{{ csrf_field() }}--}}
+                                                    {{--<p class="form-submit">--}}
+                                                        {{--<button type="submit" class="w-100 d-block btn btn-maincolor">Send comment</button>--}}
+                                                    {{--</p>--}}
+                                                {{--</form>--}}
+                                            {{--</div>--}}
+                                        {{--</div>--}}
 
 
                                         <!-- .comment-body -->
-                                        <ol class="children">
-                                            @if(count(App\Http\Controllers\Front\CourseController::GetSubComment($v->id)) > 0)
-                                                @foreach(App\Http\Controllers\Front\CourseController::GetSubComment($v->id) as $subv)
-                                                    <li class="comment" id="commentID{{$subv->id}}">
-                                                        <article class="comment-body">
-                                                            <footer class="comment-meta">
-                                                                <div class="comment-author vcard">
-                                                                    <img alt="" src="images/team/testimonials_02.jpg">
-                                                                </div>
-                                                                <!-- .comment-author -->
-                                                                <div class="comment-name">
-                                                                    <span class="says">By:</span>
-                                                                    <b class="fn">
-                                                                        <a href="javascript:void(0);" rel="nofollow" class="url fw-500">{{ $subv->name }}</a>
-                                                                    </b>
-                                                                    <span class="comment-metadata d-block">
-                                                                        <a href="javascript:void(0);">
-                                                                            <time datetime="2019-03-14T08:01:21+00:00">
-                                                                                {{ Carbon\Carbon::parse($subv->created_at)->format('F d, h:ia') }}
-                                                                            </time>
-                                                                        </a>
-                                                                    </span>
-                                                                    <!-- .comment-metadata -->
-                                                                </div>
-                                                            </footer>
-                                                            <!-- .comment-meta -->
-                                                            <div class="comment-content">
-                                                                <p>{!! $subv->message !!}</p>
-                                                            </div>
-                                                            <div class="d-flex justify-content-between">
-                                                                <div>
-                                                                    <span class="like">
-                                                                        <a class="like-link fw-500" href="javascript:void(0);" onclick="javascript:likeit({{ $subv->id }});" aria-label="Reply to {{ $subv->name }}">Like</a>
-                                                                    </span>
+                                        {{--<ol class="children">--}}
+                                            {{--@if(count(App\Http\Controllers\Front\CourseController::GetSubComment($v->id)) > 0)--}}
+                                                {{--@foreach(App\Http\Controllers\Front\CourseController::GetSubComment($v->id) as $k=>$subv)--}}
+                                                    {{--<li class="comment" id="commentID{{$subv->id}}">--}}
+                                                        {{--<article class="comment-body">--}}
+                                                            {{--<footer class="comment-meta">--}}
+                                                                {{--<div class="comment-author vcard">--}}
+                                                                    {{--<img alt="" src="/images/team/testimonials_02.jpg">--}}
+                                                                {{--</div>--}}
+                                                                {{--<!-- .comment-author -->--}}
+                                                                {{--<div class="comment-name">--}}
+                                                                    {{--<span class="says">By:</span>--}}
+                                                                    {{--<b class="fn">--}}
+                                                                        {{--<a href="javascript:void(0);" rel="nofollow" class="url fw-500">{{ $subv->name }}</a>--}}
+                                                                    {{--</b>--}}
+                                                                    {{--<span class="comment-metadata d-block">--}}
+                                                                        {{--<a href="javascript:void(0);">--}}
+                                                                            {{--<time datetime="2019-03-14T08:01:21+00:00">--}}
+                                                                                {{--{{ Carbon\Carbon::parse($subv->created_at)->format('F d, h:ia') }}--}}
+                                                                            {{--</time>--}}
+                                                                        {{--</a>--}}
+                                                                    {{--</span>--}}
+                                                                    {{--<!-- .comment-metadata -->--}}
+                                                                {{--</div>--}}
+                                                            {{--</footer>--}}
+                                                            {{--<!-- .comment-meta -->--}}
+                                                            {{--<div class="comment-content">--}}
+                                                                {{--<p>{!! $subv->message !!}</p>--}}
+                                                            {{--</div>--}}
+                                                            {{--<div class="d-flex justify-content-between">--}}
+                                                                {{--<div>--}}
+                                                                    {{--<span class="like">--}}
+                                                                        {{--<a class="like-link fw-500" href="javascript:void(0);" onclick="javascript:likeit({{ $subv->id }});" aria-label="Reply to {{ $subv->name }}">Like</a>--}}
+                                                                    {{--</span>--}}
 {{--                                                                    <span class="reply">--}}
 {{--                                                                        <a rel="nofollow" class="comment-reply-link fw-500" href="#comments" aria-label="Reply to {{ $subv->name }}">Reply</a>--}}
 {{--                                                                    </span>--}}
-                                                                </div>
-                                                                <div>
-                                                                    <span class="like-count color-dark" id="mainlike{{ $subv->id }}">
-                                                                        <i class="fw-600 color-dark fa fa-heart-o"></i>
-                                                                        {{ json_decode($subv->liked, true)["likes"] }}
-                                                                    </span>
-                                                                    <span class="comment-count color-dark">
-                                                                        <i class="color-dark icon-m-comment-alt"></i>
-                                                                        {{ json_decode($subv->liked, true)["Comments"] }} Comment
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </article>
-                                                        <!-- .comment-body -->
-                                                    </li>
-                                                @endforeach
-                                            @endif
-                                        </ol>
+                                                                {{--</div>--}}
+                                                                {{--<div>--}}
+                                                                    {{--<span class="like-count color-dark" id="mainlike{{ $subv->id }}">--}}
+                                                                        {{--<i class="fw-600 color-dark fa fa-heart-o"></i>--}}
+                                                                        {{--{{ json_decode($subv->liked, true)["likes"] }}--}}
+                                                                    {{--</span>--}}
+                                                                    {{--<span class="comment-count color-dark">--}}
+                                                                        {{--<i class="color-dark icon-m-comment-alt"></i>--}}
+                                                                        {{--{{ json_decode($subv->liked, true)["Comments"] }} Comment--}}
+                                                                    {{--</span>--}}
+                                                                {{--</div>--}}
+                                                            {{--</div>--}}
+                                                        {{--</article>--}}
+                                                        {{--<!-- .comment-body -->--}}
+                                                    {{--</li>--}}
+                                                {{--@endforeach--}}
+                                            {{--@endif--}}
+                                        {{--</ol>--}}
                                         <!-- .children -->
                                 </li>
                                 @endforeach
@@ -422,5 +521,157 @@
             </div>
         </div>
     </section>
+
+    <section class="ls course-comment">{{--s-pt-55 s-pb-60 s-pt-lg-95 s-pb-lg-100 c-gutter-50--}}
+        <div class="container">
+            <div class="row instructore-more-course">
+                <h4 class="fw-500">More Courses by Eneida F. Withrow</h4>
+            </div>
+            <div class="row writer-card">
+                <div class="col-lg-3 col-xl-3">
+                    <img src="http://127.0.0.1:8000/uploads/pavatar/269687077.jpg" width="300" height="300" />
+                    <div class="writer-content">
+                        <b>The Complete Financial Analyst Training & Investing Course Chris Haroun</b>
+                        <div class="writer-rate">Rating: 4.5 out of 5
+                            4.5
+                            (20,960)</div>
+                        <div class="writer-hours">22.5 total hours . 225 lectures</div>
+                        <div class="writer-levels">. All Levels</div>
+                        <div class="writer-price">&pound; 88</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-3">
+                    <img src="http://127.0.0.1:8000/uploads/pavatar/1287658438.jpg" width="300" height="300" />
+                    <div class="writer-content">
+                        <b>The Complete Financial Analyst Training & Investing Course Chris Haroun</b>
+                        <div class="writer-rate">Rating: 4.5 out of 5
+                            4.5
+                            (20,960)</div>
+                        <div class="writer-hours">22.5 total hours . 225 lectures</div>
+                        <div class="writer-levels">. All Levels</div>
+                        <div class="writer-price">&pound; 22</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-3">
+                    <img src="http://127.0.0.1:8000/uploads/pavatar/401966259.jpg" width="300" height="300" />
+                    <div class="writer-content">
+                        <b>The Complete Financial Analyst Training & Investing Course Chris Haroun</b>
+                        <div class="writer-rate">Rating: 4.5 out of 5
+                            4.5
+                            (20,960)</div>
+                        <div class="writer-hours">22.5 total hours . 225 lectures</div>
+                        <div class="writer-levels">. All Levels</div>
+                        <div class="writer-price">&pound; 99</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-3">
+                    <img src="http://127.0.0.1:8000/uploads/pavatar/8589637.jpg" width="300" height="300" />
+                    <div class="writer-content">
+                        <b>The Complete Financial Analyst Training & Investing Course Chris Haroun</b>
+                        <div class="writer-rate">Rating: 4.5 out of 5
+                            4.5
+                            (20,960)</div>
+                        <div class="writer-hours">22.5 total hours . 225 lectures</div>
+                        <div class="writer-levels">. All Levels</div>
+                        <div class="writer-price">&pound; 33</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div class="modal fade" id="YouTubeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+
+                <div class="modal-body">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <!-- 16:9 aspect ratio -->
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="" id="video"  allowscriptaccess="always" allow="autoplay"></iframe>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Video Modal -->
+
+
+
+    <!-------------- Iframe Modal ------------>
+    <div class="modal fade" id="IMGModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="width: 600px; height: 650px">
+
+
+                <div class="modal-body">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <!-- 16:9 aspect ratio -->
+                    <div class="embed-responsive embed-responsive-16by9" style="height: 650px">
+                        <iframe src="" class="puiframe" style="width:600px; height:650px;" frameborder="0"></iframe>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-------------- Iframe Modal ------------>
+
+    <!-------------- Video Modal ------------>
+    {{--<div class="modal fade" id="VideoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--}}
+        {{--<div class="modal-dialog" role="document">--}}
+            {{--<div class="modal-content">--}}
+
+
+                {{--<div class="modal-body">--}}
+
+                    {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+                        {{--<span aria-hidden="true">&times;</span>--}}
+                    {{--</button>--}}
+                    {{--<!-- 16:9 aspect ratio -->--}}
+                    {{--<div class="embed-responsive embed-responsive-16by9 vm">--}}
+
+                    {{--</div>--}}
+
+
+                {{--</div>--}}
+
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+    <!-------------- Video Modal ------------>
+
+    <!-- --------------- Content Model ------------------- -->
+    <div class="modal fade" id="ContentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body popup-data-div">
+
+                </div>
+                <div class="modal-footer">
+                    {{--<button type="button" name="RConfirmBTN" id="RConfirmBTN" data-key="0" class="btn btn-primary">Confirm</button>--}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- --------------- Content Model ------------------- -->
 
 @endsection

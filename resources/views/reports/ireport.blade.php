@@ -4,54 +4,7 @@
 @include('blocks.left-menu-admin')
 
 <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet">
-<style>
-    table.dataTable tbody tr {
-        background-color: #000000;
-        color: #fff;
-    }
-    table.dataTable.display tbody tr.even>.sorting_1, table.dataTable.order-column.stripe tbody tr.even>.sorting_1 {
-        background-color: #000000;
-        color: #fff;
-    }
-    table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
-        background-color: #000000;
-        border: none !important;
-    }
-    table.dataTable.display tbody tr.odd>.sorting_1, table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
-        background-color: #000000;
-    }
-    table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover, table.dataTable.display tbody tr:hover .sorting_1 {
-        background-color: #555555;
-    }
-    #example thead tr th {
-        color: #fff;
-    }
-    #example tbody tr td {
-        border-bottom: none;
-    }
-    div#example_length label {
-        color: #fff;
-    }
 
-    div#example_filter label {
-        color: #fff;
-    }
-
-    div#example_info {
-        color: #fff;
-    }
-
-    div#example_paginate a {
-        color: #ccc !important;
-        background-color: #555;
-    }
-    .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-        background: none;
-    }
-    div#example_length select {
-        color: #000;
-    }
-</style>
 <!-- Edit form -->
 <div class="center-content-area table-set">
     <div class="table-responsive">
@@ -71,7 +24,7 @@
                     <th>Enrolment date</th>
                     <th>Instructor</th>
                     <th>Total amount</th>
-                    <th>Admin revenue</th>
+                    <th>Instructor revenue</th>
                 </tr>
                 </thead>
                 <tbody>

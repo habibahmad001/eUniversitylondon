@@ -66,6 +66,46 @@ class MexamController extends Controller
         return view('mockexam/index', $data);
     }
 
+    public function MExamListing(Request $request) {
+
+        $data['sub_heading']  = 'Mock Exam';
+        $data['page_title']   = 'eUniversitylondon Mock Exam';
+        if(collect(request()->segments())->first() == 'instructor') {
+            $data['Exams']          =  MockExam::where('exam_user_id', Auth::user()->id)->where('course_id', $request->cid)->paginate(10);
+            $data['Courses']        =  Courses::where('course_status', "yes")->where('course_user_id', Auth::user()->id)->get();
+        } elseif(collect(request()->segments())->first() == 'admin') {
+            $data['Exams']          =  MockExam::where('course_id', $request->cid)->paginate(10);
+            $data['Courses']        =  Courses::where('course_status', "yes")->get();
+        }
+        /**************** Get Course Name **************/
+        $Array_Course_Name           =  array();
+        foreach($data['Exams'] as $exam_data) {
+            if(!empty($exam_data->course_id)) {
+                $Course_Name        =  Courses::where('id', $exam_data->course_id)->first();
+                if(isset($Course_Name->course_title)) {
+                    $Array_Course_Name[$exam_data->id] = $Course_Name->course_title;
+                }
+            }
+        }
+        $data['Array_Course_Name']           =  $Array_Course_Name;
+        /**************** Get Course Name **************/
+
+        /**************** Get instructor Name **************/
+        $Array_Instructor_Name           =  array();
+        foreach($data['Exams'] as $course_data) {
+            if(!empty($course_data->exam_user_id)) {
+                $Instructor_Name        =  User::where('id', $course_data->exam_user_id)->first();
+                if(isset($Instructor_Name->first_name)) {
+                    $Array_Instructor_Name[$course_data->id] = $Instructor_Name->first_name . " " . $Instructor_Name->last_name;
+                }
+            }
+        }
+        $data['Array_Instructor_Name']           =  $Array_Instructor_Name;
+        /**************** Get instructor Name **************/
+
+        return view('mockexam/index', $data);
+    }
+
     public function MexamsAdd(Request $request){
         $Exam         = new MockExam;
         $this->validate($request, [
@@ -82,7 +122,7 @@ class MexamController extends Controller
         $saved          = $Exam->save();
         if ($saved) {
             $request->session()->flash('message', 'Mock Exam successfully added!');
-            return redirect('/' . collect(request()->segments())->first() . '/mexam');
+            return redirect()->back();
         } else {
             return redirect()->back()->with('message', 'Couldn\'t create Mock Exam!');
         }
@@ -111,7 +151,7 @@ class MexamController extends Controller
         $saved              = $Exam->save();
         if ($saved) {
             $request->session()->flash('message', 'Mock Exams was successful edited!');
-            return redirect('/' . collect(request()->segments())->first() . '/mexam');
+            return redirect()->back();
         } else {
             return redirect()->back()->with('error', 'Couldn\'t create Mock Exams!');
         }

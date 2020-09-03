@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comments;
+use App\Ratings;
 use App\Courses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -22,30 +23,29 @@ class CommentController extends Controller
 
     public function index() {
 
-        $data['sub_heading']  = 'Comment';
-        $data['page_title']   = 'eUniversitylondon Comment';
+        $data['sub_heading']  = 'Reviews';
+        $data['page_title']   = 'eUniversitylondon Reviews';
 
-        $data['Comment']        =  Comments::where('status', "yes")->paginate(10);
+        $data['Comment']        =  Ratings::paginate(10);
         $data['Courses']        =  Courses::where('course_status', "yes")->get();
 
         return view('comment/index', $data);
     }
 
     public function CommentAdd(Request $request){
-        $Comment         = new Comments;
+        $Rating         = new Ratings;
 
         $this->validate($request, [
-            'cuser'=>'required',
-            'cemail'=>'required',
+            'star_val'=>'required',
             'ccomments'=>'required'
         ]);
 
-        $Comment->name         = $request->cuser;
-        $Comment->email        = $request->cemail;
-        $Comment->subComment   = 0;
-        $Comment->message      = $request->ccomments;
-        $Comment->course_id    = $request->cour_id;
-        $Comment->liked        = json_encode(array("likes" => 0, "Comments" => 0));
+        $Rating->course_id      = $request->cid;
+        $Rating->user_id        = Auth::user()->id;
+        $Rating->name           = Auth::user()->first_name . " " . Auth::user()->last_name;
+        $Rating->rating         = $request->star_val;
+        $Rating->ccomment       = $request->ccomments;
+        $Rating->commentlevel   = 0;
 
         $saved                  = $Comment->save();
 
@@ -59,20 +59,20 @@ class CommentController extends Controller
 
     public function GetComment($id){
         $data           = [];
-        $data['Comment'] = Comments::find($id);
+        $data['Comment'] = Ratings::find($id);
 
         return Response::json($data);
     }
 
     public function CommentsBlocked(Request $request){
         $msg_sts = "";
-        $Comment = Comments::find($request->id);
+        $Comment = Ratings::find($request->id);
         if($Comment) {
-            if($Comment->isActive == "yes") {
-                $Comment->isActive      = "no";
+            if($Comment->status == "yes") {
+                $Comment->status      = "no";
                 $msg_sts = "Blocked";
             } else {
-                $Comment->isActive      = "yes";
+                $Comment->status      = "yes";
                 $msg_sts = "Approved";
             }
             $saved                  = $Comment->save();
@@ -90,19 +90,19 @@ class CommentController extends Controller
         $id              =        $request->cid;
 
         $this->validate($request, [
-            'cuser'=>'required',
-            'cemail'=>'required',
+            'star_val'=>'required',
             'ccomments'=>'required'
         ]);
-        $Comment               = Comments::find($id);
-        $Comment->name         = $request->cuser;
-        $Comment->email        = $request->cemail;
-        $Comment->subComment   = 0;
-        $Comment->message      = $request->ccomments;
-        $Comment->course_id    = $request->cour_id;
-        $Comment->liked        = json_encode(array("likes" => 0, "Comments" => 0));
+        $Rating               = Ratings::find($id);
 
-        $saved                  = $Comment->save();
+        $Rating->course_id      = $request->cid;
+        $Rating->user_id        = Auth::user()->id;
+        $Rating->name           = Auth::user()->first_name . " " . Auth::user()->last_name;
+        $Rating->rating         = $request->star_val;
+        $Rating->ccomment       = $request->ccomments;
+        $Rating->commentlevel   = 0;
+
+        $saved                  = $Rating->save();
 
         if ($saved) {
             $request->session()->flash('message', 'Comment was successful edited!');
@@ -115,7 +115,7 @@ class CommentController extends Controller
 
     public function destroy($id) {
         //Find a user with a given id and delete
-        $Comment = Comments::findOrFail($id);
+        $Comment = Ratings::findOrFail($id);
         $Comment->delete();
         return redirect('/' . collect(request()->segments())->first() . '/comment')->with('message', 'Selected Comment has been deleted successfully!');
     }

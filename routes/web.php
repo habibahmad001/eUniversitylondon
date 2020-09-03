@@ -99,7 +99,8 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/finishquiz/{status}', 'Front\CourseController@FinishQuiz');
     Route::get('/user/newsubscription/{cid}', 'Front\CourseController@NewSubscription');
     Route::post('/saveresult', 'Front\CourseController@SaveResult');
-    Route::post('/saveratings', 'Front\CourseController@SaveRatings');
+//    Route::post('/saveratings', 'Front\CourseController@SaveRatings');
+    Route::post('/saveratings', 'Front\CourseController@SaveReviews');
     Route::post('/storecomments', 'Front\CourseController@StoreComments');
     /************* Course Ends ***************/
 
@@ -155,6 +156,7 @@ Route::get('/HasItems/{id}', 'QandAController@HasItems');
 Route::get('/AnswerCount/{id}', 'QandAController@AnswerCount');
 Route::get('/qetanswer/{eid}/{type}/{qid}', 'QandAController@GetAnswer');
 Route::get('/qaonid/{id}', 'QandAController@QAonID');
+Route::get('/qaresid/{id}', 'QandAController@QAresID');
 /********** Gernal Q&A Functions *********/
 
 /********** Gernal Exam Functions *********/
@@ -163,11 +165,17 @@ Route::get('/examdata/{qid}/{table_name}', 'QandAController@ExamData');
 Route::get('/questiondata/{qid}', 'QandAController@QuestionData');
 Route::get('/getquizresult/{exam_id}', 'CourseController@GetQuizResult');
 Route::get('/examcount/{cid}', 'CoursesController@ExamCount');
+Route::get('/mexamcount/{cid}', 'CoursesController@MExamCount');
+Route::get('/quizcount/{cid}', 'CoursesController@QuizCount');
 /********** Gernal Exam Functions *********/
 
 /********** Gernal Login User Functions *********/
 Route::get('/user_msg', 'LoginController@UserMSG');
 /********** Gernal Login User Functions *********/
+
+/********** Gernal Quiz Functions *********/
+Route::get('/getquizoncourse/{cid}', 'QuizController@GetQuizOnCourse');
+/********** Gernal Quiz Functions *********/
 
 
 /********** Gernal Category Functions *********/
@@ -199,6 +207,11 @@ Route::get('/offerapplied/{id}', 'CoursesController@OfferApplied');
 /********** Gernal CMS Functions *********/
 Route::get('/cmsbtn/{cid}/{pid}', 'Front\CMSController@cmsBTN');
 /********** Gernal CMS Functions *********/
+
+/********** Gernal Course Program Functions *********/
+Route::get('/getcpid/{cpid}', 'CourseProgramController@GetCPONID');
+Route::get('/ratingoncourse/{cpid}', 'CourseProgramController@TotalRatingOnCourse');
+/********** Gernal Course Program Functions *********/
 
 /********** Gernal User Functions *********/
 Route::get('/getuseronid/{id}', 'OrderController@GetUserOnID');
@@ -294,13 +307,17 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/courseprogram_add', 'CourseProgramController@CourseProgramAdd');
     Route::get('/admin/getcourseprogram/{cp_id}', 'CourseProgramController@GetCourseProgram');
     Route::post('/admin/update-courseprogram', 'CourseProgramController@UpdateCourseProgram');
+    Route::post('/admin/update-unit', 'CourseProgramController@UpdateUnits');
     Route::get('/admin/cplisting/{cid}', 'CourseProgramController@CPListing');
+    Route::get('/admin/cpunits/{cid}', 'CourseProgramController@Units');
+    Route::get('/admin/getajaxquiz/{cid}', 'CourseProgramController@GetAjaxQuiz');
     /*************** Course Program Ends ***************/
 
     /*************** Exam Starts ***************/
     Route::resource('/admin/exam', 'Exams');
     Route::get('/admin/exam', 'Exams@index');
     Route::get('/admin/examlisting/{cid}', 'Exams@ExamListing');
+    Route::post('/admin/exam/removeall', 'Exams@RemoveAll');
     Route::post('/admin/exam_add', 'Exams@ExamsAdd');
     Route::post('/admin/selected_exam_add', 'Exams@AddSelectedExam');
     Route::get('/admin/getexam/{exm_id}', 'Exams@GetExams');
@@ -311,10 +328,22 @@ Route::middleware(['admin'])->group(function () {
     /*************** MockExam Starts ***************/
     Route::resource('/admin/mockexam', 'MexamController');
     Route::get('/admin/mexam', 'MexamController@index');
+    Route::get('/admin/mexamlisting/{cid}', 'MexamController@MExamListing');
+    Route::delete('/admin/mexamlisting/mockexam/{cid}', 'MexamController@destroy');
     Route::post('/admin/mexam_add', 'MexamController@MexamsAdd');
     Route::get('/admin/getmexam/{exm_id}', 'MexamController@GetMexams');
     Route::post('/admin/update-mexam', 'MexamController@UpdateMexams');
     /*************** MockExam Ends ***************/
+
+    /*************** Quiz Starts ***************/
+    Route::resource('/admin/quiz', 'QuizController');
+    Route::get('/admin/quiz', 'QuizController@index');
+    Route::get('/admin/quizlisting/{cid}', 'QuizController@QuizListing');
+    Route::delete('/admin/quizlisting/quiz/{cid}', 'QuizController@destroy');
+    Route::post('/admin/quiz_add', 'QuizController@QuizAdd');
+    Route::get('/admin/getquiz/{exm_id}', 'QuizController@GetQuiz');
+    Route::post('/admin/update-quiz', 'QuizController@UpdateQuiz');
+    /*************** Quiz Ends ***************/
 
     /*************** Testimonial Starts ***************/
     Route::resource('/admin/testimonial', 'TestimonialController');
@@ -359,6 +388,15 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/setproduct', 'CoursesController@SetProduct');
     Route::post('/admin/applyoffer', 'CoursesController@ApplyOffer');
     /*************** Courses Ends ***************/
+
+    /*************** Assignment Starts ***************/
+    Route::resource('/admin/assignment', 'AssignmentController');
+    Route::get('/admin/assignment', 'AssignmentController@index');
+    Route::post('/admin/assignment_add', 'AssignmentController@AssignmentAdd');
+    Route::get('/admin/getassignment/{a_id}', 'AssignmentController@GetAssignment');
+    Route::post('/admin/update-assignment', 'AssignmentController@UpdateAssignment');
+    Route::get('/admin/getassignmentexam/{tab_name}', 'AssignmentController@GetAssignmentExam');
+    /*************** Assignment Ends ***************/
 
     /*************** Order Starts ***************/
     Route::resource('/admin/Order', 'OrderController');
@@ -439,6 +477,15 @@ Route::middleware(['instructor'])->group(function () {
     Route::get('/instructor/getcourse/{cou_id}', 'CoursesController@GetCourse');
     Route::post('/instructor/update-course', 'CoursesController@UpdateCourse');
     /*************** Courses Ends ***************/
+
+    /*************** Assignment Starts ***************/
+    Route::resource('/instructor/assignment', 'AssignmentController');
+    Route::get('/instructor/assignment', 'AssignmentController@index');
+    Route::post('/instructor/assignment_add', 'AssignmentController@AssignmentAdd');
+    Route::get('/instructor/getassignment/{a_id}', 'AssignmentController@GetAssignment');
+    Route::post('/instructor/update-assignment', 'AssignmentController@UpdateAssignment');
+    Route::get('/instructor/getassignmentexam/{tab_name}', 'AssignmentController@GetAssignmentExam');
+    /*************** Assignment Ends ***************/
 
 
     /*************** Question & Answer Starts ***************/
@@ -528,6 +575,13 @@ Route::get('/get-started', function () {
 
 Route::get('/404', function () {
     return view('frontend.404');
+});
+
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('view:clear');
+    return "Cache is cleared";
 });
 
 Route::get('/checkout', 'AuthorizeController@index');

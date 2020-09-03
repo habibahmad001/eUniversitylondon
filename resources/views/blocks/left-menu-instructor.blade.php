@@ -17,11 +17,18 @@
     </li>
 
     <li @if(collect(request()->segments())->last()=='courseprogram') class="active" @endif>
-      <a href="{{ URL::to('/admin/courseprogram') }}">
+      <a href="{{ URL::to('/instructor/courseprogram') }}">
         {{--manage-rules--}}
         <div class="icon">CC</div>
-        {{--        <div class="icon-detail">Course Program</div>--}}
-        <div class="icon-detail">Curriculum</div>
+        <div class="icon-detail">Section's / Units</div>
+      </a>
+    </li>
+
+    <li @if(collect(request()->segments())->last()=='assignment') class="active" @endif>
+      <a href="{{ URL::to('/instructor/assignment') }}">
+        {{--manage-rules--}}
+        <div class="icon">A</div>
+        <div class="icon-detail">Assignment</div>
       </a>
     </li>
 
@@ -53,7 +60,7 @@
       <a href="{{ URL::to('/instructor/questionandanswer') }}">
         {{--manage-rules--}}
         <div class="icon">QA</div>
-        <div class="icon-detail">Question & Ans</div>
+        <div class="icon-detail">Question Bank</div>
       </a>
     </li>
 

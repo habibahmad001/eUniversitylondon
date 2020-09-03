@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Quiz;
+use App\Ratings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
@@ -23,8 +25,8 @@ class CourseProgramController extends Controller
 
     public function index() {
 
-        $data['sub_heading']  = 'Curriculum';
-        $data['page_title']   = 'eUniversitylondon Curriculum';
+        $data['sub_heading']  = 'content/Units';
+        $data['page_title']   = 'eUniversitylondon content/Units';
         if(collect(request()->segments())->first() == 'instructor') {
             $data['CourseProgram']          =  CourseProgram::join('tablecourses', 'tablecourseprogram.course_id', '=', 'tablecourses.id')
                                                                 ->select('*')
@@ -55,8 +57,8 @@ class CourseProgramController extends Controller
 
     public function CPListing(Request $request) {
 
-        $data['sub_heading']  = 'Curriculum';
-        $data['page_title']   = 'eUniversitylondon Curriculum';
+        $data['sub_heading']  = 'content/Units';
+        $data['page_title']   = 'eUniversitylondon content/Units';
         if(collect(request()->segments())->first() == 'instructor') {
             $data['CourseProgram']          =  CourseProgram::join('tablecourses', 'tablecourseprogram.course_id', '=', 'tablecourses.id')
                                         ->select('*')
@@ -86,24 +88,34 @@ class CourseProgramController extends Controller
         return view('courseprogram/index', $data);
     }
 
+    public function Units(Request $request) {
+
+        $data['sub_heading']  = 'Content / Units';
+        $data['page_title']   = 'eUniversitylondon Content / Units';
+
+        $id              =        $request->cid;
+
+        $CourseProgram              = CourseProgram::find($id);
+
+        if(!empty($CourseProgram->cp_desc)){
+            $data["Units"]  =   json_decode($CourseProgram->cp_desc, true);
+        }
+
+        return view('courseprogram/units', $data);
+    }
+
     public function CourseProgramAdd(Request $request){
         $CourseProgram         = new CourseProgram;
         $this->validate($request, [
 
             'title'=>'required',
-            'desc'=>'required',
-            'author'=>'required',
             'placement'=>'required',
-            'cour_id'=>'required',
-            'youtube'=>'required'
+            'cour_id'=>'required'
         ]);
 
         $CourseProgram->cp_title  = $request->title;
-        $CourseProgram->cp_desc  = $request->desc;
-        $CourseProgram->cp_author  = $request->author;
         $CourseProgram->cp_placement  = $request->placement;
         $CourseProgram->course_id  = $request->cour_id;
-        $CourseProgram->videoLink  = $request->youtube;
 
         /************ Image PDF ***********/
         if(!empty($request->file('cou_pdf'))) {
@@ -134,10 +146,10 @@ class CourseProgramController extends Controller
 
         $saved          = $CourseProgram->save();
         if ($saved) {
-            $request->session()->flash('message', '$Course Program successfully added!');
+            $request->session()->flash('message', 'Course content/Units successfully added!');
             return redirect()->back();
         } else {
-            return redirect()->back()->with('message', 'Couldn\'t create Course Program!');
+            return redirect()->back()->with('message', 'Couldn\'t create Course content/Units!');
         }
     }
 
@@ -148,24 +160,44 @@ class CourseProgramController extends Controller
         return Response::json($data);
     }
 
+    public static function GetCPONID($id){
+        $CourseProgram         = CourseProgram::find($id);
+        return $CourseProgram;
+    }
+
+    public function GetAjaxQuiz($cid) {
+
+        $Quiz         = Quiz::where("course_id", $cid)->get();
+        $res_var = '<option value="">--- Select One ---</option>';
+        if(count($Quiz) > 0) {
+            foreach($Quiz as $v) {
+                $res_var .= '<option value="'.$v->id.'">'.$v->quiz_title.'</option>';
+            }
+        }
+
+        $data['ResponseData']  = $res_var;
+//        echo $res_var;
+        return Response::json($data);
+
+    }
+
+    public static function TotalRatingOnCourse($id){
+        $TRating         = Ratings::where("course_id", $id)->get();
+        return $TRating;
+    }
+
     public function UpdateCourseProgram(Request $request){
         $id              =        $request->cp_id;
         $this->validate($request, [
             'title'=>'required',
-            'desc'=>'required',
-            'author'=>'required',
             'placement'=>'required',
-            'cour_id'=>'required',
-            'youtube'=>'required'
+            'cour_id'=>'required'
         ]);
         $CourseProgram              = CourseProgram::find($id);
 
         $CourseProgram->cp_title  = $request->title;
-        $CourseProgram->cp_desc  = $request->desc;
-        $CourseProgram->cp_author  = $request->author;
         $CourseProgram->cp_placement  = $request->placement;
         $CourseProgram->course_id  = $request->cour_id;
-        $CourseProgram->videoLink  = $request->youtube;
 
         /************ Image PDF ***********/
         if(!empty($request->file('cou_pdf'))) {
@@ -206,10 +238,83 @@ class CourseProgramController extends Controller
         $saved              = $CourseProgram->save();
 
         if ($saved) {
-            $request->session()->flash('message', 'Course Program was successful edited!');
+            $request->session()->flash('message', 'Course content/Units was successful edited!');
             return redirect()->back();
         } else {
-            return redirect()->back()->with('error', 'Couldn\'t create Course Program!');
+            return redirect()->back()->with('error', 'Couldn\'t create Course content/Units!');
+        }
+    }
+
+    public function UpdateUnits(Request $request){
+        $id              =        $request->cpid;
+        $this->validate($request, [
+            'title'=>'required',
+            'type'=>'required',
+        ]);
+
+        $DESDATA    =   [];
+//        $DESDATA    =   array("Item" => array("Title" => "Some", "Type" => "Video", "Content" => "img.jpg", "Duration" => "2:30"));
+
+        /********* Loop On type *********/
+        $counter = 0;
+        foreach($request->type as $v) {
+            $DESDATA[$counter]["Title"]       =   $request->title[$counter];
+            $DESDATA[$counter]["Type"]        =   $v;
+            if($v == "Content_".$counter) {
+                $DESDATA[$counter]["Content"]     =   $request->contentarr[$counter];
+                $DESDATA[$counter]["Duration"]    =   $request->contentdur[$counter];
+            } else if($v == "Iframe_".$counter) {
+                $DESDATA[$counter]["Content"]     =   $request->iframearr[$counter];
+                $DESDATA[$counter]["Duration"]    =   $request->iframedur[$counter];
+            } else if($v == "Quiz_".$counter) {
+                $DESDATA[$counter]["Content"]     =   $request->quizarr[$counter];
+                $DESDATA[$counter]["Duration"]    =   $request->quizdur[$counter];
+            } else if($v == "Youtube_".$counter) {
+                $DESDATA[$counter]["Content"]     =   $request->youtubearr[$counter];
+                $DESDATA[$counter]["Duration"]    =   $request->youtubedur[$counter];
+            } else if($v == "Video_".$counter) {
+                /************ Video Upload ***********/
+                if(!empty($request->file('videoarr')[$counter])) {
+                    $CoursesVIDEO = $request->file('videoarr')[$counter];
+                    $CoursesVIDEO_new_name = rand() . '.' . $CoursesVIDEO->getClientOriginalExtension();
+                    $DESDATA[$counter]["Content"]     =   $CoursesVIDEO_new_name;
+                    $CoursesVIDEO->move('uploads/courseprogramVIDEO', $CoursesVIDEO_new_name);
+                } else {
+                    $DESDATA[$counter]["Content"]     =   $request->oldvid[$counter];
+                }
+                /************ Video Upload ***********/
+                $DESDATA[$counter]["Duration"]    =   $request->videodur[$counter];
+            } else if($v == "Image_".$counter) {
+                /************ Image Upload ***********/
+                if(!empty($request->file('imgarr')[$counter])) {
+                    $CoursesIMG = $request->file('imgarr')[$counter];
+                    $CoursesIMG_new_name = rand() . '.' . $CoursesIMG->getClientOriginalExtension();
+                    $DESDATA[$counter]["Content"]     =   $CoursesIMG_new_name;
+                    $CoursesIMG->move('uploads/courseprogramIMG', $CoursesIMG_new_name);
+                } else {
+                    $DESDATA[$counter]["Content"]     =   $request->oldimg[$counter];
+                }
+                /************ Image Upload ***********/
+                $DESDATA[$counter]["Duration"]    =   $request->imgdur[$counter];
+            }
+
+            $counter++;
+        }
+//        exit(json_encode($DESDATA));
+        /********* Loop On type *********/
+
+        $CourseProgram              = CourseProgram::find($id);
+
+        $CourseProgram->cp_desc  = json_encode($DESDATA);
+
+
+        $saved              = $CourseProgram->save();
+
+        if ($saved) {
+            $request->session()->flash('message', 'Course content/Units was successful edited!');
+            return redirect()->back();
+        } else {
+            return redirect()->back()->with('error', 'Couldn\'t create Course content/Units!');
         }
     }
 
@@ -221,7 +326,7 @@ class CourseProgramController extends Controller
             (file_exists('uploads/courseprogrampdf/' . $CourseProgram->pdf)) ? unlink('uploads/courseprogrampdf/' . $CourseProgram->pdf) : "";
         }
         $CourseProgram->delete();
-        return redirect('/' . collect(request()->segments())->first() . '/courseprogram')->with('message', 'Selected Course Program has been deleted successfully!');
+        return redirect('/' . collect(request()->segments())->first() . '/courseprogram')->with('message', 'Selected Course content/Units has been deleted successfully!');
     }
 
 }

@@ -365,7 +365,7 @@ class CartController extends Controller
                 $pdfpath    =   "/uploads/coursepdf/";
             }
             $data['UserProgramData']            = $UserProgramData;
-            $data['courseprogramData']          = CourseProgram::where("course_id", $course_id)->get();
+            $data['courseprogramData']          = CourseProgram::where("course_id", $course_id)->orderBy('id', 'asc')->get();
             $data['PDFpath']  = $pdfpath;
 
             /*************** Number of days left ************/
@@ -507,14 +507,20 @@ class CartController extends Controller
                 ($prod_data->OfferData && (strtotime($prod_data->EndDate) >= strtotime(Carbon::now()))) ? ($price = ($prod_data->course_price - (($prod_data->OfferData)/100)*$prod_data->course_price)) : ($price = $prod_data->course_price);
                 $cartSession[$request->pid] = array($prod_data->course_avatar, $prod_data->course_title, 1, $price, $prod_data->id);
 
+//                echo json_encode($cartSession); exit();
                 $sessNewItem    = cart::firstOrNew(array('session_id' => session()->getId()));
                 $sessNewItem->session_id = session()->getId();
                 $sessNewItem->key = "cartItem";
                 $sessNewItem->val = json_encode($cartSession);
+                $sessNewItem->created = Carbon::today();
 
-                $sessNewItem->save();
+//                print_r($sessNewItem); exit();
 
-                return redirect()->intended('/cart')->with('message', 'Cart has setup!!!');
+                $saved = $sessNewItem->save();
+                if($saved)
+                    return redirect()->intended('/cart')->with('message', 'Cart has setup!!!');
+                else
+                    return redirect()->intended('/cart')->with('message', 'This course is not active yet!!!');
             }
 
 
@@ -575,6 +581,7 @@ class CartController extends Controller
             $sessNewItem->session_id = session()->getId();
             $sessNewItem->key = "cartItem";
             $sessNewItem->val = json_encode($cartSession);
+            $sessNewItem->created = Carbon::today();
 
             $sessNewItem->save();
 

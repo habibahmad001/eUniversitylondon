@@ -69,6 +69,12 @@ $(".edit-icon").click(function () {
         }
       });
 
+      $("#edit-anstype option").each(function() {
+        if($(this).val() == QandA.AnsType) {
+          $(this).attr("selected","selected");
+        }
+      });
+
       $("#edit-sel_table option").each(function() {
         if($(this).val() == QandA.table_name) {
           $(this).attr("selected","selected");
@@ -86,6 +92,7 @@ function reset_form() {
   });
   $("#qa_title").val('');
   $("#child").val('');
+  $("#anstype").val('');
   $("#edit-sel_txt").removeAttr('selected');
   $(".exm_table").removeAttr('selected');
   $(".exm_item").html('<select name="sel_ex_id" id="sel_ex_id" class="half-width">\n' +
@@ -138,25 +145,6 @@ $("#edit-child").click(function () {
   }
 });
 
-function validateEmailExist(type) {
-  var email = $("#"+type+"email").val();
-  var email_rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if(email_rgx.test(email)) {
-    var user_id = $("#user_id").val();
-    $.get('/email-exist?id=' + user_id +'&email=' + email, function(data){
-      if(data.exist) {
-        $("#"+type+"email_exist").val('1');
-        $("#"+type+"email-exist").css('color','#ff0000');
-        $("#"+type+"email-exist").html('E-mail already exists.');
-      } else {
-        $("#"+type+"email-exist").html('');
-        $("#"+type+"email_exist").val('');
-      }
-    })
-
-  }
-}
-
 function validate(type) {
   $(".error").each(function(){
     $(this).removeClass('error');
@@ -167,12 +155,14 @@ function validate(type) {
   var qa_content = $("#"+ type +"qa_content").val();
 
 
-  if(qa_title == '') {
-    errors.push("#"+ type +"qa_title");
+  if($("#"+ type +"qa_title").length) {
+    if(qa_title == '')
+      errors.push("#"+ type +"qa_title");
   }
 
-  if(qa_content == '') {
-    errors.push("#"+ type +"qa_content");
+  if($("#"+ type +"qa_content").length) {
+    if(qa_content == '')
+      errors.push("#"+ type +"qa_content");
   }
 
   if(errors.length>0){

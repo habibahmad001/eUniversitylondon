@@ -16,13 +16,34 @@
       <div style="color:red" id="form-errors">
       </div>
 
-      <div class="form-line">
-        <input type="text" name="qa_title" id="qa_title" placeholder="Title" >
-      </div>
+      @if(collect(request()->segments())->pull(1) == "childqa")
+        @if(App\Http\Controllers\QandAController::QAresID(collect(request()->segments())->last())->AnsType == "Text Based")
+          <div class="form-line">
+            <textarea name="qa_content" id="qa_content" placeholder="Type some description."></textarea>
+          </div>
+        @else
+          <div class="form-line">
+            <input type="text" name="qa_title" id="qa_title" placeholder="Title" >
+          </div>
+        @endif
+      @else
+        <div class="form-line">
+          <input type="text" name="qa_title" id="qa_title" placeholder="Title" >
+        </div>
+      @endif
 
+      @if(collect(request()->segments())->last() == 'questionandanswer' or collect(request()->segments())->pull(1) == 'questionlist')
       <div class="form-line">
-        <textarea name="qa_content" id="qa_content" placeholder="Type some description."></textarea>
+        <select name="anstype" id="anstype" class="full-width">
+          <option value="">Select Answer Type</option>
+          <option value="Multiple Selection">Multiple Selection</option>
+          <option value="Chose Single Option">Chose Single Option</option>
+          <option value="True False">True False</option>
+          <option value="Text Based">Text Based</option>
+        </select>
       </div>
+      @endif
+
       @if(collect(request()->segments())->pull(1) == 'childqa' or collect(request()->segments())->pull(1) == 'questionlist')
         <input type="hidden" name="sel_txt" value="{{ collect(request()->segments())->pull(2) }}">
         @if(collect(request()->segments())->pull(1) == 'questionlist')
@@ -30,12 +51,13 @@
           <input type="hidden" name="table_name" value="{{ collect(request()->segments())->last() }}">
         @endif
       @else
+
         <div class="form-line">
           <input type="checkbox" name="child" id="child" >&nbsp;&nbsp;&nbsp; Is Answer
         </div>
 
         <div class="form-line" id="category_div">
-          <select name="sel_txt" id="sel_txt" class="half-width">
+          <select name="sel_txt" id="sel_txt" class="full-width">
             <option value="0">Select Question</option>
             @if(count($QandAALL)) @foreach ($QandAALL as $qa) @if($qa->qa_cid == NULL)
               <option value="{{ $qa->id }}">{{ $qa->qa_title }}</option>
@@ -46,10 +68,11 @@
         </div>
 
         <div class="form-line exm_table" id="exm_table">
-          <select name="sel_table" id="sel_table" class="half-width">
+          <select name="sel_table" id="sel_table" class="full-width">
             <option value="Exam">Select Exam Type</option>
             <option value="Exam">Exam</option>
             <option value="MockExam">Mock Exam</option>
+            <option value="Quiz">Quiz</option>
           </select>
         </div>
 

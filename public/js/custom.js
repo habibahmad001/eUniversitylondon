@@ -1,6 +1,7 @@
 // Custom scroll
 (function($){
     $(window).on("load",function(){
+        $(".table.fixed").remove();
         $(".left-menu").mCustomScrollbar({
         	alwaysShowScrollbar: 1,
         	autoHideScrollbar:false,

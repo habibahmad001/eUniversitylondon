@@ -20,14 +20,18 @@
       </div>
 
       <div class="form-line">
-        <select name="cour_id" id="cour_id" class="half-width">
-          <option value="">Select Course</option>
-          @if(count($Courses)) @foreach ($Courses as $course)
-            <option value="{{ $course->id }}">{{ $course->course_title }}</option>
-          @endforeach @else
-            <option value="">No Course Listed</option>
-          @endif
-        </select>
+        @if(collect(request()->segments())->pull(1) == "mexamlisting")
+          <input type="hidden" name="cour_id" value="{{ collect(request()->segments())->last() }}">
+        @else
+          <select name="cour_id" id="cour_id" class="full-width">
+            <option value="">Select Course</option>
+            @if(count($Courses)) @foreach ($Courses as $course)
+              <option value="{{ $course->id }}">{{ $course->course_title }}</option>
+            @endforeach @else
+              <option value="">No Course Listed</option>
+            @endif
+          </select>
+        @endif
       </div>
 
     </div>

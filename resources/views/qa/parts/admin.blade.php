@@ -7,7 +7,7 @@
         <th width="2%" class="checkbox-container">
             <input type="checkbox" name="all">
         </th>
-        <th>{!! (collect(request()->segments())->pull(1) == 'childqa') ? "Answer" : "Question" !!}</th>
+        <th style="width: 30%;">{!! (collect(request()->segments())->pull(1) == 'childqa') ? "Answer" : "Question" !!}</th>
         <th>Exam Type</th>
         <th>{!! (collect(request()->segments())->pull(1) == 'childqa') ? "Question Name" : "Exam Name" !!}</th>
         <th>View Answers</th>
@@ -24,7 +24,17 @@
             <th class="checkbox-container">
                 <input type="checkbox" name="del_questionandanswer[]" value="{{ $qa->id }}" class="checkbox-selector">
             </th>
-            <td>{{ $qa->qa_title }}</td>
+            <td style="width: 30%;">
+                @if(collect(request()->segments())->pull(1) == 'childqa')
+                    @if(App\Http\Controllers\QandAController::QAresID(collect(request()->segments())->last())->AnsType == "Text Based")
+                        {!! (strlen(strip_tags($qa->qa_desc)) > 150) ? substr(strip_tags($qa->qa_desc) , 0, 150). "..." : strip_tags($qa->qa_desc) !!}
+                    @else
+                        {!! $qa->qa_title !!}
+                    @endif
+                @else
+                    {!! $qa->qa_title !!}
+                @endif
+            </td>
             <td>{{ $qa->table_name  }}</td>
             <td>{!! (collect(request()->segments())->pull(1) == 'childqa') ? App\Http\Controllers\QandAController::QuestionData($qa->qa_cid)->qa_title : App\Http\Controllers\QandAController::ExamData($qa->exam_qa_id, $qa->table_name)->exam_title !!}</td>
             @if(collect(request()->segments())->pull(1) != 'childqa')
