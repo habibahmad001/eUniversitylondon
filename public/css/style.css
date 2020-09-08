@@ -100,13 +100,41 @@ header .success-message-box .cancel:hover { background: url(../images/cancel-ico
 .content .table th.error { text-align: center; color: #ff0000; }
 .content .table th,.content .table td { color:#555; font-size:12px; }
 .content .table tr a { color:#2b97df; }
-.content .table tr.yellow { background: #2b2b2b; }
+/*.content .table tr.yellow { background: #2b2b2b; }*/
 .content .table>tbody>tr>td,.content .table>tbody>tr>th,
 .content .table>tfoot>tr>td,.content .table>tfoot>tr>th,
 .content .table>thead>tr>td,.content .table>thead>tr>th { border-top: none; }
 .content .pagination-container::after { content: ''; display: block; clear: both; }
 .content .pagination-container nav { float: right; padding: 0 20px 0 0; }
 .content .pagination-container .pagination { margin: 0; background: #8c8c8c;}
+
+.custonDelete {
+    visibility: hidden;
+    color: #fff;
+    background: #2c3b49;
+    border: 1px solid #2c3b49;
+    padding: 0 13px;
+    line-height: 31px;
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 72px 0 0 32px;
+    float: left;
+    text-decoration: none;
+}
+
+.custonDelete.show-btn {
+    margin-top: 2px;
+    visibility: visible;
+    opacity: 1;
+    position: absolute;
+    top: 14px;
+    left: 14%;
+    animation-duration: 4s;
+}
+
+table.table thead {
+    background-color: #262e3947;
+}
 
 .content .add-new-form { position: absolute; right: 0; top: 0px; bottom: 0; background: #ffffff; z-index: 10; }
 .content .add-new-data { width:0; overflow:hidden; }
@@ -327,6 +355,9 @@ table.table { border-collapse:collapse; }
 .BTNMenu {
     border-radius: 20px;
     padding-bottom: 10px;
+}
+.course-menu-class {
+    width: 200px;
 }
 .expiried {
     color: #d9534f !important;

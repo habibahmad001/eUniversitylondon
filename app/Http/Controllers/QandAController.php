@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Quiz;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
@@ -70,18 +71,25 @@ class QandAController extends Controller
         if($request->sel_txt == 0) {
             $this->validate($request, [
                 'qa_title' => 'required',
-                'qa_content' => 'required',
                 'sel_table' => 'required',
+                'anstype' => 'required',
                 'sel_ex_id' => 'required'
             ]);
         } else {
-            $this->validate($request, [
-                'qa_title' => 'required',
-                'qa_content' => 'required'
-            ]);
+            if(QandAController::QAresID($request->sel_txt)->AnsType == "Text Based") {
+                $this->validate($request, [
+                    'qa_content' => 'required'
+                ]);
+            } else {
+                $this->validate($request, [
+                    'qa_title' => 'required'
+                ]);
+            }
         }
+
         $QandA->qa_title    = $request->qa_title;
         $QandA->qa_desc     = $request->qa_content;
+        $QandA->AnsType     = $request->anstype;
         if($request->page_name == 'questionlist') {
             $QandA->qa_cid      = 0;
         } else {
@@ -128,8 +136,10 @@ class QandAController extends Controller
     public static function ExamData($qid, $table_name){
         if($table_name == 'Exam')
             $RES          = Exam::find($qid);
-        else
+        else if($table_name == 'MockExam')
             $RES          = MockExam::find($qid);
+        else
+            $RES          = Quiz::where('id', $qid)->get(['tablequiz.quiz_title AS exam_title', 'tablequiz.*'])->first();
         return $RES;
     }
 
@@ -178,6 +188,11 @@ class QandAController extends Controller
 
     }
 
+    public static function QAresID($id){
+        $Res_qa          = QandA::find($id);
+        return $Res_qa;
+    }
+
     public function GeQAExam($table_name){
         $data           = [];
         if($table_name == "MockExam") {
@@ -186,15 +201,21 @@ class QandAController extends Controller
                 $resulset       = MockExam::All();
             }
             $ret_msg = 'Please first create <a href="/' . collect(request()->segments())->first() . '/mexam">Mock Exam</a>';
-        } else {
+        } else if($table_name == "Exam")  {
             $resulset       = Exam::where("exam_user_id", Auth::user()->id)->get();
             if(Auth::user()->user_type == "admin") {
                 $resulset       = Exam::All();
             }
             $ret_msg = 'Please first create <a href="/' . collect(request()->segments())->first() . '/exam">Exam</a>';
+        } else {
+            $resulset       = Quiz::where("quiz_user_id", Auth::user()->id)->get();
+            if(Auth::user()->user_type == "admin") {
+                $resulset       = Quiz::get(["tablequiz.quiz_title AS exam_title", "tablequiz.*"]);
+            }
+            $ret_msg = 'Please first create <a href="/' . collect(request()->segments())->first() . '/quiz">Quiz</a>';
         }
         if(count($resulset) > 0) {
-            $res_var = '<select name="sel_ex_id" id="sel_ex_id" class="half-width">';
+            $res_var = '<select name="sel_ex_id" id="sel_ex_id" class="full-width">';
             foreach($resulset as $v){
                 $res_var .= '<option value="' . $v->id . '">' . $v->exam_title . '</option>';
             }
@@ -213,19 +234,26 @@ class QandAController extends Controller
         if($request->sel_txt == 0) {
             $this->validate($request, [
                 'qa_title' => 'required',
-                'qa_content' => 'required',
                 'sel_table' => 'required',
+                'anstype' => 'required',
                 'sel_ex_id' => 'required'
             ]);
         } else {
-            $this->validate($request, [
-                'qa_title' => 'required',
-                'qa_content' => 'required'
-            ]);
+            if(QandAController::QAresID($request->sel_txt)->AnsType == "Text Based") {
+                $this->validate($request, [
+                    'qa_content' => 'required'
+                ]);
+            } else {
+                $this->validate($request, [
+                    'qa_title' => 'required'
+                ]);
+            }
+
         }
         $QandA              = QandA::find($id);
         $QandA->qa_title    = $request->qa_title;
         $QandA->qa_desc     = $request->qa_content;
+        $QandA->AnsType     = $request->anstype;
         if($request->page_name == 'questionlist') {
             $QandA->qa_cid      = 0;
         } else {

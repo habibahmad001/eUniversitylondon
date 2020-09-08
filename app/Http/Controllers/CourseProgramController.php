@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Quiz;
 use App\Ratings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -164,6 +165,22 @@ class CourseProgramController extends Controller
         return $CourseProgram;
     }
 
+    public function GetAjaxQuiz($cid) {
+
+        $Quiz         = Quiz::where("course_id", $cid)->get();
+        $res_var = '<option value="">--- Select One ---</option>';
+        if(count($Quiz) > 0) {
+            foreach($Quiz as $v) {
+                $res_var .= '<option value="'.$v->id.'">'.$v->quiz_title.'</option>';
+            }
+        }
+
+        $data['ResponseData']  = $res_var;
+//        echo $res_var;
+        return Response::json($data);
+
+    }
+
     public static function TotalRatingOnCourse($id){
         $TRating         = Ratings::where("course_id", $id)->get();
         return $TRating;
@@ -249,6 +266,9 @@ class CourseProgramController extends Controller
             } else if($v == "Iframe_".$counter) {
                 $DESDATA[$counter]["Content"]     =   $request->iframearr[$counter];
                 $DESDATA[$counter]["Duration"]    =   $request->iframedur[$counter];
+            } else if($v == "Quiz_".$counter) {
+                $DESDATA[$counter]["Content"]     =   $request->quizarr[$counter];
+                $DESDATA[$counter]["Duration"]    =   $request->quizdur[$counter];
             } else if($v == "Youtube_".$counter) {
                 $DESDATA[$counter]["Content"]     =   $request->youtubearr[$counter];
                 $DESDATA[$counter]["Duration"]    =   $request->youtubedur[$counter];

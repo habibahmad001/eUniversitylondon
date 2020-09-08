@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 
 use App\User;
-use App\MockExam;
+use App\Quiz;
 use App\Courses;
 use App\MexamWithUser;
 
@@ -15,7 +15,7 @@ use Auth;
 
 use Session;
 
-class MexamController extends Controller
+class QuizController extends Controller
 {
     public function __construct() {
         $this->middleware(['auth']); //isAdmin middleware lets only users with a //specific permission permission to access these resources
@@ -23,24 +23,24 @@ class MexamController extends Controller
 
     public function index() {
 
-        $data['sub_heading']  = 'Exam';
-        $data['page_title']   = 'eUniversitylondon Exam';
+        $data['sub_heading']  = 'Quiz';
+        $data['page_title']   = 'eUniversitylondon Quiz';
         if(collect(request()->segments())->first() == 'instructor') {
-            $data['Exams']        =  MockExam::where('mexam_user_id', Auth::user()->id)->paginate(10);
+            $data['Quizs']        =  Quiz::where('mexam_user_id', Auth::user()->id)->paginate(10);
             $data['Courses']        =  Courses::where('course_user_id', Auth::user()->id)->where('course_status', "yes")->get();
         } elseif(collect(request()->segments())->first() == 'learner') {
-            $data['Exams']        =  MexamWithUser::join('tablemockexam', 'tablemexamwithuser.mexam_id', '=', 'tablemockexam.id')
+            $data['Quizs']        =  MexamWithUser::join('tablemockexam', 'tablemexamwithuser.mexam_id', '=', 'tablemockexam.id')
                 ->select('*')
                 ->where('tablemexamwithuser.user_id', '=', Auth::user()->id)
                 ->paginate(10);
             $data['Courses']        =  Courses::where('course_status', "yes")->get();
         } else {
-            $data['Exams']        =  MockExam::paginate(10);
+            $data['Quizs']        =  Quiz::paginate(10);
             $data['Courses']        =  Courses::where('course_status', "yes")->get();
         }
         /**************** Get Course Name **************/
         $Array_Course_Name           =  array();
-        foreach($data['Exams'] as $exam_data) {
+        foreach($data['Quizs'] as $exam_data) {
             if(!empty($exam_data->course_id)) {
                 $Course_Name        =  Courses::where('id', $exam_data->course_id)->first();
                 if(isset($Course_Name->course_title)) {
@@ -53,7 +53,7 @@ class MexamController extends Controller
 
         /**************** Get instructor Name **************/
         $Array_Instructor_Name           =  array();
-        foreach($data['Exams'] as $course_data) {
+        foreach($data['Quizs'] as $course_data) {
             if(!empty($course_data->mexam_user_id)) {
                 $Instructor_Name        =  User::where('id', $course_data->mexam_user_id)->first();
                 if(isset($Instructor_Name->first_name)) {
@@ -63,23 +63,23 @@ class MexamController extends Controller
         }
         $data['Array_Instructor_Name']           =  $Array_Instructor_Name;
         /**************** Get instructor Name **************/
-        return view('mockexam/index', $data);
+        return view('quiz/index', $data);
     }
 
-    public function MExamListing(Request $request) {
+    public function QuizListing(Request $request) {
 
-        $data['sub_heading']  = 'Mock Exam';
-        $data['page_title']   = 'eUniversitylondon Mock Exam';
+        $data['sub_heading']  = 'Quiz';
+        $data['page_title']   = 'eUniversitylondon Quiz';
         if(collect(request()->segments())->first() == 'instructor') {
-            $data['Exams']          =  MockExam::where('exam_user_id', Auth::user()->id)->where('course_id', $request->cid)->paginate(10);
+            $data['Quizs']          =  Quiz::where('exam_user_id', Auth::user()->id)->where('course_id', $request->cid)->paginate(10);
             $data['Courses']        =  Courses::where('course_status', "yes")->where('course_user_id', Auth::user()->id)->get();
         } elseif(collect(request()->segments())->first() == 'admin') {
-            $data['Exams']          =  MockExam::where('course_id', $request->cid)->paginate(10);
+            $data['Quizs']          =  Quiz::where('course_id', $request->cid)->paginate(10);
             $data['Courses']        =  Courses::where('course_status', "yes")->get();
         }
         /**************** Get Course Name **************/
         $Array_Course_Name           =  array();
-        foreach($data['Exams'] as $exam_data) {
+        foreach($data['Quizs'] as $exam_data) {
             if(!empty($exam_data->course_id)) {
                 $Course_Name        =  Courses::where('id', $exam_data->course_id)->first();
                 if(isset($Course_Name->course_title)) {
@@ -92,7 +92,7 @@ class MexamController extends Controller
 
         /**************** Get instructor Name **************/
         $Array_Instructor_Name           =  array();
-        foreach($data['Exams'] as $course_data) {
+        foreach($data['Quizs'] as $course_data) {
             if(!empty($course_data->exam_user_id)) {
                 $Instructor_Name        =  User::where('id', $course_data->exam_user_id)->first();
                 if(isset($Instructor_Name->first_name)) {
@@ -103,39 +103,44 @@ class MexamController extends Controller
         $data['Array_Instructor_Name']           =  $Array_Instructor_Name;
         /**************** Get instructor Name **************/
 
-        return view('mockexam/index', $data);
+        return view('quiz/index', $data);
     }
 
-    public function MexamsAdd(Request $request){
-        $Exam         = new MockExam;
+    public function QuizAdd(Request $request){
+        $Quiz         = new Quiz;
         $this->validate($request, [
 
             'exe_title'=>'required',
             'exe_content'=>'required',
             'cour_id'=>'required'
         ]);
-        $Exam->exam_title  = $request->exe_title;
-        $Exam->exam_content  = $request->exe_content;
-        $Exam->course_id  = $request->cour_id;
-        $Exam->mexam_user_id  = Auth::user()->id;
+        $Quiz->quiz_title  = $request->exe_title;
+        $Quiz->quiz_content  = $request->exe_content;
+        $Quiz->course_id  = $request->cour_id;
+        $Quiz->quiz_user_id  = Auth::user()->id;
 
-        $saved          = $Exam->save();
+        $saved          = $Quiz->save();
         if ($saved) {
-            $request->session()->flash('message', 'Mock Exam successfully added!');
+            $request->session()->flash('message', 'Quiz successfully added!');
             return redirect()->back();
         } else {
-            return redirect()->back()->with('message', 'Couldn\'t create Mock Exam!');
+            return redirect()->back()->with('message', 'Couldn\'t create Quiz!');
         }
     }
 
-    public function GetMexams($id){
+    public function GetQuiz($id){
         $data         = [];
-        $Exam         = MockExam::find($id);
-        $data['Exams'] = $Exam;
+        $Quiz         = Quiz::find($id);
+        $data['Quizs'] = $Quiz;
         return Response::json($data);
     }
 
-    public function UpdateMexams(Request $request){
+    public static function GetQuizOnCourse($id){
+        $Quiz         = Quiz::where("course_id", $id)->get();
+        return $Quiz;
+    }
+
+    public function UpdateQuiz(Request $request){
         $id              =        $request->exe_id;
         $this->validate($request, [
             'exe_title'=>'required',
@@ -143,26 +148,26 @@ class MexamController extends Controller
             'cour_id'=>'required'
         ]);
 
-        $Exam              = MockExam::find($id);
-        $Exam->exam_title  = $request->exe_title;
-        $Exam->exam_content  = $request->exe_content;
-        $Exam->course_id  = $request->cour_id;
+        $Quiz              = Quiz::find($id);
+        $Quiz->quiz_title  = $request->exe_title;
+        $Quiz->quiz_content  = $request->exe_content;
+        $Quiz->course_id  = $request->cour_id;
 
-        $saved              = $Exam->save();
+        $saved              = $Quiz->save();
         if ($saved) {
-            $request->session()->flash('message', 'Mock Exams was successful edited!');
+            $request->session()->flash('message', 'Quiz was successful edited!');
             return redirect()->back();
         } else {
-            return redirect()->back()->with('error', 'Couldn\'t create Mock Exams!');
+            return redirect()->back()->with('error', 'Couldn\'t create Quiz!');
         }
     }
 
 
     public function destroy($id) {
         //Find a user with a given id and delete
-        $Exam = MockExam::findOrFail($id);
-        $Exam->delete();
-        return redirect('/' . collect(request()->segments())->first() . '/mexam')->with('message', 'Selected Mock Exam has been deleted successfully!');
+        $Quiz = Quiz::findOrFail($id);
+        $Quiz->delete();
+        return redirect()->back()->with('message', 'Selected Quiz has been deleted successfully!');
     }
 
 }

@@ -44,6 +44,9 @@
           <a href="{{ URL::to('/admin/mexam') }}">
             <div class="icon-detail"><i class="fa fa-file-text" aria-hidden="true"></i> Mock Exams</div>
           </a>
+          <a href="{{ URL::to('/admin/quiz') }}">
+            <div class="icon-detail"><i class="fa fa-pied-piper-pp" aria-hidden="true"></i> Quiz's</div>
+          </a>
           <a href="javascript:void(0);">
             <div class="icon-detail"><i class="fa fa-shield" aria-hidden="true"></i> Certificates</div>
           </a>

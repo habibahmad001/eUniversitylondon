@@ -6,6 +6,9 @@
 @include('exam.create')
 
 <!-- Edit form -->
+<form name="delfrm" id="delfrm" method="post" action="{{ URL::to('/admin/exam/removeall') }}">
+    {{ csrf_field() }}
+<input type="submit" name="custonDelete" id="custonDelete" class="custonDelete" value="Delete">
 <div class="center-content-area table-set">
     <div class="table-responsive">
         @if ($errors->any())
@@ -23,8 +26,8 @@
                     </tr>
                     <tr>
                         <th width="3%" class="edit-icon-container">&nbsp;</th>
-                        <th width="2%" class="checkbox-container">
-                            <input type="checkbox" name="all">
+                        <th width="2%" class="checkbox-container-new">
+                            <input type="checkbox" name="allnew">
                         </th>
                         <th>Exam's Title</th>
                         <th>{!! (collect(request()->segments())->first() == "admin" || collect(request()->segments())->first() == "instructor") ? "Exam Question's" : "Obtained Mark's" !!}</th>
@@ -41,7 +44,7 @@
                             <span class="edit-icon" data-id="{{ $Exam->id }}"><img src="{{URL::asset('/images/')}}/edit-icon.png" alt="" title=""></span>
                         @endif
                     </th>
-                    <th class="checkbox-container">
+                    <th class="checkbox-container-new">
                         <input type="checkbox" name="del_exam[]" value="{{ $Exam->id }}" class="checkbox-selector">
                     </th>
                     <td>{{ $Exam->exam_title }}</td>
@@ -68,6 +71,7 @@
         </nav>
     </div>
 </div>
+</form>
 @include('../blocks/delete-form', ['model' => 'exam'])
 
 @endsection 

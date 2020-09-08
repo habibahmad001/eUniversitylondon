@@ -26,11 +26,11 @@
                         <th width="2%" class="checkbox-container">
                             <input type="checkbox" name="all">
                         </th>
-                        <th>Exam's Title</th>
-                        <th>{!! (collect(request()->segments())->first() == "admin" || collect(request()->segments())->first() == "instructor") ? "Exam Question's" : "Obtained Mark's" !!}</th>
+                        <th>Mock Exam's Title</th>
+                        <th>{!! (collect(request()->segments())->first() == "admin" || collect(request()->segments())->first() == "instructor") ? "Mock Exam Question's" : "Obtained Mark's" !!}</th>
                         <th>Course Name</th>
                         @if(collect(request()->segments())->first() == "admin")
-                            <th>Instructor Name</th>
+                            {{--<th>Instructor Name</th>--}}
                         @endif
                     </tr>
                 </thead>
@@ -48,7 +48,7 @@
                     <td>@if(collect(request()->segments())->first() == "admin" || collect(request()->segments())->first() == "instructor")<a href="/{{ collect(request()->segments())->first() }}/questionlist/{{ $Exam->id }}/MockExam">No of Question's ({{ (App\Http\Controllers\QandAController::QuestionCount($Exam->id, "MockExam")) ? App\Http\Controllers\QandAController::QuestionCount($Exam->id, "MockExam") : 0 }})</a>@else <a href="javascript:void(0);">{!! (isset(App\Http\Controllers\Front\CourseController::GetQuizResult($Exam->id, "MockExam")->result)) ? json_decode(App\Http\Controllers\Front\CourseController::GetQuizResult($Exam->id, "MockExam")->result, true)["Result"]. " (".(json_decode(App\Http\Controllers\Front\CourseController::GetQuizResult($Exam->id, "MockExam")->result, true)["MarksObtain"]).")" : 0 !!}</a> @endif</td>
                     <td>{{ (array_key_exists($Exam->id, $Array_Course_Name)) ? $Array_Course_Name[$Exam->id] : "" }}</td>
                     @if(collect(request()->segments())->first() == "admin")
-                        <td>{{ (array_key_exists($Exam->id, $Array_Instructor_Name)) ? $Array_Instructor_Name[$Exam->id] : "" }}</td>
+                        {{--<td>{{ (array_key_exists($Exam->id, $Array_Instructor_Name)) ? $Array_Instructor_Name[$Exam->id] : "" }}</td>--}}
                     @endif
                 </tr>
                 @endforeach @else
@@ -70,7 +70,7 @@
 </div>
 @include('../blocks/delete-form', ['model' => 'mockexam'])
 
-@endsection 
+@endsection
 
 @section('js_libraries')
 <script type="text/javascript" src="{{ asset('js/mockexam.js')}}"></script>

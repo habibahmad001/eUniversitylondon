@@ -44,6 +44,7 @@
                                                     <option value="Youtube_<?=$count?>" {!! ($v["Type"] == "Youtube_".$count) ? "selected" : "" !!}>Youtube</option>
                                                     <option value="Video_<?=$count?>" {!! ($v["Type"] == "Video_".$count) ? "selected" : "" !!}>Video</option>
                                                     <option value="Image_<?=$count?>" {!! ($v["Type"] == "Image_".$count) ? "selected" : "" !!}>PDF</option>
+                                                    <option value="Quiz_<?=$count?>" {!! ($v["Type"] == "Quiz_".$count) ? "selected" : "" !!}>Quiz</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -108,6 +109,23 @@
                                                 <input type="text" name="imgdur[]" id="imgdur_<?=$count?>" value="{!! ($v["Type"] == "Image_".$count) ? $v["Duration"] : "" !!}" placeholder="1:30">
                                             </div>
                                         </div>
+                                        <div class="unit-Item OperationRow" id="Quiz_<?=$count?>" {!! ($v["Type"] == "Quiz_".$count) ? "style='display:block'" : "" !!}>
+                                            <div class="form-line">
+                                                <label>Select Quiz:</label>
+                                                <select name="quizarr[]" id="quizarr_<?=$count?>">
+                                                    <option value="">--- Select One ---</option>
+                                                    @if(count(App\Http\Controllers\QuizController::GetQuizOnCourse(App\Http\Controllers\CourseProgramController::GetCPONID(collect(request()->segments())->last())->course_id)) > 0)
+                                                        @foreach(App\Http\Controllers\QuizController::GetQuizOnCourse(App\Http\Controllers\CourseProgramController::GetCPONID(collect(request()->segments())->last())->course_id) as $ev)
+                                                            <option value="{!! $ev->id !!}" @if($v["Type"] == "Quiz_".$count) {!! ($v["Content"] == $ev->id) ? "selected='selected'" : "" !!} @endif>{!! $ev->quiz_title !!}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select><br />
+                                            </div>
+                                            <div class="form-line">
+                                                <label>Duration:</label>
+                                                <input type="text" name="quizdur[]" id="quizdur_<?=$count?>" value="{!! ($v["Type"] == "Quiz_".$count) ? $v["Duration"] : "" !!}" placeholder="1:30">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -133,6 +151,7 @@
                                                 <option value="Youtube_0">Youtube</option>
                                                 <option value="Video_0">Video</option>
                                                 <option value="Image_0">PDF</option>
+                                                <option value="Quiz_0">Quiz</option>
                                             </select>
                                         </div>
                                     </div>
@@ -187,6 +206,23 @@
                                             <input type="text" name="imgdur[]" id="imgdur_0" placeholder="1:30">
                                         </div>
                                     </div>
+                                    <div class="unit-Item OperationRow" id="Quiz_0">
+                                        <div class="form-line">
+                                            <label>Select Quiz:</label>
+                                            <select name="quizarr[]" id="quizarr_0">
+                                                <option value="">--- Select One ---</option>
+                                                @if(count(App\Http\Controllers\QuizController::GetQuizOnCourse(App\Http\Controllers\CourseProgramController::GetCPONID(collect(request()->segments())->last())->course_id)) > 0)
+                                                    @foreach(App\Http\Controllers\QuizController::GetQuizOnCourse(App\Http\Controllers\CourseProgramController::GetCPONID(collect(request()->segments())->last())->course_id) as $v)
+                                                        <option value="{!! $v->id !!}">{!! $v->quiz_title !!}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select><br />
+                                        </div>
+                                        <div class="form-line">
+                                            <label>Duration:</label>
+                                            <input type="text" name="quizdur[]" id="quizdur_0" placeholder="1:30">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -195,6 +231,8 @@
                         <input type="hidden" name="RepeateItem" id="RepeateItem" value="{!! (isset($Units)) ? count($Units)-1 : 0 !!}">
                     </div>
                     <div class="unitHeader saveUnit text-right">
+                        <input type="hidden" name="cidd" id="cidd" value="{!! App\Http\Controllers\CourseProgramController::GetCPONID(collect(request()->segments())->last())->course_id !!}">
+                        <input type="hidden" name="user_folder" id="user_folder" value="{!! collect(request()->segments())->first() !!}">
                         <button type="button" class="btn btn-info" onclick="javascript:window.location.href = '{{ URL::to("/admin/cplisting/" . App\Http\Controllers\CourseProgramController::GetCPONID(collect(request()->segments())->last())->course_id) }}';">Listing</button>
                         <button type="button" class="btn btn-primary" onclick="javascript:repetar();">Add Unit</button>
                         <button type="submit" class="btn btn-success">Save Units</button>

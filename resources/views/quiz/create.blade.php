@@ -1,10 +1,10 @@
 <!-- Add form -->
 <div class="add-new-form add-new-data">
   <div class="form-header">
-    <h3>Create New Mock Exam</h3>
+    <h3>Create New Quiz</h3>
     <div class="close-icon"></div>
   </div>
-  <form method="POST" action="/{{ collect(request()->segments())->first() }}/mexam_add" enctype="multipart/form-data" onSubmit="return validate('');">
+  <form method="POST" action="/{{ collect(request()->segments())->first() }}/quiz_add" enctype="multipart/form-data" onSubmit="return validate('');">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" id="email_exist">
     <div class="form-height-control">
@@ -20,7 +20,7 @@
       </div>
 
       <div class="form-line">
-        @if(collect(request()->segments())->pull(1) == "mexamlisting")
+        @if(collect(request()->segments())->pull(1) == "quizlistingc")
           <input type="hidden" name="cour_id" value="{{ collect(request()->segments())->last() }}">
         @else
           <select name="cour_id" id="cour_id" class="full-width">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\CourseProgram;
 use App\Exam;
+use App\MockExam;
+use App\Quiz;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Mail;
@@ -154,6 +156,24 @@ class CoursesController extends Controller
             $RES          = Exam::where('course_id', $cid)->count();
         } else {
             $RES          = Exam::where('course_id', $cid)->where('exam_user_id', Auth::user()->id)->count();
+        }
+        return $RES;
+    }
+
+    public static function MExamCount($cid) {
+        if(Auth::user()->user_type == "admin") {
+            $RES          = MockExam::where('course_id', $cid)->count();
+        } else {
+            $RES          = MockExam::where('course_id', $cid)->where('exam_user_id', Auth::user()->id)->count();
+        }
+        return $RES;
+    }
+
+    public static function QuizCount($cid) {
+        if(Auth::user()->user_type == "admin") {
+            $RES          = Quiz::where('course_id', $cid)->count();
+        } else {
+            $RES          = Quiz::where('course_id', $cid)->where('quiz_user_id', Auth::user()->id)->count();
         }
         return $RES;
     }

@@ -109,44 +109,54 @@ class Exams extends Controller
     }
 
     public function ExamsAdd(Request $request){
-        $Exam         = new Exam;
-        $this->validate($request, [
-
-            'exe_title'=>'required',
-            'exe_content'=>'required',
-            'cour_id'=>'required'
-        ]);
-        $Exam->exam_title    = $request->exe_title;
-        $Exam->exam_content  = $request->exe_content;
-        $Exam->course_id     = $request->cour_id;
-        $Exam->exam_user_id  = Auth::user()->id;
-        $saved               = $Exam->save();
-        if ($saved) {
-            $request->session()->flash('message', 'Exam successfully added!');
-            return redirect('/' . collect(request()->segments())->first() . '/exam');
+        $Exam         = Exam::where('course_id', $request->cid)->get();
+        if(count($Exam) > 0) {
+            $request->session()->flash('message', 'You only allowed to create only one final exam for each course, So please already created final exam for this course!');
+            return redirect()->back();
         } else {
-            return redirect()->back()->with('message', 'Couldn\'t create Exam!');
+            $this->validate($request, [
+
+                'exe_title'=>'required',
+                'exe_content'=>'required',
+                'cour_id'=>'required'
+            ]);
+            $Exam->exam_title    = $request->exe_title;
+            $Exam->exam_content  = $request->exe_content;
+            $Exam->course_id     = $request->cour_id;
+            $Exam->exam_user_id  = Auth::user()->id;
+            $saved               = $Exam->save();
+            if ($saved) {
+                $request->session()->flash('message', 'Exam successfully added!');
+                return redirect()->back();
+            } else {
+                return redirect()->back()->with('message', 'Couldn\'t create Exam!');
+            }
         }
     }
 
     public function AddSelectedExam(Request $request){
-        $Exam         = new Exam;
-        $this->validate($request, [
-
-            'exe_title'=>'required',
-            'exe_content'=>'required',
-            'cid'=>'required'
-        ]);
-        $Exam->exam_title    = $request->exe_title;
-        $Exam->exam_content  = $request->exe_content;
-        $Exam->course_id     = $request->cid;
-        $Exam->exam_user_id  = Auth::user()->id;
-        $saved               = $Exam->save();
-        if ($saved) {
-            $request->session()->flash('message', 'Exam successfully added!');
+        $Exam         = Exam::where('course_id', $request->cid)->get();
+        if(count($Exam) > 0) {
+            $request->session()->flash('message', 'You only allowed to create only one final exam for each course, So please already created final exam for this course!');
             return redirect()->back();
         } else {
-            return redirect()->back()->with('message', 'Couldn\'t create Exam!');
+            $this->validate($request, [
+
+                'exe_title' => 'required',
+                'exe_content' => 'required',
+                'cid' => 'required'
+            ]);
+            $Exam->exam_title = $request->exe_title;
+            $Exam->exam_content = $request->exe_content;
+            $Exam->course_id = $request->cid;
+            $Exam->exam_user_id = Auth::user()->id;
+            $saved = $Exam->save();
+            if ($saved) {
+                $request->session()->flash('message', 'Exam successfully added!');
+                return redirect()->back();
+            } else {
+                return redirect()->back()->with('message', 'Couldn\'t create Exam!');
+            }
         }
     }
 
@@ -199,6 +209,17 @@ class Exams extends Controller
         } else {
             return redirect()->back()->with('error', 'Couldn\'t create Exams!');
         }
+    }
+
+    public function RemoveAll(Request $request) {
+        //Find a user with a given id and delete
+//        print_r($request->del_exam);exit();
+        foreach($request->del_exam as $v) {
+            echo $v;
+            $Exam = Exam::findOrFail($v);
+            $Exam->delete();
+        }
+        return redirect()->back()->with('message', 'Selected Exam has been deleted successfully!');
     }
 
     public function destroy($id) {

@@ -394,6 +394,24 @@ a.active {
 	padding-left: 20px !important;
 	border-left: 3px solid #3f4c4f;
 }
+.instructore-more-course h4 {
+	font-size: 33px;
+	padding: 1%;
+}
+
+.writer-card img {
+	border-radius: 6px;
+	margin: 10% 0;
+}
+
+.writer-content div {
+	margin: 4% 0;
+	font-size: 12px;
+}
+
+.writer-content {
+	margin-bottom: 12%;
+}
 
 a.btn:active,
 a.button:active,

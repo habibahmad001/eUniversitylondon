@@ -1,9 +1,9 @@
 <div class="add-new-form edit-current-data">
   <div class="form-header">
-    <h3>Edit Mock Exam</h3>
+    <h3>Edit Quiz</h3>
     <div class="close-icon"></div>
   </div>
-  <form method="post" action="/{{ collect(request()->segments())->first() }}/update-mexam" enctype="multipart/form-data" onSubmit="return validate('edit-');">
+  <form method="post" action="/{{ collect(request()->segments())->first() }}/update-quiz" enctype="multipart/form-data" onSubmit="return validate('edit-');">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" name="exe_id" id="exe_id">
     <input type="hidden" id="edit-email_exist">

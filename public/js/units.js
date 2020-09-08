@@ -65,6 +65,7 @@ function repetar() {
       '                                            <option value="Youtube_'+(Number(idcount)+1)+'">Youtybe</option>\n' +
       '                                            <option value="Video_'+(Number(idcount)+1)+'">Video</option>\n' +
       '                                            <option value="Image_'+(Number(idcount)+1)+'">PDF</option>\n' +
+      '                                            <option value="Quiz_'+(Number(idcount)+1)+'">Quiz</option>\n' +
       '                                        </select>\n' +
       '                                    </div>\n' +
       '                                </div>\n' +
@@ -119,7 +120,31 @@ function repetar() {
       '                                        <input type="text" name="imgdur[]" id="imgdur_'+(Number(idcount)+1)+'" placeholder="1:30">\n' +
       '                                    </div>\n' +
       '                                </div>\n' +
+      '                                <div class="unit-Item OperationRow" id="Quiz_'+(Number(idcount)+1)+'">\n' +
+      '                                    <div class="form-line">\n' +
+      '                                        <label>Select Quiz:</label>\n' +
+      '                                        <select name="quizarr[]" id="quizarr_'+(Number(idcount)+1)+'">\n' +
+      '                                                 <option value="{!! $v->id !!}">{!! $v->quiz_title !!}</option>\n' +
+      '                                        </select><br />\n' +
+      '                                    </div>\n' +
+      '                                    <div class="form-line">\n' +
+      '                                        <label>Duration:</label>\n' +
+      '                                        <input type="text" name="quizdur[]" id="quizdur_'+(Number(idcount)+1)+'" placeholder="1:30">\n' +
+      '                                    </div>\n' +
+      '                                </div>\n' +
       '                            </div>\n' +
       '                        </div>\n' +
       '                    </div>');
+
+    /********* Load Quiz **********/
+    var user_folder = $("#user_folder").val();
+    var cid = $("#cidd").val();
+    $.get('/' + user_folder + '/getajaxquiz/' + cid, function(data){
+
+      if(typeof data.ResponseData != 'undefined'){
+        // alert(data.ResponseData);
+        $("#quizarr_"+(Number(idcount)+1)).html(data.ResponseData);
+      }
+    });
+    /********* Load Quiz **********/
 }

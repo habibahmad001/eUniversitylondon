@@ -132,6 +132,15 @@
                                                                 {!! $v["Duration"] !!}
                                                             </div>
                                                         </div>
+                                                    @elseif($v["Type"] == "Quiz_" . $count)
+                                                        <div class="bodyrow">
+                                                            <div class="bodyrowItem1">
+                                                                <i class="fa fa-pied-piper-pp" aria-hidden="true"></i> {!! $v["Title"] !!}
+                                                            </div>
+                                                            <div class="bodyrowItem2">
+                                                                {!! $v["Duration"] !!}
+                                                            </div>
+                                                        </div>
                                                     @endif
                                                 <?php $count++;?>
                                                 @endforeach
@@ -288,7 +297,7 @@
         <div class="container">
             <div class="row align-items-center text-center text-lg-left">
                 <div class="col-lg-4">
-                    <img class="rounded" src="images/team/single-course.jpg" alt="">
+                    <img class="rounded" src="/images/team/single-course.jpg" alt="">
                 </div>
                 <div class="col-lg-8 text-center text-lg-left">
                     <div>
@@ -515,7 +524,7 @@
 
     <section class="ls course-comment">{{--s-pt-55 s-pb-60 s-pt-lg-95 s-pb-lg-100 c-gutter-50--}}
         <div class="container">
-            <div class="row">
+            <div class="row instructore-more-course">
                 <h4 class="fw-500">More Courses by Eneida F. Withrow</h4>
             </div>
             <div class="row writer-card">
@@ -553,6 +562,18 @@
                         <div class="writer-hours">22.5 total hours . 225 lectures</div>
                         <div class="writer-levels">. All Levels</div>
                         <div class="writer-price">&pound; 99</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-3">
+                    <img src="http://127.0.0.1:8000/uploads/pavatar/8589637.jpg" width="300" height="300" />
+                    <div class="writer-content">
+                        <b>The Complete Financial Analyst Training & Investing Course Chris Haroun</b>
+                        <div class="writer-rate">Rating: 4.5 out of 5
+                            4.5
+                            (20,960)</div>
+                        <div class="writer-hours">22.5 total hours . 225 lectures</div>
+                        <div class="writer-levels">. All Levels</div>
+                        <div class="writer-price">&pound; 33</div>
                     </div>
                 </div>
             </div>
