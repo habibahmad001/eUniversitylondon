@@ -112,11 +112,17 @@ class MexamController extends Controller
 
             'exe_title'=>'required',
             'exe_content'=>'required',
+            'duration'=>'required',
+            'total_marks'=>'required',
+            'passing_marks'=>'required',
             'cour_id'=>'required'
         ]);
-        $Exam->exam_title  = $request->exe_title;
-        $Exam->exam_content  = $request->exe_content;
-        $Exam->course_id  = $request->cour_id;
+        $Exam->exam_title     = $request->exe_title;
+        $Exam->exam_content   = $request->exe_content;
+        $Exam->ExamDuration   = $request->duration;
+        $Exam->TotalMarks     = $request->total_marks;
+        $Exam->PassingMarks   = $request->passing_marks;
+        $Exam->course_id      = $request->cour_id;
         $Exam->mexam_user_id  = Auth::user()->id;
 
         $saved          = $Exam->save();
@@ -140,13 +146,19 @@ class MexamController extends Controller
         $this->validate($request, [
             'exe_title'=>'required',
             'exe_content'=>'required',
+            'duration'=>'required',
+            'total_marks'=>'required',
+            'passing_marks'=>'required',
             'cour_id'=>'required'
         ]);
 
-        $Exam              = MockExam::find($id);
-        $Exam->exam_title  = $request->exe_title;
+        $Exam                = MockExam::find($id);
+        $Exam->exam_title    = $request->exe_title;
         $Exam->exam_content  = $request->exe_content;
-        $Exam->course_id  = $request->cour_id;
+        $Exam->ExamDuration  = $request->duration;
+        $Exam->TotalMarks    = $request->total_marks;
+        $Exam->PassingMarks  = $request->passing_marks;
+        $Exam->course_id     = $request->cour_id;
 
         $saved              = $Exam->save();
         if ($saved) {

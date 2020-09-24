@@ -109,22 +109,31 @@ class Exams extends Controller
     }
 
     public function ExamsAdd(Request $request){
-        $Exam         = Exam::where('course_id', $request->cid)->get();
+        $Exam         = Exam::where('course_id', $request->cour_id)->get();
         if(count($Exam) > 0) {
-            $request->session()->flash('message', 'You only allowed to create only one final exam for each course, So please already created final exam for this course!');
+            $request->session()->flash('message', 'You only allowed to create one final exam for each course, So you already created final exam for this course!');
             return redirect()->back();
         } else {
+            $Exam         = new Exam;
             $this->validate($request, [
 
                 'exe_title'=>'required',
                 'exe_content'=>'required',
+                'duration'=>'required',
+                'total_marks'=>'required',
+                'passing_marks'=>'required',
                 'cour_id'=>'required'
             ]);
             $Exam->exam_title    = $request->exe_title;
             $Exam->exam_content  = $request->exe_content;
+            $Exam->ExamDuration  = $request->duration;
+            $Exam->TotalMarks    = $request->total_marks;
+            $Exam->PassingMarks  = $request->passing_marks;
             $Exam->course_id     = $request->cour_id;
             $Exam->exam_user_id  = Auth::user()->id;
+
             $saved               = $Exam->save();
+
             if ($saved) {
                 $request->session()->flash('message', 'Exam successfully added!');
                 return redirect()->back();
@@ -135,19 +144,28 @@ class Exams extends Controller
     }
 
     public function AddSelectedExam(Request $request){
-        $Exam         = Exam::where('course_id', $request->cid)->get();
+        $Exam         = Exam::where('course_id', $request->cour_id)->get();
         if(count($Exam) > 0) {
-            $request->session()->flash('message', 'You only allowed to create only one final exam for each course, So please already created final exam for this course!');
+            $request->session()->flash('message', 'You only allowed to create one final exam for each course, So you already created final exam for this course!');
             return redirect()->back();
         } else {
+
+            $Exam         = new Exam;
+
             $this->validate($request, [
 
                 'exe_title' => 'required',
                 'exe_content' => 'required',
+                'duration'=>'required',
+                'total_marks'=>'required',
+                'passing_marks'=>'required',
                 'cid' => 'required'
             ]);
             $Exam->exam_title = $request->exe_title;
             $Exam->exam_content = $request->exe_content;
+            $Exam->ExamDuration  = $request->duration;
+            $Exam->TotalMarks    = $request->total_marks;
+            $Exam->PassingMarks  = $request->passing_marks;
             $Exam->course_id = $request->cid;
             $Exam->exam_user_id = Auth::user()->id;
             $saved = $Exam->save();
@@ -172,12 +190,18 @@ class Exams extends Controller
         $this->validate($request, [
             'exe_title'=>'required',
             'exe_content'=>'required',
+            'duration'=>'required',
+            'total_marks'=>'required',
+            'passing_marks'=>'required',
             'cour_id'=>'required'
         ]);
 
         $Exam              = Exam::find($id);
         $Exam->exam_title  = $request->exe_title;
         $Exam->exam_content  = $request->exe_content;
+        $Exam->ExamDuration  = $request->duration;
+        $Exam->TotalMarks    = $request->total_marks;
+        $Exam->PassingMarks  = $request->passing_marks;
         $Exam->course_id  = $request->cour_id;
 
         $saved              = $Exam->save();
@@ -194,12 +218,18 @@ class Exams extends Controller
         $this->validate($request, [
             'exe_title'=>'required',
             'exe_content'=>'required',
+            'duration'=>'required',
+            'total_marks'=>'required',
+            'passing_marks'=>'required',
             'cid'=>'required'
         ]);
 
         $Exam              = Exam::find($id);
         $Exam->exam_title  = $request->exe_title;
         $Exam->exam_content  = $request->exe_content;
+        $Exam->ExamDuration  = $request->duration;
+        $Exam->TotalMarks    = $request->total_marks;
+        $Exam->PassingMarks  = $request->passing_marks;
         $Exam->course_id  = $request->cid;
 
         $saved              = $Exam->save();

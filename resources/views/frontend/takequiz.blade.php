@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     @if(count($ExamData) > 0)
-                        <h5>{{ (isset($DBTable) && $DBTable == "Exam") ? $DBTable : "Mock Exam"}}: {{ $ExamData[0]->exam_title }}</h5>
+                        <h5>{{ (isset($DBTable)) ? $DBTable : "Mock Exam"}}: {{ $ExamData[0]->exam_title }}</h5>
                         @if(count($QandAData) > 0)
                             <ul class="qa-outer">
                             @foreach($QandAData as $v)

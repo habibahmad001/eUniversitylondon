@@ -132,6 +132,10 @@ function repetar() {
       '                                        <input type="text" name="quizdur[]" id="quizdur_'+(Number(idcount)+1)+'" placeholder="1:30">\n' +
       '                                    </div>\n' +
       '                                </div>\n' +
+      '                                 <div class="form-line activediv">\n' +
+      '                                    <input type="checkbox" name="isactive[]" id="isactive_'+(Number(idcount)+1)+'" value="'+(Number(idcount)+1)+'">\n' +
+      '                                        <label>Only for registered users</label>\n' +
+      '                                </div>\n' +
       '                            </div>\n' +
       '                        </div>\n' +
       '                    </div>');

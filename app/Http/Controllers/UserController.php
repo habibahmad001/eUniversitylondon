@@ -286,33 +286,26 @@ class UserController extends Controller {
         ]);
 
         
-        $input = $request->only(['first_name', 'last_name', 'email']); 
+        $input = $request->only(['first_name', 'last_name', 'email']);
         if($request->password) {
           $input['password'] = bcrypt($request->password);
         }
         if($request->hasFile('avatar')){
-
-
-        if($user->avatar!='default.jpg'){
-        unlink(public_path() . '/uploads/avatars/'.$user->avatar);
+            if($user->avatar!='default.jpg'){
+                unlink(public_path() . '/uploads/avatars/'.$user->avatar);
+            }
+            $avatar = $request->file('avatar');
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+            //Image::make($avatar)->resize(90, 90)->save( public_path('/uploads/avatars/' . $filename ) );
+            $request->file('avatar')->move('uploads/avatars', $filename);
+            $input['avatar'] = $filename;
         }
-
-
-        $avatar = $request->file('avatar');
-        $filename = time() . '.' . $avatar->getClientOriginalExtension();
-        //Image::make($avatar)->resize(90, 90)->save( public_path('/uploads/avatars/' . $filename ) );
-        $request->file('avatar')->move('uploads/avatars', $filename);
-        $input['avatar'] = $filename;
-
-        }
-
-
+        $input['descr'] = $request->descr;
         if($user->fill($input)->save()){
-        $request->session()->flash('message', 'User was successful Edited!');
-        return redirect('/admin/my-account');
-        }else{
-        return redirect()->back()->with('error', 'Couldn\'t create organization!');
-
+            $request->session()->flash('message', 'User was successful Edited!');
+            return redirect('/admin/my-account');
+        } else {
+            return redirect()->back()->with('error', 'Couldn\'t create organization!');
         }
 
     }

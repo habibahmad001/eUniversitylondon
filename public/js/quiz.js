@@ -35,6 +35,9 @@ $(".edit-icon").click(function () {
 
       $("#edit-exe_title").val(Quizs.quiz_title);
       $("#edit-exe_content").summernote('code', Quizs.quiz_content);
+      $("#edit-duration").val(Quizs.ExamDuration);
+      $("#edit-total_marks").val(Quizs.TotalMarks);
+      $("#edit-passing_marks").val(Quizs.PassingMarks);
       $("#exe_id").val(quiz_id);
       $("#edit-cour_id option").each(function() {
         if($(this).val() == Quizs.course_id) {
@@ -53,6 +56,9 @@ function reset_form() {
   });
   $("#exe_title").val('');
   $("#exe_content").val('');
+  $("#duration").val('');
+  $("#total_marks").val('');
+  $("#passing_marks").val('');
   $("#cour_id").val('');
 }
 
@@ -62,8 +68,11 @@ function validate(type) {
   });
   var errors = [];
 
-  var exe_title = $("#"+ type +"exe_title").val();
-  var exe_content = $("#"+ type +"exe_content").val();
+  var exe_title     = $("#"+ type +"exe_title").val();
+  var exe_content   = $("#"+ type +"exe_content").val();
+  var duration      = $("#"+ type +"duration").val();
+  var total_marks   = $("#"+ type +"total_marks").val();
+  var passing_marks = $("#"+ type +"passing_marks").val();
   var cour_id = $("#"+ type +"cour_id").val();
 
 
@@ -73,6 +82,18 @@ function validate(type) {
 
   if(exe_content == '') {
     errors.push("#"+ type +"exe_content");
+  }
+
+  if(duration == '') {
+    errors.push("#"+ type +"duration");
+  }
+
+  if(total_marks == '') {
+    errors.push("#"+ type +"total_marks");
+  }
+
+  if(passing_marks == '') {
+    errors.push("#"+ type +"passing_marks");
   }
 
   if(cour_id == '') {

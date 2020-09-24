@@ -18,6 +18,7 @@
                         <input type="hidden" name="cpid" id="cpid" value="{{ collect(request()->segments())->last() }}">
                     </div>
                     @if(isset($Units))
+                        <?php //print_r($Units);?>
                         <?php $count = 0;?>
                         @foreach($Units as $v)
                             <div class="unit-section" id="sectionID_<?=$count?>">
@@ -126,6 +127,10 @@
                                                 <input type="text" name="quizdur[]" id="quizdur_<?=$count?>" value="{!! ($v["Type"] == "Quiz_".$count) ? $v["Duration"] : "" !!}" placeholder="1:30">
                                             </div>
                                         </div>
+                                        <div class="form-line activediv">
+                                            <input type="checkbox" name="isactive[]" id="isactive_<?=$count?>" {!! (isset($v["isActive"]) && !empty($v["isActive"])) ? "checked" : "" !!} value="<?=$count?>">
+                                            <label>Only for registered users</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -222,6 +227,10 @@
                                             <label>Duration:</label>
                                             <input type="text" name="quizdur[]" id="quizdur_0" placeholder="1:30">
                                         </div>
+                                    </div>
+                                    <div class="form-line activediv">
+                                        <input type="checkbox" name="isactive[]" id="isactive_0" value="0">
+                                        <label>Only for registered users</label>
                                     </div>
                                 </div>
                             </div>

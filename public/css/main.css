@@ -390,7 +390,7 @@ ul.course_timeline li>a {
 	background-color: #fafafa;
 	padding-left: 0px;
 }
-a.active {
+.course_timeline a.active {
 	padding-left: 20px !important;
 	border-left: 3px solid #3f4c4f;
 }
@@ -407,6 +407,14 @@ a.active {
 .writer-content div {
 	margin: 4% 0;
 	font-size: 12px;
+}
+
+.writer-levels {
+	display: inline-block;
+}
+
+.writer-price {
+	display: inline-block;
 }
 
 .writer-content {

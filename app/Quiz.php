@@ -11,7 +11,7 @@ class Quiz extends Model
     protected $dates = ['exam_date'];
 
     protected $fillable = [
-        'id', 'course_id', 'quiz_title', 'quiz_content', 'quiz_status', 'quiz_date', 'quiz_user_id'
+        'id', 'course_id', 'quiz_title', 'quiz_content', 'quiz_status', 'quiz_date', 'quiz_user_id', 'ExamDuration', 'TotalMarks', 'PassingMarks'
     ];
 
     public function course() {

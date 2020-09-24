@@ -253,13 +253,14 @@ class CourseProgramController extends Controller
         ]);
 
         $DESDATA    =   [];
-//        $DESDATA    =   array("Item" => array("Title" => "Some", "Type" => "Video", "Content" => "img.jpg", "Duration" => "2:30"));
-
+//        $DESDATA    =   array("Item" => array("Title" => "Some", "Type" => "Video", "Content" => "img.jpg", "Duration" => "2:30", "isActive" => 1));
         /********* Loop On type *********/
         $counter = 0;
         foreach($request->type as $v) {
             $DESDATA[$counter]["Title"]       =   $request->title[$counter];
             $DESDATA[$counter]["Type"]        =   $v;
+            $DESDATA[$counter]["isActive"]    =   (is_array($request->isactive) && in_array($counter, $request->isactive)) ? "yes" : "";
+
             if($v == "Content_".$counter) {
                 $DESDATA[$counter]["Content"]     =   $request->contentarr[$counter];
                 $DESDATA[$counter]["Duration"]    =   $request->contentdur[$counter];
@@ -300,6 +301,7 @@ class CourseProgramController extends Controller
 
             $counter++;
         }
+
 //        exit(json_encode($DESDATA));
         /********* Loop On type *********/
 

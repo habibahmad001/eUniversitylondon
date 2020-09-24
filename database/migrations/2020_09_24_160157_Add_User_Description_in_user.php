@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddExamTypeFieldInResultsTable extends Migration
+class AddUserDescriptionInUser extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddExamTypeFieldInResultsTable extends Migration
      */
     public function up()
     {
-        Schema::table('tableresults', function (Blueprint $table) {
-            $table->enum('examType', array('Exam', 'MockExam', "Quiz"))->default('Exam');
+        Schema::table('users', function (Blueprint $table) {
+            $table->text('descr')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddExamTypeFieldInResultsTable extends Migration
      */
     public function down()
     {
-        Schema::table('tableresults', function (Blueprint $table) {
-            $table->dropColumn(['examType']);
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['descr']);
         });
     }
 }

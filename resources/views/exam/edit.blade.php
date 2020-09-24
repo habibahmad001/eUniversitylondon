@@ -20,12 +20,30 @@
       <div class="form-content-box">
 
         <div class="form-line">
+          <label>Exam Title</label>
           <input type="text" name="exe_title" id="edit-exe_title" placeholder="Exam Title" >
         </div>
 
         <div class="form-line">
+          <label>Exam Content</label>
           <textarea name="exe_content" id="edit-exe_content" placeholder="Type some description."></textarea>
         </div>
+
+        <div class="form-line">
+          <label>Exam Duration</label>
+          <input type="text" name="duration" id="edit-duration" placeholder="3 Hours" >
+        </div>
+
+        <div class="form-line">
+          <label>Total Marks</label>
+          <input type="text" name="total_marks" id="edit-total_marks" placeholder="100" >
+        </div>
+
+        <div class="form-line">
+          <label>Passing Marks</label>
+          <input type="text" name="passing_marks" id="edit-passing_marks" placeholder="40" >
+        </div>
+
         @if(collect(request()->segments())->pull(1) != "examlisting")
           <div class="form-line">
             <select name="cour_id" id="edit-cour_id" class="full-width">
