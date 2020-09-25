@@ -35,6 +35,14 @@
         </div>
 
         <div class="form-line">
+          <label>Description <span>*</span></label>
+          <div class="field-container">
+            <textarea name="descr" id="descr" placeholder="Tell us about your self . . .">{{ (isset($user->descr)) ? $user->descr : "" }}</textarea>
+            <span class="error-message" id="desc_error">Please provide a valid description.</span>
+          </div>
+        </div>
+
+        <div class="form-line">
           <label>Avatar</label>
           <div class="field-container">
             <input id="avatar-1" name="avatar" type="file">

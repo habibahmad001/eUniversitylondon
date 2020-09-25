@@ -136,6 +136,19 @@ table.table thead {
     background-color: #262e3947;
 }
 
+.activediv label {
+    display: inline-block;
+    width: 50%;
+    margin-top: 4%;
+}
+
+.activediv input {
+    vertical-align: bottom;
+    width: 15px !important;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
 .content .add-new-form { position: absolute; right: 0; top: 0px; bottom: 0; background: #ffffff; z-index: 10; }
 .content .add-new-data { width:0; overflow:hidden; }
 .content .edit-current-data, #google-suggestion { width:0; overflow:hidden; }

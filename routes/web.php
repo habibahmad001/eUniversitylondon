@@ -90,11 +90,13 @@ Route::get('/learner', 'Auth\LoginController@showLearnerLoginForm')->name('learn
     Route::get('/startcourse/{id}', 'Front\CartController@StartCourse');
     Route::get('/getcppdf/{cpid}', 'Front\CourseController@GetCPPDF');
     Route::get('/user/mock_exam/{mcid}', 'Front\CourseController@MockExam');
+    Route::get('/user/quiz_rules/{qcid}', 'Front\CourseController@QuizRules');
     Route::get('/user/exam/{cid}', 'Front\CourseController@Exam');
     Route::get('/finish_course/{cid}', 'Front\CourseController@FinishCourse');
     Route::get('/quizstart/{cid}', 'Front\CourseController@ExamStart');
     Route::get('/reviews/{cid}', 'Front\CourseController@ReviewsPage');
     Route::get('/mquizstart/{cid}', 'Front\CourseController@MockExamStart');
+    Route::get('/testquizstart/{cid}', 'Front\CourseController@QuizStart');
     Route::get('/courseresult/{type}/{cid}/{eid}', 'Front\CourseController@CourseResult');
     Route::get('/finishquiz/{status}', 'Front\CourseController@FinishQuiz');
     Route::get('/user/newsubscription/{cid}', 'Front\CourseController@NewSubscription');
@@ -202,6 +204,7 @@ Route::get('/examincourse', 'CoursesController@ExamInCourse');
 Route::get('/studentcount/{cid}', 'Front\CourseController@StudentCount');
 Route::get('/curriculumcount/{cid}', 'CoursesController@CurriculumCount');
 Route::get('/offerapplied/{id}', 'CoursesController@OfferApplied');
+Route::get('/getinstructorcourses/{id}', 'CoursesController@GetInstructorCourses');
 /********** Gernal Course Functions *********/
 
 /********** Gernal CMS Functions *********/
@@ -215,15 +218,21 @@ Route::get('/ratingoncourse/{cpid}', 'CourseProgramController@TotalRatingOnCours
 
 /********** Gernal User Functions *********/
 Route::get('/getuseronid/{id}', 'OrderController@GetUserOnID');
+Route::get('/getinstructorinfo/{cid}', 'Front\CourseController@GetInstructorInfo');
 /********** Gernal User Functions *********/
 
 /********** Gernal Ratings Functions *********/
 Route::get('/getstars/{cid}', 'Front\CourseController@GetStars');
+Route::get('/gettotalcomments/{cid}', 'Front\CourseController@GetTotalComments');
 /********** Gernal Ratings Functions *********/
 
 /********** Gernal Comment Functions *********/
 Route::get('/getcomments/{cid}', 'Front\CourseController@GetSubComment');
 /********** Gernal Comment Functions *********/
+
+/********** Gernal Quiz Functions *********/
+Route::get('/getquizdata/{qid}', 'Front\CourseController@GetQuizData');
+/********** Gernal Quiz Functions *********/
 
 
 // Route::get('admin_area', ['middleware' => 'admin', function () {

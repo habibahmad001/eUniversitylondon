@@ -112,10 +112,16 @@ class QuizController extends Controller
 
             'exe_title'=>'required',
             'exe_content'=>'required',
+            'duration'=>'required',
+            'total_marks'=>'required',
+            'passing_marks'=>'required',
             'cour_id'=>'required'
         ]);
         $Quiz->quiz_title  = $request->exe_title;
         $Quiz->quiz_content  = $request->exe_content;
+        $Quiz->ExamDuration  = $request->duration;
+        $Quiz->TotalMarks    = $request->total_marks;
+        $Quiz->PassingMarks  = $request->passing_marks;
         $Quiz->course_id  = $request->cour_id;
         $Quiz->quiz_user_id  = Auth::user()->id;
 
@@ -145,13 +151,19 @@ class QuizController extends Controller
         $this->validate($request, [
             'exe_title'=>'required',
             'exe_content'=>'required',
+            'duration'=>'required',
+            'total_marks'=>'required',
+            'passing_marks'=>'required',
             'cour_id'=>'required'
         ]);
 
-        $Quiz              = Quiz::find($id);
-        $Quiz->quiz_title  = $request->exe_title;
+        $Quiz                = Quiz::find($id);
+        $Quiz->quiz_title    = $request->exe_title;
         $Quiz->quiz_content  = $request->exe_content;
-        $Quiz->course_id  = $request->cour_id;
+        $Quiz->ExamDuration  = $request->duration;
+        $Quiz->TotalMarks    = $request->total_marks;
+        $Quiz->PassingMarks  = $request->passing_marks;
+        $Quiz->course_id     = $request->cour_id;
 
         $saved              = $Quiz->save();
         if ($saved) {

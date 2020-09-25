@@ -35,13 +35,13 @@
                     <div>
                         <h3>Instructions for Taking the Exam</h3><br />
 
-                        ► Exam time duration : 40 mins<br />
+                        ► Exam time duration : {!! (isset($ExamData[0]->ExamDuration)) ? $ExamData[0]->ExamDuration : "Max time 3 Hours" !!}<br />
 
-                        ► Total questions : 30<br />
+                        ► Total questions : {{ ((count($ExamData) > 0) && App\Http\Controllers\QandAController::QuestionCount($ExamData[0]->id, $DBTable)) ? App\Http\Controllers\QandAController::QuestionCount($ExamData[0]->id, $DBTable) : 0 }}<br />
 
-                        ► Total marks : 300 (Each question 10 marks)<br />
+                        ► Total marks : {!! (isset($ExamData[0]->TotalMarks)) ? $ExamData[0]->TotalMarks : "0" !!} (Each question 10 marks)<br />
 
-                        ► Pass marks : 195
+                        ► Pass marks : {!! (isset($ExamData[0]->PassingMarks)) ? $ExamData[0]->PassingMarks : "0" !!}
                         <h5>Taking the Exam</h5>
                         <ol>
                             <li>Select an answer for every question. Unanswered questions will be scored as incorrect.</li>

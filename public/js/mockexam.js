@@ -35,6 +35,9 @@ $(".edit-icon").click(function () {
 
       $("#edit-exe_title").val(Exams.exam_title);
       $("#edit-exe_content").summernote('code', Exams.exam_content);
+      $("#edit-duration").val(Exams.ExamDuration);
+      $("#edit-total_marks").val(Exams.TotalMarks);
+      $("#edit-passing_marks").val(Exams.PassingMarks);
       $("#exe_id").val(exm_id);
       $("#edit-cour_id option").each(function() {
         if($(this).val() == Exams.course_id) {
@@ -53,26 +56,10 @@ function reset_form() {
   });
   $("#exe_title").val('');
   $("#exe_content").val('');
+  $("#duration").val('');
+  $("#total_marks").val('');
+  $("#passing_marks").val('');
   $("#cour_id").val('');
-}
-
-function validateEmailExist(type) {
-  var email = $("#"+type+"email").val();
-  var email_rgx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if(email_rgx.test(email)) {
-    var user_id = $("#user_id").val();
-    $.get('/email-exist?id=' + user_id +'&email=' + email, function(data){
-      if(data.exist) {
-        $("#"+type+"email_exist").val('1');
-        $("#"+type+"email-exist").css('color','#ff0000');
-        $("#"+type+"email-exist").html('E-mail already exists.');
-      } else {
-        $("#"+type+"email-exist").html('');
-        $("#"+type+"email_exist").val('');
-      }
-    })
-
-  }
 }
 
 function validate(type) {
@@ -81,9 +68,12 @@ function validate(type) {
   });
   var errors = [];
 
-  var exe_title = $("#"+ type +"exe_title").val();
-  var exe_content = $("#"+ type +"exe_content").val();
-  var cour_id = $("#"+ type +"cour_id").val();
+  var exe_title     = $("#"+ type +"exe_title").val();
+  var exe_content   = $("#"+ type +"exe_content").val();
+  var duration      = $("#"+ type +"duration").val();
+  var total_marks   = $("#"+ type +"total_marks").val();
+  var passing_marks = $("#"+ type +"passing_marks").val();
+  var cour_id       = $("#"+ type +"cour_id").val();
 
 
   if(exe_title == '') {
@@ -92,6 +82,18 @@ function validate(type) {
 
   if(exe_content == '') {
     errors.push("#"+ type +"exe_content");
+  }
+
+  if(duration == '') {
+    errors.push("#"+ type +"duration");
+  }
+
+  if(total_marks == '') {
+    errors.push("#"+ type +"total_marks");
+  }
+
+  if(passing_marks == '') {
+    errors.push("#"+ type +"passing_marks");
   }
 
   if(cour_id == '') {

@@ -46,7 +46,7 @@
                     {!! $course->course_desc !!}
 
                     <h5 class="program-title">Course Content</h5>
-                    <b class="program-states">{!! count($CourseProgram) !!} sections • 08 lectures</b>
+                    <b class="program-states">{!! count($CourseProgram) !!} sections • {{ str_pad($course->course_duration, 2, '0', STR_PAD_LEFT) }} Hours Duration • {{ str_pad($course->course_lectures, 2, '0', STR_PAD_LEFT) }} Lectures</b>
                     <div id="accordion01" role="tablist" class="course-tab bordered rounded">
                         @if(count($CourseProgram) > 0)
                             <?php $cp_count = 0; ?>
@@ -80,7 +80,15 @@
                                                     @if($v["Type"] == "Youtube_" . $count)
                                                         <div class="bodyrow">
                                                             <div class="bodyrowItem1">
-                                                                <i class="fa fa-youtube-play" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#YouTubeModal" class="video-link" data-src="{!! $v["Content"] !!}"> {!! $v["Title"] !!}</a>
+                                                                @if(isset(Auth::user()->user_type) && Auth::user()->user_type == "learner")
+                                                                    <i class="fa fa-youtube-play" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#YouTubeModal" class="video-link" data-src="{!! $v["Content"] !!}"> {!! $v["Title"] !!}</a>
+                                                                @else
+                                                                    @if(isset($v["isActive"]) && empty($v["isActive"]))
+                                                                        <i class="fa fa-youtube-play" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#YouTubeModal" class="video-link" data-src="{!! $v["Content"] !!}"> {!! $v["Title"] !!}</a>
+                                                                    @else
+                                                                        <i class="fa fa-youtube-play" aria-hidden="true"></i> {!! $v["Title"] !!}
+                                                                    @endif
+                                                                @endif
                                                             </div>
                                                             <div class="bodyrowItem2">
                                                                 {!! $v["Duration"] !!}
@@ -89,7 +97,15 @@
                                                     @elseif($v["Type"] == "Content_" . $count)
                                                         <div class="bodyrow">
                                                             <div class="bodyrowItem1">
-                                                                <i class="fa fa-file-text-o" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#ContentModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                @if(isset(Auth::user()->user_type) && Auth::user()->user_type == "learner")
+                                                                    <i class="fa fa-file-text-o" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#ContentModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                @else
+                                                                    @if(isset($v["isActive"]) && empty($v["isActive"]))
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#ContentModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                    @else
+                                                                        <i class="fa fa-file-text-o" aria-hidden="true"></i> {!! $v["Title"] !!}
+                                                                    @endif
+                                                                @endif
                                                                 <div class="relative-content<?=$val->id.$count?>" style="display: none;">{!! $v["Content"] !!}</div>
                                                             </div>
                                                             <div class="bodyrowItem2">
@@ -99,7 +115,15 @@
                                                     @elseif($v["Type"] == "Iframe_" . $count)
                                                         <div class="bodyrow">
                                                             <div class="bodyrowItem1">
-                                                                <i class="fa fa-picture-o" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#ContentModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                @if(isset(Auth::user()->user_type) && Auth::user()->user_type == "learner")
+                                                                    <i class="fa fa-picture-o" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#ContentModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                @else
+                                                                    @if(isset($v["isActive"]) && empty($v["isActive"]))
+                                                                        <i class="fa fa-picture-o" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#ContentModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                    @else
+                                                                        <i class="fa fa-picture-o" aria-hidden="true"></i> {!! $v["Title"] !!}
+                                                                    @endif
+                                                                @endif
                                                                 <div class="relative-content<?=$val->id.$count?>" style="display: none;">{!! $v["Content"] !!}</div>
                                                             </div>
                                                             <div class="bodyrowItem2">
@@ -109,23 +133,39 @@
                                                     @elseif($v["Type"] == "Video_" . $count)
                                                         <div class="bodyrow">
                                                             <div class="bodyrowItem1">
-                                                                <i class="fa fa-video-camera" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#VideoModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                @if(isset(Auth::user()->user_type) && Auth::user()->user_type == "learner")
+                                                                    <i class="fa fa-video-camera" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#VideoModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                @else
+                                                                    @if(isset($v["isActive"]) && empty($v["isActive"]))
+                                                                        <i class="fa fa-video-camera" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#VideoModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                    @else
+                                                                        <i class="fa fa-video-camera" aria-hidden="true"></i> {!! $v["Title"] !!}
+                                                                    @endif
+                                                                @endif
                                                                 <div class="relative-video<?=$val->id.$count?> playedvideos" style="width: 100%; display: none;">
                                                                     <video width="100%" controls>
-                                                                        <source src="{!! "/uploads/courseprogramVIDEO/" . $v["Content"] !!}" type="video/mp4">
-                                                                        <source src="{!! "/uploads/courseprogramVIDEO/" . $v["Content"] !!}" type="video/ogg">
+                                                                        <source src="{!! "/uploads/courseprogramVIDEO/" . @$v["Content"] !!}" type="video/mp4">
+                                                                        <source src="{!! "/uploads/courseprogramVIDEO/" . @$v["Content"] !!}" type="video/ogg">
                                                                         Your browser does not support HTML video.
                                                                     </video>
                                                                 </div>
                                                             </div>
                                                             <div class="bodyrowItem2">
-                                                                {!! $v["Duration"] !!}
+                                                                {!! @$v["Duration"] !!}
                                                             </div>
                                                         </div>
                                                     @elseif($v["Type"] == "Image_" . $count)
                                                         <div class="bodyrow">
                                                             <div class="bodyrowItem1">
-                                                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#IMGModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                @if(isset(Auth::user()->user_type) && Auth::user()->user_type == "learner")
+                                                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#IMGModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                @else
+                                                                    @if(isset($v["isActive"]) && empty($v["isActive"]))
+                                                                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> <a href="javascript:void(0);" data-toggle="modal" data-target="#IMGModal" data-id="<?=$val->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                    @else
+                                                                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> {!! $v["Title"] !!}
+                                                                    @endif
+                                                                @endif
                                                                 <div class="relative-img<?=$val->id.$count?>" style="display: none;">{!! "/uploads/courseprogramIMG/" . $v["Content"] !!}</div>
                                                             </div>
                                                             <div class="bodyrowItem2">
@@ -135,7 +175,15 @@
                                                     @elseif($v["Type"] == "Quiz_" . $count)
                                                         <div class="bodyrow">
                                                             <div class="bodyrowItem1">
-                                                                <i class="fa fa-pied-piper-pp" aria-hidden="true"></i> {!! $v["Title"] !!}
+                                                                @if(isset(Auth::user()->user_type) && Auth::user()->user_type == "learner")
+                                                                    <i class="fa fa-pied-piper-pp" aria-hidden="true"></i> <a href="{!! URL::to('/user/quiz_rules/' . $course->id . "/?qid=" . $v["Content"]) !!}" name="exlink" data-extype="testquizstart" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                @else
+                                                                    @if(isset($v["isActive"]) && empty($v["isActive"]))
+                                                                        <i class="fa fa-pied-piper-pp" aria-hidden="true"></i> <a href="{!! URL::to('/user/quiz_rules/' . $course->id . "/?qid=" . $v["Content"]) !!}" name="exlink" data-extype="testquizstart" class="content-field"> {!! $v["Title"] !!}</a>
+                                                                    @else
+                                                                        <i class="fa fa-pied-piper-pp" aria-hidden="true"></i> {!! $v["Title"] !!}
+                                                                    @endif
+                                                                @endif
                                                             </div>
                                                             <div class="bodyrowItem2">
                                                                 {!! $v["Duration"] !!}
@@ -211,7 +259,7 @@
                                     </tr>
                                     <tr>
                                         <th>Duration:</th>
-                                        <td>{{ $course->course_duration }} Days</td>
+                                        <td>{{ $course->course_duration }} Hours</td>
                                     <tr>
                                         <th>Includes:</th>
                                         <td>{{ $course->course_includes }}</td>
@@ -224,30 +272,30 @@
                     </div>
                     <div class="row courses-item c-mb-30">
                         @if(count($AllCourse) > 0)
-                            @foreach($AllCourse as $course)
-                                @if(in_array("most_popular", json_decode($course->setas)))
+                            @foreach($AllCourse as $courseData)
+                                @if(in_array("most_popular", json_decode($courseData->setas)))
                                     <div class="col-12 col-md-6 col-lg-12 popular">
                                         <div class="course-flip h-100">
                                             <div class="course-front bordered rounded">
                                                 <div class=" vertical-item content-padding">
                                                     <div class="item-media rounded-top">
-                                                        {!! ($course->OfferData && (strtotime($course->EndDate) >= strtotime(Carbon\Carbon::now()))) ? '<span class="onsale">'.$course->OfferData.'% Off</span>' : '' !!}
-                                                        <img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" alt="">
+                                                        {!! ($courseData->OfferData && (strtotime($courseData->EndDate) >= strtotime(Carbon\Carbon::now()))) ? '<span class="onsale">'.$courseData->OfferData.'% Off</span>' : '' !!}
+                                                        <img src="{{ asset('/uploads/pavatar/' . $courseData->course_avatar ) }}" alt="">
                                                     </div>
                                                     <div class="item-content">
                                                         <h6 class="course-title">
-                                                            <a href="{{ URL::to('/course_detail/' . strtolower(str_replace(' ', '-', $course->course_title))) }}">{{ (strlen(strip_tags($course->course_title)) > 32) ? substr(strip_tags($course->course_title), 0, 32) . "..." : strip_tags($course->course_title) }}</a>
+                                                            <a href="{{ URL::to('/course_detail/' . strtolower(str_replace(' ', '-', $courseData->course_title))) }}">{{ (strlen(strip_tags($courseData->course_title)) > 32) ? substr(strip_tags($courseData->course_title), 0, 32) . "..." : strip_tags($courseData->course_title) }}</a>
                                                         </h6>
 
-                                                        <div class="star-rating course-rating" id="{{ App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}">
+                                                        <div class="star-rating course-rating" id="{{ App\Http\Controllers\Front\CourseController::GetStars($courseData->id)["ratingcount"] }}">
                                                             <span style="width: {{ (App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] == 0) ? 100 : App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}%">Rated <strong class="rating">5.00</strong> out of 5</span>
                                                         </div>
 
-                                                        <div class="product-price">£{{ $course->course_price }}</div>
+                                                        <div class="product-price">£{{ $courseData->course_price }}</div>
 
                                                         <div class="tagcloud">
-                                                            @if(count(json_decode($course->category_id)) > 0)
-                                                                @foreach(json_decode($course->category_id) as $v)
+                                                            @if(count(json_decode($courseData->category_id)) > 0)
+                                                                @foreach(json_decode($courseData->category_id) as $v)
                                                                     <a href="/category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
                                                                         {{ App\Http\Controllers\Category::CatID($v)->category_title }}
                                                                     </a>
@@ -260,19 +308,19 @@
                                             <div class="course-back rounded vertical-item content-padding ds">
                                                 <div class="item-content">
                                                     <h6 class="course-title">
-                                                        <a href="{{ URL::to('/course_detail/' . strtolower(str_replace(' ', '-', $course->course_title))) }}">{{ (strlen(strip_tags($course->course_title)) > 32) ? substr(strip_tags($course->course_title), 0, 32) . "..." : strip_tags($course->course_title) }}</a>
+                                                        <a href="{{ URL::to('/course_detail/' . strtolower(str_replace(' ', '-', $courseData->course_title))) }}">{{ (strlen(strip_tags($courseData->course_title)) > 32) ? substr(strip_tags($courseData->course_title), 0, 32) . "..." : strip_tags($courseData->course_title) }}</a>
                                                     </h6>
-                                                    {{ (strlen(strip_tags($course->course_desc)) > 150) ? substr(strip_tags($course->course_desc), 0, 150) . "..." : strip_tags($course->course_desc) }}
-                                                    <div class="star-rating course-rating" id="{{ App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}">
+                                                    {{ (strlen(strip_tags($courseData->course_desc)) > 150) ? substr(strip_tags($courseData->course_desc), 0, 150) . "..." : strip_tags($courseData->course_desc) }}
+                                                    <div class="star-rating course-rating" id="{{ App\Http\Controllers\Front\CourseController::GetStars($courseData->id)["ratingcount"] }}">
                                                         <span style="width: {{ (App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] == 0) ? 100 : App\Http\Controllers\Front\CourseController::GetStars($course->id)["ratingcount"] }}%">Rated <strong class="rating">5.00</strong> out of 5</span>
                                                     </div>{{ csrf_field() }}
-                                                    <div class="product-price">£{{ $course->course_price }}</div>
-                                                    <div class="divider-48" id="itm-post-{{ $course->id }}"></div>
-                                                    <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $course->course_title))) }}" class="btn btn-maincolor">View More</a>
-                                                    <a href="javascript:void(0);" onclick="javascript:product_submit({{ $course->id }});" class="btn btn-maincolor">Buy Now</a>
+                                                    <div class="product-price">£{{ $courseData->course_price }}</div>
+                                                    <div class="divider-48" id="itm-post-{{ $courseData->id }}"></div>
+                                                    <a href="{{ URL::to("/course_detail/" . strtolower(str_replace(' ', '-', $courseData->course_title))) }}" class="btn btn-maincolor">View More</a>
+                                                    <a href="javascript:void(0);" onclick="javascript:product_submit({{ $courseData->id }});" class="btn btn-maincolor">Buy Now</a>
                                                     <div class="tagcloud">
-                                                        @if(count(json_decode($course->category_id)) > 0)
-                                                            @foreach(json_decode($course->category_id) as $v)
+                                                        @if(count(json_decode($courseData->category_id)) > 0)
+                                                            @foreach(json_decode($courseData->category_id) as $v)
                                                                 <a href="/category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
                                                                     {{ App\Http\Controllers\Category::CatID($v)->category_title }}
                                                                 </a>
@@ -292,28 +340,29 @@
         </div>
     </section>
     </form>
-
+    <?php $resD = App\Http\Controllers\Front\CourseController::GetInstructorInfo($course->course_user_id); ?>
     <section class="ds s-pt-60 s-pb-55 s-py-lg-100 c-gutter-50 course-bio">
         <div class="container">
             <div class="row align-items-center text-center text-lg-left">
                 <div class="col-lg-4">
-                    <img class="rounded" src="/images/team/single-course.jpg" alt="">
+                    <img class="rounded" src="{!! (!empty($resD->avatar)) ? URL::to("/uploads/avatars/" . $resD->avatar) : URL::to("/images/team/single-course.jpg") !!}" height="357" width="357" alt="">
                 </div>
                 <div class="col-lg-8 text-center text-lg-left">
                     <div>
                         <div class="divider-20 d-block d-lg-none"></div>
-                        <h4 class="fw-500">Eneida F. Withrow</h4>
-                        <p class="color-dark position">Autor courses</p>
+                        <h4 class="fw-500">{!! $resD->first_name . " " . $resD->last_name !!}</h4>
+                        <p class="color-dark position">course Autor</p>
                         <p>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren
+                            {!! isset($resD->descr) ? $resD->descr : "" !!}
                         </p>
                         <div class="tagcloud">
-                            <a href="#" class="tag-cloud-link">
-                                Technology
-                            </a>
-                            <a href="#" class="tag-cloud-link">
-                                Humanities
-                            </a>
+                            @if(count(json_decode($course->category_id)) > 0)
+                                @foreach(json_decode($course->category_id) as $v)
+                                    <a href="/category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
+                                        {{ App\Http\Controllers\Category::CatID($v)->category_title }}
+                                    </a>
+                                @endforeach
+                            @endif
                         </div>
                         <p class="social-icons">
                             <a href="#" class="fa fa-facebook fs-20" title="facebook"></a>
@@ -334,27 +383,27 @@
                     <h4 class="fw-500">Students also bought</h4>
                     <div class="stu-container">
                         @if(count($AllCourse) > 0)
-                            @foreach($AllCourse as $course)
-                                {{--@if(in_array("most_popular", json_decode($course->setas)))--}}
+                            @foreach($AllCourse as $Studentcourse)
+                                {{--@if(in_array("most_popular", json_decode($Studentcourse->setas)))--}}
                                     <div class="stu-row">
                                         <div class="stu-course">
-                                            <div class="stu-course-avt"><img src="{{ asset('/uploads/pavatar/' . $course->course_avatar ) }}" /></div>
+                                            <div class="stu-course-avt"><img src="{{ asset('/uploads/pavatar/' . $Studentcourse->course_avatar ) }}" /></div>
                                             <div class="stu-course-content">
-                                                <div class="stu-course-content-title"><b>{{ $course->course_title }}</b></div>
+                                                <div class="stu-course-content-title"><b>{{ $Studentcourse->course_title }}</b></div>
                                                 <div class="stu-course-content-detail">
-                                                    @if(count(json_decode($course->category_id)) > 0)
-                                                        @foreach(json_decode($course->category_id) as $v)
+                                                    @if(count(json_decode($Studentcourse->category_id)) > 0)
+                                                        @foreach(json_decode($Studentcourse->category_id) as $v)
                                                             <a href="/category/{{ App\Http\Controllers\Category::CatID($v)->page_slug }}" class="tag-cloud-link">
                                                                 {{ App\Http\Controllers\Category::CatID($v)->category_title }}
                                                             </a> .
                                                         @endforeach
-                                                    @endif  3.5 total hours . Updated</div>
+                                                    @endif  {{ $Studentcourse->course_lectures }} Lectures. {{ $Studentcourse->course_duration }} Hours Duration</div>
                                             </div>
                                         </div>
-                                        <div class="stu-rating">{{ App\Http\Controllers\Front\CourseController::GetStars($course->id)["RateNumb"] }} <i class="fa fa-star" aria-hidden="true"></i>
+                                        <div class="stu-rating">{{ App\Http\Controllers\Front\CourseController::GetStars($Studentcourse->id)["RateNumb"] }} <i class="fa fa-star" aria-hidden="true"></i>
                                         </div>
-                                        <div class="stu-students">65,000</div>
-                                        <div class="stu-price">&pound; {{ $course->course_price }}</div>
+                                        <div class="stu-students">{{ str_pad(App\Http\Controllers\Front\CourseController::StudentCount($Studentcourse->id), 4, '0', STR_PAD_LEFT) }}</div>
+                                        <div class="stu-price">&pound; {{ $Studentcourse->course_price }}</div>
                                     </div>
                                 {{--@endif--}}
                             @endforeach
@@ -379,7 +428,7 @@
                                         <article class="comment-body">
                                             <footer class="comment-meta">
                                                 <div class="comment-author vcard">
-                                                    <img alt="" src="/images/team/testimonials_01.jpg">
+                                                    <img alt="" src="{!! (!empty(App\Http\Controllers\Front\CourseController::GetInstructorInfo($v->user_id)->avatar)) ? URL::to("/uploads/avatars/" . App\Http\Controllers\Front\CourseController::GetInstructorInfo($v->user_id)->avatar) : URL::to("/images/team/single-course.jpg") !!}" width="125">
                                                 </div>
                                                 <!-- .comment-author -->
                                                 <div class="comment-name">
@@ -525,57 +574,23 @@
     <section class="ls course-comment">{{--s-pt-55 s-pb-60 s-pt-lg-95 s-pb-lg-100 c-gutter-50--}}
         <div class="container">
             <div class="row instructore-more-course">
-                <h4 class="fw-500">More Courses by Eneida F. Withrow</h4>
+                <h4 class="fw-500">More Courses by {!! $resD->first_name . " " . $resD->last_name !!}</h4>
             </div>
             <div class="row writer-card">
-                <div class="col-lg-3 col-xl-3">
-                    <img src="http://127.0.0.1:8000/uploads/pavatar/269687077.jpg" width="300" height="300" />
-                    <div class="writer-content">
-                        <b>The Complete Financial Analyst Training & Investing Course Chris Haroun</b>
-                        <div class="writer-rate">Rating: 4.5 out of 5
-                            4.5
-                            (20,960)</div>
-                        <div class="writer-hours">22.5 total hours . 225 lectures</div>
-                        <div class="writer-levels">. All Levels</div>
-                        <div class="writer-price">&pound; 88</div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-xl-3">
-                    <img src="http://127.0.0.1:8000/uploads/pavatar/1287658438.jpg" width="300" height="300" />
-                    <div class="writer-content">
-                        <b>The Complete Financial Analyst Training & Investing Course Chris Haroun</b>
-                        <div class="writer-rate">Rating: 4.5 out of 5
-                            4.5
-                            (20,960)</div>
-                        <div class="writer-hours">22.5 total hours . 225 lectures</div>
-                        <div class="writer-levels">. All Levels</div>
-                        <div class="writer-price">&pound; 22</div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-xl-3">
-                    <img src="http://127.0.0.1:8000/uploads/pavatar/401966259.jpg" width="300" height="300" />
-                    <div class="writer-content">
-                        <b>The Complete Financial Analyst Training & Investing Course Chris Haroun</b>
-                        <div class="writer-rate">Rating: 4.5 out of 5
-                            4.5
-                            (20,960)</div>
-                        <div class="writer-hours">22.5 total hours . 225 lectures</div>
-                        <div class="writer-levels">. All Levels</div>
-                        <div class="writer-price">&pound; 99</div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-xl-3">
-                    <img src="http://127.0.0.1:8000/uploads/pavatar/8589637.jpg" width="300" height="300" />
-                    <div class="writer-content">
-                        <b>The Complete Financial Analyst Training & Investing Course Chris Haroun</b>
-                        <div class="writer-rate">Rating: 4.5 out of 5
-                            4.5
-                            (20,960)</div>
-                        <div class="writer-hours">22.5 total hours . 225 lectures</div>
-                        <div class="writer-levels">. All Levels</div>
-                        <div class="writer-price">&pound; 33</div>
-                    </div>
-                </div>
+                @if(count(App\Http\Controllers\Front\CourseController::GetInstructorCourses($course->course_user_id)) > 0)
+                    @foreach(App\Http\Controllers\Front\CourseController::GetInstructorCourses($course->course_user_id) as $v)
+                        <div class="col-lg-3 col-xl-3">
+                            <img src="{{ asset('/uploads/pavatar/' . $v->course_avatar ) }}" width="300" height="300" />
+                            <div class="writer-content">
+                                <b>{{ $v->course_title }}</b>
+                                <div class="writer-rate"><div class="star-rating course-rating" style="margin-bottom:0; width: 23%; display: inline-block;" id="{{ App\Http\Controllers\Front\CourseController::GetStars($v->id)["ratingcount"] }}"><span style="width: {{ (App\Http\Controllers\Front\CourseController::GetStars($v->course_id)["ratingcount"] == 0) ? 100 : App\Http\Controllers\Front\CourseController::GetStars($v->course_id)["ratingcount"] }}%">Rated <strong class="rating">5.00</strong> out of 5</span></div>({{ str_pad(App\Http\Controllers\Front\CourseController::GetTotalComments($v->id), 4, '0', STR_PAD_LEFT) }})</div>
+                                <div class="writer-hours">{{ $v->course_duration }} total hours . {{ $v->course_lectures }} lectures</div>
+                                <div class="writer-levels">. All Levels</div>
+                                <div class="writer-price">&pound; {{ $v->course_price }}</div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
     </section>

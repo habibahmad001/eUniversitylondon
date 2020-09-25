@@ -121,6 +121,36 @@
                     </div>
 
                 </div>
+            </div><br /><br />
+            <div class="row">
+                <div class="col-lg-12">
+                    <div>
+                        <h3>Quiz Results</h3> <br />
+                        <table width="100%" border="1px">
+                            <thead>
+                            <td>Title</td>
+                            <td>Mark's</td>
+                            <td>Date</td>
+                            <td>Action</td>
+                            </thead>
+                            @if(count($QuizResultData) > 0)
+                                @foreach($QuizResultData as $v)
+                                    <tr>
+                                        <td>{!! App\Http\Controllers\Front\CourseController::GetQuizData($v->exam_id)->quiz_title !!}</td>
+                                        <td>{!! json_decode($v->result, true)["Result"] !!} ({!! json_decode($v->result, true)["MarksObtain"] !!})</td>
+                                        <td>{{ Carbon\Carbon::parse($v->created_at)->format('F d, Y h:ia') }}</td>
+                                        <td><a href="{{URL::to("/courseresult/Quiz/" . $cid . "/" . $v->exam_id)}}"> View Detail</a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="4" class="text-center">No record found !!!</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+
+                </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">

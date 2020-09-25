@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Coupan;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -22,6 +23,7 @@ use App\Courses;
 use App\Result;
 use App\QandA;
 use App\Exam;
+use App\Quiz;
 use App\cart;
 
 use Auth;
@@ -222,30 +224,142 @@ class CourseController extends Controller
     public function MockExam($mcid) {
         $data         = [];
 
+        if(!Auth::user()) {
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+        }
+
         $data['sub_heading']  = 'Mock Exam Page';
         $data['page_title']   = $this->header_title;
 
-        $data['cid']   = $mcid;
-        $data['DBTable']   = "MockExam";
+        $chkResult  =   Result::where("user_id", Auth::user()->id)->where("examType", "MockExam")->count();
+
+
+        if($chkResult >= 3) {
+            return redirect()->intended('/user/newsubscription/' . $mcid);
+        } else {
+            $data['ExamData'] = MockExam::where("course_id", $mcid)->orderBy("id", "asc")->get();
+            if(count($data['ExamData']) > 0) {
+                foreach($data['ExamData'] as $v) {
+                    if($this->ResultCHKMock($mcid, $v->id) == "no") {
+                        $data['ExamData']           =   MockExam::where("id", $v->id)->orderBy("id", "asc")->get();
+                        $data['QandAData']          =   QandA::where("exam_qa_id", $v->id)->where("table_name", "MockExam")->where("qa_cid", 0)->get();
+                        $data['cid']   = $mcid;
+                        $data['DBTable']   = "MockExam";
+
+                        return view('frontend.exam', $data);
+                    }
+                }
+                $data['QandAData']          =   QandA::where("exam_qa_id", $data['ExamData'][0]->id)->where("table_name", "MockExam")->where("qa_cid", 0)->get();
+                $data['cid']   = $mcid;
+                $data['DBTable']   = "MockExam";
+
+
+                return view('frontend.exam', $data);
+            }
+            $data['QandAData'] = array();
+            $data['cid']   = $mcid;
+            $data['DBTable']   = "MockExam";
+        }
 
         return view('frontend.exam', $data);
     }
 
-    public function Exam($cid) {
+    public function QuizRules($qcid) {
+        $data         = [];
 
         if(!Auth::user()) {
             return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
         }
+
+        $data['sub_heading']  = 'Quiz Rules Page';
+        $data['page_title']   = $this->header_title;
+
+        /*********** Get Quiz ***********/
+        $data['ExamData']           =   Quiz::where("id", $_REQUEST["qid"])->orderBy("id", "asc")->get();
+        $data['QandAData']          =   QandA::where("exam_qa_id", $_REQUEST["qid"])->where("table_name", "Quiz")->where("qa_cid", 0)->get();
+        $data['cid']   = $qcid;
+        $data['DBTable']   = "Quiz";
+        /*********** Get Quiz ***********/
+
+        return view('frontend.exam', $data);
+    }
+
+    public static function GetInstructorInfo($cid) {
+        $InsRes =   User::find($cid);
+        return $InsRes;
+    }
+
+    public static function GetInstructorCourses($id) {
+        $Res =   Courses::where("course_user_id", $id)->where("course_status", "yes")->orderBy('id', 'desc')->take(5)->get();
+        return $Res;
+    }
+
+    public static function GetTotalComments($cid) {
+        $Res =   Ratings::where("course_id", $cid)->where("status", "yes")->count();
+        return $Res;
+    }
+
+    public function QuizStart($qid) {
+        $data         = [];
+
+        if(!Auth::user()) {
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+        }
+
+        $data['sub_heading']  = 'Take Quiz Page';
+        $data['page_title']   = $this->header_title;
+
+        /*********** Get Quiz ***********/
+        $data['ExamData']           =   Quiz::where("id", $_REQUEST["qid"])->orderBy("id", "asc")->get(['tablequiz.quiz_title AS exam_title', 'tablequiz.*']);
+        $data['QandAData']          =   QandA::where("exam_qa_id", $_REQUEST["qid"])->where("table_name", "Quiz")->where("qa_cid", 0)->get();
+        $data['cid']   = $qid;
+        $data['DBTable']   = "Quiz";
+        /*********** Get Quiz ***********/
+
+        return view('frontend.takequiz', $data);
+    }
+
+    public function Exam($cid) {
 
         $data         = [];
 
         $data['sub_heading']  = 'Exam Page';
         $data['page_title']   = $this->header_title;
 
-        $data['cid']   = $cid;
-        $data['DBTable']   = "Exam";
+        if(!Auth::user()) {
+            return redirect()->intended('/')->withErrors(['email' => 'Please login first !!!']);
+        }
 
-        return view('frontend.exam', $data);
+        $chkResult  =   Result::where("user_id", Auth::user()->id)->where("examType", "Exam")->count();
+
+        if($chkResult >= 1) {
+            return redirect()->intended('/user/newsubscription/' . $cid);
+        } else {
+            $data['ExamData']          =   Exam::where("course_id", $cid)->orderBy("id", "asc")->get();
+            if(count($data['ExamData']) > 0) {
+                foreach($data['ExamData'] as $v) {
+                    if($this->ResultCHK($cid, $v->id) == "no") {
+                        $data['ExamData']           =   Exam::where("id", $v->id)->get();
+                        $data['QandAData']          =   QandA::where("exam_qa_id", $v->id)->where("table_name", "Exam")->where("qa_cid", 0)->get();
+                        $data['cid']   = $cid;
+                        $data['DBTable']   = "Exam";
+
+                        return view('frontend.exam', $data);
+                    }
+                }
+                $data['QandAData']          =   QandA::where("exam_qa_id", $data['ExamData'][0]->id)->where("table_name", "Exam")->where("qa_cid", 0)->get();
+                $data['cid']   = $cid;
+                $data['DBTable']   = "Exam";
+
+                return view('frontend.exam', $data);
+            }
+
+            $data['QandAData'] = array();
+            $data['cid']   = $cid;
+            $data['DBTable']   = "Exam";
+
+            return view('frontend.exam', $data);
+        }
     }
 
     public function FinishQuiz($status = "unsuccessful-1") {
@@ -348,6 +462,7 @@ class CourseController extends Controller
 
         $data['ResultData']         =   Result::where("course_id", $course_id)->where("user_id", Auth::user()->id)->where("examType", "Exam")->get();
         $data['MockResultData']     =   Result::where("course_id", $course_id)->where("user_id", Auth::user()->id)->where("examType", "MockExam")->get();
+        $data['QuizResultData']     =   Result::where("course_id", $course_id)->where("user_id", Auth::user()->id)->where("examType", "Quiz")->get();
 
         $data['cid']   = $course_id;
         $data['DBTable']   = "MockExam";
@@ -355,6 +470,11 @@ class CourseController extends Controller
 
 
         return view('frontend.quizresults', $data);
+    }
+
+    public static function GetQuizData($qid) {
+        $res        =  Quiz::find($qid);
+        return $res;
     }
 
 
@@ -455,7 +575,17 @@ class CourseController extends Controller
         /********** Result Data ***********/
         $results["ResultData"]      =   $ResultData;
         $results["MarksObtain"]     =   $totalmax;
-        $results["Result"]          =   ($totalmax > 195) ? "PASSED" : "FAILED";
+        if($request->DBTable == "Quiz") {
+            $ExamStates =   Quiz::find($request->exam);
+            $results["Result"]          =   ($totalmax >= $ExamStates->PassingMarks) ? "PASSED" : "FAILED";
+        } else if($request->DBTable == "Exam") {
+            $ExamStates =   Exam::find($request->exam);
+            $results["Result"]          =   ($totalmax >= $ExamStates->PassingMarks) ? "PASSED" : "FAILED";
+        } else {
+            $ExamStates =   MockExam::find($request->exam);
+            $results["Result"]          =   ($totalmax >= $ExamStates->PassingMarks) ? "PASSED" : "FAILED";
+        }
+
         $ResData = json_encode($results);
         /********** Result Data ***********/
 
@@ -478,15 +608,16 @@ class CourseController extends Controller
             $ewuOBJ                 = new ExamWithUser();
             $ewuOBJ->exam_id    =   $request->exam;
             $ewuOBJ->user_id    =   Auth::user()->id;
-        } else {
+            $saved              =   $ewuOBJ->save();
+        } else if($request->DBTable == "MockExam") {
             $ewuOBJ                 = new MexamWithUser();
             $ewuOBJ->mexam_id    =   $request->exam;
             $ewuOBJ->user_id     =   Auth::user()->id;
+            $saved              =   $ewuOBJ->save();
         }
-        $saved              =   $ewuOBJ->save();
         /********** Store data in courese with user ********/
 
-        if($totalmax > 40) //195
+        if($totalmax >= $ExamStates->PassingMarks)
             return redirect()->intended('/finishquiz/success-' . $request->course);
         else
             return redirect()->intended('/finishquiz/unsuccessful-' . $request->course);

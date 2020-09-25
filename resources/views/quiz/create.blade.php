@@ -12,11 +12,28 @@
       </div>
 
       <div class="form-line">
-        <input type="text" name="exe_title" id="exe_title" placeholder="Mock Exam Title" >
+        <label>Quiz Title</label>
+        <input type="text" name="exe_title" id="exe_title" placeholder="Quiz Title" >
       </div>
 
       <div class="form-line">
+        <label>Quiz Content</label>
         <textarea name="exe_content" id="exe_content" placeholder="Type some description."></textarea>
+      </div>
+
+      <div class="form-line">
+        <label>Quiz Duration</label>
+        <input type="text" name="duration" id="duration" placeholder="3 Hours" >
+      </div>
+
+      <div class="form-line">
+        <label>Total Marks</label>
+        <input type="text" name="total_marks" id="total_marks" placeholder="100" >
+      </div>
+
+      <div class="form-line">
+        <label>Passing Marks</label>
+        <input type="text" name="passing_marks" id="passing_marks" placeholder="40" >
       </div>
 
       <div class="form-line">

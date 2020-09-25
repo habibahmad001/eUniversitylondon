@@ -76,23 +76,23 @@
                         @endif
                     @else
                         {{--@if(is_array(json_decode($courseprogramData[0]->cp_desc, true)))--}}
-                            {{--@if(explode("_",json_decode($courseprogramData[0]->cp_desc, true)[0]["Type"])[0] == "Youtube")--}}
-                                {{--<iframe width="100%" height="515" src="{!! json_decode($courseprogramData[0]->cp_desc, true)[0]["Content"] !!}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>--}}
-                            {{--@elseif(explode("_",json_decode($courseprogramData[0]->cp_desc, true)[0]["Type"])[0] == "Content")--}}
-                                {{--<div class="pdfobject-container">{!! json_decode($courseprogramData[0]->cp_desc, true)[0]["Content"] !!}</div>--}}
-                            {{--@elseif(explode("_",json_decode($courseprogramData[0]->cp_desc, true)[0]["Type"])[0] == "Iframe")--}}
-                                {{--{!! json_decode($courseprogramData[0]->cp_desc, true)[0]["Content"] !!}--}}
-                            {{--@elseif(explode("_",json_decode($courseprogramData[0]->cp_desc, true)[0]["Type"])[0] == "Video")--}}
-                                {{--<video width="100%" controls>--}}
-                                    {{--<source src="{!! "/uploads/courseprogramVIDEO/" . json_decode($courseprogramData[0]->cp_desc, true)[0]["Content"] !!}" type="video/mp4">--}}
-                                    {{--<source src="{!! "/uploads/courseprogramVIDEO/" . json_decode($courseprogramData[0]->cp_desc, true)[0]["Content"] !!}" type="video/ogg">--}}
-                                    {{--Your browser does not support HTML video.--}}
-                                {{--</video>--}}
-                            {{--@elseif(explode("_",json_decode($courseprogramData[0]->cp_desc, true)[0]["Type"])[0] == "Image")--}}
-                                {{--<iframe width="100%" height="515" src="{!! json_decode($courseprogramData[0]->cp_desc, true)[0]["Content"] !!}" frameborder="0" allow="" allowfullscreen></iframe>--}}
-                            {{--@endif--}}
+                        {{--@if(explode("_",json_decode($courseprogramData[0]->cp_desc, true)[0]["Type"])[0] == "Youtube")--}}
+                        {{--<iframe width="100%" height="515" src="{!! json_decode($courseprogramData[0]->cp_desc, true)[0]["Content"] !!}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>--}}
+                        {{--@elseif(explode("_",json_decode($courseprogramData[0]->cp_desc, true)[0]["Type"])[0] == "Content")--}}
+                        {{--<div class="pdfobject-container">{!! json_decode($courseprogramData[0]->cp_desc, true)[0]["Content"] !!}</div>--}}
+                        {{--@elseif(explode("_",json_decode($courseprogramData[0]->cp_desc, true)[0]["Type"])[0] == "Iframe")--}}
+                        {{--{!! json_decode($courseprogramData[0]->cp_desc, true)[0]["Content"] !!}--}}
+                        {{--@elseif(explode("_",json_decode($courseprogramData[0]->cp_desc, true)[0]["Type"])[0] == "Video")--}}
+                        {{--<video width="100%" controls>--}}
+                        {{--<source src="{!! "/uploads/courseprogramVIDEO/" . json_decode($courseprogramData[0]->cp_desc, true)[0]["Content"] !!}" type="video/mp4">--}}
+                        {{--<source src="{!! "/uploads/courseprogramVIDEO/" . json_decode($courseprogramData[0]->cp_desc, true)[0]["Content"] !!}" type="video/ogg">--}}
+                        {{--Your browser does not support HTML video.--}}
+                        {{--</video>--}}
+                        {{--@elseif(explode("_",json_decode($courseprogramData[0]->cp_desc, true)[0]["Type"])[0] == "Image")--}}
+                        {{--<iframe width="100%" height="515" src="{!! json_decode($courseprogramData[0]->cp_desc, true)[0]["Content"] !!}" frameborder="0" allow="" allowfullscreen></iframe>--}}
+                        {{--@endif--}}
                         {{--@else--}}
-                            {{--<div class="pdfobject-container">This section have no content yet.</div>--}}
+                        {{--<div class="pdfobject-container">This section have no content yet.</div>--}}
                         {{--@endif--}}
                         <div class="pdfobject-container">This section have no content yet.</div>
                     @endif
@@ -109,7 +109,7 @@
                     </ul>
                     @if(count($courseprogramData) > 0)
                         <ul class="course_timeline">
-                        @foreach($courseprogramData as $data)
+                            @foreach($courseprogramData as $data)
                                 <li @if(isset($UserProgramData[0]->CourseProgramID) && $data->id == $UserProgramData[0]->CourseProgramID) class="activeli" @endif id="li-{{ $data->id }}">
                                     {!! (isset($UserProgramData[0]->CourseProgramID) && $data->id == $UserProgramData[0]->CourseProgramID) ? "<span></span>" : "" !!}
                                     <a href="javascript:void(0);" onclick="javascript:Get_CP_PDF({{ $data->id }});" @if(isset($UserProgramData[0]->CourseProgramID) && $data->id == $UserProgramData[0]->CourseProgramID) class="active" @endif  id="aid-{{ $data->id }}">{{ $data->cp_title }}</a>
@@ -119,30 +119,30 @@
                                                 @if(is_array(json_decode($data->cp_desc, true)))
                                                     <?php $count = 0;?>
                                                     @foreach(json_decode($data->cp_desc, true) as $v)
-                                                            <li>
+                                                        <li>
                                                             @if($v["Type"] == "Youtube_" . $count)
-                                                               <a href="javascript:void(0);" data-toggle="modal" data-target="#YouTubeModal" class="video-link" data-src="{!! $v["Content"] !!}"> {!! $v["Title"] !!}</a>
+                                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#YouTubeModal" class="video-link" data-src="{!! @$v["Content"] !!}"> {!! $v["Title"] !!}</a>
                                                             @elseif($v["Type"] == "Content_" . $count)
                                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#ContentModal" data-id="<?=$data->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
-                                                                <div class="relative-content<?=$data->id.$count?>" style="display: none;">{!! $v["Content"] !!}</div>
+                                                                <div class="relative-content<?=$data->id.$count?>" style="display: none;">{!! @$v["Content"] !!}</div>
                                                             @elseif($v["Type"] == "Iframe_" . $count)
                                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#ContentModal" data-id="<?=$data->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
-                                                                <div class="relative-content<?=$data->id.$count?>" style="display: none;">{!! $v["Content"] !!}</div>
+                                                                <div class="relative-content<?=$data->id.$count?>" style="display: none;">{!! @$v["Content"] !!}</div>
                                                             @elseif($v["Type"] == "Video_" . $count)
                                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#VideoModal" data-id="<?=$data->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
                                                                 <div class="relative-video<?=$data->id.$count?> playedvideos" style="width: 100%; display: none;">
                                                                     <video width="100%" controls>
-                                                                        <source src="{!! "/uploads/courseprogramVIDEO/" . $v["Content"] !!}" type="video/mp4">
-                                                                        <source src="{!! "/uploads/courseprogramVIDEO/" . $v["Content"] !!}" type="video/ogg">
+                                                                        <source src="{!! "/uploads/courseprogramVIDEO/" . @$v["Content"] !!}" type="video/mp4">
+                                                                        <source src="{!! "/uploads/courseprogramVIDEO/" . @$v["Content"] !!}" type="video/ogg">
                                                                         Your browser does not support HTML video.
                                                                     </video>
                                                                 </div>
                                                             @elseif($v["Type"] == "Image_" . $count)
                                                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#IMGModal" data-id="<?=$data->id.$count?>" class="content-field"> {!! $v["Title"] !!}</a>
-                                                                <div class="relative-img<?=$data->id.$count?>" style="display: none;">{!! "/uploads/courseprogramIMG/" . $v["Content"] !!}</div>
+                                                                <div class="relative-img<?=$data->id.$count?>" style="display: none;">{!! "/uploads/courseprogramIMG/" . @$v["Content"] !!}</div>
                                                             @endif
-                                                            </li>
-                                                    <?php $count++;?>
+                                                        </li>
+                                                        <?php $count++;?>
                                                     @endforeach
                                                 @endif
                                             </ul>
@@ -152,7 +152,7 @@
                                         </div>
                                     </div>
                                 </li>
-                        @endforeach
+                            @endforeach
                             <li><a name="exlink" href="{{ URL::to("/user/mock_exam/" . $cid) }}" data-exType="mquizstart">Mock Exam</a></li>
                             <li><a name="exlink" href="{{ URL::to("/user/exam/" . $cid) }}" data-exType="quizstart">Exam</a></li>
                         </ul>
